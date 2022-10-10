@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Pipelines.Caching;
 
-public class CacheRemovingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class CacheRemovingBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ICacheRemoverRequest
 {
     private readonly IDistributedCache _cache;
@@ -17,7 +17,7 @@ public class CacheRemovingBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
         _logger = logger;
     }
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
+    public override async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
                                         RequestHandlerDelegate<TResponse> next)
     {
         TResponse response;

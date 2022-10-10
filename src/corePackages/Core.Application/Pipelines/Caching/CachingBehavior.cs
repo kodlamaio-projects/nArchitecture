@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Core.Application.Pipelines.Caching;
 
-public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class CachingBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ICachableRequest
 {
     private readonly IDistributedCache _cache;
@@ -23,7 +23,7 @@ public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         _cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>();
     }
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
+    public override async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
                                         RequestHandlerDelegate<TResponse> next)
     {
         TResponse response;

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Core.Application.Pipelines.Validation;
 
-public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class RequestValidationBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
@@ -14,8 +14,7 @@ public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
         _validators = validators;
     }
 
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
-                                  RequestHandlerDelegate<TResponse> next)
+    protected override void OnBefore(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
         ValidationContext<object> context = new(request);
         List<ValidationFailure> failures = _validators
@@ -23,7 +22,7 @@ public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
                                            .SelectMany(result => result.Errors)
                                            .Where(failure => failure != null)
                                            .ToList();
-        if (failures.Count != 0) throw new ValidationException(failures);
-        return next();
+        if (failures.Count != 0)
+            throw new ValidationException(failures);
     }
 }

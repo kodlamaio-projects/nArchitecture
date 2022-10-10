@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Core.Application.Pipelines.Logging;
 
-public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class LoggingBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ILoggableRequest
 {
     private readonly LoggerServiceBase _loggerServiceBase;
@@ -19,8 +19,7 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
-                                  RequestHandlerDelegate<TResponse> next)
+    protected override void OnBefore(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
         List<LogParameter> logParameters = new();
         logParameters.Add(new LogParameter
@@ -35,12 +34,10 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
             Parameters = logParameters,
             User = _httpContextAccessor.HttpContext == null ||
                    _httpContextAccessor.HttpContext.User.Identity.Name == null
-                       ? "?"
+                       ? "<anonymous>"
                        : _httpContextAccessor.HttpContext.User.Identity.Name
         };
 
         _loggerServiceBase.Info(JsonConvert.SerializeObject(logDetail));
-
-        return next();
     }
 }
