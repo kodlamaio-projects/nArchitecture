@@ -18,7 +18,7 @@ public class UserManager : IUserService
         return user;
     }
 
-    public async Task<User?> GetById(int id)
+    public async Task<User> GetById(int id)
     {
         User? user = await _userRepository.GetAsync(u => u.Id == id);
         return user;
