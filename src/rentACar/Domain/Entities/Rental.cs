@@ -7,8 +7,8 @@ public class Rental : Entity
 {
     public int CarId { get; set; }
     public int CustomerId { get; set; }
-    //public int RentStartRentalBranchId { get; set; }
-    //public int? RentEndRentalBranchId { get; set; }
+    public int RentStartRentalBranchId { get; set; }
+    public int? RentEndRentalBranchId { get; set; }
     public DateTime RentStartDate { get; set; }
     public DateTime RentEndDate { get; set; }
     public DateTime? ReturnDate { get; set; }
@@ -17,8 +17,8 @@ public class Rental : Entity
 
     public virtual Car? Car { get; set; }
     public virtual Customer? Customer { get; set; }
-    //public virtual RentalBranch? RentStartRentalBranch { get; set; }
-    //public virtual RentalBranch? RentEndRentalBranch { get; set; }
+    public virtual RentalBranch? RentStartRentalBranch { get; set; }
+    public virtual RentalBranch? RentEndRentalBranch { get; set; }
     public virtual ICollection<RentalsAdditionalService> RentalsAdditionalServices { get; set; }
 
     public Rental()
@@ -33,8 +33,8 @@ public class Rental : Entity
         Id = id;
         CustomerId = customerId;
         CarId = carId;
-        //RentStartRentalBranchId = rentStartRentalBranchId;
-        //RentEndRentalBranchId = rentEndRentalBranchId;
+        RentStartRentalBranchId = rentStartRentalBranchId;
+        RentEndRentalBranchId = rentEndRentalBranchId;
         RentStartDate = rentStartDate;
         RentEndDate = rentEndDate;
         ReturnDate = returnDate;
