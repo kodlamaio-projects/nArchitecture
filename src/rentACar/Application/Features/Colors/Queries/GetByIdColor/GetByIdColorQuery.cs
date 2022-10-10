@@ -7,17 +7,17 @@ using MediatR;
 
 namespace Application.Features.Colors.Queries.GetByIdColor;
 
-public class GetByIdColorQuery : IRequest<ColorDto>
+public class GetByIdSpeedQuery : IRequest<SpeedDto>
 {
     public int Id { get; set; }
 
-    public class GetByIdColorQueryHandler : IRequestHandler<GetByIdColorQuery, ColorDto>
+    public class GetByIdColorQueryHandler : IRequestHandler<GetByIdSpeedQuery, SpeedDto>
     {
         private readonly IColorRepository _colorRepository;
         private readonly IMapper _mapper;
-        private readonly ColorBusinessRules _colorBusinessRules;
+        private readonly SpeedBusinessRules _colorBusinessRules;
 
-        public GetByIdColorQueryHandler(IColorRepository colorRepository, ColorBusinessRules colorBusinessRules,
+        public GetByIdColorQueryHandler(IColorRepository colorRepository, SpeedBusinessRules colorBusinessRules,
                                         IMapper mapper)
         {
             _colorRepository = colorRepository;
@@ -26,12 +26,12 @@ public class GetByIdColorQuery : IRequest<ColorDto>
         }
 
 
-        public async Task<ColorDto> Handle(GetByIdColorQuery request, CancellationToken cancellationToken)
+        public async Task<SpeedDto> Handle(GetByIdSpeedQuery request, CancellationToken cancellationToken)
         {
             await _colorBusinessRules.ColorIdShouldExistWhenSelected(request.Id);
 
             Color? color = await _colorRepository.GetAsync(c => c.Id == request.Id);
-            ColorDto colorDto = _mapper.Map<ColorDto>(color);
+            SpeedDto colorDto = _mapper.Map<SpeedDto>(color);
             return colorDto;
         }
     }

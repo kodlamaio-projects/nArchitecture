@@ -1,6 +1,6 @@
-﻿namespace Application.Features.Colors.Dtos;
+﻿namespace Application.Features.Speeds.Dtos;
 
-public class SpeedDto
+public class SpeedListDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

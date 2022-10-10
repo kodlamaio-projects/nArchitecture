@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Colors.Dtos;
+﻿namespace Application.Features.Speeds.Dtos;
 
 public class CreatedSpeedDto
 {

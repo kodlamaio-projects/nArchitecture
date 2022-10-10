@@ -5,11 +5,11 @@ using Domain.Entities;
 
 namespace Application.Features.Colors.Rules;
 
-public class ColorBusinessRules
+public class SpeedBusinessRules
 {
     private readonly IColorRepository _colorRepository;
 
-    public ColorBusinessRules(IColorRepository colorRepository)
+    public SpeedBusinessRules(IColorRepository colorRepository)
     {
         _colorRepository = colorRepository;
     }

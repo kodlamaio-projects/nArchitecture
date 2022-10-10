@@ -1,4 +1,4 @@
-﻿using Application.Features.Colors.Dtos;
+﻿using Application.Features.Speeds.Dtos;
 using Core.Persistence.Paging;
 
 namespace Application.Features.Colors.Models;

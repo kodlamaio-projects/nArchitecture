@@ -9,14 +9,14 @@ using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Colors.Commands.UpdateColor;
 
-public class UpdateColorCommand : IRequest<UpdatedColorDto>, ISecuredRequest
+public class UpdateColorCommand : IRequest<UpdatedSpeedDto>, ISecuredRequest
 {
     public int Id { get; set; }
     public string Name { get; set; }
 
     public string[] Roles => new[] { Admin, ColorUpdate };
 
-    public class UpdateColorCommandHandler : IRequestHandler<UpdateColorCommand, UpdatedColorDto>
+    public class UpdateColorCommandHandler : IRequestHandler<UpdateColorCommand, UpdatedSpeedDto>
     {
         private IColorRepository _colorRepository { get; }
         private IMapper _mapper { get; }
@@ -27,11 +27,11 @@ public class UpdateColorCommand : IRequest<UpdatedColorDto>, ISecuredRequest
             _mapper = mapper;
         }
 
-        public async Task<UpdatedColorDto> Handle(UpdateColorCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatedSpeedDto> Handle(UpdateColorCommand request, CancellationToken cancellationToken)
         {
             Color mappedColor = _mapper.Map<Color>(request);
             Color updatedColor = await _colorRepository.UpdateAsync(mappedColor);
-            UpdatedColorDto updatedColorDto = _mapper.Map<UpdatedColorDto>(updatedColor);
+            UpdatedSpeedDto updatedColorDto = _mapper.Map<UpdatedSpeedDto>(updatedColor);
             return updatedColorDto;
         }
     }

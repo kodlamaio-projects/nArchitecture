@@ -9,13 +9,13 @@ using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Colors.Commands.DeleteColor;
 
-public class DeleteColorCommand : IRequest<DeletedColorDto>, ISecuredRequest
+public class DeleteColorCommand : IRequest<DeletedSpeedDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
     public string[] Roles => new[] { Admin, ColorDelete };
 
-    public class DeleteColorCommandHandler : IRequestHandler<DeleteColorCommand, DeletedColorDto>
+    public class DeleteColorCommandHandler : IRequestHandler<DeleteColorCommand, DeletedSpeedDto>
     {
         private readonly IColorRepository _colorRepository;
         private readonly IMapper _mapper;
@@ -26,11 +26,11 @@ public class DeleteColorCommand : IRequest<DeletedColorDto>, ISecuredRequest
             _mapper = mapper;
         }
 
-        public async Task<DeletedColorDto> Handle(DeleteColorCommand request, CancellationToken cancellationToken)
+        public async Task<DeletedSpeedDto> Handle(DeleteColorCommand request, CancellationToken cancellationToken)
         {
             Color mappedColor = _mapper.Map<Color>(request);
             Color updatedColor = await _colorRepository.DeleteAsync(mappedColor);
-            DeletedColorDto deletedColorDto = _mapper.Map<DeletedColorDto>(updatedColor);
+            DeletedSpeedDto deletedColorDto = _mapper.Map<DeletedSpeedDto>(updatedColor);
             return deletedColorDto;
         }
     }

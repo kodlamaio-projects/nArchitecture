@@ -55,7 +55,7 @@ public static class ApplicationServiceRegistration
         services.AddScoped<BrandBusinessRules>();
         services.AddScoped<CarBusinessRules>();
         services.AddScoped<CarDamageBusinessRules>();
-        services.AddScoped<ColorBusinessRules>();
+        services.AddScoped<SpeedBusinessRules>();
         services.AddScoped<CorporateCustomerBusinessRules>();
         services.AddScoped<CustomerBusinessRules>();
         services.AddScoped<FindeksCreditRateBusinessRules>();

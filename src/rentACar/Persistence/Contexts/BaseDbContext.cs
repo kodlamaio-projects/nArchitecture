@@ -31,6 +31,8 @@ public class BaseDbContext : DbContext
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Transmission> Transmissions { get; set; }
     public DbSet<OtpAuthenticator> OtpAuthenticators { get; set; }
+    public DbSet<Speed> Speeds { get; set; }
+
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
     {
@@ -289,6 +291,14 @@ public class BaseDbContext : DbContext
             e.HasOne(e => e.User);
         });
 
+        modelBuilder.Entity<Speed>(c =>
+        {
+            c.ToTable("Speeds").HasKey(k => k.Id);
+            c.Property(p => p.Id).HasColumnName("Id");
+            c.Property(p => p.Name).HasColumnName("Name");
+            c.HasMany(p => p.Cars);
+        });
+
         AdditionalService[] additionalServiceSeeds = { new(1, "Baby Seat", 200), new(2, "Scooter", 300) };
         modelBuilder.Entity<AdditionalService>().HasData(additionalServiceSeeds);
 
@@ -342,5 +352,8 @@ public class BaseDbContext : DbContext
 
         Transmission[] transmissionsSeeds = { new(1, "Manuel"), new(2, "Automatic") };
         modelBuilder.Entity<Transmission>().HasData(transmissionsSeeds);
+
+        Speed[] speedSeeds = { new(1, "150"), new(2, "250") ,new(3,"400")};
+        modelBuilder.Entity<Speed>().HasData(speedSeeds);
     }
 }

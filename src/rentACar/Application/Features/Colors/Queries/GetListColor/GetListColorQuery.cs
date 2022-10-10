@@ -8,11 +8,11 @@ using MediatR;
 
 namespace Application.Features.Colors.Queries.GetListColor;
 
-public class GetListColorQuery : IRequest<ColorListModel>
+public class GetListSpeedQuery : IRequest<SpeedListModel>
 {
     public PageRequest PageRequest { get; set; }
 
-    public class GetListColorQueryHandler : IRequestHandler<GetListColorQuery, ColorListModel>
+    public class GetListColorQueryHandler : IRequestHandler<GetListSpeedQuery, SpeedListModel>
     {
         private readonly IColorRepository _colorRepository;
         private readonly IMapper _mapper;
@@ -23,11 +23,11 @@ public class GetListColorQuery : IRequest<ColorListModel>
             _mapper = mapper;
         }
 
-        public async Task<ColorListModel> Handle(GetListColorQuery request, CancellationToken cancellationToken)
+        public async Task<SpeedListModel> Handle(GetListSpeedQuery request, CancellationToken cancellationToken)
         {
             IPaginate<Color> colors = await _colorRepository.GetListAsync(index: request.PageRequest.Page,
                                                                           size: request.PageRequest.PageSize);
-            ColorListModel mappedColorListModel = _mapper.Map<ColorListModel>(colors);
+            SpeedListModel mappedColorListModel = _mapper.Map<SpeedListModel>(colors);
             return mappedColorListModel;
         }
     }
