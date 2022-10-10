@@ -37,11 +37,6 @@ public class CarManager : ICarService
     public async Task<Car?> GetAvailableCarToRent(int modelId, int rentStartRentalBranch, DateTime rentStartDate,
                                                   DateTime rentEndDate)
     {
-        //todo: refactor as query
-        // IList<Car> cars =
-        //     (await _carRepository.GetListAsync(c => c.ModelId == modelId && c.RentalBranchId == rentStartRentalBranch))
-        //     .Items;
-
         IList<Car> cars = await _carRepository.GetCarListByModelIdAndRentalBranchId(modelId, rentStartRentalBranch);
 
         foreach (Car car in cars)
