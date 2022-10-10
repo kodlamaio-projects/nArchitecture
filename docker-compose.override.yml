@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings:RentACarConnectionString=Server=database;Database=master;User=sa;Password=Your_password123;
+    ports:
+      - "80:80"
+    depends_on:
+      - database
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
