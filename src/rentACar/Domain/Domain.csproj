@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\corePackages\Core.Persistence\Core.Persistence.csproj" />
+    <ProjectReference Include="..\..\corePackages\Core.Security\Core.Security.csproj" />
+  </ItemGroup>
+
+</Project>
