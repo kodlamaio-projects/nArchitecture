@@ -143,18 +143,18 @@ public class AuthManager : IAuthService
 
     public async Task SendAuthenticatorCode(User user)
     {
-        if (user.AuthenticatorType is AuthenticatorType.Email) await SendAuthenticatorCodeWithEmail(user);
+        if (user.AuthenticatorType is AuthenticatorType.Email) await sendAuthenticatorCodeWithEmail(user);
     }
 
     public async Task VerifyAuthenticatorCode(User user, string authenticatorCode)
     {
         if (user.AuthenticatorType is AuthenticatorType.Email)
-            await VerifyAuthenticatorCodeWithEmail(user, authenticatorCode);
+            await verifyAuthenticatorCodeWithEmail(user, authenticatorCode);
         else if (user.AuthenticatorType is AuthenticatorType.Otp)
-            await VerifyAuthenticatorCodeWithOtp(user, authenticatorCode);
+            await verifyAuthenticatorCodeWithOtp(user, authenticatorCode);
     }
 
-    private async Task SendAuthenticatorCodeWithEmail(User user)
+    private async Task sendAuthenticatorCodeWithEmail(User user)
     {
         EmailAuthenticator emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(e => e.UserId == user.Id);
 
@@ -173,7 +173,7 @@ public class AuthManager : IAuthService
         });
     }
 
-    private async Task VerifyAuthenticatorCodeWithEmail(User user, string authenticatorCode)
+    private async Task verifyAuthenticatorCodeWithEmail(User user, string authenticatorCode)
     {
         EmailAuthenticator emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(e => e.UserId == user.Id);
 
@@ -184,7 +184,7 @@ public class AuthManager : IAuthService
         await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
     }
 
-    private async Task VerifyAuthenticatorCodeWithOtp(User user, string authenticatorCode)
+    private async Task verifyAuthenticatorCodeWithOtp(User user, string authenticatorCode)
     {
         OtpAuthenticator otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(e => e.UserId == user.Id);
 
