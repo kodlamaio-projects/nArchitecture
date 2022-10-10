@@ -10,13 +10,15 @@ public class Mail
     public AttachmentCollection? Attachments { get; set; }
     public string ToFullName { get; set; }
     public string ToEmail { get; set; }
-
+    public List<MailboxAddress>? CcList { get; set; }
+    public List<MailboxAddress>? BccList { get; set; }
+    
     public Mail()
     {
     }
 
     public Mail(string subject, string textBody, string htmlBody, AttachmentCollection? attachments, string toFullName,
-                string toEmail)
+                string toEmail, List<MailboxAddress>? ccList = null, List<MailboxAddress>? bccList = null)
     {
         Subject = subject;
         TextBody = textBody;
@@ -24,5 +26,7 @@ public class Mail
         Attachments = attachments;
         ToFullName = toFullName;
         ToEmail = toEmail;
+        CcList = ccList;
+        BccList = bccList;
     }
 }
