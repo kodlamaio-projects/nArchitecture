@@ -17,12 +17,12 @@ public class BrandBusinessRules
     public async Task BrandIdShouldExistWhenSelected(int id)
     {
         Brand? result = await _brandRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Brand not exists.");
+        if (result == null) throw new NotFoundException("Brand not exists.");
     }
 
     public async Task BrandNameCanNotBeDuplicatedWhenInserted(string name)
     {
         IPaginate<Brand> result = await _brandRepository.GetListAsync(b => b.Name == name);
-        if (result.Items.Any()) throw new BusinessException("Brand name exists.");
+        if (result.Items.Any()) throw new BadRequestException("Brand name exists.");
     }
 }

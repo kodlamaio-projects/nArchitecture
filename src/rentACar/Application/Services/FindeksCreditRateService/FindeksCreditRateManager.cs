@@ -17,7 +17,7 @@ public class FindeksCreditRateManager : IFindeksCreditRateService
     {
         FindeksCreditRate findeksCreditRate =
             await _findeksCreditRateRepository.GetAsync(f => f.CustomerId == customerId);
-        if (findeksCreditRate == null) throw new BusinessException("Customer's findeks score do not exists.");
+        if (findeksCreditRate == null) throw new NotFoundException("Customer's findeks score do not exists.");
         return findeksCreditRate;
     }
 
