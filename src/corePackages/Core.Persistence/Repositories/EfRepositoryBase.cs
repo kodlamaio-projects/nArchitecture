@@ -16,12 +16,12 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
     {
         Context = context;
     }
-
-    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
+    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
-        return await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+        var query =  Context.Set<TEntity>().AsQueryable();
+        if (include != null) query = include(query);
+        return await query.FirstOrDefaultAsync(predicate);
     }
-
     public async Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy =
                                                            null,
@@ -79,11 +79,12 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return entity;
     }
 
-    public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
+    public TEntity Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
-        return Context.Set<TEntity>().FirstOrDefault(predicate);
+        var query = Context.Set<TEntity>().AsQueryable();
+        if (include != null) query = include(query);
+        return query.FirstOrDefault(predicate);
     }
-
     public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
                                       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
@@ -130,4 +131,6 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         Context.SaveChanges();
         return entity;
     }
+
+    
 }
