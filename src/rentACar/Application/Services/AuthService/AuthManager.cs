@@ -159,7 +159,7 @@ public class AuthManager : IAuthService
     {
         EmailAuthenticator emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(e => e.UserId == user.Id);
 
-        if (!emailAuthenticator.IsVerified) throw new BusinessException("Email Authenticator must be is verified.");
+        if (!emailAuthenticator.IsVerified) throw new BadRequestException("Email Authenticator must be is verified.");
 
         string authenticatorCode = await _emailAuthenticatorHelper.CreateEmailActivationCode();
         emailAuthenticator.ActivationKey = authenticatorCode;
@@ -179,7 +179,7 @@ public class AuthManager : IAuthService
         EmailAuthenticator emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(e => e.UserId == user.Id);
 
         if (emailAuthenticator.ActivationKey != authenticatorCode)
-            throw new BusinessException("Authenticator code is invalid.");
+            throw new BadRequestException("Authenticator code is invalid.");
 
         emailAuthenticator.ActivationKey = null;
         await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
@@ -192,6 +192,6 @@ public class AuthManager : IAuthService
         bool result = await _otpAuthenticatorHelper.VerifyCode(otpAuthenticator.SecretKey, authenticatorCode);
 
         if (!result)
-            throw new BusinessException("Authenticator code is invalid.");
+            throw new BadRequestException("Authenticator code is invalid.");
     }
 }

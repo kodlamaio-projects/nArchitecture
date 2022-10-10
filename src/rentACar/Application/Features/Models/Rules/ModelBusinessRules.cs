@@ -16,6 +16,6 @@ public class ModelBusinessRules
     public async Task ModelIdShouldExistWhenSelected(int id)
     {
         Model? result = await _modelRepository.GetAsync(c => c.Id == id);
-        if (result == null) throw new BusinessException("Model not exists.");
+        if (result == null) throw new NotFoundException("Model not exists.");
     }
 }

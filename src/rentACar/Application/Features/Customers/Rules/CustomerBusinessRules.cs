@@ -16,12 +16,12 @@ public class CustomerBusinessRules
     public async Task CustomerIdShouldExist(int id)
     {
         Customer? result = await _customerRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Customer not exists.");
+        if (result == null) throw new NotFoundException("Customer not exists.");
     }
 
     public Task CustomerShouldBeExist(Customer? customer)
     {
-        if (customer is null) throw new BusinessException("Customer don't exists.");
+        if (customer is null) throw new NotFoundException("Customer don't exists.");
         return Task.CompletedTask;
     }
 }

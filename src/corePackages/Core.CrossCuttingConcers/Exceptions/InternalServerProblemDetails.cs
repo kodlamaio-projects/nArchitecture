@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Exceptions
 {
-    public class NotFoundProblemDetails : ProblemDetails
+    public class InternalServerProblemDetails : ProblemDetails
     {
         public override string ToString() => JsonConvert.SerializeObject(this);
     }

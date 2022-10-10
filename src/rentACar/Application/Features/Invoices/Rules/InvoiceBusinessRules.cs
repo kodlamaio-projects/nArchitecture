@@ -16,6 +16,6 @@ public class InvoiceBusinessRules
     public async Task InvoiceIdShouldExistWhenSelected(int id)
     {
         Invoice? result = await _invoiceRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Invoice not exists.");
+        if (result == null) throw new NotFoundException("Invoice not exists.");
     }
 }

@@ -17,12 +17,12 @@ public class ColorBusinessRules
     public async Task ColorIdShouldExistWhenSelected(int id)
     {
         Color? result = await _colorRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Color not exists.");
+        if (result == null) throw new NotFoundException("Color not exists.");
     }
 
     public async Task ColorNameCanNotBeDuplicatedWhenInserted(string name)
     {
         IPaginate<Color> result = await _colorRepository.GetListAsync(b => b.Name == name);
-        if (result.Items.Any()) throw new BusinessException("Color name exists.");
+        if (result.Items.Any()) throw new BadRequestException("Color name exists.");
     }
 }

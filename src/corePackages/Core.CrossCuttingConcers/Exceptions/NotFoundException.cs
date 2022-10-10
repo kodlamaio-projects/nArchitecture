@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Exceptions
 {
-    public class NotFoundException : Exception
+    public class NotFoundException : BusinessException
     {
-        public NotFoundException(string message) : base(message)
+        public NotFoundException(string message) : base(message, Enums.BusinessExceptionTypes.NotFound)
         {
         }
     }

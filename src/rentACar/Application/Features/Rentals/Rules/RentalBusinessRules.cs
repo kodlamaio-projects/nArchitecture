@@ -17,7 +17,7 @@ public class RentalBusinessRules
     public async Task RentalIdShouldExistWhenSelected(int id)
     {
         Rental? result = await _rentalRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Rental not exists.");
+        if (result == null) throw new NotFoundException("Rental not exists.");
     }
 
     public async Task RentalCanNotBeUpdateWhenThereIsARentedCarInDate(int id, int carId, DateTime rentStartDate,
@@ -28,14 +28,14 @@ public class RentalBusinessRules
                                              r.RentEndDate >= rentStartDate &&
                                              r.RentStartDate <= rentEndDate);
         if (rentals.Items.Any())
-            throw new BusinessException("Rental can't be updated when there is another rented car for the date.");
+            throw new BadRequestException("Rental can't be updated when there is another rented car for the date.");
     }
 
     public Task RentalCanNotBeCreatedWhenCustomerFindeksScoreLowerThanCarMinFindeksScore(
         short customerFindeksCreditRate, short carMinFindeksCreditRate)
     {
         if (customerFindeksCreditRate < carMinFindeksCreditRate)
-            throw new BusinessException(
+            throw new BadRequestException(
                 "Rental can not be created when customer findeks credit score lower than car min findeks score.");
         return Task.CompletedTask;
     }

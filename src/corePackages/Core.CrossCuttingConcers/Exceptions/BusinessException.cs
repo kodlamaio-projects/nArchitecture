@@ -1,8 +1,12 @@
-﻿namespace Core.CrossCuttingConcerns.Exceptions;
+﻿using Core.CrossCuttingConcerns.Enums;
+
+namespace Core.CrossCuttingConcerns.Exceptions;
 
 public class BusinessException : Exception
 {
-    public BusinessException(string message) : base(message)
+    public BusinessExceptionTypes BusinessExceptionType { get; }
+    public BusinessException(string message, BusinessExceptionTypes businessExceptionType) : base(message)
     {
+        BusinessExceptionType = businessExceptionType;
     }
 }
