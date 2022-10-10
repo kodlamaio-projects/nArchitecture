@@ -1,7 +1,6 @@
 ﻿using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Mailing;
-using Core.Persistence.Paging;
 using Core.Security.EmailAuthenticator;
 using Core.Security.Entities;
 using Core.Security.Enums;
@@ -44,14 +43,16 @@ public class AuthManager : IAuthService
 
     public async Task<AccessToken> CreateAccessToken(User user)
     {
-        IPaginate<UserOperationClaim> userOperationClaims =
-            await _userOperationClaimRepository.GetListAsync(u => u.UserId == user.Id,
-                                                             include: u =>
-                                                                 u.Include(u => u.OperationClaim)
-            );
-        IList<OperationClaim> operationClaims =
-            userOperationClaims.Items.Select(u => new OperationClaim
-                                                 { Id = u.OperationClaim.Id, Name = u.OperationClaim.Name }).ToList();
+        IList<OperationClaim> operationClaims = await _userOperationClaimRepository
+            .Query()
+            .AsNoTracking()
+            .Where(p => p.UserId == user.Id)
+            .Select(p => new OperationClaim
+            {
+                Id = p.OperationClaimId,
+                Name = p.OperationClaim.Name
+            })
+            .ToListAsync();
 
         AccessToken accessToken = _tokenHelper.CreateToken(user, operationClaims);
         return accessToken;
