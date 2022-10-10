@@ -1,7 +1,9 @@
-﻿using Core.Security.Entities;
+﻿using Core.Persistence.Repositories;
+using Core.Security.Entities;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 
 namespace Persistence.Contexts;
@@ -36,7 +38,24 @@ public class BaseDbContext : DbContext
     {
         Configuration = configuration;
     }
+    
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
 
+        IEnumerable<EntityEntry<Entity>> datas = ChangeTracker
+            .Entries<Entity>();
+        
+        foreach (var data in datas)
+        {
+            _ = data.State switch
+            {
+                EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
+                EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow
+            };
+        }
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //if (!optionsBuilder.IsConfigured)
@@ -52,6 +71,8 @@ public class BaseDbContext : DbContext
             a.Property(p => p.Id).HasColumnName("Id");
             a.Property(p => p.Name).HasColumnName("Name");
             a.Property(p => p.DailyPrice).HasColumnName("DailyPrice");
+            a.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            a.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
         });
 
         modelBuilder.Entity<Brand>(b =>
@@ -59,6 +80,8 @@ public class BaseDbContext : DbContext
             b.ToTable("Brands").HasKey(k => k.Id);
             b.Property(p => p.Id).HasColumnName("Id");
             b.Property(p => p.Name).HasColumnName("Name");
+            b.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            b.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             b.HasMany(p => p.Models);
         });
 
@@ -73,6 +96,8 @@ public class BaseDbContext : DbContext
             c.Property(p => p.CarState).HasColumnName("State");
             c.Property(p => p.ModelYear).HasColumnName("ModelYear");
             c.Property(p => p.Plate).HasColumnName("Plate");
+            c.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            c.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             c.HasOne(p => p.Color);
             c.HasMany(p => p.CarDamages);
             c.HasOne(p => p.Model);
@@ -85,6 +110,8 @@ public class BaseDbContext : DbContext
             c.Property(p => p.Id).HasColumnName("Id");
             c.Property(p => p.CarId).HasColumnName("CarId");
             c.Property(p => p.IsFixed).HasColumnName("IsFixed").HasDefaultValue(false);
+            c.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            c.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             c.HasOne(p => p.Car);
         });
 
@@ -93,6 +120,8 @@ public class BaseDbContext : DbContext
             c.ToTable("Colors").HasKey(k => k.Id);
             c.Property(p => p.Id).HasColumnName("Id");
             c.Property(p => p.Name).HasColumnName("Name");
+            c.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            c.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             c.HasMany(p => p.Cars);
         });
 
@@ -103,6 +132,8 @@ public class BaseDbContext : DbContext
             c.Property(c => c.CustomerId).HasColumnName("CustomerId");
             c.Property(c => c.CompanyName).HasColumnName("CompanyName");
             c.Property(c => c.TaxNo).HasColumnName("TaxNo");
+            c.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            c.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             c.HasOne(c => c.Customer);
         });
 
@@ -111,6 +142,8 @@ public class BaseDbContext : DbContext
             c.ToTable("Customers").HasKey(c => c.Id);
             c.Property(c => c.Id).HasColumnName("Id");
             c.Property(c => c.UserId).HasColumnName("UserId");
+            c.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            c.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             c.HasOne(c => c.User);
             c.HasOne(c => c.CorporateCustomer);
             c.HasOne(c => c.FindeksCreditRate);
@@ -125,6 +158,8 @@ public class BaseDbContext : DbContext
             e.Property(e => e.UserId).HasColumnName("UserId");
             e.Property(e => e.ActivationKey).HasColumnName("ActivationKey");
             e.Property(e => e.IsVerified).HasColumnName("IsVerified");
+            e.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            e.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             e.HasOne(e => e.User);
         });
 
@@ -134,6 +169,8 @@ public class BaseDbContext : DbContext
             f.Property(f => f.Id).HasColumnName("Id");
             f.Property(f => f.CustomerId).HasColumnName("CustomerId");
             f.Property(f => f.Score).HasColumnName("Score");
+            f.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            f.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             f.HasOne(f => f.Customer);
         });
 
@@ -142,6 +179,8 @@ public class BaseDbContext : DbContext
             f.ToTable("Fuels").HasKey(f => f.Id);
             f.Property(f => f.Id).HasColumnName("Id");
             f.Property(f => f.Name).HasColumnName("Name");
+            f.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            f.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             f.HasMany(f => f.Models);
         });
 
@@ -153,6 +192,8 @@ public class BaseDbContext : DbContext
             c.Property(i => i.FirstName).HasColumnName("FirstName");
             c.Property(i => i.LastName).HasColumnName("LastName");
             c.Property(i => i.NationalIdentity).HasColumnName("NationalIdentity");
+            c.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            c.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             c.HasOne(i => i.Customer);
         });
 
@@ -167,6 +208,8 @@ public class BaseDbContext : DbContext
             i.Property(i => i.RentalEndDate).HasColumnName("RentalEndDate");
             i.Property(i => i.TotalRentalDate).HasColumnName("TotalRentalDate");
             i.Property(i => i.RentalPrice).HasColumnName("RentalPrice");
+            i.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            i.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             i.HasOne(i => i.Customer);
         });
 
@@ -180,6 +223,8 @@ public class BaseDbContext : DbContext
             m.Property(p => p.Name).HasColumnName("Name");
             m.Property(p => p.DailyPrice).HasColumnName("DailyPrice");
             m.Property(p => p.ImageUrl).HasColumnName("ImageUrl");
+            m.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            m.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             m.HasOne(p => p.Brand);
             m.HasMany(p => p.Cars);
             m.HasOne(p => p.Fuel);
@@ -199,6 +244,8 @@ public class BaseDbContext : DbContext
             r.Property(r => r.RevokedByIp).HasColumnName("RevokedByIp");
             r.Property(r => r.ReplacedByToken).HasColumnName("ReplacedByToken");
             r.Property(r => r.ReasonRevoked).HasColumnName("ReasonRevoked");
+            r.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            r.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             r.HasOne(r => r.User);
         });
 
@@ -215,6 +262,8 @@ public class BaseDbContext : DbContext
             r.Property(r => r.ReturnDate).HasColumnName("ReturnDate");
             r.Property(r => r.RentStartKilometer).HasColumnName("RentStartKilometer");
             r.Property(r => r.RentEndKilometer).HasColumnName("RentEndKilometer");
+            r.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            r.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             r.HasOne(r => r.Car);
             r.HasOne(r => r.Customer);
             //r.HasOne(r => r.RentStartRentalBranch);
@@ -229,6 +278,8 @@ public class BaseDbContext : DbContext
             r.Property(r => r.Id).HasColumnName("Id");
             r.Property(r => r.RentalId).HasColumnName("RentalId");
             r.Property(r => r.AdditionalServiceId).HasColumnName("AdditionalServiceId");
+            r.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            r.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             r.HasOne(r => r.Rental);
             r.HasOne(r => r.AdditionalService);
         });
@@ -238,6 +289,8 @@ public class BaseDbContext : DbContext
             r.ToTable("RentalBranches").HasKey(r => r.Id);
             r.Property(r => r.Id).HasColumnName("Id");
             r.Property(r => r.City).HasColumnName("City");
+            r.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            r.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             r.HasMany(r => r.Cars);
             
         });
@@ -247,6 +300,8 @@ public class BaseDbContext : DbContext
             o.ToTable("OperationClaims").HasKey(o => o.Id);
             o.Property(o => o.Id).HasColumnName("Id");
             o.Property(o => o.Name).HasColumnName("Name");
+            o.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            o.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
         });
 
         modelBuilder.Entity<User>(u =>
@@ -260,6 +315,8 @@ public class BaseDbContext : DbContext
             u.Property(u => u.PasswordHash).HasColumnName("PasswordHash");
             u.Property(u => u.Status).HasColumnName("Status").HasDefaultValue(true);
             u.Property(u => u.AuthenticatorType).HasColumnName("AuthenticatorType");
+            u.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            u.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
         });
 
         modelBuilder.Entity<UserOperationClaim>(u =>
@@ -268,6 +325,8 @@ public class BaseDbContext : DbContext
             u.Property(u => u.Id).HasColumnName("Id");
             u.Property(u => u.UserId).HasColumnName("UserId");
             u.Property(u => u.OperationClaimId).HasColumnName("OperationClaimId");
+            u.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            u.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             u.HasOne(u => u.User);
             u.HasOne(u => u.OperationClaim);
         });
@@ -277,6 +336,8 @@ public class BaseDbContext : DbContext
             t.ToTable("Transmissions").HasKey(k => k.Id);
             t.Property(p => p.Id).HasColumnName("Id");
             t.Property(p => p.Name).HasColumnName("Name");
+            t.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            t.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             t.HasMany(p => p.Models);
         });
 
@@ -286,6 +347,8 @@ public class BaseDbContext : DbContext
             e.Property(e => e.UserId).HasColumnName("UserId");
             e.Property(e => e.SecretKey).HasColumnName("SecretKey");
             e.Property(e => e.IsVerified).HasColumnName("IsVerified");
+            e.Property(p => p.CreatedDate).HasColumnName("CreatedDate");
+            e.Property(p => p.UpdatedDate).HasColumnName("UpdatedDate");
             e.HasOne(e => e.User);
         });
 
@@ -301,41 +364,18 @@ public class BaseDbContext : DbContext
             new(2, 2, 2, 2, CarState.Rented, 1000, 2018, "15ABC15", 1100)
         };
         modelBuilder.Entity<Car>().HasData(carSeeds);
-
+        
         Color[] colorSeeds = { new(1, "Red"), new(2, "Blue") };
         modelBuilder.Entity<Color>().HasData(colorSeeds);
-
-        CorporateCustomer[] corporateCustomers = { new(1, 2, "Ahmet Çetinkaya", "54154512") };
-        modelBuilder.Entity<CorporateCustomer>().HasData(corporateCustomers);
-
-        FindeksCreditRate[] findeksCreditRates = { new(1, 1, 1000), new(2, 2, 1900) };
-        modelBuilder.Entity<FindeksCreditRate>().HasData(findeksCreditRates);
 
         Fuel[] fuelSeeds = { new(1, "Diesel"), new(2, "Electric") };
         modelBuilder.Entity<Fuel>().HasData(fuelSeeds);
 
-        IndividualCustomer[] individualCustomers = { new(1, 1, "Ahmet", "Çetinkaya", "123123123123") };
-        modelBuilder.Entity<IndividualCustomer>().HasData(individualCustomers);
-
         Model[] modelSeeds = { new(1, 1, 1, 2, "418i", 1000, ""), new(2, 2, 2, 1, "CLA 180D", 600, "") };
         modelBuilder.Entity<Model>().HasData(modelSeeds);
 
-        Rental[] rentalSeeds =
-        {
-            new(1, 1, 2, 1, 2, DateTime.Today, DateTime.Today.AddDays(2), null, 1000, 1200),
-            new(2, 2, 1, 2, 1, DateTime.Today, DateTime.Today.AddDays(2), null, 1000, 1200)
-        };
-        modelBuilder.Entity<Rental>().HasData(rentalSeeds);
-
         RentalBranch[] rentalBranchSeeds = { new(1, City.Ankara), new(2, City.Antalya) };
         modelBuilder.Entity<RentalBranch>().HasData(rentalBranchSeeds);
-
-        Invoice[] invoiceSeeds =
-        {
-            new(1, 1, "123123", DateTime.Today, DateTime.Today, DateTime.Today.AddDays(2), 2, 1000),
-            new(2, 1, "123123", DateTime.Today, DateTime.Today, DateTime.Today.AddDays(2), 2, 2000)
-        };
-        modelBuilder.Entity<Invoice>().HasData(invoiceSeeds);
 
         OperationClaim[] operationClaimSeeds = { new(1, "Admin") };
         modelBuilder.Entity<OperationClaim>().HasData(operationClaimSeeds);
