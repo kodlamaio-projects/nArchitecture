@@ -8,7 +8,6 @@ namespace Persistence.Contexts;
 
 public class BaseDbContext : DbContext
 {
-    protected IConfiguration Configuration { get; set; }
     public DbSet<AdditionalService> AdditionalServices { get; set; }
     public DbSet<Brand> Brands { get; set; }
     public DbSet<Car> Cars { get; set; }
@@ -32,17 +31,7 @@ public class BaseDbContext : DbContext
     public DbSet<Transmission> Transmissions { get; set; }
     public DbSet<OtpAuthenticator> OtpAuthenticators { get; set; }
 
-    public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
-    {
-        Configuration = configuration;
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        //if (!optionsBuilder.IsConfigured)
-        //    base.OnConfiguring(
-        //        optionsBuilder.UseSqlServer(Configuration.GetConnectionString("RentACarConnectionString")));
-    }
+    public BaseDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -218,8 +207,6 @@ public class BaseDbContext : DbContext
             r.Property(r => r.Id).HasColumnName("Id");
             r.Property(r => r.CustomerId).HasColumnName("CustomerId");
             r.Property(r => r.CarId).HasColumnName("CarId");
-            //r.Property(r => r.RentStartRentalBranchId).HasColumnName("RentStartRentalBranchId");
-            //r.Property(r => r.RentEndRentalBranchId).HasColumnName("RentEndRentalBranchId");
             r.Property(r => r.RentStartDate).HasColumnName("RentStartDate");
             r.Property(r => r.RentEndDate).HasColumnName("RentEndDate");
             r.Property(r => r.ReturnDate).HasColumnName("ReturnDate");
@@ -227,8 +214,6 @@ public class BaseDbContext : DbContext
             r.Property(r => r.RentEndKilometer).HasColumnName("RentEndKilometer");
             r.HasOne(r => r.Car);
             r.HasOne(r => r.Customer);
-            //r.HasOne(r => r.RentStartRentalBranch);
-            //r.HasOne(r => r.RentEndRentalBranch);
             r.HasMany(r => r.RentalsAdditionalServices);
 
         });
