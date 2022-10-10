@@ -2,7 +2,7 @@
 
 public class Paginate<T> : IPaginate<T>
 {
-    internal Paginate(IEnumerable<T> source, int index, int size, int from)
+    public Paginate(IEnumerable<T> source, int index, int size, int from)
     {
         var enumerable = source as T[] ?? source.ToArray();
 
@@ -32,7 +32,7 @@ public class Paginate<T> : IPaginate<T>
         }
     }
 
-    internal Paginate()
+    public Paginate()
     {
         Items = new T[0];
     }
@@ -47,7 +47,7 @@ public class Paginate<T> : IPaginate<T>
     public bool HasNext => Index - From + 1 < Pages;
 }
 
-internal class Paginate<TSource, TResult> : IPaginate<TResult>
+public class Paginate<TSource, TResult> : IPaginate<TResult>
 {
     public Paginate(IEnumerable<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter,
                     int index, int size, int from)
