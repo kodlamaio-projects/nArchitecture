@@ -38,9 +38,12 @@ public class CarManager : ICarService
                                                   DateTime rentEndDate)
     {
         //todo: refactor as query
-        IList<Car> cars =
-            (await _carRepository.GetListAsync(c => c.ModelId == modelId && c.RentalBranchId == rentStartRentalBranch))
-            .Items;
+        // IList<Car> cars =
+        //     (await _carRepository.GetListAsync(c => c.ModelId == modelId && c.RentalBranchId == rentStartRentalBranch))
+        //     .Items;
+
+        IList<Car> cars = await _carRepository.GetCarListByModelIdAndRentalBranchId(modelId, rentStartRentalBranch);
+
         foreach (Car car in cars)
         {
             IList<Rental> rentals = await _rentalService.GetAllByInDates(car.Id, rentStartDate, rentEndDate);
