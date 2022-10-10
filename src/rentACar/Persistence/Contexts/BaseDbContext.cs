@@ -319,17 +319,17 @@ public class BaseDbContext : DbContext
         Color[] colorSeeds = { new(1, "Red"), new(2, "Blue") };
         modelBuilder.Entity<Color>().HasData(colorSeeds);
 
-        CorporateCustomer[] corporateCustomers = { new(1, 2, "Ahmet Çetinkaya", "54154512") };
-        modelBuilder.Entity<CorporateCustomer>().HasData(corporateCustomers);
+        CorporateCustomer[] corporateCustomerSeeds = { new(1, 2, "Ahmet Çetinkaya", "54154512") };
+        modelBuilder.Entity<CorporateCustomer>().HasData(corporateCustomerSeeds);
 
-        FindeksCreditRate[] findeksCreditRates = { new(1, 1, 1000), new(2, 2, 1900) };
-        modelBuilder.Entity<FindeksCreditRate>().HasData(findeksCreditRates);
+        FindeksCreditRate[] findeksCreditRateSeeds = { new(1, 1, 1000), new(2, 2, 1900) };
+        modelBuilder.Entity<FindeksCreditRate>().HasData(findeksCreditRateSeeds);
 
         Fuel[] fuelSeeds = { new(1, "Diesel"), new(2, "Electric") };
         modelBuilder.Entity<Fuel>().HasData(fuelSeeds);
 
-        IndividualCustomer[] individualCustomers = { new(1, 1, "Ahmet", "Çetinkaya", "123123123123") };
-        modelBuilder.Entity<IndividualCustomer>().HasData(individualCustomers);
+        IndividualCustomer[] individualCustomerSeeds = { new(1, 1, "Ahmet", "Çetinkaya", "123123123123") };
+        modelBuilder.Entity<IndividualCustomer>().HasData(individualCustomerSeeds);
 
         Model[] modelSeeds = { new(1, 1, 1, 2, "418i", 1000, ""), new(2, 2, 2, 1, "CLA 180D", 600, "") };
         modelBuilder.Entity<Model>().HasData(modelSeeds);
