@@ -146,12 +146,12 @@ public class AuthManager : IAuthService
         if (user.AuthenticatorType is AuthenticatorType.Email) await sendAuthenticatorCodeWithEmail(user);
     }
 
-    public async Task VerifyAuthenticatorCode(User user, string AuthenticatorCode)
+    public async Task VerifyAuthenticatorCode(User user, string authenticatorCode)
     {
         if (user.AuthenticatorType is AuthenticatorType.Email)
-            await verifyAuthenticatorCodeWithEmail(user, AuthenticatorCode);
+            await verifyAuthenticatorCodeWithEmail(user, authenticatorCode);
         else if (user.AuthenticatorType is AuthenticatorType.Otp)
-            await verifyAuthenticatorCodeWithOtp(user, AuthenticatorCode);
+            await verifyAuthenticatorCodeWithOtp(user, authenticatorCode);
     }
 
     private async Task sendAuthenticatorCodeWithEmail(User user)
