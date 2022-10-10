@@ -32,6 +32,7 @@ using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Logging;
 using Core.Application.Pipelines.Validation;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Logging.Serilog;
 using Core.CrossCuttingConcerns.Logging.Serilog.Logger;
 using Core.ElasticSearch;
@@ -50,25 +51,7 @@ public static class ApplicationServiceRegistration
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());
 
-        services.AddScoped<AdditionalServiceBusinessRules>();
-        services.AddScoped<AuthBusinessRules>();
-        services.AddScoped<BrandBusinessRules>();
-        services.AddScoped<CarBusinessRules>();
-        services.AddScoped<CarDamageBusinessRules>();
-        services.AddScoped<ColorBusinessRules>();
-        services.AddScoped<CorporateCustomerBusinessRules>();
-        services.AddScoped<CustomerBusinessRules>();
-        services.AddScoped<FindeksCreditRateBusinessRules>();
-        services.AddScoped<FuelBusinessRules>();
-        services.AddScoped<IndividualCustomerBusinessRules>();
-        services.AddScoped<InvoiceBusinessRules>();
-        services.AddScoped<ModelBusinessRules>();
-        services.AddScoped<RentalBusinessRules>();
-        services.AddScoped<RentalBranchBusinessRules>();
-        services.AddScoped<OperationClaimBusinessRules>();
-        services.AddScoped<UserBusinessRules>();
-        services.AddScoped<UserOperationClaimBusinessRules>();
-        services.AddScoped<TransmissionBusinessRules>();
+        services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
@@ -93,6 +76,27 @@ public static class ApplicationServiceRegistration
         services.AddSingleton<LoggerServiceBase, FileLogger>();
         services.AddSingleton<IElasticSearch, ElasticSearchManager>();
 
+        return services;
+    }
+
+    public static IServiceCollection AddSubClassesOfType(
+        this IServiceCollection services,
+        Assembly assembly,
+        Type type,
+        Func<IServiceCollection, Type, IServiceCollection>? addWithLifeCycle = null)
+    {
+        var types = assembly.GetTypes().Where(t => t.IsSubclassOf(type) && type != t).ToList();
+        foreach (var item in types)
+        {
+            if (addWithLifeCycle == null)
+            {
+                services.AddScoped(item);
+            }
+            else
+            {
+                addWithLifeCycle(services, type);
+            }
+        }
         return services;
     }
 }
