@@ -37,15 +37,10 @@ public class CarManager : ICarService
     public async Task<Car?> GetAvailableCarToRent(int modelId, int rentStartRentalBranch, DateTime rentStartDate,
                                                   DateTime rentEndDate)
     {
-        //todo: refactor as query
-        IList<Car> cars =
-            (await _carRepository.GetListAsync(c => c.ModelId == modelId && c.RentalBranchId == rentStartRentalBranch))
-            .Items;
-        foreach (Car car in cars)
-        {
-            IList<Rental> rentals = await _rentalService.GetAllByInDates(car.Id, rentStartDate, rentEndDate);
-            if (rentals.Count == 0) return car;
-        }
+        Car? car = await _carRepository.GetAsync(c => c.ModelId == modelId && c.RentalBranchId == rentStartRentalBranch);
+        
+        IList<Rental> rentals = await _rentalService.GetAllByInDates(car.Id, rentStartDate, rentEndDate);
+        if (rentals.Count == 0) return car;
 
         throw new BusinessException("Available car doesn't exist.");
     }
