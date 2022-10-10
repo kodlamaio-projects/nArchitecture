@@ -3,6 +3,7 @@ using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Domain.Entities;
 using Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.CarService;
 
@@ -37,16 +38,11 @@ public class CarManager : ICarService
     public async Task<Car?> GetAvailableCarToRent(int modelId, int rentStartRentalBranch, DateTime rentStartDate,
                                                   DateTime rentEndDate)
     {
-        //todo: refactor as query
-        IList<Car> cars =
-            (await _carRepository.GetListAsync(c => c.ModelId == modelId && c.RentalBranchId == rentStartRentalBranch))
-            .Items;
-        foreach (Car car in cars)
-        {
-            IList<Rental> rentals = await _rentalService.GetAllByInDates(car.Id, rentStartDate, rentEndDate);
-            if (rentals.Count == 0) return car;
-        }
-
+        Car? carToFind = await _carRepository.GetAsync(c => c.ModelId == modelId && 
+                                                            c.RentalBranchId == rentStartRentalBranch &&
+                                                            !c.Rentals.Any(r=>r.RentStartDate <= rentStartDate && r.RentEndDate >= rentEndDate), 
+                                                            include:i=>i.Include(i=>i.Rentals));
+        if (carToFind != null) return carToFind;
         throw new BusinessException("Available car doesn't exist.");
     }
 }
