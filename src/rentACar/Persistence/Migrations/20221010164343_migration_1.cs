@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class all : Migration
+    public partial class migration_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DailyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -29,7 +29,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +42,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +68,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,7 +109,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
@@ -129,7 +129,7 @@ namespace Persistence.Migrations
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     FuelId = table.Column<int>(type: "int", nullable: false),
                     TransmissionId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DailyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -316,7 +316,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaxNo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TaxNo = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -358,7 +358,7 @@ namespace Persistence.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NationalIdentity = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    NationalIdentity = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -379,7 +379,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     No = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 9, 28, 14, 21, 31, 28, DateTimeKind.Local).AddTicks(8708)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 10, 19, 43, 42, 748, DateTimeKind.Local).AddTicks(8533)),
                     RentalStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentalEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalRentalDate = table.Column<short>(type: "smallint", nullable: false),
@@ -502,40 +502,12 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "CorporateCustomers",
-                columns: new[] { "Id", "CompanyName", "CustomerId", "TaxNo" },
-                values: new object[] { 1, "Ahmet Çetinkaya", 2, "54154512" });
-
-            migrationBuilder.InsertData(
-                table: "FindeksCreditRates",
-                columns: new[] { "Id", "CustomerId", "Score" },
-                values: new object[,]
-                {
-                    { 1, 1, (short)1000 },
-                    { 2, 2, (short)1900 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Fuels",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
                     { 1, "Diesel" },
                     { 2, "Electric" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "IndividualCustomers",
-                columns: new[] { "Id", "CustomerId", "FirstName", "LastName", "NationalIdentity" },
-                values: new object[] { 1, 1, "Ahmet", "Çetinkaya", "123123123123" });
-
-            migrationBuilder.InsertData(
-                table: "Invoices",
-                columns: new[] { "Id", "CreatedDate", "CustomerId", "No", "RentalEndDate", "RentalPrice", "RentalStartDate", "TotalRentalDate" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1, "123123", new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 1000m, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), (short)2 },
-                    { 2, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1, "123123", new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 2000m, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), (short)2 }
                 });
 
             migrationBuilder.InsertData(
@@ -581,15 +553,17 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "State", "ColorId", "Kilometer", "MinFindeksCreditRate", "ModelId", "ModelYear", "Plate", "RentalBranchId" },
                 values: new object[] { 2, 2, 2, 1000, (short)1100, 2, (short)2018, "15ABC15", 2 });
 
-            migrationBuilder.InsertData(
-                table: "Rentals",
-                columns: new[] { "Id", "CarId", "CustomerId", "RentEndDate", "RentEndKilometer", "RentStartDate", "RentStartKilometer", "ReturnDate" },
-                values: new object[] { 1, 2, 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 1200, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1000, null });
+            migrationBuilder.CreateIndex(
+                name: "IX_AdditionalServices_Name",
+                table: "AdditionalServices",
+                column: "Name",
+                unique: true);
 
-            migrationBuilder.InsertData(
-                table: "Rentals",
-                columns: new[] { "Id", "CarId", "CustomerId", "RentEndDate", "RentEndKilometer", "RentStartDate", "RentStartKilometer", "ReturnDate" },
-                values: new object[] { 2, 1, 2, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 1200, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1000, null });
+            migrationBuilder.CreateIndex(
+                name: "IX_Brands_Name",
+                table: "Brands",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CarDamages_CarId",
@@ -612,15 +586,28 @@ namespace Persistence.Migrations
                 column: "RentalBranchId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Colors_Name",
+                table: "Colors",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CorporateCustomers_CustomerId",
                 table: "CorporateCustomers",
                 column: "CustomerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_CorporateCustomers_TaxNo",
+                table: "CorporateCustomers",
+                column: "TaxNo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Customers_UserId",
                 table: "Customers",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailAuthenticators_UserId",
@@ -634,9 +621,21 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Fuels_Name",
+                table: "Fuels",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_IndividualCustomers_CustomerId",
                 table: "IndividualCustomers",
                 column: "CustomerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IndividualCustomers_NationalIdentity",
+                table: "IndividualCustomers",
+                column: "NationalIdentity",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -655,9 +654,21 @@ namespace Persistence.Migrations
                 column: "FuelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Models_Name",
+                table: "Models",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Models_TransmissionId",
                 table: "Models",
                 column: "TransmissionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperationClaims_Name",
+                table: "OperationClaims",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OtpAuthenticators_UserId",
@@ -690,14 +701,27 @@ namespace Persistence.Migrations
                 column: "RentalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transmissions_Name",
+                table: "Transmissions",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserOperationClaims_OperationClaimId",
                 table: "UserOperationClaims",
                 column: "OperationClaimId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserOperationClaims_UserId",
+                name: "IX_UserOperationClaims_UserId_OperationClaimId",
                 table: "UserOperationClaims",
-                column: "UserId");
+                columns: new[] { "UserId", "OperationClaimId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

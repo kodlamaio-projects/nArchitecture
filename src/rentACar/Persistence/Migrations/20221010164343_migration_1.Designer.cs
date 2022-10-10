@@ -12,8 +12,8 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20220928112131_all")]
-    partial class all
+    [Migration("20221010164343_migration_1")]
+    partial class migration_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,10 +62,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("OperationClaims", (string)null);
 
@@ -174,7 +177,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Email");
 
                     b.Property<string>("FirstName")
@@ -205,6 +208,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users", (string)null);
                 });
 
@@ -229,7 +235,8 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OperationClaimId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "OperationClaimId")
+                        .IsUnique();
 
                     b.ToTable("UserOperationClaims", (string)null);
                 });
@@ -249,10 +256,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("AdditionalServices", (string)null);
 
@@ -282,10 +292,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Brands", (string)null);
 
@@ -421,10 +434,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Colors", (string)null);
 
@@ -461,7 +477,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("TaxNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("TaxNo");
 
                     b.HasKey("Id");
@@ -469,16 +485,10 @@ namespace Persistence.Migrations
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
-                    b.ToTable("CorporateCustomers", (string)null);
+                    b.HasIndex("TaxNo")
+                        .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompanyName = "Ahmet Çetinkaya",
-                            CustomerId = 2,
-                            TaxNo = "54154512"
-                        });
+                    b.ToTable("CorporateCustomers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Customer", b =>
@@ -496,7 +506,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Customers", (string)null);
                 });
@@ -524,20 +535,6 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("FindeksCreditRates", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            Score = (short)1000
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CustomerId = 2,
-                            Score = (short)1900
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Fuel", b =>
@@ -551,10 +548,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Fuels", (string)null);
 
@@ -596,7 +596,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("NationalIdentity")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("NationalIdentity");
 
                     b.HasKey("Id");
@@ -604,17 +604,10 @@ namespace Persistence.Migrations
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
-                    b.ToTable("IndividualCustomers", (string)null);
+                    b.HasIndex("NationalIdentity")
+                        .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            FirstName = "Ahmet",
-                            LastName = "Çetinkaya",
-                            NationalIdentity = "123123123123"
-                        });
+                    b.ToTable("IndividualCustomers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Invoice", b =>
@@ -629,7 +622,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 28, 14, 21, 31, 28, DateTimeKind.Local).AddTicks(8708))
+                        .HasDefaultValue(new DateTime(2022, 10, 10, 19, 43, 42, 748, DateTimeKind.Local).AddTicks(8533))
                         .HasColumnName("CreatedDate");
 
                     b.Property<int>("CustomerId")
@@ -662,30 +655,6 @@ namespace Persistence.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Invoices", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            CustomerId = 1,
-                            No = "123123",
-                            RentalEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentalPrice = 1000m,
-                            RentalStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            TotalRentalDate = (short)2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            CustomerId = 1,
-                            No = "123123",
-                            RentalEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentalPrice = 2000m,
-                            RentalStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            TotalRentalDate = (short)2
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Model", b =>
@@ -716,7 +685,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.Property<int>("TransmissionId")
@@ -728,6 +697,9 @@ namespace Persistence.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("FuelId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("TransmissionId");
 
@@ -800,28 +772,6 @@ namespace Persistence.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Rentals", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CarId = 2,
-                            CustomerId = 1,
-                            RentEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentEndKilometer = 1200,
-                            RentStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CarId = 1,
-                            CustomerId = 2,
-                            RentEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentEndKilometer = 1200,
-                            RentStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.RentalBranch", b =>
@@ -891,10 +841,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Transmissions", (string)null);
 

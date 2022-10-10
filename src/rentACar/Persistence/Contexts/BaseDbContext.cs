@@ -51,6 +51,7 @@ public class BaseDbContext : DbContext
             a.ToTable("AdditionalServices").HasKey(k => k.Id);
             a.Property(p => p.Id).HasColumnName("Id");
             a.Property(p => p.Name).HasColumnName("Name");
+            a.HasIndex(p => p.Name).IsUnique();
             a.Property(p => p.DailyPrice).HasColumnName("DailyPrice");
         });
 
@@ -59,6 +60,7 @@ public class BaseDbContext : DbContext
             b.ToTable("Brands").HasKey(k => k.Id);
             b.Property(p => p.Id).HasColumnName("Id");
             b.Property(p => p.Name).HasColumnName("Name");
+            b.HasIndex(p => p.Name).IsUnique();
             b.HasMany(p => p.Models);
         });
 
@@ -93,6 +95,7 @@ public class BaseDbContext : DbContext
             c.ToTable("Colors").HasKey(k => k.Id);
             c.Property(p => p.Id).HasColumnName("Id");
             c.Property(p => p.Name).HasColumnName("Name");
+            c.HasIndex(p => p.Name).IsUnique();
             c.HasMany(p => p.Cars);
         });
 
@@ -101,8 +104,10 @@ public class BaseDbContext : DbContext
             c.ToTable("CorporateCustomers").HasKey(c => c.Id);
             c.Property(c => c.Id).HasColumnName("Id");
             c.Property(c => c.CustomerId).HasColumnName("CustomerId");
+            c.HasIndex(c => c.CustomerId).IsUnique();
             c.Property(c => c.CompanyName).HasColumnName("CompanyName");
             c.Property(c => c.TaxNo).HasColumnName("TaxNo");
+            c.HasIndex(p => p.TaxNo).IsUnique();
             c.HasOne(c => c.Customer);
         });
 
@@ -111,6 +116,7 @@ public class BaseDbContext : DbContext
             c.ToTable("Customers").HasKey(c => c.Id);
             c.Property(c => c.Id).HasColumnName("Id");
             c.Property(c => c.UserId).HasColumnName("UserId");
+            c.HasIndex(c => c.UserId).IsUnique();
             c.HasOne(c => c.User);
             c.HasOne(c => c.CorporateCustomer);
             c.HasOne(c => c.FindeksCreditRate);
@@ -142,6 +148,7 @@ public class BaseDbContext : DbContext
             f.ToTable("Fuels").HasKey(f => f.Id);
             f.Property(f => f.Id).HasColumnName("Id");
             f.Property(f => f.Name).HasColumnName("Name");
+            f.HasIndex(f => f.Name).IsUnique();
             f.HasMany(f => f.Models);
         });
 
@@ -150,9 +157,11 @@ public class BaseDbContext : DbContext
             c.ToTable("IndividualCustomers").HasKey(i => i.Id);
             c.Property(i => i.Id).HasColumnName("Id");
             c.Property(i => i.CustomerId).HasColumnName("CustomerId");
+            c.HasIndex(i => i.CustomerId).IsUnique();
             c.Property(i => i.FirstName).HasColumnName("FirstName");
             c.Property(i => i.LastName).HasColumnName("LastName");
             c.Property(i => i.NationalIdentity).HasColumnName("NationalIdentity");
+            c.HasIndex(i => i.NationalIdentity).IsUnique();
             c.HasOne(i => i.Customer);
         });
 
@@ -178,6 +187,7 @@ public class BaseDbContext : DbContext
             m.Property(p => p.FuelId).HasColumnName("FuelId");
             m.Property(p => p.TransmissionId).HasColumnName("TransmissionId");
             m.Property(p => p.Name).HasColumnName("Name");
+            m.HasIndex(p => p.Name).IsUnique();
             m.Property(p => p.DailyPrice).HasColumnName("DailyPrice");
             m.Property(p => p.ImageUrl).HasColumnName("ImageUrl");
             m.HasOne(p => p.Brand);
@@ -220,7 +230,7 @@ public class BaseDbContext : DbContext
             //r.HasOne(r => r.RentStartRentalBranch);
             //r.HasOne(r => r.RentEndRentalBranch);
             r.HasMany(r => r.RentalsAdditionalServices);
-       
+
         });
 
         modelBuilder.Entity<RentalsAdditionalService>(r =>
@@ -239,7 +249,7 @@ public class BaseDbContext : DbContext
             r.Property(r => r.Id).HasColumnName("Id");
             r.Property(r => r.City).HasColumnName("City");
             r.HasMany(r => r.Cars);
-            
+
         });
 
         modelBuilder.Entity<OperationClaim>(o =>
@@ -247,6 +257,7 @@ public class BaseDbContext : DbContext
             o.ToTable("OperationClaims").HasKey(o => o.Id);
             o.Property(o => o.Id).HasColumnName("Id");
             o.Property(o => o.Name).HasColumnName("Name");
+            o.HasIndex(o => o.Name).IsUnique();
         });
 
         modelBuilder.Entity<User>(u =>
@@ -256,6 +267,7 @@ public class BaseDbContext : DbContext
             u.Property(u => u.FirstName).HasColumnName("FirstName");
             u.Property(u => u.LastName).HasColumnName("LastName");
             u.Property(u => u.Email).HasColumnName("Email");
+            u.HasIndex(u => u.Email).IsUnique();
             u.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt");
             u.Property(u => u.PasswordHash).HasColumnName("PasswordHash");
             u.Property(u => u.Status).HasColumnName("Status").HasDefaultValue(true);
@@ -268,6 +280,7 @@ public class BaseDbContext : DbContext
             u.Property(u => u.Id).HasColumnName("Id");
             u.Property(u => u.UserId).HasColumnName("UserId");
             u.Property(u => u.OperationClaimId).HasColumnName("OperationClaimId");
+            u.HasIndex(u => new { u.UserId, u.OperationClaimId }).IsUnique();
             u.HasOne(u => u.User);
             u.HasOne(u => u.OperationClaim);
         });
@@ -277,6 +290,7 @@ public class BaseDbContext : DbContext
             t.ToTable("Transmissions").HasKey(k => k.Id);
             t.Property(p => p.Id).HasColumnName("Id");
             t.Property(p => p.Name).HasColumnName("Name");
+            t.HasIndex(p => p.Name).IsUnique();
             t.HasMany(p => p.Models);
         });
 
