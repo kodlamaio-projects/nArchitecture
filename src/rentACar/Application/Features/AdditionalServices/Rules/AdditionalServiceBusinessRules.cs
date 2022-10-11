@@ -1,3 +1,4 @@
+using Application.Features.AdditionalServices.Constants;
 using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
@@ -17,12 +18,12 @@ public class AdditionalServiceBusinessRules
     public async Task AdditionalServiceIdShouldExistWhenSelected(int id)
     {
         AdditionalService? result = await _additionalServiceRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("AdditionalService not exists.");
+        if (result == null) throw new BusinessException(AdditionalServiceExceptionMessages.AdditionalServiceNotExistsMessage);
     }
 
     public async Task AdditionalServiceNameCanNotBeDuplicatedWhenInserted(string name)
     {
         IPaginate<AdditionalService> result = await _additionalServiceRepository.GetListAsync(a => a.Name == name);
-        if (result.Items.Any()) throw new BusinessException("Additional service name exists.");
+        if (result.Items.Any()) throw new BusinessException(AdditionalServiceExceptionMessages.AdditionalServiceNotExistsMessage);
     }
 }
