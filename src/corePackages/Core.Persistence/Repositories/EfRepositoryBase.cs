@@ -16,11 +16,13 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
     {
         Context = context;
     }
-    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
+    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
+                                         IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = true)
     {
-        var query =  Context.Set<TEntity>().AsQueryable();
-        if (include != null) query = include(query);
-        return await query.FirstOrDefaultAsync(predicate);
+        IQueryable<TEntity> queryable = Query().AsQueryable();
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        if (include != null) queryable = include(queryable);
+        return await queryable.FirstOrDefaultAsync(predicate);
     }
     public async Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy =
@@ -79,11 +81,13 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return entity;
     }
 
-    public TEntity Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
+    public TEntity Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
+                       IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = true)
     {
-        var query = Context.Set<TEntity>().AsQueryable();
-        if (include != null) query = include(query);
-        return query.FirstOrDefault(predicate);
+        IQueryable<TEntity> queryable = Query().AsQueryable();
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        if (include != null) queryable = include(queryable);
+        return queryable.FirstOrDefault(predicate);
     }
     public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
                                       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
