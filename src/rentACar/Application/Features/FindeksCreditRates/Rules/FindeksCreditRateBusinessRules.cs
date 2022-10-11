@@ -1,3 +1,4 @@
+using Application.Features.FindeksCreditRates.Constants;
 using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Domain.Entities;
@@ -16,12 +17,12 @@ public class FindeksCreditRateBusinessRules
     public async Task FindeksCreditRateIdShouldExistWhenSelected(int id)
     {
         FindeksCreditRate? result = await _findeksCreditRateRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Findeks Credit Rate not exists.");
+        if (result == null) throw new BusinessException(FindexCreditRateExceptionMessage.FindeksCreditRateNotExistsMessage);
     }
 
     public Task FindeksCreditShouldBeExist(FindeksCreditRate? findeksCreditRate)
     {
-        if (findeksCreditRate is null) throw new BusinessException("Findeks Credit Rate not exists.");
+        if (findeksCreditRate is null) throw new BusinessException(FindexCreditRateExceptionMessage.FindeksCreditRateNotExistsMessage);
         return Task.CompletedTask;
     }
 }
