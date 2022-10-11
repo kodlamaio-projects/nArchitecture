@@ -17,6 +17,7 @@ public class CreateIndividualCustomerCommand : IRequest<CreatedIndividualCustome
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string NationalIdentity { get; set; }
+    public DateTime BirthDay { get; set; }
 
     public string[] Roles => new[] { Admin, IndividualCustomerAdd };
 
@@ -43,10 +44,13 @@ public class CreateIndividualCustomerCommand : IRequest<CreatedIndividualCustome
         public async Task<CreatedIndividualCustomerDto> Handle(CreateIndividualCustomerCommand request,
                                                                CancellationToken cancellationToken)
         {
+            IndividualCustomer mappedIndividualCustomer = _mapper.Map<IndividualCustomer>(request);
+            
+            await _individualCustomerBusinessRules.IndividualCustomerNationalIdentityMustVerifyWhenInserted(mappedIndividualCustomer);
             await _individualCustomerBusinessRules.IndividualCustomerNationalIdentityCanNotBeDuplicatedWhenInserted(
                 request.NationalIdentity);
 
-            IndividualCustomer mappedIndividualCustomer = _mapper.Map<IndividualCustomer>(request);
+            
             IndividualCustomer createdIndividualCustomer =
                 await _individualCustomerRepository.AddAsync(mappedIndividualCustomer);
 

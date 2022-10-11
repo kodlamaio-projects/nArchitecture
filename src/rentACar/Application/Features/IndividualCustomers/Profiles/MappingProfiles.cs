@@ -13,6 +13,9 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
+        CreateMap<IndividualCustomer, CitizenDto>().ReverseMap();
+        
+        CreateMap<IndividualCustomer, CreateIndividualCustomerCommand>().ReverseMap();
         CreateMap<IndividualCustomer, CreateIndividualCustomerCommand>().ReverseMap();
         CreateMap<IndividualCustomer, CreatedIndividualCustomerDto>().ReverseMap();
         CreateMap<IndividualCustomer, UpdateIndividualCustomerCommand>().ReverseMap();

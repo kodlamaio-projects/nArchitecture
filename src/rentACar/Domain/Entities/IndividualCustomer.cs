@@ -8,6 +8,7 @@ public class IndividualCustomer : Entity
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string NationalIdentity { get; set; }
+    public DateTime BirthDay { get; set; }
 
     public virtual Customer Customer { get; set; }
 
@@ -15,12 +16,13 @@ public class IndividualCustomer : Entity
     {
     }
 
-    public IndividualCustomer(int id, int customerId, string firstName, string lastName, string nationalIdentity) :
+    public IndividualCustomer(int id, int customerId, string firstName, string lastName, string nationalIdentity, DateTime birthDay) :
         base(id)
     {
         CustomerId = customerId;
         FirstName = firstName;
         LastName = lastName;
         NationalIdentity = nationalIdentity;
+        BirthDay = birthDay;
     }
 }

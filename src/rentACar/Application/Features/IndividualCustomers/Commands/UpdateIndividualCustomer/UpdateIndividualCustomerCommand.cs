@@ -17,6 +17,7 @@ public class UpdateIndividualCustomerCommand : IRequest<UpdatedIndividualCustome
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string NationalIdentity { get; set; }
+    public DateTime BirthDay { get; set; }
 
     public string[] Roles => new[] { Admin, IndividualCustomerUpdate };
 

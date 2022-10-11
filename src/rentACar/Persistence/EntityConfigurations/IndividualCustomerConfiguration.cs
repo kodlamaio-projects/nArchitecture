@@ -19,9 +19,10 @@ namespace Persistence.EntityConfigurations
             builder.Property(i => i.FirstName).HasColumnName("FirstName");
             builder.Property(i => i.LastName).HasColumnName("LastName");
             builder.Property(i => i.NationalIdentity).HasColumnName("NationalIdentity");
+            builder.Property(i => i.BirthDay).HasColumnName("BirthDay");
             builder.HasOne(i => i.Customer);
 
-            IndividualCustomer[] individualCustomers = { new(1, 1, "Ahmet", "Çetinkaya", "123123123123") };
+            IndividualCustomer[] individualCustomers = { new(1, 1, "Ahmet", "Çetinkaya", "123123123123",DateTime.UtcNow) };
             builder.HasData(individualCustomers);
         }
     }
