@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Rentals.Constants;
+using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -17,7 +18,7 @@ public class RentalBusinessRules
     public async Task RentalIdShouldExistWhenSelected(int id)
     {
         Rental? result = await _rentalRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Rental not exists.");
+        if (result == null) throw new BusinessException(RentalMessages.RentalNotExists);
     }
 
     public async Task RentalCanNotBeUpdateWhenThereIsARentedCarInDate(int id, int carId, DateTime rentStartDate,
@@ -28,7 +29,7 @@ public class RentalBusinessRules
                                              r.RentEndDate >= rentStartDate &&
                                              r.RentStartDate <= rentEndDate);
         if (rentals.Items.Any())
-            throw new BusinessException("Rental can't be updated when there is another rented car for the date.");
+            throw new BusinessException(RentalMessages.RentalCanNotBeUpdatedWhenThereIsAnotherRentedCarForTheDate);
     }
 
     public Task RentalCanNotBeCreatedWhenCustomerFindeksScoreLowerThanCarMinFindeksScore(
@@ -36,7 +37,7 @@ public class RentalBusinessRules
     {
         if (customerFindeksCreditRate < carMinFindeksCreditRate)
             throw new BusinessException(
-                "Rental can not be created when customer findeks credit score lower than car min findeks score.");
+                RentalMessages.RentalCanNotBeCreatedWhenCustomerFindeksCreditScoreLowerThanCarMinFindeksScore);
         return Task.CompletedTask;
     }
 }
