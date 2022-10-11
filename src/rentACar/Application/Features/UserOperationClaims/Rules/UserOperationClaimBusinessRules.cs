@@ -1,3 +1,4 @@
+using Application.Features.UserOperationClaims.Constants;
 using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
@@ -16,6 +17,6 @@ public class UserOperationClaimBusinessRules
     public async Task UserOperationClaimIdShouldExistWhenSelected(int id)
     {
         UserOperationClaim? result = await _userOperationClaimRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("UserOperationClaim not exists.");
+        if (result == null) throw new BusinessException(UserOperationClaimExceptionMessages.UserOperationClaimNotExistsMessage);
     }
 }
