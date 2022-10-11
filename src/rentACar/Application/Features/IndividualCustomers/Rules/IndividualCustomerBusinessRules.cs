@@ -1,3 +1,4 @@
+using Application.Features.IndividualCustomers.Constants;
 using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
@@ -22,7 +23,7 @@ public class IndividualCustomerBusinessRules
 
     public Task IndividualCustomerShouldBeExist(IndividualCustomer? individualCustomer)
     {
-        if (individualCustomer is null) throw new BusinessException("Individual customer not exists.");
+        if (individualCustomer is null) throw new BusinessException(IndividualCustomerExceptionMessages.IndividualCustomerNotExistsMessage);
         return Task.CompletedTask;
     }
 
@@ -30,6 +31,6 @@ public class IndividualCustomerBusinessRules
     {
         IPaginate<IndividualCustomer> result =
             await _individualCustomerRepository.GetListAsync(c => c.NationalIdentity == nationalIdentity);
-        if (result.Items.Any()) throw new BusinessException("Individual customer national identity already exists.");
+        if (result.Items.Any()) throw new BusinessException(IndividualCustomerExceptionMessages.IndividualCustomerNationalIdentityExistsMessage);
     }
 }
