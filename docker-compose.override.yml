@@ -12,3 +12,4 @@ services:
       - database
     volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
