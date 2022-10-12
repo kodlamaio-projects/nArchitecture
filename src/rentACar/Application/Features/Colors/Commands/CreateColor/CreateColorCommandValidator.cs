@@ -6,7 +6,7 @@ namespace Application.Features.Colors.Commands.CreateColor
     {
         public CreateColorCommandValidator()
         {
-
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
         }
     }
 }

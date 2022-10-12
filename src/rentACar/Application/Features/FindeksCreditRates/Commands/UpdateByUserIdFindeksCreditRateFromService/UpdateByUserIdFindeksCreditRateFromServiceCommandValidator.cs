@@ -6,7 +6,8 @@ namespace Application.Features.FindeksCreditRates.Commands.UpdateByUserIdFindeks
     {
         public UpdateByUserIdFindeksCreditRateFromServiceCommandValidator()
         {
-
+            RuleFor(c => c.UserId).GreaterThan(0);
+            RuleFor(c => c.IdentityNumber).NotEmpty().MinimumLength(2);
         }
     }
 }

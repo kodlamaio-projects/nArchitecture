@@ -6,7 +6,7 @@ namespace Application.Features.OperationClaims.Commands.UpdateOperationClaim
     {
         public UpdateOperationClaimCommandValidator()
         {
-
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Application.Features.FindeksCreditRates.Commands.UpdateFindeksCreditRa
     {
         public UpdateFindeksCreditRateFromServiceCommandValidator()
         {
-
+            RuleFor(c => c.IdentityNumber).NotEmpty().MinimumLength(2);
         }
     }
 }

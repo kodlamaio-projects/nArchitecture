@@ -6,7 +6,7 @@ namespace Application.Features.Customers.Commands.CreateCustomer
     {
         public CreateCustomerCommandValidator()
         {
-
+            RuleFor(c => c.UserId).GreaterThan(0);
         }
     }
 }

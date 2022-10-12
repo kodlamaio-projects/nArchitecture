@@ -6,7 +6,7 @@ namespace Application.Features.Fuels.Commands.UpdateFuel
     {
         public UpdateFuelCommandValidator()
         {
-
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Application.Features.RentalBranches.Commands.UpdateRentalBranch
     {
         public UpdateRentalBranchCommandValidator()
         {
-
+            RuleFor(c => c.City).NotEmpty();
         }
     }
 }

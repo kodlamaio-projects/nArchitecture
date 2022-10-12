@@ -6,7 +6,9 @@ namespace Application.Features.Rentals.Commands.PickUpRental
     {
         public PickUpRentalCommandValidator()
         {
-
+            RuleFor(c => c.RentEndRentalBranchId).GreaterThan(0);
+            RuleFor(c => c.RentEndKilometer).GreaterThan(0);
+            RuleFor(c => c.ReturnDate).GreaterThan(DateTime.Now);
         }
     }
 }

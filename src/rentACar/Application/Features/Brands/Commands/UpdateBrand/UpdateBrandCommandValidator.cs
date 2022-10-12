@@ -6,7 +6,7 @@ namespace Application.Features.Brands.Commands.UpdateBrand
     {
         public UpdateBrandCommandValidator()
         {
-
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
         }
     }
 }

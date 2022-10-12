@@ -6,7 +6,8 @@ namespace Application.Features.CarDamages.Commands.UpdateCarDamage
     {
         public UpdateCarDamageCommandValidator()
         {
-
+            RuleFor(c => c.CarId).GreaterThan(0);
+            RuleFor(c => c.DamageDescription).NotEmpty().MinimumLength(2);
         }
     }
 }

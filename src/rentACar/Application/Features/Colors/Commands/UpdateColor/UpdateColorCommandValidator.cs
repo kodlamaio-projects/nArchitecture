@@ -6,7 +6,7 @@ namespace Application.Features.Colors.Commands.UpdateColor
     {
         public UpdateColorCommandValidator()
         {
-
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
         }
     }
 }

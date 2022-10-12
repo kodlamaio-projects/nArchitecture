@@ -6,7 +6,7 @@ namespace Application.Features.Customers.Commands.UpdateCustomer
     {
         public UpdateCustomerCommandValidator()
         {
-
+            RuleFor(c => c.UserId).GreaterThan(0);
         }
     }
 }

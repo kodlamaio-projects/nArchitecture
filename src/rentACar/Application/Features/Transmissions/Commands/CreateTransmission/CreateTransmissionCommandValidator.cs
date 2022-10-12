@@ -6,7 +6,7 @@ namespace Application.Features.Transmissions.Commands.CreateTransmission
     {
         public CreateTransmissionCommandValidator()
         {
-
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
         }
     }
 }

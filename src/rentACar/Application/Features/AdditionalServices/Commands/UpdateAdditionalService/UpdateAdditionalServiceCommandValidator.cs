@@ -6,7 +6,8 @@ namespace Application.Features.AdditionalServices.Commands.UpdateAdditionalServi
     {
         public UpdateAdditionalServiceCommandValidator()
         {
-
+            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
+            RuleFor(c => c.DailyPrice).GreaterThan(0);
         }
     }
 }
