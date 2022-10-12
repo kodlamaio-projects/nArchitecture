@@ -29,25 +29,7 @@ public class ExceptionMiddleware
         }
         catch (Exception exception)
         {
-            List<LogParameter> logParameters = new();
-            logParameters.Add(new LogParameter
-            {
-                Type = context.GetType().Name,
-                Value = context
-            });
-
-            LogDetailWithException logDetailWithException = new()
-            {
-                MethodName = _next.Method.Name,
-                Parameters = logParameters,
-                User = _httpContextAccessor.HttpContext == null ||
-                   _httpContextAccessor.HttpContext.User.Identity.Name == null
-                       ? "?"
-                       : _httpContextAccessor.HttpContext.User.Identity.Name,
-                ExceptionMessage = exception.Message
-
-            };
-            _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
+            LoggingErrors(context, exception)
             await HandleExceptionAsync(context, exception);
         }
     }
@@ -134,5 +116,27 @@ public class ExceptionMiddleware
             Detail = exception.Message,
             Instance = ""
         }.ToString());
+    }
+    private void LoggingErrors(HttpContext context, Exception exception)
+    {
+        List<LogParameter> logParameters = new();
+        logParameters.Add(new LogParameter
+        {
+            Type = context.GetType().Name,
+            Value = context
+        });
+
+        LogDetailWithException logDetailWithException = new()
+        {
+            MethodName = _next.Method.Name,
+            Parameters = logParameters,
+            User = _httpContextAccessor.HttpContext == null ||
+               _httpContextAccessor.HttpContext.User.Identity.Name == null
+                   ? "?"
+                   : _httpContextAccessor.HttpContext.User.Identity.Name,
+            ExceptionMessage = exception.Message
+
+        };
+        _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
     }
 }
