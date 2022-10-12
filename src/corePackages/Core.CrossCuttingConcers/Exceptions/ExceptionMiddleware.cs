@@ -31,8 +31,9 @@ public class ExceptionMiddleware
         context.Response.ContentType = "application/json";
 
         if (exception.GetType() == typeof(ValidationException)) return CreateValidationException(context, exception);
-        if (exception.GetType() == typeof(BusinessException)) return CreateBusinessException(context, exception);
-        if (exception.GetType() == typeof(AuthorizationException))
+        else if (exception.GetType() == typeof(BusinessException)) return CreateBusinessException(context, exception);
+        else if (exception.GetType() == typeof(NotFoundException)) return CreateNotFoundException(context, exception);
+        else if (exception.GetType() == typeof(AuthorizationException))
             return CreateAuthorizationException(context, exception);
         return CreateInternalException(context, exception);
     }
@@ -78,6 +79,20 @@ public class ExceptionMiddleware
             Detail = "",
             Instance = "",
             Errors = errors
+        }.ToString());
+    }
+
+    private Task CreateNotFoundException(HttpContext context, Exception exception)
+    {
+        context.Response.StatusCode = Convert.ToInt32(HttpStatusCode.NotFound);
+
+        return context.Response.WriteAsync(new NotFoundProblemDetails
+        {
+            Status = StatusCodes.Status404NotFound,
+            Type = "https://example.com/probs/notfound",
+            Title = "Not Found exception",
+            Detail = exception.Message,
+            Instance = ""
         }.ToString());
     }
 

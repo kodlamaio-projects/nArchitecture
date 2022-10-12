@@ -18,9 +18,11 @@ public class Car : Entity
     public virtual RentalBranch? RentalBranch { get; set; }
     public virtual Model? Model { get; set; }
     public virtual ICollection<CarDamage> CarDamages { get; set; }
+    public virtual ICollection<Rental> Rentals { get; set; }
 
     public Car()
     {
+        Rentals = new HashSet<Rental>();
         CarDamages = new HashSet<CarDamage>();
     }
 
