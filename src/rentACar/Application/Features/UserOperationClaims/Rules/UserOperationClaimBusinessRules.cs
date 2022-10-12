@@ -19,4 +19,16 @@ public class UserOperationClaimBusinessRules
         UserOperationClaim? result = await _userOperationClaimRepository.GetAsync(b => b.Id == id);
         if (result == null) throw new BusinessException(UserOperationClaimMessages.UserOperationClaimNotExists);
     }
+
+    public async Task ThisOperationClaimCannotBeDuplicatedForThisUserWhenCreated(int userId, int operationCliamId)
+    {
+        UserOperationClaim? result = await _userOperationClaimRepository.GetAsync(uoc => uoc.UserId == userId && uoc.OperationClaimId == operationCliamId);
+        if (result != null) throw new BusinessException(UserOperationClaimMessages.ThisUserAlreadyHasThisOperationClaim);
+    }
+
+    public async Task ThisOperationClaimCannotBeDuplicatedForThisUserWhenUpdated(int id, int userId, int operationCliamId)
+    {
+        UserOperationClaim? result = await _userOperationClaimRepository.GetAsync(uoc => uoc.Id != id && uoc.UserId == userId && uoc.OperationClaimId == operationCliamId);
+        if (result != null) throw new BusinessException(UserOperationClaimMessages.ThisUserAlreadyHasThisOperationClaim);
+    }
 }

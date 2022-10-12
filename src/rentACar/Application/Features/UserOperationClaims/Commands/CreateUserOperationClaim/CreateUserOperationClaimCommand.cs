@@ -37,6 +37,8 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
         public async Task<CreatedUserOperationClaimDto> Handle(CreateUserOperationClaimCommand request,
                                                                CancellationToken cancellationToken)
         {
+            await _userOperationClaimBusinessRules.ThisOperationClaimCannotBeDuplicatedForThisUserWhenCreated(request.UserId, request.OperationClaimId);
+
             UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
             UserOperationClaim createdUserOperationClaim =
                 await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);

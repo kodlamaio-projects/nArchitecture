@@ -38,6 +38,8 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
         public async Task<UpdatedUserOperationClaimDto> Handle(UpdateUserOperationClaimCommand request,
                                                                CancellationToken cancellationToken)
         {
+            await _userOperationClaimBusinessRules.ThisOperationClaimCannotBeDuplicatedForThisUserWhenUpdated(request.Id, request.UserId, request.OperationClaimId);
+
             UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
             UserOperationClaim updatedUserOperationClaim =
                 await _userOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
