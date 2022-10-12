@@ -2,13 +2,10 @@
 version: '3.4'
 
 services:
-  database:
-  image: "mcr.microsoft.com/mssql/server"
-  environment:
-      SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
-  container_name: database
-
+  s_mssqlserver:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: s_mssqlserver
+    
   webapi:
     image: ${DOCKER_REGISTRY-}webapi
     build:
