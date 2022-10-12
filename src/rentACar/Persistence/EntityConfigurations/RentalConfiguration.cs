@@ -25,9 +25,9 @@ namespace Persistence.EntityConfigurations
             builder.Property(r => r.RentStartKilometer).HasColumnName("RentStartKilometer");
             builder.Property(r => r.RentEndKilometer).HasColumnName("RentEndKilometer");
             builder.HasOne(r => r.Car);
-            builder.HasOne(r => r.Customer);
-            //builder.HasOne(r => r.RentStartRentalBranch);
-            //builder.HasOne(r => r.RentEndRentalBranch);
+            //builder.HasOne(r => r.Customer);
+            builder.HasOne(r => r.RentStartRentalBranch).WithMany().HasForeignKey(r=>r.RentStartRentalBranchId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(r => r.RentEndRentalBranch).WithMany().HasForeignKey(r => r.RentEndRentalBranchId).OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(r => r.RentalsAdditionalServices);
 
             Rental[] rentalSeeds =
