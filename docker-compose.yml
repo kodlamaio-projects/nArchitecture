@@ -1,0 +1,14 @@
+
+version: '3.4'
+
+services:
+  s_mssqlserver:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: s_mssqlserver
+    
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: src/rentACar/WebAPI/Dockerfile
+      
