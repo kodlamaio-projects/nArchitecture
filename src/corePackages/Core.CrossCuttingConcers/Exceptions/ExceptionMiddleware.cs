@@ -1,6 +1,9 @@
-﻿using FluentValidation;
+﻿using Core.CrossCuttingConcerns.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace Core.CrossCuttingConcerns.Exceptions;
@@ -8,10 +11,14 @@ namespace Core.CrossCuttingConcerns.Exceptions;
 public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly LoggerServiceBase _loggerServiceBase;
 
-    public ExceptionMiddleware(RequestDelegate next)
+    public ExceptionMiddleware(RequestDelegate next, LoggerServiceBase loggerServiceBase, IHttpContextAccessor httpContextAccessor)
     {
         _next = next;
+        _loggerServiceBase = loggerServiceBase;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task Invoke(HttpContext context)
@@ -22,6 +29,7 @@ public class ExceptionMiddleware
         }
         catch (Exception exception)
         {
+            await ExceptionsLogging(context, exception, Get_httpContextAccessor());
             await HandleExceptionAsync(context, exception);
         }
     }
@@ -108,5 +116,34 @@ public class ExceptionMiddleware
             Detail = exception.Message,
             Instance = ""
         }.ToString());
+    }
+
+    private IHttpContextAccessor Get_httpContextAccessor()
+    {
+        return _httpContextAccessor;
+    }
+
+    private Task ExceptionsLogging(HttpContext context, Exception exception, IHttpContextAccessor _httpContextAccessor)
+    {
+        List<LogParameter> logParameters = new();
+        logParameters.Add(new LogParameter
+        {
+            Type = context.GetType().Name,
+            Value = context
+        });
+
+        LogDetailWithException logDetailWithException = new()
+        {
+            MethodName = _next.Method.Name,
+            Parameters = logParameters,
+            User = _httpContextAccessor.HttpContext == null ||
+               _httpContextAccessor.HttpContext.User.Identity.Name == null
+                   ? "?"
+                   : _httpContextAccessor.HttpContext.User.Identity.Name,
+            ExceptionMessage = exception.Message
+
+        };
+        _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
+        return Task.CompletedTask;
     }
 }
