@@ -1,4 +1,5 @@
 ﻿using Core.Security.Entities;
+using Core.Security.Hashing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -22,6 +23,14 @@ namespace Persistence.EntityConfigurations
             builder.Property(u => u.PasswordHash).HasColumnName("PasswordHash");
             builder.Property(u => u.Status).HasColumnName("Status").HasDefaultValue(true);
             builder.Property(u => u.AuthenticatorType).HasColumnName("AuthenticatorType");
+
+
+            HashingHelper.CreatePasswordHash(password: "123456", out byte[] passwordHash, out byte[] passwordSalt);
+
+            User[] usersSeedData=new User[] {new(1,"Ahmet","Çetinkaya","ahmetcetinkaya@rentacar.com",passwordSalt,passwordHash,true,Core.Security.Enums.AuthenticatorType.None),new
+              (2,"Halit","Kalaycı","halitkalayci@rentacar.com",passwordSalt,passwordHash,true,Core.Security.Enums.AuthenticatorType.None)};
+
+            builder.HasData(usersSeedData);
         }
     }
 }

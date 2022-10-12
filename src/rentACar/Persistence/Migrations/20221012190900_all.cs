@@ -16,7 +16,9 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DailyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    DailyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +31,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +46,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +61,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +76,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,7 +91,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    City = table.Column<int>(type: "int", nullable: false)
+                    City = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +106,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,7 +127,9 @@ namespace Persistence.Migrations
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    AuthenticatorType = table.Column<int>(type: "int", nullable: false)
+                    AuthenticatorType = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,7 +147,9 @@ namespace Persistence.Migrations
                     TransmissionId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DailyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -162,7 +180,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,7 +203,9 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ActivationKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsVerified = table.Column<bool>(type: "bit", nullable: false)
+                    IsVerified = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,7 +226,9 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     SecretKey = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    IsVerified = table.Column<bool>(type: "bit", nullable: false)
+                    IsVerified = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -231,7 +255,9 @@ namespace Persistence.Migrations
                     Revoked = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RevokedByIp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReplacedByToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReasonRevoked = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ReasonRevoked = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -251,7 +277,9 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    OperationClaimId = table.Column<int>(type: "int", nullable: false)
+                    OperationClaimId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,7 +311,9 @@ namespace Persistence.Migrations
                     Kilometer = table.Column<int>(type: "int", nullable: false),
                     ModelYear = table.Column<short>(type: "smallint", nullable: false),
                     Plate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MinFindeksCreditRate = table.Column<short>(type: "smallint", nullable: false)
+                    MinFindeksCreditRate = table.Column<short>(type: "smallint", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -316,7 +346,9 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaxNo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TaxNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -336,7 +368,9 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    Score = table.Column<short>(type: "smallint", nullable: false)
+                    Score = table.Column<short>(type: "smallint", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -358,7 +392,9 @@ namespace Persistence.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NationalIdentity = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    NationalIdentity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -379,11 +415,12 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     No = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 9, 28, 14, 21, 31, 28, DateTimeKind.Local).AddTicks(8708)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 22, 8, 59, 896, DateTimeKind.Local).AddTicks(5573)),
                     RentalStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentalEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalRentalDate = table.Column<short>(type: "smallint", nullable: false),
-                    RentalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    RentalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -404,7 +441,9 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CarId = table.Column<int>(type: "int", nullable: false),
                     DamageDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsFixed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    IsFixed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -425,11 +464,15 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CarId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
+                    RentStartRentalBranchId = table.Column<int>(type: "int", nullable: false),
+                    RentEndRentalBranchId = table.Column<int>(type: "int", nullable: true),
                     RentStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RentStartKilometer = table.Column<int>(type: "int", nullable: false),
-                    RentEndKilometer = table.Column<int>(type: "int", nullable: true)
+                    RentEndKilometer = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -446,6 +489,18 @@ namespace Persistence.Migrations
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rentals_RentalBranches_RentEndRentalBranchId",
+                        column: x => x.RentEndRentalBranchId,
+                        principalTable: "RentalBranches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Rentals_RentalBranches_RentStartRentalBranchId",
+                        column: x => x.RentStartRentalBranchId,
+                        principalTable: "RentalBranches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -455,7 +510,9 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RentalId = table.Column<int>(type: "int", nullable: false),
-                    AdditionalServiceId = table.Column<int>(type: "int", nullable: false)
+                    AdditionalServiceId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -476,120 +533,136 @@ namespace Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "AdditionalServices",
-                columns: new[] { "Id", "DailyPrice", "Name" },
+                columns: new[] { "Id", "CreatedDate", "DailyPrice", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, 200m, "Baby Seat" },
-                    { 2, 300m, "Scooter" }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 200m, "Baby Seat", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 300m, "Scooter", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Brands",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "BMW" },
-                    { 2, "Mercedes" }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "BMW", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mercedes", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Colors",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "Red" },
-                    { 2, "Blue" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "CorporateCustomers",
-                columns: new[] { "Id", "CompanyName", "CustomerId", "TaxNo" },
-                values: new object[] { 1, "Ahmet Çetinkaya", 2, "54154512" });
-
-            migrationBuilder.InsertData(
-                table: "FindeksCreditRates",
-                columns: new[] { "Id", "CustomerId", "Score" },
-                values: new object[,]
-                {
-                    { 1, 1, (short)1000 },
-                    { 2, 2, (short)1900 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Red", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Blue", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Fuels",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "Diesel" },
-                    { 2, "Electric" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "IndividualCustomers",
-                columns: new[] { "Id", "CustomerId", "FirstName", "LastName", "NationalIdentity" },
-                values: new object[] { 1, 1, "Ahmet", "Çetinkaya", "123123123123" });
-
-            migrationBuilder.InsertData(
-                table: "Invoices",
-                columns: new[] { "Id", "CreatedDate", "CustomerId", "No", "RentalEndDate", "RentalPrice", "RentalStartDate", "TotalRentalDate" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1, "123123", new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 1000m, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), (short)2 },
-                    { 2, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1, "123123", new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 2000m, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), (short)2 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Diesel", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Electric", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "OperationClaims",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Admin" });
+                columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Admin", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "RentalBranches",
-                columns: new[] { "Id", "City" },
+                columns: new[] { "Id", "City", "CreatedDate", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, 6 },
-                    { 2, 7 }
+                    { 1, 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Transmissions",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "Manuel" },
-                    { 2, "Automatic" }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Manuel", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Automatic", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "Status", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "ahmetcetinkaya@rentacar.com", "Ahmet", "Çetinkaya", new byte[] { 148, 111, 58, 222, 170, 198, 147, 214, 100, 23, 21, 192, 195, 179, 51, 151, 116, 135, 29, 228, 23, 97, 126, 12, 37, 129, 65, 122, 71, 170, 49, 67, 137, 166, 92, 54, 124, 148, 75, 241, 236, 138, 12, 235, 198, 218, 204, 167, 18, 113, 248, 114, 2, 24, 198, 9, 216, 29, 60, 89, 250, 54, 10, 130 }, new byte[] { 61, 82, 101, 7, 26, 21, 155, 200, 170, 215, 112, 85, 215, 122, 147, 7, 95, 231, 193, 235, 23, 31, 228, 134, 163, 227, 235, 8, 226, 53, 168, 113, 194, 128, 140, 177, 40, 191, 32, 25, 148, 38, 3, 234, 227, 135, 131, 243, 1, 70, 48, 23, 109, 43, 174, 170, 102, 202, 150, 40, 181, 115, 191, 7, 179, 100, 245, 81, 39, 130, 23, 123, 58, 53, 187, 185, 61, 224, 90, 188, 142, 176, 36, 198, 137, 5, 76, 42, 196, 5, 84, 118, 160, 172, 35, 72, 69, 207, 103, 85, 65, 47, 65, 242, 60, 189, 27, 192, 217, 122, 19, 167, 196, 107, 230, 134, 9, 4, 118, 215, 132, 38, 18, 9, 48, 217, 78, 247 }, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "halitkalayci@rentacar.com", "Halit", "Kalaycı", new byte[] { 148, 111, 58, 222, 170, 198, 147, 214, 100, 23, 21, 192, 195, 179, 51, 151, 116, 135, 29, 228, 23, 97, 126, 12, 37, 129, 65, 122, 71, 170, 49, 67, 137, 166, 92, 54, 124, 148, 75, 241, 236, 138, 12, 235, 198, 218, 204, 167, 18, 113, 248, 114, 2, 24, 198, 9, 216, 29, 60, 89, 250, 54, 10, 130 }, new byte[] { 61, 82, 101, 7, 26, 21, 155, 200, 170, 215, 112, 85, 215, 122, 147, 7, 95, 231, 193, 235, 23, 31, 228, 134, 163, 227, 235, 8, 226, 53, 168, 113, 194, 128, 140, 177, 40, 191, 32, 25, 148, 38, 3, 234, 227, 135, 131, 243, 1, 70, 48, 23, 109, 43, 174, 170, 102, 202, 150, 40, 181, 115, 191, 7, 179, 100, 245, 81, 39, 130, 23, 123, 58, 53, 187, 185, 61, 224, 90, 188, 142, 176, 36, 198, 137, 5, 76, 42, 196, 5, 84, 118, 160, 172, 35, 72, 69, 207, 103, 85, 65, 47, 65, 242, 60, 189, 27, 192, 217, 122, 19, 167, 196, 107, 230, 134, 9, 4, 118, 215, 132, 38, 18, 9, 48, 217, 78, 247 }, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "Id", "CreatedDate", "UpdatedDate", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Models",
-                columns: new[] { "Id", "BrandId", "DailyPrice", "FuelId", "ImageUrl", "Name", "TransmissionId" },
-                values: new object[] { 1, 1, 1000m, 1, "", "418i", 2 });
-
-            migrationBuilder.InsertData(
-                table: "Models",
-                columns: new[] { "Id", "BrandId", "DailyPrice", "FuelId", "ImageUrl", "Name", "TransmissionId" },
-                values: new object[] { 2, 2, 600m, 2, "", "CLA 180D", 1 });
-
-            migrationBuilder.InsertData(
-                table: "Cars",
-                columns: new[] { "Id", "State", "ColorId", "Kilometer", "MinFindeksCreditRate", "ModelId", "ModelYear", "Plate", "RentalBranchId" },
-                values: new object[] { 1, 1, 1, 1000, (short)500, 1, (short)2018, "07ABC07", 1 });
+                columns: new[] { "Id", "BrandId", "CreatedDate", "DailyPrice", "FuelId", "ImageUrl", "Name", "TransmissionId", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000m, 1, "", "418i", 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 600m, 2, "", "CLA 180D", 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
 
             migrationBuilder.InsertData(
                 table: "Cars",
-                columns: new[] { "Id", "State", "ColorId", "Kilometer", "MinFindeksCreditRate", "ModelId", "ModelYear", "Plate", "RentalBranchId" },
-                values: new object[] { 2, 2, 2, 1000, (short)1100, 2, (short)2018, "15ABC15", 2 });
+                columns: new[] { "Id", "State", "ColorId", "CreatedDate", "Kilometer", "MinFindeksCreditRate", "ModelId", "ModelYear", "Plate", "RentalBranchId", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000, (short)500, 1, (short)2018, "07ABC07", 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000, (short)1100, 2, (short)2018, "15ABC15", 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CorporateCustomers",
+                columns: new[] { "Id", "CompanyName", "CreatedDate", "CustomerId", "TaxNo", "UpdatedDate" },
+                values: new object[] { 1, "Ahmet Çetinkaya", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "54154512", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
+                table: "FindeksCreditRates",
+                columns: new[] { "Id", "CreatedDate", "CustomerId", "Score", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, (short)1000, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, (short)1900, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "IndividualCustomers",
+                columns: new[] { "Id", "CreatedDate", "CustomerId", "FirstName", "LastName", "NationalIdentity", "UpdatedDate" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Ahmet", "Çetinkaya", "123123123123", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
+                table: "Invoices",
+                columns: new[] { "Id", "CreatedDate", "CustomerId", "No", "RentalEndDate", "RentalPrice", "RentalStartDate", "TotalRentalDate", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local), 1, "123123", new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local), 1000m, new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local), (short)2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local), 1, "123123", new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local), 2000m, new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local), (short)2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
 
             migrationBuilder.InsertData(
                 table: "Rentals",
-                columns: new[] { "Id", "CarId", "CustomerId", "RentEndDate", "RentEndKilometer", "RentStartDate", "RentStartKilometer", "ReturnDate" },
-                values: new object[] { 1, 2, 1, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 1200, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1000, null });
+                columns: new[] { "Id", "CarId", "CreatedDate", "CustomerId", "RentEndDate", "RentEndKilometer", "RentEndRentalBranchId", "RentStartDate", "RentStartKilometer", "RentStartRentalBranchId", "ReturnDate", "UpdatedDate" },
+                values: new object[] { 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local), 1200, 2, new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local), 1000, 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Rentals",
-                columns: new[] { "Id", "CarId", "CustomerId", "RentEndDate", "RentEndKilometer", "RentStartDate", "RentStartKilometer", "ReturnDate" },
-                values: new object[] { 2, 1, 2, new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local), 1200, new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local), 1000, null });
+                columns: new[] { "Id", "CarId", "CreatedDate", "CustomerId", "RentEndDate", "RentEndKilometer", "RentEndRentalBranchId", "RentStartDate", "RentStartKilometer", "RentStartRentalBranchId", "ReturnDate", "UpdatedDate" },
+                values: new object[] { 2, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local), 1200, 1, new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local), 1000, 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CarDamages_CarId",
@@ -678,6 +751,19 @@ namespace Persistence.Migrations
                 name: "IX_Rentals_CustomerId",
                 table: "Rentals",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rentals_RentEndRentalBranchId",
+                table: "Rentals",
+                column: "RentEndRentalBranchId",
+                unique: true,
+                filter: "[RentEndRentalBranchId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rentals_RentStartRentalBranchId",
+                table: "Rentals",
+                column: "RentStartRentalBranchId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RentalsAdditionalServices_AdditionalServiceId",

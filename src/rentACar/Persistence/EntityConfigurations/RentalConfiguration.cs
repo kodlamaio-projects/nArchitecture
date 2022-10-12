@@ -17,8 +17,8 @@ namespace Persistence.EntityConfigurations
             builder.Property(r => r.Id).HasColumnName("Id");
             builder.Property(r => r.CustomerId).HasColumnName("CustomerId");
             builder.Property(r => r.CarId).HasColumnName("CarId");
-            //builder.Property(r => r.RentStartRentalBranchId).HasColumnName("RentStartRentalBranchId");
-            //builder.Property(r => r.RentEndRentalBranchId).HasColumnName("RentEndRentalBranchId");
+            builder.Property(r => r.RentStartRentalBranchId).HasColumnName("RentStartRentalBranchId");
+            builder.Property(r => r.RentEndRentalBranchId).HasColumnName("RentEndRentalBranchId");
             builder.Property(r => r.RentStartDate).HasColumnName("RentStartDate");
             builder.Property(r => r.RentEndDate).HasColumnName("RentEndDate");
             builder.Property(r => r.ReturnDate).HasColumnName("ReturnDate");
@@ -26,8 +26,8 @@ namespace Persistence.EntityConfigurations
             builder.Property(r => r.RentEndKilometer).HasColumnName("RentEndKilometer");
             builder.HasOne(r => r.Car);
             builder.HasOne(r => r.Customer);
-            //builder.HasOne(r => r.RentStartRentalBranch);
-            //builder.HasOne(r => r.RentEndRentalBranch);
+            builder.HasOne(r => r.RentStartRentalBranch).WithOne().HasForeignKey<Rental>(r => r.RentStartRentalBranchId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(r => r.RentEndRentalBranch).WithOne().HasForeignKey<Rental>(r => r.RentEndRentalBranchId).OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(r => r.RentalsAdditionalServices);
 
             Rental[] rentalSeeds =
