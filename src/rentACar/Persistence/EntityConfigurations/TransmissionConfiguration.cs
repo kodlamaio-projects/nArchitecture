@@ -16,6 +16,7 @@ namespace Persistence.EntityConfigurations
             builder.ToTable("Transmissions").HasKey(k => k.Id);
             builder.Property(p => p.Id).HasColumnName("Id");
             builder.Property(p => p.Name).HasColumnName("Name");
+            builder.HasIndex(p => p.Name, "UK_Transmissions_Name").IsUnique();
             builder.HasMany(p => p.Models);
 
             Transmission[] transmissionsSeeds = { new(1, "Manuel"), new(2, "Automatic") };

@@ -17,6 +17,7 @@ namespace Persistence.EntityConfigurations
             builder.Property(u => u.Id).HasColumnName("Id");
             builder.Property(u => u.UserId).HasColumnName("UserId");
             builder.Property(u => u.OperationClaimId).HasColumnName("OperationClaimId");
+            builder.HasIndex(u => new { u.UserId, u.OperationClaimId }, "UK_UserOperationClaims_UserId_OperationClaimId").IsUnique();
             builder.HasOne(u => u.User);
             builder.HasOne(u => u.OperationClaim);
         }
