@@ -16,6 +16,7 @@ namespace Persistence.EntityConfigurations
             builder.ToTable("AdditionalServices").HasKey(k => k.Id);
             builder.Property(p => p.Id).HasColumnName("Id");
             builder.Property(p => p.Name).HasColumnName("Name");
+            builder.HasIndex(p => p.Name, "UK_AdditionalServices_Name").IsUnique();
             builder.Property(p => p.DailyPrice).HasColumnName("DailyPrice");
 
             AdditionalService[] additionalServiceSeeds = { new(1, "Baby Seat", 200), new(2, "Scooter", 300) };
