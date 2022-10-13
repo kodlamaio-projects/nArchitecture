@@ -9,15 +9,15 @@ public class Paginate<T> : IPaginate<T>
         if (from > index)
             throw new ArgumentException($"indexFrom: {from} > pageIndex: {index}, must indexFrom <= pageIndex");
 
-        if (source is IQueryable<T> querable)
+        if (source is IQueryable<T> queryable)
         {
             Index = index;
             Size = size;
             From = from;
-            Count = querable.Count();
+            Count = queryable.Count();
             Pages = (int)Math.Ceiling(Count / (double)Size);
 
-            Items = querable.Skip((Index - From) * Size).Take(Size).ToList();
+            Items = queryable.Skip((Index - From) * Size).Take(Size).ToList();
         }
         else
         {
