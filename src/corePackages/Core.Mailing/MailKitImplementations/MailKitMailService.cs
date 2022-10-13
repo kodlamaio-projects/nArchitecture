@@ -78,7 +78,7 @@ public class MailKitMailService : IMailService
 
         smtp = new SmtpClient();
         smtp.Connect(_mailSettings.Server, _mailSettings.Port, SecureSocketOptions.Auto);
-        smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+        if (_mailSettings.AuthenticationRequired) smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
     }
 
     private AsymmetricKeyParameter ReadPrivateKeyFromPemEncodedString()
