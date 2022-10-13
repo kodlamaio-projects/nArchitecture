@@ -34,7 +34,7 @@ public class Paginate<T> : IPaginate<T>
 
     public Paginate()
     {
-        Items = new T[0];
+        Items = Array.Empty<T>();
     }
 
     public int From { get; set; }
