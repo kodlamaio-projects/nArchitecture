@@ -12,11 +12,12 @@ public class BasePipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequ
 
     public virtual async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
+        TResponse response = default;
         bool isSuccess = true;
         OnBefore(request, cancellationToken, next);
         try
         {
-            return await next();
+            response = await next();
         }
         catch (Exception e)
         {
@@ -24,12 +25,11 @@ public class BasePipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequ
             Onexception(request, cancellationToken, next, e);
             throw;
         }
-        finally
-        {
-            if (isSuccess)
-                OnSuccess(request, cancellationToken, next);
+        if (isSuccess)
+            OnSuccess(request, cancellationToken, next);
 
-            OnAfter(request, cancellationToken, next);
-        }
+        OnAfter(request, cancellationToken, next);
+
+        return response;
     }
 }
