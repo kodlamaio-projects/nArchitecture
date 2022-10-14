@@ -16,6 +16,7 @@ namespace Persistence.EntityConfigurations
             builder.ToTable("OperationClaims").HasKey(o => o.Id);
             builder.Property(o => o.Id).HasColumnName("Id");
             builder.Property(o => o.Name).HasColumnName("Name");
+            builder.HasIndex(o => o.Name, "UK_OperationClaims_Name").IsUnique();
 
             OperationClaim[] operationClaimSeeds = { new(1, "Admin") };
             builder.HasData(operationClaimSeeds);

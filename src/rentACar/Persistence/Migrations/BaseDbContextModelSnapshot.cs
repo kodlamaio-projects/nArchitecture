@@ -627,7 +627,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 28, 14, 21, 31, 28, DateTimeKind.Local).AddTicks(8708))
+                        .HasDefaultValue(new DateTime(2022, 10, 10, 23, 7, 7, 426, DateTimeKind.Local).AddTicks(6025))
                         .HasColumnName("CreatedDate");
 
                     b.Property<int>("CustomerId")
@@ -665,23 +665,23 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             CustomerId = 1,
                             No = "123123",
-                            RentalEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentalEndDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
                             RentalPrice = 1000m,
-                            RentalStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentalStartDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             TotalRentalDate = (short)2
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             CustomerId = 1,
                             No = "123123",
-                            RentalEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentalEndDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
                             RentalPrice = 2000m,
-                            RentalStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentalStartDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             TotalRentalDate = (short)2
                         });
                 });
@@ -779,6 +779,9 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("RentEndKilometer");
 
+                    b.Property<int?>("RentEndRentalBranchId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("RentStartDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("RentStartDate");
@@ -786,6 +789,9 @@ namespace Persistence.Migrations
                     b.Property<int>("RentStartKilometer")
                         .HasColumnType("int")
                         .HasColumnName("RentStartKilometer");
+
+                    b.Property<int>("RentStartRentalBranchId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2")
@@ -797,6 +803,10 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("RentEndRentalBranchId");
+
+                    b.HasIndex("RentStartRentalBranchId");
+
                     b.ToTable("Rentals", (string)null);
 
                     b.HasData(
@@ -805,20 +815,24 @@ namespace Persistence.Migrations
                             Id = 1,
                             CarId = 2,
                             CustomerId = 1,
-                            RentEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentEndDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
                             RentEndKilometer = 1200,
-                            RentStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000
+                            RentEndRentalBranchId = 2,
+                            RentStartDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentStartKilometer = 1000,
+                            RentStartRentalBranchId = 1
                         },
                         new
                         {
                             Id = 2,
                             CarId = 1,
                             CustomerId = 2,
-                            RentEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentEndDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
                             RentEndKilometer = 1200,
-                            RentStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000
+                            RentEndRentalBranchId = 1,
+                            RentStartDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            RentStartKilometer = 1000,
+                            RentStartRentalBranchId = 2
                         });
                 });
 
@@ -1084,7 +1098,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Rental", b =>
                 {
                     b.HasOne("Domain.Entities.Car", "Car")
-                        .WithMany()
+                        .WithMany("Rentals")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1095,9 +1109,23 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.RentalBranch", "RentEndRentalBranch")
+                        .WithMany()
+                        .HasForeignKey("RentEndRentalBranchId");
+
+                    b.HasOne("Domain.Entities.RentalBranch", "RentStartRentalBranch")
+                        .WithMany()
+                        .HasForeignKey("RentStartRentalBranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Car");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("RentEndRentalBranch");
+
+                    b.Navigation("RentStartRentalBranch");
                 });
 
             modelBuilder.Entity("Domain.Entities.RentalsAdditionalService", b =>
@@ -1134,6 +1162,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Car", b =>
                 {
                     b.Navigation("CarDamages");
+
+                    b.Navigation("Rentals");
                 });
 
             modelBuilder.Entity("Domain.Entities.Color", b =>

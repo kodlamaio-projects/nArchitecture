@@ -1,7 +1,9 @@
-﻿using Core.Security.Entities;
+﻿using Core.Persistence.Repositories;
+using Core.Security.Entities;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
@@ -37,7 +39,24 @@ public class BaseDbContext : DbContext
     {
         Configuration = configuration;
     }
+    
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
 
+        IEnumerable<EntityEntry<Entity>> datas = ChangeTracker
+            .Entries<Entity>();
+        
+        foreach (var data in datas)
+        {
+            _ = data.State switch
+            {
+                EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
+                EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow
+            };
+        }
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //if (!optionsBuilder.IsConfigured)
