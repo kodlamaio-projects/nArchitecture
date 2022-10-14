@@ -4,41 +4,41 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace Core.Application.Pipelines.ExceptionLogging
+namespace Core.Application.Pipelines.ExceptionLogging;
+
+public class ExceptionLoggingBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
 {
-    public class ExceptionLoggingBehavior<TRequest, TResponse> : BasePipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+    private readonly LoggerServiceBase _loggerServiceBase;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+    public ExceptionLoggingBehavior(LoggerServiceBase loggerServiceBase, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly LoggerServiceBase _loggerServiceBase;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _loggerServiceBase = loggerServiceBase;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-
-        public ExceptionLoggingBehavior(LoggerServiceBase loggerServiceBase, IHttpContextAccessor httpContextAccessor)
+    protected override void Onexception(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next, Exception e)
+    {
+        List<LogParameter> logParameters = new();
+        logParameters.Add(new LogParameter
         {
-            _loggerServiceBase = loggerServiceBase;
-            _httpContextAccessor = httpContextAccessor;
-        }
+            Type = request.GetType().Name,
+            Value = request
+        });
 
-        protected override void Onexception(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next, Exception e)
+        LogDetailWithException logDetailWithException = new()
         {
-            List<LogParameter> logParameters = new();
-            logParameters.Add(new LogParameter
-            {
-                Type = request.GetType().Name,
-                Value = request
-            });
+            MethodName = next.Method.Name,
+            Parameters = logParameters,
+            ExceptionMessage = e.Message,
+            User = _httpContextAccessor.HttpContext == null ||
+                   _httpContextAccessor.HttpContext.User.Identity.Name == null
+                       ? "<anonymous>"
+                       : _httpContextAccessor.HttpContext.User.Identity.Name
+        };
 
-            LogDetail logDetail = new()
-            {
-                MethodName = next.Method.Name,
-                Parameters = logParameters,
-                User = _httpContextAccessor.HttpContext == null ||
-                       _httpContextAccessor.HttpContext.User.Identity.Name == null
-                           ? "<anonymous>"
-                           : _httpContextAccessor.HttpContext.User.Identity.Name
-            };
-
-            _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetail));
-        }
+        _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
     }
 }
