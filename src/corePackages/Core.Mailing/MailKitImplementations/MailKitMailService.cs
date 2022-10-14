@@ -23,6 +23,15 @@ public class MailKitMailService : IMailService
 
         email.To.Add(new MailboxAddress(mail.ToFullName, mail.ToEmail));
 
+        if (mail.CcList != null && mail.CcList.Any())
+        {
+            email.Cc.AddRange(mail.CcList);
+        }
+        if (mail.BccList != null && mail.BccList.Any())
+        {
+            email.Bcc.AddRange(mail.BccList);
+        }
+
         email.Subject = mail.Subject;
 
         BodyBuilder bodyBuilder = new()
@@ -39,7 +48,10 @@ public class MailKitMailService : IMailService
 
         using SmtpClient smtp = new();
         smtp.Connect(_mailSettings.Server, _mailSettings.Port);
-        //smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+        
+        if (_mailSettings.AuthenticationRequired)
+            smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+        
         smtp.Send(email);
         smtp.Disconnect(true);
     }

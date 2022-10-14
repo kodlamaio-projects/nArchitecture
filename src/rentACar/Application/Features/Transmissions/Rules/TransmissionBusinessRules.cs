@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Transmissions.Constants;
+using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -17,12 +18,12 @@ public class TransmissionBusinessRules
     public async Task TransmissionIdShouldExistWhenSelected(int id)
     {
         Transmission? result = await _transmissionRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Transmission not exists.");
+        if (result == null) throw new BusinessException(TransmissionMessages.TransmissionNotExists);
     }
 
     public async Task TransmissionNameCanNotBeDuplicatedWhenInserted(string name)
     {
         IPaginate<Transmission> result = await _transmissionRepository.GetListAsync(b => b.Name == name);
-        if (result.Items.Any()) throw new BusinessException("Transmission name exists.");
+        if (result.Items.Any()) throw new BusinessException(TransmissionMessages.TransmissionNameExists);
     }
 }

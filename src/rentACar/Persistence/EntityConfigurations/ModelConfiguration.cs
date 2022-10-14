@@ -19,6 +19,7 @@ namespace Persistence.EntityConfigurations
             builder.Property(p => p.FuelId).HasColumnName("FuelId");
             builder.Property(p => p.TransmissionId).HasColumnName("TransmissionId");
             builder.Property(p => p.Name).HasColumnName("Name");
+            builder.HasIndex(p => p.Name, "UK_Models_Name").IsUnique();
             builder.Property(p => p.DailyPrice).HasColumnName("DailyPrice");
             builder.Property(p => p.ImageUrl).HasColumnName("ImageUrl");
             builder.HasOne(p => p.Brand);
