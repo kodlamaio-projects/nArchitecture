@@ -1,4 +1,4 @@
-﻿using Core.Security.Entities;
+﻿using Core.Domain.Security.Entities;
 using Core.Security.JWT;
 
 namespace Application.Features.Auths.Dtos;

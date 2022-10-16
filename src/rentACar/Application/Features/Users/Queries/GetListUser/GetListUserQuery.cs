@@ -2,8 +2,8 @@ using Application.Features.Users.Models;
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Requests;
+using Core.Domain.Security.Entities;
 using Core.Persistence.Paging;
-using Core.Security.Entities;
 using MediatR;
 
 namespace Application.Features.Users.Queries.GetListUser;

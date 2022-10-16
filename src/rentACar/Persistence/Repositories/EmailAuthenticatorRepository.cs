@@ -1,6 +1,6 @@
 ﻿using Application.Services.Repositories;
+using Core.Domain.Security.Entities;
 using Core.Persistence.Repositories;
-using Core.Security.Entities;
 using Persistence.Contexts;
 
 namespace Persistence.Repositories;

@@ -1,7 +1,7 @@
 using Application.Features.Auths.Constants;
 using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
-using Core.Security.Entities;
+using Core.Domain.Security.Entities;
 using Core.Security.Hashing;
 
 namespace Application.Features.Users.Rules;

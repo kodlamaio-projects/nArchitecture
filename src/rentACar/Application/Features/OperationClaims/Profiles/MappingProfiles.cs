@@ -4,8 +4,8 @@ using Application.Features.OperationClaims.Commands.UpdateOperationClaim;
 using Application.Features.OperationClaims.Dtos;
 using Application.Features.OperationClaims.Models;
 using AutoMapper;
+using Core.Domain.Security.Entities;
 using Core.Persistence.Paging;
-using Core.Security.Entities;
 
 namespace Application.Features.OperationClaims.Profiles;
 

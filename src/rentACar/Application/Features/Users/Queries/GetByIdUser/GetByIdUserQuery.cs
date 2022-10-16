@@ -2,7 +2,7 @@ using Application.Features.Users.Dtos;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
-using Core.Security.Entities;
+using Core.Domain.Security.Entities;
 using MediatR;
 
 namespace Application.Features.Users.Queries.GetByIdUser;

@@ -2,7 +2,7 @@
 using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
 using AutoMapper;
-using Core.Security.Entities;
+using Core.Domain.Security.Entities;
 using MediatR;
 
 namespace Application.Features.Auths.Commands.RevokeToken;

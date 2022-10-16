@@ -1,7 +1,7 @@
 using Application.Features.OperationClaims.Constants;
 using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
-using Core.Security.Entities;
+using Core.Domain.Security.Entities;
 
 namespace Application.Features.OperationClaims.Rules;
 

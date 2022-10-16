@@ -1,4 +1,4 @@
-﻿using Core.Security.Entities;
+﻿using Core.Domain.Security.Entities;
 
 namespace Application.Services.UserService;
 

@@ -3,7 +3,7 @@ using Application.Features.Users.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using AutoMapper;
-using Core.Security.Entities;
+using Core.Domain.Security.Entities;
 using Core.Security.Hashing;
 using MediatR;
 

@@ -5,8 +5,8 @@ using Application.Features.Users.Commands.UpdateUserFromAuth;
 using Application.Features.Users.Dtos;
 using Application.Features.Users.Models;
 using AutoMapper;
+using Core.Domain.Security.Entities;
 using Core.Persistence.Paging;
-using Core.Security.Entities;
 
 namespace Application.Features.Users.Profiles;
 

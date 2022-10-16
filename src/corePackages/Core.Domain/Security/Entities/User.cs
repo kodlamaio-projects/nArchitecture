@@ -1,7 +1,7 @@
 ﻿using Core.Persistence.Repositories;
-using Core.Security.Enums;
+using Core.Domain.Security.Enums;
 
-namespace Core.Security.Entities;
+namespace Core.Domain.Security.Entities;
 
 public class User : Entity
 {

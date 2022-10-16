@@ -3,7 +3,7 @@ using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Authorization;
-using Core.Security.Entities;
+using Core.Domain.Security.Entities;
 using MediatR;
 using static Application.Features.OperationClaims.Constants.OperationClaims;
 using static Domain.Constants.OperationClaims;

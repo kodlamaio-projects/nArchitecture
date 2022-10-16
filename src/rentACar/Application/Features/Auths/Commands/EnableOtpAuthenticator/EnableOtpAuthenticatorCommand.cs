@@ -3,7 +3,7 @@ using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Application.Services.UserService;
-using Core.Security.Entities;
+using Core.Domain.Security.Entities;
 using MediatR;
 
 namespace Application.Features.Auths.Commands.EnableOtpAuthenticator;

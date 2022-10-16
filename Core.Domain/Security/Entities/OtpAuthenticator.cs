@@ -1,6 +1,6 @@
 ﻿using Core.Persistence.Repositories;
 
-namespace Core.Security.Entities;
+namespace Core.Domain.Security.Entities;
 
 public class OtpAuthenticator : Entity
 {

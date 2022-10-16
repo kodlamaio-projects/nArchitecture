@@ -1,5 +1,5 @@
-﻿using Core.Persistence.Repositories;
-using Core.Security.Entities;
+﻿using Core.Domain.Security.Entities;
+using Core.Persistence.Repositories;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
