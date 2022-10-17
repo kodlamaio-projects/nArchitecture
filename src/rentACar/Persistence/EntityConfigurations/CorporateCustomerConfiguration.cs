@@ -21,9 +21,6 @@ namespace Persistence.EntityConfigurations
             builder.Property(c => c.TaxNo).HasColumnName("TaxNo");
             builder.HasIndex(c => c.TaxNo, "UK_CorporateCustomers_TaxNo").IsUnique();
             builder.HasOne(c => c.Customer);
-
-            CorporateCustomer[] corporateCustomers = { new(1, 2, "Ahmet Çetinkaya", "54154512") };
-            builder.HasData(corporateCustomers);
         }
     }
 }
