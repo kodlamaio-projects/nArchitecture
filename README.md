@@ -25,6 +25,7 @@
 </p>
 
 ## 💻 About The Project
+As Kodlama.io, we decided to share examples of completed projects. Inspired by Clean Architecture, nArchitecture is a monolith project. In this project, which is a rental car simulation, we have completed the project with advanced techniques. A project has been created that includes Clean Architecture, CQRS, Advanced Repository, Dynamic Querying, JWT, OTP, Google & Microsoft Auth, Role Based Management, Distributed Caching(Redis), Logging (Serilog), Elastic Search, and much more. By contributing, you can support the project and learn new things.
 
 ### Built With
 
