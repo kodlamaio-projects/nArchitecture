@@ -1,11 +1,12 @@
 using Application.Features.Customers.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Domain.Entities;
 
 namespace Application.Features.Customers.Rules;
 
-public class CustomerBusinessRules
+public class CustomerBusinessRules : BaseBusinessRules
 {
     private readonly ICustomerRepository _customerRepository;
 

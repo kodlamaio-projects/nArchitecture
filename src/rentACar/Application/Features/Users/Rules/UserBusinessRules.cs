@@ -1,12 +1,13 @@
 using Application.Features.Auths.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
 using Core.Security.Hashing;
 
 namespace Application.Features.Users.Rules;
 
-public class UserBusinessRules
+public class UserBusinessRules : BaseBusinessRules
 {
     private readonly IUserRepository _userRepository;
 

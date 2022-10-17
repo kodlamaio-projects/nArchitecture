@@ -1,11 +1,12 @@
 using Application.Features.UserOperationClaims.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
 
 namespace Application.Features.UserOperationClaims.Rules;
 
-public class UserOperationClaimBusinessRules
+public class UserOperationClaimBusinessRules : BaseBusinessRules
 {
     private readonly IUserOperationClaimRepository _userOperationClaimRepository;
 

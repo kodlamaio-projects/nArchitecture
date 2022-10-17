@@ -1,5 +1,6 @@
 using Application.Features.Auths.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
 using Core.Security.Enums;
@@ -7,7 +8,7 @@ using Core.Security.Hashing;
 
 namespace Application.Features.Auths.Rules;
 
-public class AuthBusinessRules
+public class AuthBusinessRules : BaseBusinessRules
 {
     private readonly IUserRepository _userRepository;
     private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
