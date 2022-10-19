@@ -1,4 +1,6 @@
-﻿using Application.Features.Brands.Commands.CreateBrand;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Application.Features.Brands.Commands.CreateBrand;
 using Application.Features.Brands.Commands.DeleteBrand;
 using Application.Features.Brands.Commands.UpdateBrand;
 using Application.Features.Brands.Profiles;
@@ -11,16 +13,12 @@ using AutoMapper;
 using Core.Application.Requests;
 using Core.CrossCuttingConcerns.Exceptions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Brands.Commands.CreateBrand.CreateBrandCommand;
 using static Application.Features.Brands.Commands.DeleteBrand.DeleteBrandCommand;
 using static Application.Features.Brands.Commands.UpdateBrand.UpdateBrandCommand;
 using static Application.Features.Brands.Queries.GetByIdBrand.GetByIdBrandQuery;
 using static Application.Features.Brands.Queries.GetListBrand.GetListBrandQuery;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Tests.FeaturesTests.Brands
 {
@@ -70,7 +68,7 @@ namespace Application.Tests.FeaturesTests.Brands
         [Fact]
         public async Task UpdateBrandWhenExistsBrand()
         {
-            UpdateBrandCommandHandler handler = new UpdateBrandCommandHandler(_mockBrandRepository.Object, _mapper);
+            UpdateBrandCommandHandler handler = new(_mockBrandRepository.Object, _mapper, _brandBusinessRules);
             UpdateBrandCommand command = new UpdateBrandCommand();
             command.Id = 1;
             command.Name = "Opel";
@@ -83,7 +81,7 @@ namespace Application.Tests.FeaturesTests.Brands
         [Fact]
         public async Task UpdateBrandWhenNotExistsBrand()
         {
-            UpdateBrandCommandHandler handler = new UpdateBrandCommandHandler(_mockBrandRepository.Object, _mapper);
+            UpdateBrandCommandHandler handler = new(_mockBrandRepository.Object, _mapper, _brandBusinessRules);
             UpdateBrandCommand command = new UpdateBrandCommand();
             command.Id = 6;
             command.Name = "Opel";
@@ -94,7 +92,7 @@ namespace Application.Tests.FeaturesTests.Brands
         [Fact]
         public async Task DeleteBrandWhenExistsBrand()
         {
-            DeleteBrandCommandHandler handler = new DeleteBrandCommandHandler(_mockBrandRepository.Object, _mapper);
+            DeleteBrandCommandHandler handler = new(_mockBrandRepository.Object, _mapper, _brandBusinessRules);
             DeleteBrandCommand command = new DeleteBrandCommand();
             command.Id = 1;
 
@@ -106,7 +104,7 @@ namespace Application.Tests.FeaturesTests.Brands
         [Fact]
         public async Task DeleteBrandWhenNotExistsBrand()
         {
-            DeleteBrandCommandHandler handler = new DeleteBrandCommandHandler(_mockBrandRepository.Object, _mapper);
+            DeleteBrandCommandHandler handler = new(_mockBrandRepository.Object, _mapper, _brandBusinessRules);
             DeleteBrandCommand command = new DeleteBrandCommand();
             command.Id = 6;
 

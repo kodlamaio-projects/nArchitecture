@@ -1,8 +1,8 @@
-﻿using Core.Persistence.Paging;
+﻿using System.Linq.Expressions;
+using Core.Persistence.Paging;
 using Core.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
-using System.Linq.Expressions;
 
 namespace Core.Test.Helpers
 {
@@ -14,7 +14,7 @@ namespace Core.Test.Helpers
         {
             Mock<TRepository> mockRepo = new Mock<TRepository>();
 
-            Build(mockRepo,list);
+            Build(mockRepo, list);
             return mockRepo;
         }
 
@@ -68,12 +68,18 @@ namespace Core.Test.Helpers
             where TEntity : Entity, new()
             where TRepository : class, IAsyncRepository<TEntity>, IRepository<TEntity>
         {
-            mockRepo.Setup(s => s.GetAsync(It.IsAny<Expression<Func<TEntity, bool>>>(), It.IsAny<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>>()))
-               .ReturnsAsync((Expression<Func<TEntity, bool>> expression, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include) =>
-               {
-                   TEntity? result = entityList.FirstOrDefault(expression.Compile());
-                   return result;
-               });
+            mockRepo.Setup(s => s.GetAsync(It.IsAny<Expression<Func<TEntity, bool>>>(),
+                                           It.IsAny<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>>(),
+                                           It.IsAny<bool>(),
+                                           It.IsAny<CancellationToken>()
+                           ))
+                    .ReturnsAsync((Expression<Func<TEntity, bool>> expression,
+                                   Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include,
+                                   bool enableTracking, CancellationToken cancellationToken) =>
+                    {
+                        TEntity? result = entityList.FirstOrDefault(predicate: expression.Compile());
+                        return result;
+                    });
         }
 
         static void SetupAddAsync<TRepository, TEntity>(Mock<TRepository> mockRepo, List<TEntity> entityList)
