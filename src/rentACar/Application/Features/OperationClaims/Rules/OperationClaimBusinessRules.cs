@@ -1,10 +1,12 @@
+using Application.Features.OperationClaims.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Security.Entities;
 
 namespace Application.Features.OperationClaims.Rules;
 
-public class OperationClaimBusinessRules
+public class OperationClaimBusinessRules : BaseBusinessRules
 {
     private readonly IOperationClaimRepository _operationClaimRepository;
 
@@ -16,6 +18,6 @@ public class OperationClaimBusinessRules
     public async Task OperationClaimIdShouldExistWhenSelected(int id)
     {
         OperationClaim? result = await _operationClaimRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("OperationClaim not exists.");
+        if (result == null) throw new BusinessException(OperationClaimMessages.OperationClaimNotExists);
     }
 }

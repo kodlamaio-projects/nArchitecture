@@ -1,11 +1,13 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Fuels.Constants;
+using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.Fuels.Rules;
 
-public class FuelBusinessRules
+public class FuelBusinessRules : BaseBusinessRules
 {
     private readonly IFuelRepository _fuelRepository;
 
@@ -17,12 +19,12 @@ public class FuelBusinessRules
     public async Task FuelIdShouldExistWhenSelected(int id)
     {
         Fuel? result = await _fuelRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException("Fuel not exists.");
+        if (result == null) throw new BusinessException(FuelMessages.FuelNotExists);
     }
 
     public async Task FuelNameCanNotBeDuplicatedWhenInserted(string name)
     {
         IPaginate<Fuel> result = await _fuelRepository.GetListAsync(b => b.Name == name);
-        if (result.Items.Any()) throw new BusinessException("Fuel name exists.");
+        if (result.Items.Any()) throw new BusinessException(FuelMessages.FuelNameExists);
     }
 }

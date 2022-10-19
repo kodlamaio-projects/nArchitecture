@@ -23,13 +23,6 @@ namespace Persistence.EntityConfigurations
             builder.Property(i => i.TotalRentalDate).HasColumnName("TotalRentalDate");
             builder.Property(i => i.RentalPrice).HasColumnName("RentalPrice");
             builder.HasOne(i => i.Customer);
-
-            Invoice[] invoiceSeeds =
-            {
-                new(1, 1, "123123", DateTime.Today, DateTime.Today, DateTime.Today.AddDays(2), 2, 1000),
-                new(2, 1, "123123", DateTime.Today, DateTime.Today, DateTime.Today.AddDays(2), 2, 2000)
-            };
-            builder.HasData(invoiceSeeds);
         }
     }
 }

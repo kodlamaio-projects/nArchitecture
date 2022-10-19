@@ -34,9 +34,15 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ActivationKey");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit")
                         .HasColumnName("IsVerified");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -58,12 +64,21 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "UK_OperationClaims_Name")
+                        .IsUnique();
 
                     b.ToTable("OperationClaims", (string)null);
 
@@ -71,7 +86,9 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Admin"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Admin",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -83,6 +100,9 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit")
                         .HasColumnName("IsVerified");
@@ -91,6 +111,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)")
                         .HasColumnName("SecretKey");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -121,6 +144,9 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CreatedByIp");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("Expires")
                         .HasColumnType("datetime2")
                         .HasColumnName("Expires");
@@ -146,6 +172,9 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Token");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("UserId");
@@ -170,9 +199,12 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AuthenticatorType");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Email");
 
                     b.Property<string>("FirstName")
@@ -201,7 +233,13 @@ namespace Persistence.Migrations
                         .HasDefaultValue(true)
                         .HasColumnName("Status");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Email" }, "UK_Users_Email")
+                        .IsUnique();
 
                     b.ToTable("Users", (string)null);
                 });
@@ -215,9 +253,15 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("OperationClaimId")
                         .HasColumnType("int")
                         .HasColumnName("OperationClaimId");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -227,7 +271,8 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OperationClaimId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex(new[] { "UserId", "OperationClaimId" }, "UK_UserOperationClaims_UserId_OperationClaimId")
+                        .IsUnique();
 
                     b.ToTable("UserOperationClaims", (string)null);
                 });
@@ -241,16 +286,25 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("DailyPrice")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("DailyPrice");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "UK_AdditionalServices_Name")
+                        .IsUnique();
 
                     b.ToTable("AdditionalServices", (string)null);
 
@@ -258,14 +312,18 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DailyPrice = 200m,
-                            Name = "Baby Seat"
+                            Name = "Baby Seat",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DailyPrice = 300m,
-                            Name = "Scooter"
+                            Name = "Scooter",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -278,12 +336,21 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "UK_Brands_Name")
+                        .IsUnique();
 
                     b.ToTable("Brands", (string)null);
 
@@ -291,12 +358,16 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "BMW"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "BMW",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Mercedes"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Mercedes",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -316,6 +387,9 @@ namespace Persistence.Migrations
                     b.Property<int>("ColorId")
                         .HasColumnType("int")
                         .HasColumnName("ColorId");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Kilometer")
                         .HasColumnType("int")
@@ -341,6 +415,9 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("RentalBranchId");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
@@ -357,24 +434,28 @@ namespace Persistence.Migrations
                             Id = 1,
                             CarState = 1,
                             ColorId = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Kilometer = 1000,
                             MinFindeksCreditRate = (short)500,
                             ModelId = 1,
                             ModelYear = (short)2018,
                             Plate = "07ABC07",
-                            RentalBranchId = 1
+                            RentalBranchId = 1,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CarState = 2,
                             ColorId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Kilometer = 1000,
                             MinFindeksCreditRate = (short)1100,
                             ModelId = 2,
                             ModelYear = (short)2018,
                             Plate = "15ABC15",
-                            RentalBranchId = 2
+                            RentalBranchId = 2,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -391,6 +472,9 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CarId");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DamageDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -400,6 +484,9 @@ namespace Persistence.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false)
                         .HasColumnName("IsFixed");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -417,12 +504,21 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "UK_Colors_Name")
+                        .IsUnique();
 
                     b.ToTable("Colors", (string)null);
 
@@ -430,12 +526,16 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Red"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Red",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Blue"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Blue",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -453,30 +553,30 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CompanyName");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int")
                         .HasColumnName("CustomerId");
 
                     b.Property<string>("TaxNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("TaxNo");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
+                    b.HasIndex(new[] { "CustomerId" }, "UK_CorporateCustomers_CustomerId")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "TaxNo" }, "UK_CorporateCustomers_TaxNo")
                         .IsUnique();
 
                     b.ToTable("CorporateCustomers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompanyName = "Ahmet Çetinkaya",
-                            CustomerId = 2,
-                            TaxNo = "54154512"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Customer", b =>
@@ -488,13 +588,20 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex(new[] { "UserId" }, "UK_Customers_UserId")
+                        .IsUnique();
 
                     b.ToTable("Customers", (string)null);
                 });
@@ -508,6 +615,9 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int")
                         .HasColumnName("CustomerId");
@@ -516,26 +626,15 @@ namespace Persistence.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("Score");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
                     b.ToTable("FindeksCreditRates", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            Score = (short)1000
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CustomerId = 2,
-                            Score = (short)1900
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Fuel", b =>
@@ -547,12 +646,21 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "UK_Fuels_Name")
+                        .IsUnique();
 
                     b.ToTable("Fuels", (string)null);
 
@@ -560,12 +668,16 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Diesel"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Diesel",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Electric"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Electric",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -577,6 +689,9 @@ namespace Persistence.Migrations
                         .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int")
@@ -594,25 +709,21 @@ namespace Persistence.Migrations
 
                     b.Property<string>("NationalIdentity")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("NationalIdentity");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
+                    b.HasIndex(new[] { "CustomerId" }, "UK_IndividualCustomers_CustomerId")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "NationalIdentity" }, "UK_IndividualCustomers_NationalIdentity")
                         .IsUnique();
 
                     b.ToTable("IndividualCustomers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            FirstName = "Ahmet",
-                            LastName = "Çetinkaya",
-                            NationalIdentity = "123123123123"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Invoice", b =>
@@ -627,7 +738,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 28, 14, 21, 31, 28, DateTimeKind.Local).AddTicks(8708))
+                        .HasDefaultValue(new DateTime(2022, 10, 17, 19, 7, 25, 692, DateTimeKind.Local).AddTicks(9094))
                         .HasColumnName("CreatedDate");
 
                     b.Property<int>("CustomerId")
@@ -655,35 +766,14 @@ namespace Persistence.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("TotalRentalDate");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Invoices", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            CustomerId = 1,
-                            No = "123123",
-                            RentalEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentalPrice = 1000m,
-                            RentalStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            TotalRentalDate = (short)2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            CustomerId = 1,
-                            No = "123123",
-                            RentalEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentalPrice = 2000m,
-                            RentalStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            TotalRentalDate = (short)2
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Model", b =>
@@ -698,6 +788,9 @@ namespace Persistence.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int")
                         .HasColumnName("BrandId");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("DailyPrice")
                         .HasColumnType("decimal(18,2)")
@@ -714,12 +807,15 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.Property<int>("TransmissionId")
                         .HasColumnType("int")
                         .HasColumnName("TransmissionId");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -729,6 +825,9 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TransmissionId");
 
+                    b.HasIndex(new[] { "Name" }, "UK_Models_Name")
+                        .IsUnique();
+
                     b.ToTable("Models", (string)null);
 
                     b.HasData(
@@ -736,21 +835,25 @@ namespace Persistence.Migrations
                         {
                             Id = 1,
                             BrandId = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DailyPrice = 1000m,
                             FuelId = 1,
                             ImageUrl = "",
                             Name = "418i",
-                            TransmissionId = 2
+                            TransmissionId = 2,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             BrandId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DailyPrice = 600m,
                             FuelId = 2,
                             ImageUrl = "",
                             Name = "CLA 180D",
-                            TransmissionId = 1
+                            TransmissionId = 1,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -767,6 +870,9 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CarId");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int")
                         .HasColumnName("CustomerId");
@@ -779,6 +885,10 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("RentEndKilometer");
 
+                    b.Property<int?>("RentEndRentalBranchId")
+                        .HasColumnType("int")
+                        .HasColumnName("RentEndRentalBranchId");
+
                     b.Property<DateTime>("RentStartDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("RentStartDate");
@@ -787,9 +897,16 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("RentStartKilometer");
 
+                    b.Property<int>("RentStartRentalBranchId")
+                        .HasColumnType("int")
+                        .HasColumnName("RentStartRentalBranchId");
+
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("ReturnDate");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -797,29 +914,14 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Rentals", (string)null);
+                    b.HasIndex("RentEndRentalBranchId")
+                        .IsUnique()
+                        .HasFilter("[RentEndRentalBranchId] IS NOT NULL");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CarId = 2,
-                            CustomerId = 1,
-                            RentEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentEndKilometer = 1200,
-                            RentStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CarId = 1,
-                            CustomerId = 2,
-                            RentEndDate = new DateTime(2022, 9, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentEndKilometer = 1200,
-                            RentStartDate = new DateTime(2022, 9, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000
-                        });
+                    b.HasIndex("RentStartRentalBranchId")
+                        .IsUnique();
+
+                    b.ToTable("Rentals", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.RentalBranch", b =>
@@ -835,6 +937,12 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("City");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("RentalBranches", (string)null);
@@ -843,12 +951,16 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            City = 6
+                            City = 6,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            City = 7
+                            City = 7,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -865,9 +977,15 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AdditionalServiceId");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("RentalId")
                         .HasColumnType("int")
                         .HasColumnName("RentalId");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -887,12 +1005,21 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "UK_Transmissions_Name")
+                        .IsUnique();
 
                     b.ToTable("Transmissions", (string)null);
 
@@ -900,12 +1027,16 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Manuel"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Manuel",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Automatic"
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Automatic",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -1084,7 +1215,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Rental", b =>
                 {
                     b.HasOne("Domain.Entities.Car", "Car")
-                        .WithMany()
+                        .WithMany("Rentals")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1095,9 +1226,24 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.RentalBranch", "RentEndRentalBranch")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Rental", "RentEndRentalBranchId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.RentalBranch", "RentStartRentalBranch")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Rental", "RentStartRentalBranchId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Car");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("RentEndRentalBranch");
+
+                    b.Navigation("RentStartRentalBranch");
                 });
 
             modelBuilder.Entity("Domain.Entities.RentalsAdditionalService", b =>
@@ -1134,6 +1280,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Car", b =>
                 {
                     b.Navigation("CarDamages");
+
+                    b.Navigation("Rentals");
                 });
 
             modelBuilder.Entity("Domain.Entities.Color", b =>
