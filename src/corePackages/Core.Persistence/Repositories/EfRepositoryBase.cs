@@ -58,25 +58,35 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return Context.Set<TEntity>();
     }
 
-    public async Task<TEntity> AddAsync(TEntity entity)
+    public async Task<TEntity> AddAsync(TEntity entity, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
         Context.Entry(entity).State = EntityState.Added;
         await Context.SaveChangesAsync();
-        return entity;
+
+        TEntity addedEntity = await GetAsync(e => e.Id == entity.Id, include: include);
+
+        return addedEntity;
     }
 
-    public async Task<TEntity> UpdateAsync(TEntity entity)
+    public async Task<TEntity> UpdateAsync(TEntity entity, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
         Context.Entry(entity).State = EntityState.Modified;
         await Context.SaveChangesAsync();
-        return entity;
+
+        TEntity updatedEntity = await GetAsync(e => e.Id == entity.Id, include: include);
+
+        return updatedEntity;
     }
 
-    public async Task<TEntity> DeleteAsync(TEntity entity)
+    public async Task<TEntity> DeleteAsync(TEntity entity, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
         Context.Entry(entity).State = EntityState.Deleted;
+
+        TEntity deletedEntity = await GetAsync(e => e.Id == entity.Id, include: include);
+
         await Context.SaveChangesAsync();
-        return entity;
+
+        return deletedEntity;
     }
 
     public TEntity Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
@@ -111,25 +121,35 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return queryable.ToPaginate(index, size);
     }
 
-    public TEntity Add(TEntity entity)
+    public TEntity Add(TEntity entity, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
         Context.Entry(entity).State = EntityState.Added;
         Context.SaveChanges();
-        return entity;
+
+        TEntity addedEntity = Get(e => e.Id == entity.Id, include: include);
+
+        return addedEntity;
     }
 
-    public TEntity Update(TEntity entity)
+    public TEntity Update(TEntity entity, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
         Context.Entry(entity).State = EntityState.Modified;
         Context.SaveChanges();
-        return entity;
+
+        TEntity updatedEntity = Get(e => e.Id == entity.Id, include: include);
+
+        return updatedEntity;
     }
 
-    public TEntity Delete(TEntity entity)
+    public TEntity Delete(TEntity entity, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
         Context.Entry(entity).State = EntityState.Deleted;
+
+        TEntity deletedEntity = Get(e => e.Id == entity.Id, include: include);
+
         Context.SaveChanges();
-        return entity;
+
+        return deletedEntity;
     }
 
     

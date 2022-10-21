@@ -19,7 +19,7 @@ public interface IAsyncRepository<T> : IQuery<T> where T : Entity
                                              int index = 0, int size = 10, bool enableTracking = true,
                                              CancellationToken cancellationToken = default);
 
-    Task<T> AddAsync(T entity);
-    Task<T> UpdateAsync(T entity);
-    Task<T> DeleteAsync(T entity);
+    Task<T> AddAsync(T entity, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
+    Task<T> UpdateAsync(T entity, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
+    Task<T> DeleteAsync(T entity, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
 }
