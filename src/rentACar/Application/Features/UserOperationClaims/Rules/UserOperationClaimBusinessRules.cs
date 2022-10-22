@@ -2,7 +2,7 @@ using Application.Features.UserOperationClaims.Constants;
 using Application.Services.Repositories;
 using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 
 namespace Application.Features.UserOperationClaims.Rules;
 

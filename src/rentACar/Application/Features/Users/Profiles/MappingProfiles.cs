@@ -6,7 +6,7 @@ using Application.Features.Users.Dtos;
 using Application.Features.Users.Models;
 using AutoMapper;
 using Core.Persistence.Paging;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 
 namespace Application.Features.Users.Profiles;
 

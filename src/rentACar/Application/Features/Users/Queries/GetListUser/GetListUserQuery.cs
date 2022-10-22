@@ -3,7 +3,7 @@ using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Requests;
 using Core.Persistence.Paging;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 using MediatR;
 
 namespace Application.Features.Users.Queries.GetListUser;

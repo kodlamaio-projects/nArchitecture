@@ -1,5 +1,5 @@
-﻿using Core.Security.Entities;
-using Core.Security.Enums;
+﻿using Core.Domain.Concrete.Security.Entities;
+using Core.Domain.Concrete.Security.Enums;
 using Core.Security.JWT;
 
 namespace Application.Features.Auths.Dtos;

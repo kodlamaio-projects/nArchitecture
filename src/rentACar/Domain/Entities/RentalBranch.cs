@@ -1,12 +1,12 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 using Domain.Enums;
 
 namespace Domain.Entities;
 
-public class RentalBranch : Entity
+public class RentalBranch : BaseEntity<int>, IEntity
 {
-    public City City { get; set; }
-   
+    public City City { get; set; }   
 
     public virtual ICollection<Car> Cars { get; set; }
 

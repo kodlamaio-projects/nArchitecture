@@ -2,8 +2,8 @@
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Mailing;
 using Core.Security.EmailAuthenticator;
-using Core.Security.Entities;
-using Core.Security.Enums;
+using Core.Domain.Concrete.Security.Entities;
+using Core.Domain.Concrete.Security.Enums;
 using Core.Security.JWT;
 using Core.Security.OtpAuthenticator;
 using Microsoft.EntityFrameworkCore;

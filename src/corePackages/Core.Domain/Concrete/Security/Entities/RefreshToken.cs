@@ -1,8 +1,9 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
-namespace Core.Security.Entities;
+namespace Core.Domain.Concrete.Security.Entities;
 
-public class RefreshToken : Entity
+public class RefreshToken : BaseEntity<int>, IEntity
 {
     public int UserId { get; set; }
     public string Token { get; set; }
@@ -20,9 +21,7 @@ public class RefreshToken : Entity
 
     public virtual User User { get; set; }
 
-    public RefreshToken()
-    {
-    }
+    public RefreshToken() { }
 
     public RefreshToken(int id, string token, DateTime expires, DateTime created, string createdByIp, DateTime? revoked,
                         string revokedByIp, string replacedByToken, string reasonRevoked)

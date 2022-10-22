@@ -2,9 +2,9 @@
 using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
 using Application.Services.UserService;
+using Core.Domain.Concrete.Security.Entities;
+using Core.Domain.Concrete.Security.Enums;
 using Core.Security.Dtos;
-using Core.Security.Entities;
-using Core.Security.Enums;
 using Core.Security.JWT;
 using MediatR;
 

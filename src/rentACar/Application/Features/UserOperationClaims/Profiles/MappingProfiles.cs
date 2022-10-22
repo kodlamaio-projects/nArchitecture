@@ -5,7 +5,7 @@ using Application.Features.UserOperationClaims.Dtos;
 using Application.Features.UserOperationClaims.Models;
 using AutoMapper;
 using Core.Persistence.Paging;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 
 namespace Application.Features.UserOperationClaims.Profiles;
 

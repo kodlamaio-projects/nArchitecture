@@ -1,8 +1,9 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class RentalsAdditionalService : Entity
+public class RentalsAdditionalService : BaseEntity<int>, IEntity
 {
     public int RentalId { get; set; }
     public int AdditionalServiceId { get; set; }
@@ -10,9 +11,7 @@ public class RentalsAdditionalService : Entity
     public virtual Rental Rental { get; set; }
     public virtual AdditionalService AdditionalService { get; set; }
 
-    public RentalsAdditionalService()
-    {
-    }
+    public RentalsAdditionalService() { }
 
     public RentalsAdditionalService(int id, int rentalId, int additionalServiceId) : base(id)
     {

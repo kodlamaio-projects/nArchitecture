@@ -1,6 +1,6 @@
 using Application.Features.Auths.Dtos;
 using AutoMapper;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 
 namespace Application.Features.Auths.Profiles;
 

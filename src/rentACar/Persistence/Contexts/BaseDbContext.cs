@@ -1,11 +1,12 @@
 ﻿using Core.Persistence.Repositories;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using Core.Domain.Abstract;
 
 namespace Persistence.Contexts;
 
@@ -43,8 +44,8 @@ public class BaseDbContext : DbContext
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
 
-        IEnumerable<EntityEntry<Entity>> datas = ChangeTracker
-            .Entries<Entity>();
+        IEnumerable<EntityEntry<IEntity>> datas = ChangeTracker
+            .Entries<IEntity>();
         
         foreach (var data in datas)
         {

@@ -1,9 +1,10 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 using Domain.Enums;
 
 namespace Domain.Entities;
 
-public class Car : Entity
+public class Car : BaseEntity<int>, IEntity
 {
     public int ColorId { get; set; }
     public int ModelId { get; set; }

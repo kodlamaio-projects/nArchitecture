@@ -2,7 +2,7 @@ using Application.Features.OperationClaims.Dtos;
 using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 using MediatR;
 
 namespace Application.Features.OperationClaims.Queries.GetByIdOperationClaim;

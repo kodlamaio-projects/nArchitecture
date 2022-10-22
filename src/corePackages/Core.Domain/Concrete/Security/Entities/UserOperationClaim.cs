@@ -1,8 +1,9 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
-namespace Core.Security.Entities;
+namespace Core.Domain.Concrete.Security.Entities;
 
-public class UserOperationClaim : Entity
+public class UserOperationClaim : BaseEntity<int>, IEntity
 {
     public int UserId { get; set; }
     public int OperationClaimId { get; set; }
@@ -10,9 +11,7 @@ public class UserOperationClaim : Entity
     public virtual User User { get; set; }
     public virtual OperationClaim OperationClaim { get; set; }
 
-    public UserOperationClaim()
-    {
-    }
+    public UserOperationClaim() { }
 
     public UserOperationClaim(int id, int userId, int operationClaimId) : base(id)
     {

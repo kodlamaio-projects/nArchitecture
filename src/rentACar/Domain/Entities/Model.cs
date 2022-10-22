@@ -1,13 +1,13 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class Model : Entity
+public class Model : BaseEntity<int>, IEntity
 {
     public int BrandId { get; set; }
     public int FuelId { get; set; }
     public int TransmissionId { get; set; }
-    public string Name { get; set; }
     public decimal DailyPrice { get; set; }
     public string ImageUrl { get; set; }
 

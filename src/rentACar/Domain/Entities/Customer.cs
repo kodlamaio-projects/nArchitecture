@@ -1,9 +1,10 @@
-﻿using Core.Persistence.Repositories;
-using Core.Security.Entities;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
+using Core.Domain.Concrete.Security.Entities;
 
 namespace Domain.Entities;
 
-public class Customer : Entity
+public class Customer : BaseEntity<int>, IEntity
 {
     public int UserId { get; set; }
 

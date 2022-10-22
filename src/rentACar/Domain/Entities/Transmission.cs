@@ -1,11 +1,10 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class Transmission : Entity
+public class Transmission : BaseEntity<int>, IEntity
 {
-    public string Name { get; set; }
-
     public virtual ICollection<Model> Models { get; set; }
 
     public Transmission()

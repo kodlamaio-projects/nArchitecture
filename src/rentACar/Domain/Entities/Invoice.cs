@@ -1,12 +1,12 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class Invoice : Entity
+public class Invoice : BaseEntity<int>, IEntity
 {
     public int CustomerId { get; set; }
     public string No { get; set; }
-    public DateTime CreatedDate { get; set; }
     public DateTime RentalStartDate { get; set; }
     public DateTime RentalEndDate { get; set; }
     public short TotalRentalDate { get; set; }

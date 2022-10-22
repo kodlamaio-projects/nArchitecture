@@ -1,8 +1,9 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class IndividualCustomer : Entity
+public class IndividualCustomer : BaseEntity<int>, IEntity
 {
     public int CustomerId { get; set; }
     public string FirstName { get; set; }
@@ -11,9 +12,7 @@ public class IndividualCustomer : Entity
 
     public virtual Customer Customer { get; set; }
 
-    public IndividualCustomer()
-    {
-    }
+    public IndividualCustomer() { }
 
     public IndividualCustomer(int id, int customerId, string firstName, string lastName, string nationalIdentity) :
         base(id)

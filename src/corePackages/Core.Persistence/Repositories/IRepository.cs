@@ -1,10 +1,11 @@
 ﻿using System.Linq.Expressions;
+using Core.Domain.Abstract;
 using Core.Persistence.Paging;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace Core.Persistence.Repositories;
 
-public interface IRepository<T> : IQuery<T> where T : Entity
+public interface IRepository<T> : IQuery<T> where T : class, IEntity, new()
 {
     T Get(Expression<Func<T, bool>> predicate, Func<IQueryable<T>,
           IIncludableQueryable<T, object>>? include = null, bool enableTracking = true);

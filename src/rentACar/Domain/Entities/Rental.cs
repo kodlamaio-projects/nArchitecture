@@ -1,9 +1,9 @@
-﻿using Core.Persistence.Repositories;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class Rental : Entity
+public class Rental : BaseEntity<int>, IEntity
 {
     public int CarId { get; set; }
     public int CustomerId { get; set; }

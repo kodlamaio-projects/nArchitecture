@@ -1,15 +1,13 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class AdditionalService : Entity
+public class AdditionalService : BaseEntity<int>, IEntity
 {
-    public string Name { get; set; }
     public decimal DailyPrice { get; set; }
 
-    public AdditionalService()
-    {
-    }
+    public AdditionalService() { }
 
     public AdditionalService(int id, string name, decimal dailyPrice) : base(id)
     {

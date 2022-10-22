@@ -8,7 +8,7 @@ using Application.Features.Auths.Commands.VerifyEmailAuthenticator;
 using Application.Features.Auths.Commands.VerifyOtpAuthenticator;
 using Application.Features.Auths.Dtos;
 using Core.Security.Dtos;
-using Core.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 

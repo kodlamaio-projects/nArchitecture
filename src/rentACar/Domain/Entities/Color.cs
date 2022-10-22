@@ -1,11 +1,10 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Domain.Abstract;
+using Core.Domain.Bases;
 
 namespace Domain.Entities;
 
-public class Color : Entity
+public class Color : BaseEntity<int>, IEntity
 {
-    public string Name { get; set; }
-
     public virtual ICollection<Car> Cars { get; set; }
 
     public Color()
