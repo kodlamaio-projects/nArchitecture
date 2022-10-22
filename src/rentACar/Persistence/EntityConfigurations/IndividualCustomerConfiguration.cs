@@ -22,9 +22,6 @@ namespace Persistence.EntityConfigurations
             builder.Property(i => i.NationalIdentity).HasColumnName("NationalIdentity");
             builder.HasIndex(i => i.NationalIdentity, "UK_IndividualCustomers_NationalIdentity").IsUnique();
             builder.HasOne(i => i.Customer);
-
-            IndividualCustomer[] individualCustomers = { new(1, 1, "Ahmet", "Çetinkaya", "123123123123") };
-            builder.HasData(individualCustomers);
         }
     }
 }
