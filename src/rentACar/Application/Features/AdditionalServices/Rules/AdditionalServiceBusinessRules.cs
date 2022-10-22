@@ -1,12 +1,13 @@
 using Application.Features.AdditionalServices.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.AdditionalServices.Rules;
 
-public class AdditionalServiceBusinessRules
+public class AdditionalServiceBusinessRules : BaseBusinessRules
 {
     private readonly IAdditionalServiceRepository _additionalServiceRepository;
 

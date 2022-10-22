@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Mime;
 
 namespace Core.CrossCuttingConcerns.Exceptions;
 
@@ -36,14 +37,15 @@ public class ExceptionMiddleware
 
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        context.Response.ContentType = "application/json";
-
-        if (exception.GetType() == typeof(ValidationException)) return CreateValidationException(context, exception);
-        else if (exception.GetType() == typeof(BusinessException)) return CreateBusinessException(context, exception);
-        else if (exception.GetType() == typeof(NotFoundException)) return CreateNotFoundException(context, exception);
-        else if (exception.GetType() == typeof(AuthorizationException))
-            return CreateAuthorizationException(context, exception);
-        return CreateInternalException(context, exception);
+        context.Response.ContentType = MediaTypeNames.Application.Json;
+        return exception switch
+        {
+            _ when exception is ValidationException => CreateValidationException(context, exception),
+            _ when exception is BusinessException => CreateBusinessException(context, exception),
+            _ when exception is NotFoundException => CreateNotFoundException(context, exception),
+            _ when exception is AuthorizationException => CreateAuthorizationException(context, exception),
+            _ => CreateInternalException(context, exception)
+        };
     }
 
     private Task CreateAuthorizationException(HttpContext context, Exception exception)

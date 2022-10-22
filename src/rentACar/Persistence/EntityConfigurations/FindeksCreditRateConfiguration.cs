@@ -18,9 +18,6 @@ namespace Persistence.EntityConfigurations
             builder.Property(f => f.CustomerId).HasColumnName("CustomerId");
             builder.Property(f => f.Score).HasColumnName("Score");
             builder.HasOne(f => f.Customer);
-
-            FindeksCreditRate[] findeksCreditRates = { new(1, 1, 1000), new(2, 2, 1900) };
-            builder.HasData(findeksCreditRates);
         }
     }
 }

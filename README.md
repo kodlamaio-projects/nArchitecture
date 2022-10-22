@@ -25,23 +25,19 @@
 </p>
 
 ## 💻 About The Project
+As Kodlama.io, we decided to share examples of completed projects. Inspired by Clean Architecture, nArchitecture is a monolith project. In this project, which is a rental car simulation, we have completed the project with advanced techniques. A project has been created that includes Clean Architecture, CQRS, Advanced Repository, Dynamic Querying, JWT, OTP, Google & Microsoft Auth, Role Based Management, Distributed Caching(Redis), Logging (Serilog), Elastic Search, and much more. By contributing, you can support the project and learn new things.
 
 ### Built With
 
 [![](https://img.shields.io/badge/.NET%20Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://learn.microsoft.com/tr-tr/dotnet/welcome)
 
-<!-- ## ⚙️ Getting Started
+## ⚙️ Getting Started
 
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
+- .NET 6
 
 ### Installation
 
@@ -49,10 +45,8 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    git clone https://github.com/kodlamaio-projects/nArchitecture.RentACarProject.git
    ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ``` -->
+2. Configure `appsettings.json` in WebAPI.
+3. Run `Update-Database` command with Package Manager Console in WebAPI to create tables in sql server.
 
 <!-- ## 🚀 Usage
 
