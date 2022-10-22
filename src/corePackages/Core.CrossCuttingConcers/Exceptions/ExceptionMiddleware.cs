@@ -1,13 +1,9 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions.Handlers;
-using Microsoft.AspNetCore.Http;
-
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog;
-using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net;
+using System.Net.Mime;
 
 namespace Core.CrossCuttingConcerns.Exceptions;
 
@@ -40,7 +36,7 @@ public class ExceptionMiddleware
 
     private Task HandleExceptionAsync(HttpResponse response, Exception exception)
     {
-        response.ContentType = "application/json";
+        response.ContentType = MediaTypeNames.Application.Json;
         _httpExceptionHandler.Response = response;
         return _httpExceptionHandler.HandleExceptionAsync(exception);
     }
