@@ -1,6 +1,8 @@
+using Core.Application.Dtos;
+
 namespace Application.Features.Users.Dtos;
 
-public class UserListDto
+public class UserListDto : IDto
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

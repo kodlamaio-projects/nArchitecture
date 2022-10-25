@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Rentals.Dtos;
+﻿using Core.Application.Dtos;
 
-public class DeletedRentalDto
+namespace Application.Features.Rentals.Dtos;
+
+public class DeletedRentalDto : IDto
 {
     public int Id { get; set; }
 }
