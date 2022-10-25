@@ -1,7 +1,6 @@
 ﻿using Core.Persistence.Repositories;
 using Core.Security.Entities;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
@@ -48,11 +47,17 @@ public class BaseDbContext : DbContext
         
         foreach (var data in datas)
         {
-            _ = data.State switch
+            switch (data.State)
             {
-                EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
-                EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow
-            };
+                case EntityState.Modified:
+                    data.Entity.UpdatedDate = DateTime.UtcNow;
+                    break;
+                case EntityState.Added:
+                    data.Entity.CreatedDate = DateTime.UtcNow;
+                    break;
+                default:
+                    break;
+            }
         }
         return await base.SaveChangesAsync(cancellationToken);
     }
