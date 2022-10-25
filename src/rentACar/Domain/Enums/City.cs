@@ -18,7 +18,7 @@ public enum City
     Bolu = 14,
     Burdur = 15,
     Bursa = 16,
-    Çanakkale = 17,
+    Canakkale = 17,
     Cankiri = 18,
     Corum = 19,
     Denizli = 20,
