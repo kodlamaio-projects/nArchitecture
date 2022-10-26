@@ -17,7 +17,7 @@ public class PickUpRentalCommand : IRequest<UpdatedRentalDto>, ISecuredRequest
     public DateTime? ReturnDate { get; set; }
     public int RentEndKilometer { get; set; }
 
-    public string[] Roles => new[] { Admin, RentalUpdate };
+    public string[] Roles => new[] { Admin, RentalAdmin, RentalWrite, RentalUpdate };
 
     public class PickUpRentalCommandHandler : IRequestHandler<PickUpRentalCommand, UpdatedRentalDto>
     {

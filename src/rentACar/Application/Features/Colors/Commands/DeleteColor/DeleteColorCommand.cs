@@ -13,7 +13,7 @@ public class DeleteColorCommand : IRequest<DeletedColorDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, ColorDelete };
+    public string[] Roles => new[] { Admin, ColorAdmin, ColorWrite, ColorDelete };
 
     public class DeleteColorCommandHandler : IRequestHandler<DeleteColorCommand, DeletedColorDto>
     {

@@ -22,7 +22,7 @@ public class CreateModelCommand : IRequest<CreatedModelDto>, ISecuredRequest, IC
 
     public bool BypassCache { get; }
     public string CacheKey => "models-list";
-    public string[] Roles => new[] { Admin, ModelsAdd };
+    public string[] Roles => new[] { Admin, ModelAdmin, ModelWrite, ModelAdd };
 
     public class CreateModelCommandHandler : IRequestHandler<CreateModelCommand, CreatedModelDto>
     {

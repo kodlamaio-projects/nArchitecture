@@ -17,7 +17,7 @@ public class UpdateCarDamageCommand : IRequest<UpdatedCarDamageDto>, ISecuredReq
     public string DamageDescription { get; set; }
     public bool IsFixed { get; set; }
 
-    public string[] Roles => new[] { Admin, CarDamageUpdate };
+    public string[] Roles => new[] { Admin, CarDamageAdmin, CarDamageWrite, CarDamageUpdate };
 
     public class UpdateCarDamageCommandHandler : IRequestHandler<UpdateCarDamageCommand, UpdatedCarDamageDto>
     {

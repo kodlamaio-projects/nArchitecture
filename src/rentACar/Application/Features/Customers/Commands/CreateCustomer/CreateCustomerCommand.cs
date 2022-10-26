@@ -14,7 +14,7 @@ public class CreateCustomerCommand : IRequest<CreatedCustomerDto>, ISecuredReque
 {
     public int UserId { get; set; }
 
-    public string[] Roles => new[] { Admin, CustomerAdd };
+    public string[] Roles => new[] { Admin, CustomerAdmin, CustomerWrite, CustomerAdd };
 
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CreatedCustomerDto>
     {

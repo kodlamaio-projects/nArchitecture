@@ -14,7 +14,7 @@ public class DeleteAdditionalServiceCommand : IRequest<DeletedAdditionalServiceD
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, AdditionalServiceDelete };
+    public string[] Roles => new[] { Admin, AdditionalServiceAdmin, AdditionalServiceWrite, AdditionalServiceDelete };
 
     public class
         DeleteAdditionalServiceCommandHandler : IRequestHandler<DeleteAdditionalServiceCommand,

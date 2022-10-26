@@ -14,7 +14,7 @@ public class DeleteCarDamageCommand : IRequest<DeletedCarDamageDto>, ISecuredReq
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, CarDamageDelete };
+    public string[] Roles => new[] { Admin, CarDamageAdmin, CarDamageWrite, CarDamageDelete };
 
     public class DeleteCarDamageCommandHandler : IRequestHandler<DeleteCarDamageCommand, DeletedCarDamageDto>
     {

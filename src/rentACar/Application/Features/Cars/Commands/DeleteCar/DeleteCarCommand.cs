@@ -13,7 +13,7 @@ public class DeleteCarCommand : IRequest<DeletedCarDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, CarDelete };
+    public string[] Roles => new[] { Admin, CarAdmin, CarWrite, CarDelete };
 
     public class DeleteCarCommandHandler : IRequestHandler<DeleteCarCommand, DeletedCarDto>
     {
