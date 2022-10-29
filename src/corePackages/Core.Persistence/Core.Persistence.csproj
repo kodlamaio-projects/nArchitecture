@@ -11,4 +11,8 @@
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.17" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Core.CrossCuttingConcers\Core.CrossCuttingConcerns.csproj" />
+  </ItemGroup>
+
 </Project>
