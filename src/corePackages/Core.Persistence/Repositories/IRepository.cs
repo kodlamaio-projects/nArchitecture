@@ -20,6 +20,9 @@ public interface IRepository<T> : IQuery<T> where T : Entity
                                   int index = 0, int size = 10, bool enableTracking = true);
 
     T Add(T entity);
+    List<T> AddRange(List<T> entity);
     T Update(T entity);
+    List<T> UpdateRange(List<T> entity);
     T Delete(T entity);
+    List<T> DeleteRange(List<T> entity);
 }

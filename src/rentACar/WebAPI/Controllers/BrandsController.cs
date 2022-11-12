@@ -49,4 +49,12 @@ public class BrandsController : BaseController
         DeletedBrandDto result = await Mediator.Send(deleteBrandCommand);
         return Ok(result);
     }
+
+    [HttpPost("BulkInsert")]
+    public async Task<IActionResult> BulkInsert([FromBody] CreateBulkBrandCommand bulkBrandCommand)
+    {
+        List<CreatedBrandDto> result = await Mediator.Send(bulkBrandCommand);
+        return Created("", result);
+
+    }
 }
