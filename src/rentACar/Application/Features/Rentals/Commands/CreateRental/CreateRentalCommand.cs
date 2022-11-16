@@ -13,6 +13,7 @@ using Core.Application.Pipelines.Logging;
 using Core.Mailing;
 using Domain.Entities;
 using MediatR;
+using MimeKit;
 
 namespace Application.Features.Rentals.Commands.CreateRental;
 
@@ -96,12 +97,15 @@ public class CreateRentalCommand : IRequest<CreatedRentalDto>, ILoggableRequest
             await _rentalsAdditionalServiceService.AddManyByRentalIdAndAdditionalServices(
                 createdRental.Id, additionalServices);
 
+            var toEmailList = new List<MailboxAddress> 
+            {
+                                new("Ahmet Çetinkaya","ahmetcetinkaya7@outlook.com")
+            };
+
             _mailService.SendMail(new Mail
             {
                 Subject = "New Rental",
                 TextBody = "A rental has been created.",
-                ToEmail = "ahmetcetinkaya7@outlook.com",
-                ToFullName = "Ahmet Çetinkaya"
             });
 
             CreatedRentalDto createdRentalDto = _mapper.Map<CreatedRentalDto>(createdRental);

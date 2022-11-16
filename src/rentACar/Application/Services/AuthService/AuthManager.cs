@@ -8,6 +8,7 @@ using Core.Security.JWT;
 using Core.Security.OtpAuthenticator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MimeKit;
 
 namespace Application.Services.AuthService;
 
@@ -165,10 +166,14 @@ public class AuthManager : IAuthService
         emailAuthenticator.ActivationKey = authenticatorCode;
         await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
 
+        var toEmailList = new List<MailboxAddress>
+            {
+                new($"{user.FirstName} {user.LastName}",user.Email)
+            };
+
         _mailService.SendMail(new Mail
         {
-            ToEmail = user.Email,
-            ToFullName = $"{user.FirstName} {user.LastName}",
+            ToList=toEmailList,
             Subject = "Authenticator Code - RentACar",
             TextBody = $"Enter your authenticator code: {authenticatorCode}"
         });
