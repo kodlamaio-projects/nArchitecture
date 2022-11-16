@@ -1,7 +1,5 @@
-﻿using Core.Persistence.Repositories;
-using Core.Domain.Concrete.Security.Entities;
+﻿using Core.Domain.Concrete.Security.Entities;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
@@ -45,8 +43,9 @@ public class BaseDbContext : DbContext
     {
 
         IEnumerable<EntityEntry<IEntity>> datas = ChangeTracker
-            .Entries<IEntity>();
-        
+            .Entries<IEntity>().Where(e =>
+                e.State == EntityState.Added || e.State == EntityState.Modified);
+
         foreach (var data in datas)
         {
             _ = data.State switch
