@@ -97,15 +97,17 @@ public class CreateRentalCommand : IRequest<CreatedRentalDto>, ILoggableRequest
             await _rentalsAdditionalServiceService.AddManyByRentalIdAndAdditionalServices(
                 createdRental.Id, additionalServices);
 
-            var toEmailList = new List<MailboxAddress> 
+
+            var toEmailList = new List<MailboxAddress>
             {
-                                new("Ahmet Çetinkaya","ahmetcetinkaya7@outlook.com")
+                new("Ahmet Çetinkaya","ahmetcetinkaya7@outlook.com")
             };
 
             _mailService.SendMail(new Mail
             {
                 Subject = "New Rental",
                 TextBody = "A rental has been created.",
+                ToList = toEmailList
             });
 
             CreatedRentalDto createdRentalDto = _mapper.Map<CreatedRentalDto>(createdRental);

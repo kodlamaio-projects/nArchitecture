@@ -1,4 +1,4 @@
-﻿using Application.Services.Repositories;
+using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Mailing;
 using Core.Security.EmailAuthenticator;
@@ -173,7 +173,7 @@ public class AuthManager : IAuthService
 
         _mailService.SendMail(new Mail
         {
-            ToList=toEmailList,
+            ToList = toEmailList,
             Subject = "Authenticator Code - RentACar",
             TextBody = $"Enter your authenticator code: {authenticatorCode}"
         });

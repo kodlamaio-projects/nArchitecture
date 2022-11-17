@@ -1,4 +1,4 @@
-﻿using Core.Domain.Concrete.Security.Entities;
+using Core.Domain.Concrete.Security.Entities;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
