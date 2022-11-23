@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Models.Dtos;
+﻿using Core.Application.Dtos;
 
-public class ModelListDto
+namespace Application.Features.Models.Dtos;
+
+public class ModelListDto : IDto
 {
     public int Id { get; set; }
     public string BrandName { get; set; }

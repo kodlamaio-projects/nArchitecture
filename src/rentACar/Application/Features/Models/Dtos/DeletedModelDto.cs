@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Models.Dtos;
+﻿using Core.Application.Dtos;
 
-public class DeletedModelDto
+namespace Application.Features.Models.Dtos;
+
+public class DeletedModelDto : IDto
 {
     public int Id { get; set; }
 }

@@ -1,6 +1,8 @@
+using Core.Application.Dtos;
+
 namespace Application.Features.CorporateCustomers.Dtos;
 
-public class CorporateCustomerListDto
+public class CorporateCustomerListDto : IDto
 {
     public int Id { get; set; }
     public string CompanyName { get; set; }
