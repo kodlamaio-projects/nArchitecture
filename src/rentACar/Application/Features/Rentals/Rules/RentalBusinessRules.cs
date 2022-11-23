@@ -1,12 +1,13 @@
 ﻿using Application.Features.Rentals.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.Rentals.Rules;
 
-public class RentalBusinessRules
+public class RentalBusinessRules : BaseBusinessRules
 {
     private readonly IRentalRepository _rentalRepository;
 

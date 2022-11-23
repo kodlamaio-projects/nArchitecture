@@ -1,12 +1,13 @@
 ﻿using Application.Features.Transmissions.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.Transmissions.Rules;
 
-public class TransmissionBusinessRules
+public class TransmissionBusinessRules : BaseBusinessRules
 {
     private readonly ITransmissionRepository _transmissionRepository;
 

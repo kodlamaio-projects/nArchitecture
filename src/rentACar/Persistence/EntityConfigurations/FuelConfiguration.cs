@@ -16,6 +16,7 @@ namespace Persistence.EntityConfigurations
             builder.ToTable("Fuels").HasKey(f => f.Id);
             builder.Property(f => f.Id).HasColumnName("Id");
             builder.Property(f => f.Name).HasColumnName("Name");
+            builder.HasIndex(f => f.Name, "UK_Fuels_Name").IsUnique();
             builder.HasMany(f => f.Models);
 
             Fuel[] fuelSeeds = { new(1, "Diesel"), new(2, "Electric") };

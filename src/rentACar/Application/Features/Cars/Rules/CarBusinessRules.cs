@@ -1,12 +1,13 @@
 ﻿using Application.Features.Cars.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Domain.Entities;
 using Domain.Enums;
 
 namespace Application.Features.Cars.Rules;
 
-public class CarBusinessRules
+public class CarBusinessRules : BaseBusinessRules
 {
     private readonly ICarRepository _carRepository;
 

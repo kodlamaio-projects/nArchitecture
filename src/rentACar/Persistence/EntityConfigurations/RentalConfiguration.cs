@@ -29,13 +29,6 @@ namespace Persistence.EntityConfigurations
             builder.HasOne(r => r.RentStartRentalBranch).WithOne().HasForeignKey<Rental>(r => r.RentStartRentalBranchId).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(r => r.RentEndRentalBranch).WithOne().HasForeignKey<Rental>(r => r.RentEndRentalBranchId).OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(r => r.RentalsAdditionalServices);
-
-            Rental[] rentalSeeds =
-            {
-                new(1, 1, 2, 1, 2, DateTime.Today, DateTime.Today.AddDays(2), null, 1000, 1200),
-                new(2, 2, 1, 2, 1, DateTime.Today, DateTime.Today.AddDays(2), null, 1000, 1200)
-            };
-            builder.HasData(rentalSeeds);
         }
     }
 }

@@ -44,8 +44,9 @@ public class BaseDbContext : DbContext
     {
 
         IEnumerable<EntityEntry<Entity>> datas = ChangeTracker
-            .Entries<Entity>();
-        
+            .Entries<Entity>().Where(e =>
+                e.State == EntityState.Added || e.State == EntityState.Modified);
+
         foreach (var data in datas)
         {
             _ = data.State switch

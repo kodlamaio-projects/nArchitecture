@@ -1,12 +1,13 @@
 ﻿using Application.Features.Brands.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.Brands.Rules;
 
-public class BrandBusinessRules
+public class BrandBusinessRules : BaseBusinessRules
 {
     private readonly IBrandRepository _brandRepository;
 
