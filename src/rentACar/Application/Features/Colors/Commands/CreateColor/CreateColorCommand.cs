@@ -14,7 +14,7 @@ public class CreateColorCommand : IRequest<CreatedColorDto>, ISecuredRequest
 {
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Admin, ColorAdd };
+    public string[] Roles => new[] { Admin, ColorAdmin, ColorWrite, ColorAdd };
 
     public class CreateColorCommandHandler : IRequestHandler<CreateColorCommand, CreatedColorDto>
     {

@@ -18,7 +18,7 @@ public class CreateUserCommand : IRequest<CreatedUserDto>, ISecuredRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public string[] Roles => new[] { Admin, UserAdd };
+    public string[] Roles => new[] { Admin, UserAdmin, UserWrite, UserAdd };
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserDto>
     {

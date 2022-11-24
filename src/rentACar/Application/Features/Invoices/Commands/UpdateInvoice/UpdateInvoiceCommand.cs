@@ -21,7 +21,7 @@ public class UpdateInvoiceCommand : IRequest<UpdatedInvoiceDto>, ISecuredRequest
     public short TotalRentalDate { get; set; }
     public decimal RentalPrice { get; set; }
 
-    public string[] Roles => new[] { Admin, InvoiceUpdate };
+    public string[] Roles => new[] { Admin, InvoiceAdmin, InvoiceWrite, InvoiceUpdate };
 
     public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand, UpdatedInvoiceDto>
     {

@@ -13,7 +13,7 @@ public class DeleteRentalCommand : IRequest<DeletedRentalDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, RentalDelete };
+    public string[] Roles => new[] { Admin, RentalAdmin, RentalWrite, RentalDelete };
 
     public class DeleteRentalCommandHandler : IRequestHandler<DeleteRentalCommand, DeletedRentalDto>
     {
