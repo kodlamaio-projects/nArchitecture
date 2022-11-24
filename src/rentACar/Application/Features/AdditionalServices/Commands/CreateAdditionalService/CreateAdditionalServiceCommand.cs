@@ -15,7 +15,7 @@ public class CreateAdditionalServiceCommand : IRequest<CreatedAdditionalServiceD
     public string Name { get; set; }
     public decimal DailyPrice { get; set; }
 
-    public string[] Roles => new[] { Admin, AdditionalServiceAdd };
+    public string[] Roles => new[] { Admin, AdditionalServiceAdmin, AdditionalServiceWrite, AdditionalServiceAdd };
 
     public class
         CreateAdditionalServiceCommandHandler : IRequestHandler<CreateAdditionalServiceCommand,

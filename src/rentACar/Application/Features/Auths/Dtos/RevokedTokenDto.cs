@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Auths.Dtos;
+﻿using Core.Application.Dtos;
 
-public class RevokedTokenDto
+namespace Application.Features.Auths.Dtos;
+
+public class RevokedTokenDto : IDto
 {
     public int Id { get; set; }
     public string Token { get; set; }

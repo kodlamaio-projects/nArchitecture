@@ -14,7 +14,7 @@ public class DeleteRentalBranchCommand : IRequest<DeletedRentalBranchDto>, ISecu
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, RentalBranchDelete };
+    public string[] Roles => new[] { Admin, RentalBranchAdmin, RentalBranchWrite, RentalBranchDelete };
 
     public class DeleteRentalBranchCommandHandler : IRequestHandler<DeleteRentalBranchCommand, DeletedRentalBranchDto>
     {

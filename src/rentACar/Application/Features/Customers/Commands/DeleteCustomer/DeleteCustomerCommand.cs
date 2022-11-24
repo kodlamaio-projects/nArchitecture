@@ -14,7 +14,7 @@ public class DeleteCustomerCommand : IRequest<DeletedCustomerDto>, ISecuredReque
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, CustomerDelete };
+    public string[] Roles => new[] { Admin, CustomerAdmin, CustomerWrite, CustomerDelete };
 
     public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, DeletedCustomerDto>
     {

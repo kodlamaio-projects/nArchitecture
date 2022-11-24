@@ -1,6 +1,6 @@
-﻿namespace Core.Security.Dtos;
+﻿namespace Core.Application.Dtos;
 
-public class UserForRegisterDto
+public class UserForRegisterDto : IDto
 {
     public string Email { get; set; }
     public string Password { get; set; }

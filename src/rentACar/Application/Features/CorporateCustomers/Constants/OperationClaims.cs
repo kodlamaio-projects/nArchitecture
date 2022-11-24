@@ -2,7 +2,12 @@
 
 public static class OperationClaims
 {
-    public const string CorporateCustomersAdd = "corporatecustomer.add";
-    public const string CorporateCustomersUpdate = "corporatecustomer.update";
-    public const string CorporateCustomersDelete = "corporatecustomer.delete";
+    public const string CorporateCustomerAdmin = "corporatecustomer.admin";
+
+    public const string CorporateCustomerRead = "corporatecustomer.read";
+    public const string CorporateCustomerWrite = "corporatecustomer.write";
+
+    public const string CorporateCustomerAdd = "corporatecustomer.add";
+    public const string CorporateCustomerUpdate = "corporatecustomer.update";
+    public const string CorporateCustomerDelete = "corporatecustomer.delete";
 }

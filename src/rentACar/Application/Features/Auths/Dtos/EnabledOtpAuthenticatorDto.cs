@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Auths.Dtos;
+﻿using Core.Application.Dtos;
 
-public class EnabledOtpAuthenticatorDto
+namespace Application.Features.Auths.Dtos;
+
+public class EnabledOtpAuthenticatorDto : IDto
 {
     public string SecretKey { get; set; }
 

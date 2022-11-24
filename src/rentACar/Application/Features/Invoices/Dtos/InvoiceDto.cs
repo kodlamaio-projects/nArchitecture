@@ -1,6 +1,8 @@
+using Core.Application.Dtos;
+
 namespace Application.Features.Invoices.Dtos;
 
-public class InvoiceDto
+public class InvoiceDto : IDto
 {
     public int CustomerId { get; set; }
     public string No { get; set; }
