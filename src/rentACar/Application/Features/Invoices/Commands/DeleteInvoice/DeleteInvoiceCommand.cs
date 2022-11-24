@@ -14,7 +14,7 @@ public class DeleteInvoiceCommand : IRequest<DeletedInvoiceDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, InvoiceDelete };
+    public string[] Roles => new[] { Admin, InvoiceAdmin, InvoiceWrite, InvoiceDelete };
 
     public class DeleteInvoiceCommandHandler : IRequestHandler<DeleteInvoiceCommand, DeletedInvoiceDto>
     {

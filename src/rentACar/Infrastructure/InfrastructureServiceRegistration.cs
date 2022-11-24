@@ -14,7 +14,7 @@ public static class InfrastructureServiceRegistration
     {
         services.AddScoped<IFindeksService, FakeFindeksServiceAdapter>();
         services.AddScoped<IPOSService, FakePOSServiceAdapter>();
-        services.AddScoped<IImageService, CloudinaryImageServiceAdapter>();
+        services.AddScoped<ImageServiceBase, CloudinaryImageServiceAdapter>();
         return services;
     }
 }

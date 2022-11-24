@@ -1,24 +1,4 @@
-﻿using System.Reflection;
-using Application.Features.AdditionalServices.Rules;
-using Application.Features.Auths.Rules;
-using Application.Features.Brands.Rules;
-using Application.Features.CarDamages.Rules;
-using Application.Features.Cars.Rules;
-using Application.Features.Colors.Rules;
-using Application.Features.CorporateCustomers.Rules;
-using Application.Features.Customers.Rules;
-using Application.Features.FindeksCreditRates.Rules;
-using Application.Features.Fuels.Rules;
-using Application.Features.IndividualCustomers.Rules;
-using Application.Features.Invoices.Rules;
-using Application.Features.Models.Rules;
-using Application.Features.OperationClaims.Rules;
-using Application.Features.RentalBranches.Rules;
-using Application.Features.Rentals.Rules;
-using Application.Features.Transmissions.Rules;
-using Application.Features.UserOperationClaims.Rules;
-using Application.Features.Users.Rules;
-using Application.Services.AdditionalServiceService;
+﻿using Application.Services.AdditionalServiceService;
 using Application.Services.AuthService;
 using Application.Services.CarService;
 using Application.Services.CustomerService;
@@ -42,6 +22,7 @@ using Core.Mailing.MailKitImplementations;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Application;
 

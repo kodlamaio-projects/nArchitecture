@@ -17,7 +17,7 @@ public class UpdateCorporateCustomerCommand : IRequest<UpdatedCorporateCustomerD
     public string CompanyName { get; set; }
     public string TaxNo { get; set; }
 
-    public string[] Roles => new[] { Admin, CorporateCustomersUpdate };
+    public string[] Roles => new[] { Admin, CorporateCustomerAdmin, CorporateCustomerWrite, CorporateCustomerUpdate };
 
     public class UpdateCorporateCustomerCommandHandler : IRequestHandler<UpdateCorporateCustomerCommand,
         UpdatedCorporateCustomerDto>

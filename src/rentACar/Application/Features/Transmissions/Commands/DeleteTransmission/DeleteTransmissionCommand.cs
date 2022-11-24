@@ -13,7 +13,7 @@ public class DeleteTransmissionCommand : IRequest<DeletedTransmissionDto>, ISecu
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, TransmissionDelete };
+    public string[] Roles => new[] { Admin, TransmissionAdmin, TransmissionWrite, TransmissionDelete };
 
     public class DeleteTransmissionCommandHandler : IRequestHandler<DeleteTransmissionCommand, DeletedTransmissionDto>
     {
