@@ -27,4 +27,9 @@ public class BrandBusinessRules : BaseBusinessRules
         IPaginate<Brand> result = await _brandRepository.GetListAsync(b => b.Name == name);
         if (result.Items.Any()) throw new BusinessException(BrandMessages.BrandNameExists);
     }
+    public async Task BrandNameListCanNotBeDuplicatedWhenInserted(List<string> nameList)
+    {
+        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => nameList.Contains(b.Name));
+        if (result.Items.Any()) throw new BusinessException(BrandMessages.BrandNameExists);
+    }
 }
