@@ -15,7 +15,7 @@ public class CreateCarDamageCommand : IRequest<CreatedCarDamageDto>, ISecuredReq
     public int CarId { get; set; }
     public string DamageDescription { get; set; }
 
-    public string[] Roles => new[] { Admin, CarDamageAdd };
+    public string[] Roles => new[] { Admin, CarDamageAdmin, CarDamageWrite, CarDamageAdd };
 
     public class CreateCarDamageCommandHandler : IRequestHandler<CreateCarDamageCommand, CreatedCarDamageDto>
     {

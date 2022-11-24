@@ -13,7 +13,7 @@ public class DeleteFuelCommand : IRequest<DeletedFuelDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, FuelDelete };
+    public string[] Roles => new[] { Admin, FuelAdmin, FuelWrite, FuelDelete };
 
     public class DeleteFuelCommandHandler : IRequestHandler<DeleteFuelCommand, DeletedFuelDto>
     {

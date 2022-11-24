@@ -15,7 +15,7 @@ public class UpdateCustomerCommand : IRequest<UpdatedCustomerDto>, ISecuredReque
     public int Id { get; set; }
     public int UserId { get; set; }
 
-    public string[] Roles => new[] { Admin, CustomerUpdate };
+    public string[] Roles => new[] { Admin, CustomerAdmin, CustomerWrite, CustomerUpdate };
 
     public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, UpdatedCustomerDto>
     {

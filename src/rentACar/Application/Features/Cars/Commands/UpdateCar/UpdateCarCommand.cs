@@ -23,7 +23,7 @@ public class UpdateCarCommand : IRequest<UpdatedCarDto>, ISecuredRequest
     public string Plate { get; set; }
     public short MinFindeksCreditRate { get; set; }
 
-    public string[] Roles => new[] { Admin, CarUpdate };
+    public string[] Roles => new[] { Admin, CarAdmin, CarWrite, CarUpdate };
 
     public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand, UpdatedCarDto>
     {

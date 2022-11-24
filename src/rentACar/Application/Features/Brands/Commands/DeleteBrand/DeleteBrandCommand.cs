@@ -17,7 +17,7 @@ public class DeleteBrandCommand : IRequest<DeletedBrandDto>, ISecuredRequest, IC
 
     public bool BypassCache { get; }
     public string CacheKey => "brands-list";
-    public string[] Roles => new[] { Admin, BrandDelete };
+    public string[] Roles => new[] { Admin, BrandAdmin, BrandWrite, BrandDelete };
 
     public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, DeletedBrandDto>
     {
