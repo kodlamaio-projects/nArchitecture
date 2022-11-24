@@ -1,6 +1,8 @@
+using Core.Application.Dtos;
+
 namespace Application.Features.CarDamages.Dtos;
 
-public class CarDamageListDto
+public class CarDamageListDto : IDto
 {
     public int Id { get; set; }
     public string CarModelBrandName { get; set; }

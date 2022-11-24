@@ -16,7 +16,7 @@ public class DeleteModelCommand : IRequest<DeletedModelDto>, ISecuredRequest, IC
 
     public bool BypassCache { get; }
     public string CacheKey => "models-list";
-    public string[] Roles => new[] { Admin, ModelsDelete };
+    public string[] Roles => new[] { Admin, ModelAdmin, ModelWrite, ModelDelete };
 
     public class DeleteModelCommandHandler : IRequestHandler<DeleteModelCommand, DeletedModelDto>
     {

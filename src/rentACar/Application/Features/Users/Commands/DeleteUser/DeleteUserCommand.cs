@@ -14,7 +14,7 @@ public class DeleteUserCommand : IRequest<DeletedUserDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, UserDelete };
+    public string[] Roles => new[] { Admin, UserAdmin, UserWrite, UserDelete };
 
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, DeletedUserDto>
     {

@@ -20,7 +20,7 @@ public class CreateInvoiceCommand : IRequest<CreatedInvoiceDto>, ISecuredRequest
     public short TotalRentalDate { get; set; }
     public decimal RentalPrice { get; set; }
 
-    public string[] Roles => new[] { Admin, InvoiceAdd };
+    public string[] Roles => new[] { Admin, InvoiceAdmin, InvoiceWrite, InvoiceAdd };
 
     public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, CreatedInvoiceDto>
     {

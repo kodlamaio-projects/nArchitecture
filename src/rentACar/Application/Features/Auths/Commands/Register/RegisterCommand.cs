@@ -2,7 +2,7 @@
 using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
-using Core.Security.Dtos;
+using Core.Application.Dtos;
 using Core.Security.Entities;
 using Core.Security.Hashing;
 using Core.Security.JWT;

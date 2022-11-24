@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Colors.Dtos;
+﻿using Core.Application.Dtos;
 
-public class UpdatedColorDto
+namespace Application.Features.Colors.Dtos;
+
+public class UpdatedColorDto : IDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

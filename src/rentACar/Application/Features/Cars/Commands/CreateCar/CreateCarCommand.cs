@@ -21,7 +21,7 @@ public class CreateCarCommand : IRequest<CreatedCarDto>, ISecuredRequest
     public string Plate { get; set; }
     public short MinFindeksCreditRate { get; set; }
 
-    public string[] Roles => new[] { Admin, CarAdd };
+    public string[] Roles => new[] { Admin, CarAdmin, CarWrite, CarAdd };
 
 
     public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, CreatedCarDto>

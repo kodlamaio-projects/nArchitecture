@@ -1,8 +1,9 @@
-﻿using Domain.Enums;
+﻿using Core.Application.Dtos;
+using Domain.Enums;
 
 namespace Application.Features.Cars.Dtos;
 
-public class CarListDto
+public class CarListDto : IDto
 {
     public int Id { get; set; }
     public string BrandName { get; set; }

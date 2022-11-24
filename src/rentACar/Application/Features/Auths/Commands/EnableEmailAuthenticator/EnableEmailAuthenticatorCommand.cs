@@ -1,5 +1,4 @@
-﻿using System.Web;
-using Application.Features.Auths.Rules;
+﻿using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Application.Services.UserService;
@@ -7,6 +6,8 @@ using Core.Mailing;
 using Core.Security.Entities;
 using Core.Security.Enums;
 using MediatR;
+using MimeKit;
+using System.Web;
 
 namespace Application.Features.Auths.Commands.EnableEmailAuthenticator;
 
@@ -47,10 +48,14 @@ public class EnableEmailAuthenticatorCommand : IRequest
             EmailAuthenticator addedEmailAuthenticator =
                 await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
 
+            var toEmailList = new List<MailboxAddress>
+            {
+                new($"{user.FirstName} {user.LastName}",user.Email)
+            };
+
             _mailService.SendMail(new Mail
             {
-                ToEmail = user.Email,
-                ToFullName = $"{user.FirstName} ${user.LastName}",
+                ToList = toEmailList,
                 Subject = "Verify Your Email - RentACar",
                 TextBody =
                     $"Click on the link to verify your email: {request.VerifyEmailUrlPrefix}?ActivationKey={HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey)}"
