@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Fuels.Dtos;
+﻿using Core.Application.Dtos;
 
-public class UpdatedFuelDto
+namespace Application.Features.Fuels.Dtos;
+
+public class UpdatedFuelDto : IDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

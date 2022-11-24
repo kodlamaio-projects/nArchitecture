@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Transmissions.Dtos;
+﻿using Core.Application.Dtos;
 
-public class CreatedTransmissionDto
+namespace Application.Features.Transmissions.Dtos;
+
+public class CreatedTransmissionDto : IDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

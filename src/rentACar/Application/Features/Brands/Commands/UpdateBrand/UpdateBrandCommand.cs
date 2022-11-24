@@ -18,7 +18,7 @@ public class UpdateBrandCommand : IRequest<UpdatedBrandDto>, ISecuredRequest, IC
 
     public bool BypassCache { get; }
     public string CacheKey => "brands-list";
-    public string[] Roles => new[] { Admin, BrandUpdate };
+    public string[] Roles => new[] { Admin, BrandAdmin, BrandWrite, BrandUpdate };
 
     public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, UpdatedBrandDto>
     {

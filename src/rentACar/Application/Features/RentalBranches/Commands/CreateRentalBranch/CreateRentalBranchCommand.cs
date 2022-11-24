@@ -15,7 +15,7 @@ public class CreateRentalBranchCommand : IRequest<CreatedRentalBranchDto>, ISecu
 {
     public City City { get; set; }
 
-    public string[] Roles => new[] { Admin, RentalBranchAdd };
+    public string[] Roles => new[] { Admin, RentalBranchAdmin, RentalBranchWrite, RentalBranchAdd };
 
     public class CreateRentalBranchCommandHandler : IRequestHandler<CreateRentalBranchCommand, CreatedRentalBranchDto>
     {

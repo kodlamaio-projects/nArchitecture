@@ -16,7 +16,7 @@ public class UpdateAdditionalServiceCommand : IRequest<UpdatedAdditionalServiceD
     public string Name { get; set; }
     public decimal DailyPrice { get; set; }
 
-    public string[] Roles => new[] { Admin, AdditionalServiceUpdate };
+    public string[] Roles => new[] { Admin, AdditionalServiceAdmin, AdditionalServiceWrite, AdditionalServiceUpdate };
 
     public class
         UpdateAdditionalServiceCommandHandler : IRequestHandler<UpdateAdditionalServiceCommand,

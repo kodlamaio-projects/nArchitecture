@@ -19,7 +19,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserDto>, ISecuredRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public string[] Roles => new[] { Admin, UserUpdate };
+    public string[] Roles => new[] { Admin, UserAdmin, UserWrite, UserUpdate };
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserDto>
     {

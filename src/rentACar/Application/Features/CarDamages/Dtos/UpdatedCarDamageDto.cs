@@ -1,6 +1,8 @@
-﻿namespace Application.Features.CarDamages.Dtos;
+﻿using Core.Application.Dtos;
 
-public class UpdatedCarDamageDto
+namespace Application.Features.CarDamages.Dtos;
+
+public class UpdatedCarDamageDto : IDto
 {
     public int Id { get; set; }
     public int CarId { get; set; }

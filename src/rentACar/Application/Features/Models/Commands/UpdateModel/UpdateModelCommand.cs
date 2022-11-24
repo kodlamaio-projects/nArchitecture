@@ -22,7 +22,7 @@ public class UpdateModelCommand : IRequest<UpdatedModelDto>, ISecuredRequest, IC
 
     public bool BypassCache { get; }
     public string CacheKey => "models-list";
-    public string[] Roles => new[] { Admin, ModelsUpdate };
+    public string[] Roles => new[] { Admin, ModelAdmin, ModelWrite, ModelUpdate };
 
     public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand, UpdatedModelDto>
     {
