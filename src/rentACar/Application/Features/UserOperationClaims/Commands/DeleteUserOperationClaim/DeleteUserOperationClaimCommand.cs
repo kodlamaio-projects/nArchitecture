@@ -14,7 +14,7 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, UserOperationClaimDelete };
+    public string[] Roles => new[] { Admin, UserOperationClaimAdmin, UserOperationClaimWrite, UserOperationClaimDelete };
 
     public class
         DeleteUserOperationClaimCommandHandler : IRequestHandler<DeleteUserOperationClaimCommand,

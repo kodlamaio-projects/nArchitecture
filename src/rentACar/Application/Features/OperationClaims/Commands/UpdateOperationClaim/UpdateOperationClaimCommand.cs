@@ -15,7 +15,7 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimDto>, I
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Admin, OperationClaimUpdate };
+    public string[] Roles => new[] { Admin, OperationClaimAdmin, OperationClaimWrite, OperationClaimUpdate };
 
     public class
         UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, UpdatedOperationClaimDto>

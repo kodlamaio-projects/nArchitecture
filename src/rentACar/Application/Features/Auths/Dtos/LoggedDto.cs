@@ -1,10 +1,11 @@
-﻿using Core.Security.Entities;
+﻿using Core.Application.Dtos;
+using Core.Security.Entities;
 using Core.Security.Enums;
 using Core.Security.JWT;
 
 namespace Application.Features.Auths.Dtos;
 
-public class LoggedDto
+public class LoggedDto : IDto
 {
     public AccessToken? AccessToken { get; set; }
     public RefreshToken? RefreshToken { get; set; }
@@ -14,7 +15,6 @@ public class LoggedDto
     {
         return new() { AccessToken = AccessToken, RequiredAuthenticatorType = RequiredAuthenticatorType };
     }
-
 
     public class LoggedResponseDto
     {

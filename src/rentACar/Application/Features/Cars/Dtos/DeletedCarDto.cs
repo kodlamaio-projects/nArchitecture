@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Cars.Dtos;
+﻿using Core.Application.Dtos;
 
-public class DeletedCarDto
+namespace Application.Features.Cars.Dtos;
+
+public class DeletedCarDto : IDto
 {
     public int Id { get; set; }
 }

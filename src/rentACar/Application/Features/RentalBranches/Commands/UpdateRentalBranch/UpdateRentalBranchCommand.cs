@@ -16,7 +16,7 @@ public class UpdateRentalBranchCommand : IRequest<UpdatedRentalBranchDto>, ISecu
     public int Id { get; set; }
     public City City { get; set; }
 
-    public string[] Roles => new[] { Admin, RentalBranchUpdate };
+    public string[] Roles => new[] { Admin, RentalBranchAdmin, RentalBranchWrite, RentalBranchUpdate };
 
     public class UpdateRentalBranchCommandHandler : IRequestHandler<UpdateRentalBranchCommand, UpdatedRentalBranchDto>
     {

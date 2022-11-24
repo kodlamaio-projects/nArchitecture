@@ -1,8 +1,9 @@
-﻿using Core.Security.JWT;
+﻿using Core.Application.Dtos;
+using Core.Security.JWT;
 
 namespace Application.Features.Users.Dtos;
 
-public class UpdatedUserFromAuthDto
+public class UpdatedUserFromAuthDto : IDto
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

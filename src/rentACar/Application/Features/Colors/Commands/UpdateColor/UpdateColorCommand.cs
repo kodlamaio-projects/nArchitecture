@@ -14,7 +14,7 @@ public class UpdateColorCommand : IRequest<UpdatedColorDto>, ISecuredRequest
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Admin, ColorUpdate };
+    public string[] Roles => new[] { Admin, ColorAdmin, ColorWrite, ColorUpdate };
 
     public class UpdateColorCommandHandler : IRequestHandler<UpdateColorCommand, UpdatedColorDto>
     {
