@@ -15,7 +15,7 @@ public class DeliverRentalCarCommand : IRequest<UpdatedCarDto>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, CarUpdate };
+    public string[] Roles => new[] { Admin, CarAdmin, CarWrite, CarUpdate };
 
     public class DeliverRentalCarCommandHandler : IRequestHandler<DeliverRentalCarCommand, UpdatedCarDto>
     {

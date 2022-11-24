@@ -14,7 +14,7 @@ public class UpdateTransmissionCommand : IRequest<UpdatedTransmissionDto>, ISecu
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Admin, TransmissionUpdate };
+    public string[] Roles => new[] { Admin, TransmissionAdmin, TransmissionWrite, TransmissionUpdate };
 
     public class UpdateTransmissionCommandHandler : IRequestHandler<UpdateTransmissionCommand, UpdatedTransmissionDto>
     {

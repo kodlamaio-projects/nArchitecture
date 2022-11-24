@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Brands.Dtos;
+﻿using Core.Application.Dtos;
 
-public class DeletedBrandDto
+namespace Application.Features.Brands.Dtos;
+
+public class DeletedBrandDto : IDto
 {
     public int Id { get; set; }
 }

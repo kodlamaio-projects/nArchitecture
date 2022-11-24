@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Brands.Dtos;
+﻿using Core.Application.Dtos;
 
-public class UpdatedBrandDto
+namespace Application.Features.Brands.Dtos;
+
+public class UpdatedBrandDto : IDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

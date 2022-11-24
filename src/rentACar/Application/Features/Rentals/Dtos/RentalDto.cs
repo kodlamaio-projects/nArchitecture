@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Rentals.Dtos;
+﻿using Core.Application.Dtos;
 
-public class RentalDto
+namespace Application.Features.Rentals.Dtos;
+
+public class RentalDto : IDto
 {
     public int Id { get; set; }
     public int CarId { get; set; }

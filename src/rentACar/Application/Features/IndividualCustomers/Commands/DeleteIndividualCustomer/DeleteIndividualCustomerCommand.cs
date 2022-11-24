@@ -14,7 +14,7 @@ public class DeleteIndividualCustomerCommand : IRequest<DeletedIndividualCustome
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Admin, IndividualCustomerDelete };
+    public string[] Roles => new[] { Admin, IndividualCustomerAdmin, IndividualCustomerWrite, IndividualCustomerDelete };
 
     public class
         DeleteIndividualCustomerCommandHandler : IRequestHandler<DeleteIndividualCustomerCommand,

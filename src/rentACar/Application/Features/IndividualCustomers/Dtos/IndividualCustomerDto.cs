@@ -1,6 +1,8 @@
+using Core.Application.Dtos;
+
 namespace Application.Features.IndividualCustomers.Dtos;
 
-public class IndividualCustomerDto
+public class IndividualCustomerDto : IDto
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

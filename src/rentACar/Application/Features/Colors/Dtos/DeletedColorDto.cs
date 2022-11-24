@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Colors.Dtos;
+﻿using Core.Application.Dtos;
 
-public class DeletedColorDto
+namespace Application.Features.Colors.Dtos;
+
+public class DeletedColorDto : IDto
 {
     public int Id { get; set; }
 }

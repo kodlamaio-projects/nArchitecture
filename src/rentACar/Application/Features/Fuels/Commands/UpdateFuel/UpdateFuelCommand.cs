@@ -14,7 +14,7 @@ public class UpdateFuelCommand : IRequest<UpdatedFuelDto>, ISecuredRequest
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Admin, FuelDelete };
+    public string[] Roles => new[] { Admin, FuelAdmin, FuelWrite, FuelDelete };
 
     public class UpdateFuelCommandHandler : IRequestHandler<UpdateFuelCommand, UpdatedFuelDto>
     {

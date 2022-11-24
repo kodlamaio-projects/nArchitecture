@@ -1,6 +1,8 @@
+using Core.Application.Dtos;
+
 namespace Application.Features.UserOperationClaims.Dtos;
 
-public class DeletedUserOperationClaimDto
+public class DeletedUserOperationClaimDto : IDto
 {
     public int Id { get; set; }
 }
