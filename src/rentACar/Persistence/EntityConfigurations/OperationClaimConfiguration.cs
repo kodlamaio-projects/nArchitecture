@@ -1,6 +1,7 @@
-﻿using Core.Security.Entities;
+using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static Domain.Constants.OperationClaims;
 
 namespace Persistence.EntityConfigurations
 {
@@ -13,7 +14,7 @@ namespace Persistence.EntityConfigurations
             builder.Property(o => o.Name).HasColumnName("Name");
             builder.HasIndex(o => o.Name, "UK_OperationClaims_Name").IsUnique();
 
-            OperationClaim[] operationClaimSeeds = { new(1, "Admin") };
+            OperationClaim[] operationClaimSeeds = { new(1, Admin) };
             builder.HasData(operationClaimSeeds);
         }
     }
