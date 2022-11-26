@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class All : Migration
+    public partial class all : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -415,7 +415,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     No = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 17, 19, 7, 25, 692, DateTimeKind.Local).AddTicks(9094)),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 11, 26, 22, 37, 2, 699, DateTimeKind.Local).AddTicks(2608)),
                     RentalStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentalEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalRentalDate = table.Column<short>(type: "smallint", nullable: false),
@@ -493,12 +493,14 @@ namespace Persistence.Migrations
                         name: "FK_Rentals_RentalBranches_RentEndRentalBranchId",
                         column: x => x.RentEndRentalBranchId,
                         principalTable: "RentalBranches",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Rentals_RentalBranches_RentStartRentalBranchId",
                         column: x => x.RentStartRentalBranchId,
                         principalTable: "RentalBranches",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -589,14 +591,31 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Models",
-                columns: new[] { "Id", "BrandId", "CreatedDate", "DailyPrice", "FuelId", "ImageUrl", "Name", "TransmissionId", "UpdatedDate" },
-                values: new object[] { 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000m, 1, "", "418i", 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                table: "Users",
+                columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "Status", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "ahmetcetinkaya@rentacar.com", "Ahmet", "Çetinkaya", new byte[] { 216, 7, 248, 213, 180, 105, 181, 167, 177, 19, 155, 30, 63, 159, 146, 2, 101, 246, 193, 196, 120, 179, 124, 19, 178, 201, 180, 94, 104, 104, 189, 76, 248, 107, 24, 218, 185, 47, 79, 34, 244, 195, 211, 203, 238, 139, 99, 203, 192, 241, 63, 158, 134, 201, 186, 179, 236, 200, 59, 131, 246, 24, 50, 255 }, new byte[] { 117, 156, 97, 169, 93, 48, 209, 56, 136, 39, 106, 211, 161, 91, 15, 61, 206, 17, 71, 236, 175, 60, 83, 82, 123, 248, 103, 177, 169, 116, 52, 32, 121, 213, 53, 232, 97, 174, 223, 170, 215, 76, 36, 235, 196, 64, 58, 41, 184, 68, 9, 131, 110, 43, 58, 158, 31, 168, 53, 183, 152, 192, 8, 59, 216, 107, 7, 49, 174, 122, 117, 102, 133, 70, 135, 182, 153, 135, 62, 35, 229, 87, 109, 252, 142, 77, 72, 47, 214, 152, 28, 139, 106, 175, 104, 98, 19, 12, 37, 185, 5, 236, 210, 40, 241, 176, 175, 23, 35, 110, 194, 250, 18, 21, 240, 162, 58, 65, 188, 233, 86, 178, 25, 137, 220, 239, 113, 64 }, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "halitkalayci@rentacar.com", "Halit", "Kalaycı", new byte[] { 216, 7, 248, 213, 180, 105, 181, 167, 177, 19, 155, 30, 63, 159, 146, 2, 101, 246, 193, 196, 120, 179, 124, 19, 178, 201, 180, 94, 104, 104, 189, 76, 248, 107, 24, 218, 185, 47, 79, 34, 244, 195, 211, 203, 238, 139, 99, 203, 192, 241, 63, 158, 134, 201, 186, 179, 236, 200, 59, 131, 246, 24, 50, 255 }, new byte[] { 117, 156, 97, 169, 93, 48, 209, 56, 136, 39, 106, 211, 161, 91, 15, 61, 206, 17, 71, 236, 175, 60, 83, 82, 123, 248, 103, 177, 169, 116, 52, 32, 121, 213, 53, 232, 97, 174, 223, 170, 215, 76, 36, 235, 196, 64, 58, 41, 184, 68, 9, 131, 110, 43, 58, 158, 31, 168, 53, 183, 152, 192, 8, 59, 216, 107, 7, 49, 174, 122, 117, 102, 133, 70, 135, 182, 153, 135, 62, 35, 229, 87, 109, 252, 142, 77, 72, 47, 214, 152, 28, 139, 106, 175, 104, 98, 19, 12, 37, 185, 5, 236, 210, 40, 241, 176, 175, 23, 35, 110, 194, 250, 18, 21, 240, 162, 58, 65, 188, 233, 86, 178, 25, 137, 220, 239, 113, 64 }, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "Id", "CreatedDate", "UpdatedDate", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Models",
                 columns: new[] { "Id", "BrandId", "CreatedDate", "DailyPrice", "FuelId", "ImageUrl", "Name", "TransmissionId", "UpdatedDate" },
-                values: new object[] { 2, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 600m, 2, "", "CLA 180D", 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000m, 1, "", "418i", 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 600m, 2, "", "CLA 180D", 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
 
             migrationBuilder.InsertData(
                 table: "Cars",

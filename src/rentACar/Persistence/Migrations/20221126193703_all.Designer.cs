@@ -12,14 +12,14 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20221017160726_All")]
-    partial class All
+    [Migration("20221126193703_all")]
+    partial class all
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -244,6 +244,34 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthenticatorType = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "ahmetcetinkaya@rentacar.com",
+                            FirstName = "Ahmet",
+                            LastName = "Çetinkaya",
+                            PasswordHash = new byte[] { 216, 7, 248, 213, 180, 105, 181, 167, 177, 19, 155, 30, 63, 159, 146, 2, 101, 246, 193, 196, 120, 179, 124, 19, 178, 201, 180, 94, 104, 104, 189, 76, 248, 107, 24, 218, 185, 47, 79, 34, 244, 195, 211, 203, 238, 139, 99, 203, 192, 241, 63, 158, 134, 201, 186, 179, 236, 200, 59, 131, 246, 24, 50, 255 },
+                            PasswordSalt = new byte[] { 117, 156, 97, 169, 93, 48, 209, 56, 136, 39, 106, 211, 161, 91, 15, 61, 206, 17, 71, 236, 175, 60, 83, 82, 123, 248, 103, 177, 169, 116, 52, 32, 121, 213, 53, 232, 97, 174, 223, 170, 215, 76, 36, 235, 196, 64, 58, 41, 184, 68, 9, 131, 110, 43, 58, 158, 31, 168, 53, 183, 152, 192, 8, 59, 216, 107, 7, 49, 174, 122, 117, 102, 133, 70, 135, 182, 153, 135, 62, 35, 229, 87, 109, 252, 142, 77, 72, 47, 214, 152, 28, 139, 106, 175, 104, 98, 19, 12, 37, 185, 5, 236, 210, 40, 241, 176, 175, 23, 35, 110, 194, 250, 18, 21, 240, 162, 58, 65, 188, 233, 86, 178, 25, 137, 220, 239, 113, 64 },
+                            Status = true,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthenticatorType = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "halitkalayci@rentacar.com",
+                            FirstName = "Halit",
+                            LastName = "Kalaycı",
+                            PasswordHash = new byte[] { 216, 7, 248, 213, 180, 105, 181, 167, 177, 19, 155, 30, 63, 159, 146, 2, 101, 246, 193, 196, 120, 179, 124, 19, 178, 201, 180, 94, 104, 104, 189, 76, 248, 107, 24, 218, 185, 47, 79, 34, 244, 195, 211, 203, 238, 139, 99, 203, 192, 241, 63, 158, 134, 201, 186, 179, 236, 200, 59, 131, 246, 24, 50, 255 },
+                            PasswordSalt = new byte[] { 117, 156, 97, 169, 93, 48, 209, 56, 136, 39, 106, 211, 161, 91, 15, 61, 206, 17, 71, 236, 175, 60, 83, 82, 123, 248, 103, 177, 169, 116, 52, 32, 121, 213, 53, 232, 97, 174, 223, 170, 215, 76, 36, 235, 196, 64, 58, 41, 184, 68, 9, 131, 110, 43, 58, 158, 31, 168, 53, 183, 152, 192, 8, 59, 216, 107, 7, 49, 174, 122, 117, 102, 133, 70, 135, 182, 153, 135, 62, 35, 229, 87, 109, 252, 142, 77, 72, 47, 214, 152, 28, 139, 106, 175, 104, 98, 19, 12, 37, 185, 5, 236, 210, 40, 241, 176, 175, 23, 35, 110, 194, 250, 18, 21, 240, 162, 58, 65, 188, 233, 86, 178, 25, 137, 220, 239, 113, 64 },
+                            Status = true,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Core.Security.Entities.UserOperationClaim", b =>
@@ -606,6 +634,22 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.FindeksCreditRate", b =>
@@ -740,7 +784,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 17, 19, 7, 25, 692, DateTimeKind.Local).AddTicks(9094))
+                        .HasDefaultValue(new DateTime(2022, 11, 26, 22, 37, 2, 699, DateTimeKind.Local).AddTicks(2608))
                         .HasColumnName("CreatedDate");
 
                     b.Property<int>("CustomerId")
@@ -1231,12 +1275,12 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.RentalBranch", "RentEndRentalBranch")
                         .WithOne()
                         .HasForeignKey("Domain.Entities.Rental", "RentEndRentalBranchId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Entities.RentalBranch", "RentStartRentalBranch")
                         .WithOne()
                         .HasForeignKey("Domain.Entities.Rental", "RentStartRentalBranchId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Car");

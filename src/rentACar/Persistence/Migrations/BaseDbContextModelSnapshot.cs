@@ -252,8 +252,8 @@ namespace Persistence.Migrations
                             Email = "ahmetcetinkaya@rentacar.com",
                             FirstName = "Ahmet",
                             LastName = "Çetinkaya",
-                            PasswordHash = new byte[] { 148, 111, 58, 222, 170, 198, 147, 214, 100, 23, 21, 192, 195, 179, 51, 151, 116, 135, 29, 228, 23, 97, 126, 12, 37, 129, 65, 122, 71, 170, 49, 67, 137, 166, 92, 54, 124, 148, 75, 241, 236, 138, 12, 235, 198, 218, 204, 167, 18, 113, 248, 114, 2, 24, 198, 9, 216, 29, 60, 89, 250, 54, 10, 130 },
-                            PasswordSalt = new byte[] { 61, 82, 101, 7, 26, 21, 155, 200, 170, 215, 112, 85, 215, 122, 147, 7, 95, 231, 193, 235, 23, 31, 228, 134, 163, 227, 235, 8, 226, 53, 168, 113, 194, 128, 140, 177, 40, 191, 32, 25, 148, 38, 3, 234, 227, 135, 131, 243, 1, 70, 48, 23, 109, 43, 174, 170, 102, 202, 150, 40, 181, 115, 191, 7, 179, 100, 245, 81, 39, 130, 23, 123, 58, 53, 187, 185, 61, 224, 90, 188, 142, 176, 36, 198, 137, 5, 76, 42, 196, 5, 84, 118, 160, 172, 35, 72, 69, 207, 103, 85, 65, 47, 65, 242, 60, 189, 27, 192, 217, 122, 19, 167, 196, 107, 230, 134, 9, 4, 118, 215, 132, 38, 18, 9, 48, 217, 78, 247 },
+                            PasswordHash = new byte[] { 216, 7, 248, 213, 180, 105, 181, 167, 177, 19, 155, 30, 63, 159, 146, 2, 101, 246, 193, 196, 120, 179, 124, 19, 178, 201, 180, 94, 104, 104, 189, 76, 248, 107, 24, 218, 185, 47, 79, 34, 244, 195, 211, 203, 238, 139, 99, 203, 192, 241, 63, 158, 134, 201, 186, 179, 236, 200, 59, 131, 246, 24, 50, 255 },
+                            PasswordSalt = new byte[] { 117, 156, 97, 169, 93, 48, 209, 56, 136, 39, 106, 211, 161, 91, 15, 61, 206, 17, 71, 236, 175, 60, 83, 82, 123, 248, 103, 177, 169, 116, 52, 32, 121, 213, 53, 232, 97, 174, 223, 170, 215, 76, 36, 235, 196, 64, 58, 41, 184, 68, 9, 131, 110, 43, 58, 158, 31, 168, 53, 183, 152, 192, 8, 59, 216, 107, 7, 49, 174, 122, 117, 102, 133, 70, 135, 182, 153, 135, 62, 35, 229, 87, 109, 252, 142, 77, 72, 47, 214, 152, 28, 139, 106, 175, 104, 98, 19, 12, 37, 185, 5, 236, 210, 40, 241, 176, 175, 23, 35, 110, 194, 250, 18, 21, 240, 162, 58, 65, 188, 233, 86, 178, 25, 137, 220, 239, 113, 64 },
                             Status = true,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -265,8 +265,8 @@ namespace Persistence.Migrations
                             Email = "halitkalayci@rentacar.com",
                             FirstName = "Halit",
                             LastName = "Kalaycı",
-                            PasswordHash = new byte[] { 148, 111, 58, 222, 170, 198, 147, 214, 100, 23, 21, 192, 195, 179, 51, 151, 116, 135, 29, 228, 23, 97, 126, 12, 37, 129, 65, 122, 71, 170, 49, 67, 137, 166, 92, 54, 124, 148, 75, 241, 236, 138, 12, 235, 198, 218, 204, 167, 18, 113, 248, 114, 2, 24, 198, 9, 216, 29, 60, 89, 250, 54, 10, 130 },
-                            PasswordSalt = new byte[] { 61, 82, 101, 7, 26, 21, 155, 200, 170, 215, 112, 85, 215, 122, 147, 7, 95, 231, 193, 235, 23, 31, 228, 134, 163, 227, 235, 8, 226, 53, 168, 113, 194, 128, 140, 177, 40, 191, 32, 25, 148, 38, 3, 234, 227, 135, 131, 243, 1, 70, 48, 23, 109, 43, 174, 170, 102, 202, 150, 40, 181, 115, 191, 7, 179, 100, 245, 81, 39, 130, 23, 123, 58, 53, 187, 185, 61, 224, 90, 188, 142, 176, 36, 198, 137, 5, 76, 42, 196, 5, 84, 118, 160, 172, 35, 72, 69, 207, 103, 85, 65, 47, 65, 242, 60, 189, 27, 192, 217, 122, 19, 167, 196, 107, 230, 134, 9, 4, 118, 215, 132, 38, 18, 9, 48, 217, 78, 247 },
+                            PasswordHash = new byte[] { 216, 7, 248, 213, 180, 105, 181, 167, 177, 19, 155, 30, 63, 159, 146, 2, 101, 246, 193, 196, 120, 179, 124, 19, 178, 201, 180, 94, 104, 104, 189, 76, 248, 107, 24, 218, 185, 47, 79, 34, 244, 195, 211, 203, 238, 139, 99, 203, 192, 241, 63, 158, 134, 201, 186, 179, 236, 200, 59, 131, 246, 24, 50, 255 },
+                            PasswordSalt = new byte[] { 117, 156, 97, 169, 93, 48, 209, 56, 136, 39, 106, 211, 161, 91, 15, 61, 206, 17, 71, 236, 175, 60, 83, 82, 123, 248, 103, 177, 169, 116, 52, 32, 121, 213, 53, 232, 97, 174, 223, 170, 215, 76, 36, 235, 196, 64, 58, 41, 184, 68, 9, 131, 110, 43, 58, 158, 31, 168, 53, 183, 152, 192, 8, 59, 216, 107, 7, 49, 174, 122, 117, 102, 133, 70, 135, 182, 153, 135, 62, 35, 229, 87, 109, 252, 142, 77, 72, 47, 214, 152, 28, 139, 106, 175, 104, 98, 19, 12, 37, 185, 5, 236, 210, 40, 241, 176, 175, 23, 35, 110, 194, 250, 18, 21, 240, 162, 58, 65, 188, 233, 86, 178, 25, 137, 220, 239, 113, 64 },
                             Status = true,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -604,16 +604,6 @@ namespace Persistence.Migrations
                     b.HasIndex(new[] { "TaxNo" }, "UK_CorporateCustomers_TaxNo")
                         .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompanyName = "Ahmet Çetinkaya",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = 2,
-                            TaxNo = "54154512",
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                     b.ToTable("CorporateCustomers", (string)null);
                 });
 
@@ -689,25 +679,6 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("FindeksCreditRates", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = 1,
-                            Score = (short)1000,
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = 2,
-                            Score = (short)1900,
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
-
                 });
 
             modelBuilder.Entity("Domain.Entities.Fuel", b =>
@@ -796,17 +767,6 @@ namespace Persistence.Migrations
                     b.HasIndex(new[] { "NationalIdentity" }, "UK_IndividualCustomers_NationalIdentity")
                         .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = 1,
-                            FirstName = "Ahmet",
-                            LastName = "Çetinkaya",
-                            NationalIdentity = "123123123123",
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                     b.ToTable("IndividualCustomers", (string)null);
                 });
 
@@ -822,7 +782,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 12, 22, 8, 59, 896, DateTimeKind.Local).AddTicks(5573))
+                        .HasDefaultValue(new DateTime(2022, 11, 26, 22, 37, 2, 699, DateTimeKind.Local).AddTicks(2608))
                         .HasColumnName("CreatedDate");
 
                     b.Property<int>("CustomerId")
@@ -858,33 +818,6 @@ namespace Persistence.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Invoices", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
-                            CustomerId = 1,
-                            No = "123123",
-                            RentalEndDate = new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentalPrice = 1000m,
-                            RentalStartDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
-                            TotalRentalDate = (short)2,
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
-                            CustomerId = 1,
-                            No = "123123",
-                            RentalEndDate = new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentalPrice = 2000m,
-                            RentalStartDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
-                            TotalRentalDate = (short)2,
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
-
                 });
 
             modelBuilder.Entity("Domain.Entities.Model", b =>
@@ -1033,37 +966,6 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Rentals", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CarId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = 1,
-                            RentEndDate = new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentEndKilometer = 1200,
-                            RentEndRentalBranchId = 2,
-                            RentStartDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000,
-                            RentStartRentalBranchId = 1,
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CarId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = 2,
-                            RentEndDate = new DateTime(2022, 10, 14, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentEndKilometer = 1200,
-                            RentEndRentalBranchId = 1,
-                            RentStartDate = new DateTime(2022, 10, 12, 0, 0, 0, 0, DateTimeKind.Local),
-                            RentStartKilometer = 1000,
-                            RentStartRentalBranchId = 2,
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
-
                 });
 
             modelBuilder.Entity("Domain.Entities.RentalBranch", b =>

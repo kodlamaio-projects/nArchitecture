@@ -24,7 +24,7 @@ namespace Persistence.EntityConfigurations
             builder.HasMany(c => c.Invoices);
             builder.HasMany(c => c.Rentals);
 
-            Customer[] customersSeedData = new Customer[] { new(1, 1),new(2,2) };
+            Customer[] customersSeedData = { new(1, 1),new(2,2) };
 
             builder.HasData(customersSeedData);
         }
