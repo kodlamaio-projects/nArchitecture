@@ -39,7 +39,6 @@ builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhos
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
 builder.Services.AddSwaggerGen(opt =>
 {
