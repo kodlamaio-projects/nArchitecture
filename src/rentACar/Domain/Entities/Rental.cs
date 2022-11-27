@@ -1,5 +1,4 @@
 ﻿using Core.Persistence.Repositories;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 

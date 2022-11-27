@@ -29,7 +29,7 @@ public class CarsController : BaseController
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
         GetListCarQuery getListCarQuery = new()
-            { PageRequest = pageRequest };
+        { PageRequest = pageRequest };
         CarListModel result = await Mediator.Send(getListCarQuery);
         return Ok(result);
     }

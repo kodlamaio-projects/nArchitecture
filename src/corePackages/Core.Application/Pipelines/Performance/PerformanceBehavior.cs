@@ -26,7 +26,7 @@ public class PerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
         try
         {
             _stopwatch.Start();
-            response = await next();            
+            response = await next();
         }
         finally
         {

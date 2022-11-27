@@ -49,7 +49,7 @@ public class CreateCorporateCustomerCommand : IRequest<CreatedCorporateCustomerD
                 await _corporateCustomerRepository.AddAsync(mappedCorporateCustomer);
 
             await _findeksCreditRateService.Add(new FindeksCreditRate
-                                                    { CustomerId = createdCorporateCustomer.CustomerId });
+            { CustomerId = createdCorporateCustomer.CustomerId });
 
             CreatedCorporateCustomerDto createdCorporateCustomerDto =
                 _mapper.Map<CreatedCorporateCustomerDto>(createdCorporateCustomer);

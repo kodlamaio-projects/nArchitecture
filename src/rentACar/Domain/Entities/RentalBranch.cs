@@ -6,7 +6,7 @@ namespace Domain.Entities;
 public class RentalBranch : Entity
 {
     public City City { get; set; }
-   
+
 
     public virtual ICollection<Car> Cars { get; set; }
 

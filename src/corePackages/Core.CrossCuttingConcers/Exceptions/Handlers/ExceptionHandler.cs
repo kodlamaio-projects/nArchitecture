@@ -18,7 +18,7 @@ namespace Core.CrossCuttingConcerns.Exceptions.Handlers
             else if (exception is NotFoundException notFoundException)
                 return HandleException(notFoundException);
 
-            else 
+            else
                 return HandleException(exception);
         }
 
