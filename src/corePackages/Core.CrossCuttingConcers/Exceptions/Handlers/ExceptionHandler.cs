@@ -18,7 +18,8 @@ namespace Core.CrossCuttingConcerns.Exceptions.Handlers
             else if (exception is NotFoundException notFoundException)
                 return HandleException(notFoundException);
 
-            else return HandleException(exception);
+            else 
+                return HandleException(exception);
         }
 
         protected abstract Task HandleException(BusinessException businessException);
