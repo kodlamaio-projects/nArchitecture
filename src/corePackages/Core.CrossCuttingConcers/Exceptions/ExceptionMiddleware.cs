@@ -2,7 +2,7 @@
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Core.CrossCuttingConcerns.Exceptions;
 
@@ -58,7 +58,7 @@ public class ExceptionMiddleware
             ExceptionMessage = exception.Message,
             ExceptionDetail = exception.ToString(),
         };
-        _loggerService.Error(JsonSerializer.Serialize(logDetailWithException));
+        _loggerService.Error(JsonConvert.SerializeObject(logDetailWithException));
         return Task.CompletedTask;
     }
 }
