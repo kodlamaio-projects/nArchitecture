@@ -1,13 +1,8 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions.Handlers;
-using Microsoft.AspNetCore.Http;
-
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog;
-using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Net;
+using System.Text.Json;
 
 namespace Core.CrossCuttingConcerns.Exceptions;
 
@@ -46,24 +41,24 @@ public class ExceptionMiddleware
     }
 
     private Task LogException(HttpContext context, Exception exception)
-    { 
+    {
         List<LogParameter> logParameters = new()
         {
             new LogParameter
             {
                 Type = context.GetType().Name,
-                Value = context
             }
         };
 
-        LogDetail logDetail = new()
+        LogDetailWithException logDetailWithException = new()
         {
             MethodName = _next.Method.Name,
             Parameters = logParameters,
-            User = _contextAccessor.HttpContext?.User.Identity?.Name ?? "?"
+            User = _contextAccessor.HttpContext?.User.Identity?.Name ?? "?",
+            ExceptionMessage = exception.Message,
+            ExceptionDetail = exception.ToString(),
         };
-
-        _loggerService.Info(JsonConvert.SerializeObject(logDetail));
+        _loggerService.Error(JsonSerializer.Serialize(logDetailWithException));
         return Task.CompletedTask;
     }
 }

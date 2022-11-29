@@ -22,12 +22,14 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
                                   RequestHandlerDelegate<TResponse> next)
     {
-        List<LogParameter> logParameters = new();
-        logParameters.Add(new LogParameter
+        List<LogParameter> logParameters = new()
         {
-            Type = request.GetType().Name,
-            Value = request
-        });
+            new LogParameter
+            {
+                Type = request.GetType().Name,
+                Value = request
+            }
+        };
 
         LogDetail logDetail = new()
         {
