@@ -37,9 +37,9 @@ public class CreateBrandCommand : IRequest<CreatedBrandDto>, ISecuredRequest, IC
         {
             await _brandBusinessRules.BrandNameCanNotBeDuplicatedWhenInserted(request.Name);
 
-            Brand mappedBrand = _mapper.Map<Brand>(request);
-            Brand createdBrand = await _brandRepository.AddAsync(mappedBrand);
-            CreatedBrandDto createdBrandDto = _mapper.Map<CreatedBrandDto>(createdBrand);
+            var mappedBrand = _mapper.Map<Brand>(request);
+            var createdBrand = await _brandRepository.AddAsync(mappedBrand);
+            var createdBrandDto = _mapper.Map<CreatedBrandDto>(createdBrand);
             return createdBrandDto;
         }
     }

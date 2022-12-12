@@ -36,10 +36,13 @@ public class UpdateBrandCommand : IRequest<UpdatedBrandDto>, ISecuredRequest, IC
 
         public async Task<UpdatedBrandDto> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
         {
-            await _brandBusinessRules.BrandIdShouldExistWhenSelected(request.Id);
-            Brand mappedBrand = _mapper.Map<Brand>(request);
-            Brand updatedBrand = await _brandRepository.UpdateAsync(mappedBrand);
-            UpdatedBrandDto updatedBrandDto = _mapper.Map<UpdatedBrandDto>(updatedBrand);
+            var brand = await _brandRepository.GetAsync(x => x.Id == request.Id);
+            _brandBusinessRules.BrandIdShouldExistWhenSelected(brand);
+            await _brandBusinessRules.BrandNameCanNotBeDuplicatedWhenUpdated(request.Id, request.Name);
+
+            _mapper.Map(request, brand);
+            var updatedBrand = await _brandRepository.UpdateAsync(brand);
+            var updatedBrandDto = _mapper.Map<UpdatedBrandDto>(updatedBrand);
             return updatedBrandDto;
         }
     }
