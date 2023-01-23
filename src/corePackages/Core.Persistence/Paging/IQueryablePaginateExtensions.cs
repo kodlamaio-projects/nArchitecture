@@ -8,11 +8,19 @@ public static class IQueryablePaginateExtensions
                                                               int from = 0,
                                                               CancellationToken cancellationToken = default)
     {
-        if (from > index) throw new ArgumentException($"From: {from} > Index: {index}, must from <= Index");
+        if (from > index)
+            throw new ArgumentException($"From: {from} > Index: {index}, must from <= Index");
 
-        int count = await source.CountAsync(cancellationToken).ConfigureAwait(false);
-        List<T> items = await source.Skip((index - from) * size).Take(size).ToListAsync(cancellationToken)
-                                    .ConfigureAwait(false);
+        int count = await source
+            .CountAsync(cancellationToken)
+            .ConfigureAwait(false);
+
+        List<T> items = await source
+            .Skip((index - from) * size)
+            .Take(size)
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
+
         Paginate<T> list = new()
         {
             Index = index,
@@ -25,14 +33,17 @@ public static class IQueryablePaginateExtensions
         return list;
     }
 
-
-    public static IPaginate<T> ToPaginate<T>(this IQueryable<T> source, int index, int size,
-                                             int from = 0)
+    public static IPaginate<T> ToPaginate<T>(this IQueryable<T> source, int index, int size, int from = 0)
     {
-        if (from > index) throw new ArgumentException($"From: {from} > Index: {index}, must from <= Index");
+        if (from > index)
+            throw new ArgumentException($"From: {from} > Index: {index}, must from <= Index");
 
         int count = source.Count();
-        List<T> items = source.Skip((index - from) * size).Take(size).ToList();
+        List<T> items = source
+            .Skip((index - from) * size)
+            .Take(size)
+            .ToList();
+
         Paginate<T> list = new()
         {
             Index = index,
