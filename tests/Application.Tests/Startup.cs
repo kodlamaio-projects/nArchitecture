@@ -8,6 +8,7 @@ namespace Application.Tests
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddBrandServices();
+            services.AddColorServices();
         }
     }
 }
