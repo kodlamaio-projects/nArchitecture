@@ -49,7 +49,7 @@ public class AuthController : BaseController
     public async Task<IActionResult> RefreshToken()
     {
         RefreshTokenCommand refreshTokenCommand = new()
-            { RefleshToken = getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
+        { RefleshToken = getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
         RefreshedTokensDto result = await Mediator.Send(refreshTokenCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created("", result.AccessToken);

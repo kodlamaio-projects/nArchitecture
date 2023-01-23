@@ -21,8 +21,8 @@ namespace Persistence.EntityConfigurations
             builder.Property(r => r.RentEndKilometer).HasColumnName("RentEndKilometer");
             builder.HasOne(r => r.Car);
             builder.HasOne(r => r.Customer);
-            builder.HasOne(r => r.RentStartRentalBranch).WithOne().HasForeignKey<Rental>(r=>r.RentStartRentalBranchId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(r => r.RentEndRentalBranch).WithOne().HasForeignKey<Rental>(r=>r.RentEndRentalBranchId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(r => r.RentStartRentalBranch).WithOne().HasForeignKey<Rental>(r => r.RentStartRentalBranchId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(r => r.RentEndRentalBranch).WithOne().HasForeignKey<Rental>(r => r.RentEndRentalBranchId).OnDelete(DeleteBehavior.NoAction);
             builder.HasMany(r => r.RentalsAdditionalServices);
         }
     }

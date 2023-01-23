@@ -38,30 +38,23 @@ public class BaseDbContext : DbContext
     {
         Configuration = configuration;
     }
-    
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
+        IEnumerable<EntityEntry<Entity>> entries = ChangeTracker
+            .Entries<Entity>()
+            .Where(e => e.State == EntityState.Added ||
+                        e.State == EntityState.Modified);
 
-        IEnumerable<EntityEntry<Entity>> datas = ChangeTracker
-            .Entries<Entity>().Where(e =>
-                e.State == EntityState.Added || e.State == EntityState.Modified);
-
-        foreach (var data in datas)
+        foreach (var entry in entries)
         {
-            _ = data.State switch
+            _ = entry.State switch
             {
-                EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
-                EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow
+                EntityState.Added => entry.Entity.CreatedDate = DateTime.UtcNow,
+                EntityState.Modified => entry.Entity.UpdatedDate = DateTime.UtcNow
             };
         }
         return await base.SaveChangesAsync(cancellationToken);
-    }
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        //if (!optionsBuilder.IsConfigured)
-        //    base.OnConfiguring(
-        //        optionsBuilder.UseSqlServer(Configuration.GetConnectionString("RentACarConnectionString")));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -52,7 +52,7 @@ public class RegisterCommand : IRequest<RegisteredDto>
             RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
             RegisteredDto registeredDto = new()
-                { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+            { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return registeredDto;
         }
     }

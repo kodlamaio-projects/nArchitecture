@@ -48,7 +48,7 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensDto>
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
 
             RefreshedTokensDto refreshedTokensDto = new()
-                { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+            { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return refreshedTokensDto;
         }
     }

@@ -51,7 +51,7 @@ public class CreateIndividualCustomerCommand : IRequest<CreatedIndividualCustome
                 await _individualCustomerRepository.AddAsync(mappedIndividualCustomer);
 
             await _findeksCreditRateService.Add(new FindeksCreditRate
-                                                    { CustomerId = createdIndividualCustomer.CustomerId });
+            { CustomerId = createdIndividualCustomer.CustomerId });
 
 
             CreatedIndividualCustomerDto createdIndividualCustomerDto =

@@ -70,7 +70,8 @@ public class FindeksCreditRatesController : BaseController
         UpdateByUserIdFindeksCreditRateFromServiceCommand updateByUserIdFindeksCreditRateFromServiceCommand =
             new()
             {
-                UserId = getUserIdFromRequest(), IdentityNumber = updateByAuthFromServiceRequestDto.IdentityNumber
+                UserId = getUserIdFromRequest(),
+                IdentityNumber = updateByAuthFromServiceRequestDto.IdentityNumber
             };
 
         UpdatedFindeksCreditRateDto result = await Mediator.Send(updateByUserIdFindeksCreditRateFromServiceCommand);
