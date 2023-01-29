@@ -4,6 +4,7 @@ using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Caching;
+using Domain.Entities;
 using MediatR;
 using static Application.Features.Brands.Constants.OperationClaims;
 using static Domain.Constants.OperationClaims;
@@ -34,13 +35,13 @@ public class DeleteBrandCommand : IRequest<DeletedBrandDto>, ISecuredRequest, IC
 
         public async Task<DeletedBrandDto> Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
         {
-            var brand = await _brandRepository.GetAsync(x => x.Id == request.Id);
+            Brand? brand = await _brandRepository.GetAsync(x => x.Id == request.Id);
             _brandBusinessRules.BrandIdShouldExistWhenSelected(brand);
 
-
             _mapper.Map(request, brand);
-            var deletedBrand = await _brandRepository.DeleteAsync(brand);
-            var deletedBrandDto = _mapper.Map<DeletedBrandDto>(deletedBrand);
+            Brand deletedBrand = await _brandRepository.DeleteAsync(brand);
+            DeletedBrandDto deletedBrandDto = _mapper.Map<DeletedBrandDto>(deletedBrand);
+
             return deletedBrandDto;
         }
     }
