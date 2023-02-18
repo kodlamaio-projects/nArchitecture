@@ -26,15 +26,15 @@ public class AuthManager : IAuthService
     public async Task<AccessToken> CreateAccessToken(User user)
     {
         IList<OperationClaim> operationClaims = await _userOperationClaimRepository
-                .Query()
-                .AsNoTracking()
-                .Where(p => p.UserId == user.Id)
-                .Select(p => new OperationClaim
-                {
-                    Id = p.OperationClaimId,
-                    Name = p.OperationClaim.Name
-                })
-                .ToListAsync();
+            .Query()
+            .AsNoTracking()
+            .Where(p => p.UserId == user.Id)
+            .Select(p => new OperationClaim
+            {
+                Id = p.OperationClaimId,
+                Name = p.OperationClaim.Name
+            })
+            .ToListAsync();
 
         AccessToken accessToken = _tokenHelper.CreateToken(user, operationClaims);
         return accessToken;
@@ -48,13 +48,16 @@ public class AuthManager : IAuthService
 
     public async Task DeleteOldRefreshTokens(int userId)
     {
-        IList<RefreshToken> refreshTokens = (await _refreshTokenRepository.GetListAsync(r =>
-                                                 r.UserId == userId &&
-                                                 r.Revoked == null && r.Expires >= DateTime.UtcNow &&
-                                                 r.Created.AddDays(_tokenOptions.RefreshTokenTTL) <=
-                                                 DateTime.UtcNow)
-                                            ).Items;
-        foreach (RefreshToken refreshToken in refreshTokens) await _refreshTokenRepository.DeleteAsync(refreshToken);
+        List<RefreshToken> refreshTokens = _refreshTokenRepository
+            .Query()
+            .AsNoTracking()
+            .Where(r => r.UserId == userId &&
+                        r.Revoked == null &&
+                        r.Expires >= DateTime.UtcNow &&
+                        r.Created.AddDays(_tokenOptions.RefreshTokenTTL) <= DateTime.UtcNow)
+            .ToList();
+
+        await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
 
     public async Task<RefreshToken?> GetRefreshTokenByToken(string token)
@@ -64,7 +67,7 @@ public class AuthManager : IAuthService
     }
 
     public async Task RevokeRefreshToken(RefreshToken refreshToken, string ipAddress, string? reason = null,
-                                         string? replacedByToken = null)
+        string? replacedByToken = null)
     {
         refreshToken.Revoked = DateTime.UtcNow;
         refreshToken.RevokedByIp = ipAddress;
@@ -81,7 +84,7 @@ public class AuthManager : IAuthService
     }
 
     public async Task RevokeDescendantRefreshTokens(RefreshToken refreshToken, string ipAddress,
-                                                    string reason)
+        string reason)
     {
         RefreshToken childToken = await _refreshTokenRepository.GetAsync(r => r.Token == refreshToken.ReplacedByToken);
 
