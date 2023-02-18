@@ -4,7 +4,7 @@ using Core.Security.OtpAuthenticator;
 using Core.Security.OtpAuthenticator.OtpNet;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace Core.Security;
 
 public static class SecurityServiceRegistration
 {
