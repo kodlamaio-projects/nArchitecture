@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.CrossCuttingConcerns.Exceptions.Types;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.CrossCuttingConcerns.Exceptions;
+namespace Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 
 internal class ValidationProblemDetails : ProblemDetails
 {
-    public object Failures { get; init; }
-
-    public ValidationProblemDetails(object failures)
+    public ValidationProblemDetails(IEnumerable<ValidationExceptionModel> errors)
     {
         Title = "Validation error(s)";
-        Failures = failures;
+        Detail = "One or more validation errors occurred.";
+        Errors = errors;
         Status = StatusCodes.Status400BadRequest;
         Type = "https://example.com/probs/validation";
-        Detail = "";
-        Instance = "";
     }
+
+    public IEnumerable<ValidationExceptionModel> Errors { get; init; }
 }

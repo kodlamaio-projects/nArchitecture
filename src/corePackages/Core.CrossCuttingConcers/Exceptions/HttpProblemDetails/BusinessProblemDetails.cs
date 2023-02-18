@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.CrossCuttingConcerns.Exceptions;
+namespace Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 
 internal class BusinessProblemDetails : ProblemDetails
 {
@@ -11,6 +11,5 @@ internal class BusinessProblemDetails : ProblemDetails
         Detail = detail;
         Status = StatusCodes.Status400BadRequest;
         Type = "https://example.com/probs/business";
-        Instance = "";
     }
 }

@@ -1,11 +1,11 @@
 ﻿using Application.Features.Brands.Commands.CreateBrand;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
-using Core.CrossCuttingConcerns.Exceptions;
 using Core.Test.Application.Constants;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Xunit;
 using static Application.Features.Brands.Commands.CreateBrand.CreateBrandCommand;
 

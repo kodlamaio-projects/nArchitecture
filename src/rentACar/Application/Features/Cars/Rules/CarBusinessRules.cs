@@ -1,7 +1,7 @@
 ﻿using Application.Features.Cars.Constants;
 using Application.Services.Repositories;
 using Core.Application.Rules;
-using Core.CrossCuttingConcerns.Exceptions;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
 using Domain.Enums;
 

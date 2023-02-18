@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.CrossCuttingConcerns.Exceptions;
+namespace Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 
 internal class AuthorizationProblemDetails : ProblemDetails
 {
@@ -11,6 +11,5 @@ internal class AuthorizationProblemDetails : ProblemDetails
         Detail = detail;
         Status = StatusCodes.Status401Unauthorized;
         Type = "https://example.com/probs/authorization";
-        Instance = "";
     }
 }

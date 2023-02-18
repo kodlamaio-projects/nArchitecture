@@ -1,6 +1,6 @@
 ﻿using Application.Services.RentalService;
 using Application.Services.Repositories;
-using Core.CrossCuttingConcerns.Exceptions;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.CrossCuttingConcerns.Exceptions;
+namespace Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 
 internal class NotFoundProblemDetails : ProblemDetails
 {
@@ -11,6 +11,5 @@ internal class NotFoundProblemDetails : ProblemDetails
         Detail = detail;
         Status = StatusCodes.Status404NotFound;
         Type = "https://example.com/probs/notfound";
-        Instance = "";
     }
 }

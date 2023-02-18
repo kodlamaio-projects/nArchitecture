@@ -1,5 +1,5 @@
 ﻿using Application.Services.Repositories;
-using Core.CrossCuttingConcerns.Exceptions;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
 
 namespace Application.Services.FindeksCreditRateService;

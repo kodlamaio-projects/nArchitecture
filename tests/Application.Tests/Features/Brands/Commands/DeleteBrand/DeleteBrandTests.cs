@@ -1,9 +1,9 @@
 ﻿using Application.Features.Brands.Commands.DeleteBrand;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
-using Core.CrossCuttingConcerns.Exceptions;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Xunit;
 using static Application.Features.Brands.Commands.DeleteBrand.DeleteBrandCommand;
 
