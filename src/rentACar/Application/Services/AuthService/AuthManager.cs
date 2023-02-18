@@ -48,14 +48,14 @@ public class AuthManager : IAuthService
 
     public async Task DeleteOldRefreshTokens(int userId)
     {
-        List<RefreshToken> refreshTokens = _refreshTokenRepository
+        List<RefreshToken> refreshTokens = await _refreshTokenRepository
             .Query()
             .AsNoTracking()
             .Where(r => r.UserId == userId &&
                         r.Revoked == null &&
                         r.Expires >= DateTime.UtcNow &&
                         r.Created.AddDays(_tokenOptions.RefreshTokenTTL) <= DateTime.UtcNow)
-            .ToList();
+            .ToListAsync();
 
         await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
