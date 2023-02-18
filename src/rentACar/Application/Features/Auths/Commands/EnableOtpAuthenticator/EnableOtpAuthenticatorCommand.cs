@@ -1,6 +1,6 @@
 ﻿using Application.Features.Auths.Dtos;
 using Application.Features.Auths.Rules;
-using Application.Services.AuthService;
+using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UserService;
 using Core.Security.Entities;
@@ -16,23 +16,23 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorDto
         EnableOtpAuthenticatorCommandHandler : IRequestHandler<EnableOtpAuthenticatorCommand,
             EnabledOtpAuthenticatorDto>
     {
-        private readonly IUserService _userService;
-        private readonly IAuthService _authService;
-        private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
         private readonly AuthBusinessRules _authBusinessRules;
+        private readonly IAuthenticatorService _authenticatorService;
+        private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
+        private readonly IUserService _userService;
 
-        public EnableOtpAuthenticatorCommandHandler(IUserService userService, IAuthService authService,
-                                                    IOtpAuthenticatorRepository otpAuthenticatorRepository,
-                                                    AuthBusinessRules authBusinessRules)
+        public EnableOtpAuthenticatorCommandHandler(IUserService userService,
+            IOtpAuthenticatorRepository otpAuthenticatorRepository, AuthBusinessRules authBusinessRules,
+            IAuthenticatorService authenticatorService)
         {
             _userService = userService;
-            _authService = authService;
             _otpAuthenticatorRepository = otpAuthenticatorRepository;
             _authBusinessRules = authBusinessRules;
+            _authenticatorService = authenticatorService;
         }
 
         public async Task<EnabledOtpAuthenticatorDto> Handle(EnableOtpAuthenticatorCommand request,
-                                                             CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             User user = await _userService.GetById(request.UserId);
             await _authBusinessRules.UserShouldBeExists(user);
@@ -44,13 +44,13 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorDto
             if (isExistsOtpAuthenticator is not null)
                 await _otpAuthenticatorRepository.DeleteAsync(isExistsOtpAuthenticator);
 
-            OtpAuthenticator newOtpAuthenticator = await _authService.CreateOtpAuthenticator(user);
+            OtpAuthenticator newOtpAuthenticator = await _authenticatorService.CreateOtpAuthenticator(user);
             OtpAuthenticator addedOtpAuthenticator =
                 await _otpAuthenticatorRepository.AddAsync(newOtpAuthenticator);
 
             EnabledOtpAuthenticatorDto enabledOtpAuthenticatorDto = new()
             {
-                SecretKey = await _authService.ConvertSecretKeyToString(addedOtpAuthenticator.SecretKey)
+                SecretKey = await _authenticatorService.ConvertSecretKeyToString(addedOtpAuthenticator.SecretKey)
             };
             return enabledOtpAuthenticatorDto;
         }

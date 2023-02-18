@@ -1,5 +1,5 @@
 ﻿using Application.Features.Auths.Rules;
-using Application.Services.AuthService;
+using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UserService;
 using Core.Security.Entities;
@@ -15,22 +15,21 @@ public class VerifyOtpAuthenticatorCommand : IRequest
 
     public class VerifyOtpAuthenticatorCommandHandler : IRequestHandler<VerifyOtpAuthenticatorCommand>
     {
-        private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
         private readonly AuthBusinessRules _authBusinessRules;
+        private readonly IAuthenticatorService _authenticatorService;
+        private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
         private readonly IUserService _userService;
-        private readonly IAuthService _authService;
 
         public VerifyOtpAuthenticatorCommandHandler(IOtpAuthenticatorRepository otpAuthenticatorRepository,
-                                                    AuthBusinessRules authBusinessRules, IUserService userService,
-                                                    IAuthService authService)
+            AuthBusinessRules authBusinessRules, IUserService userService, IAuthenticatorService authenticatorService)
         {
             _otpAuthenticatorRepository = otpAuthenticatorRepository;
             _authBusinessRules = authBusinessRules;
             _userService = userService;
-            _authService = authService;
+            _authenticatorService = authenticatorService;
         }
 
-        public async Task<Unit> Handle(VerifyOtpAuthenticatorCommand request, CancellationToken cancellationToken)
+        public async Task Handle(VerifyOtpAuthenticatorCommand request, CancellationToken cancellationToken)
         {
             OtpAuthenticator? otpAuthenticator =
                 await _otpAuthenticatorRepository.GetAsync(e => e.UserId == request.UserId);
@@ -41,12 +40,10 @@ public class VerifyOtpAuthenticatorCommand : IRequest
             otpAuthenticator.IsVerified = true;
             user.AuthenticatorType = AuthenticatorType.Otp;
 
-            await _authService.VerifyAuthenticatorCode(user, request.ActivationCode);
+            await _authenticatorService.VerifyAuthenticatorCode(user, request.ActivationCode);
 
             await _otpAuthenticatorRepository.UpdateAsync(otpAuthenticator);
             await _userService.Update(user);
-
-            return Unit.Value;
         }
     }
 }
