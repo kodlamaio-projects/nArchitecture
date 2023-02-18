@@ -29,12 +29,12 @@ public class GetListCarByDynamicQuery : IRequest<CarListModel>
         public async Task<CarListModel> Handle(GetListCarByDynamicQuery request, CancellationToken cancellationToken)
         {
             IPaginate<Car> cars = await _carRepository.GetListByDynamicAsync(
-                                      request.Dynamic,
-                                      c => c.Include(c => c.Model)
-                                            .Include(c => c.Model.Brand)
-                                            .Include(c => c.Color),
-                                      request.PageRequest.Page,
-                                      request.PageRequest.PageSize);
+                request.Dynamic,
+                include: c => c.Include(c => c.Model)
+                    .Include(c => c.Model.Brand)
+                    .Include(c => c.Color),
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize, cancellationToken: cancellationToken);
             CarListModel mappedCarListModel = _mapper.Map<CarListModel>(cars);
             return mappedCarListModel;
         }

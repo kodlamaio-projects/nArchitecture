@@ -17,8 +17,8 @@ public class GetListModelByDynamicQuery : IRequest<ModelListModel>
 
     public class GetListModelByDynamicQueryHandler : IRequestHandler<GetListModelByDynamicQuery, ModelListModel>
     {
-        private readonly IModelRepository _modelRepository;
         private readonly IMapper _mapper;
+        private readonly IModelRepository _modelRepository;
 
         public GetListModelByDynamicQueryHandler(IModelRepository modelRepository, IMapper mapper)
         {
@@ -27,15 +27,15 @@ public class GetListModelByDynamicQuery : IRequest<ModelListModel>
         }
 
         public async Task<ModelListModel> Handle(GetListModelByDynamicQuery request,
-                                                 CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             IPaginate<Model> models = await _modelRepository.GetListByDynamicAsync(
-                                          request.Dynamic,
-                                          c => c.Include(c => c.Brand)
-                                                .Include(c => c.Fuel)
-                                                .Include(c => c.Transmission),
-                                          request.PageRequest.Page,
-                                          request.PageRequest.PageSize);
+                request.Dynamic,
+                include: c => c.Include(c => c.Brand)
+                    .Include(c => c.Fuel)
+                    .Include(c => c.Transmission),
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize, cancellationToken: cancellationToken);
             ModelListModel mappedModelListModel = _mapper.Map<ModelListModel>(models);
             return mappedModelListModel;
         }
