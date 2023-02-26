@@ -33,9 +33,9 @@ public class ModelsController : BaseController
 
     [HttpPost("GetList/ByDynamic")]
     public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest,
-                                                      [FromBody] Dynamic? dynamic = null)
+                                                      [FromBody] DynamicQuery? dynamicQuery = null)
     {
-        GetListModelByDynamicQuery getListModelByDynamicQuery = new() { PageRequest = pageRequest, Dynamic = dynamic };
+        GetListModelByDynamicQuery getListModelByDynamicQuery = new() { PageRequest = pageRequest, DynamicQuery = dynamicQuery };
         ModelListModel result = await Mediator.Send(getListModelByDynamicQuery);
         return Ok(result);
     }

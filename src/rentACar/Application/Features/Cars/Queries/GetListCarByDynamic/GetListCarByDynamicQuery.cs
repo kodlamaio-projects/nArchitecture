@@ -13,7 +13,7 @@ namespace Application.Features.Cars.Queries.GetListCarByDynamic;
 public class GetListCarByDynamicQuery : IRequest<CarListModel>
 {
     public PageRequest PageRequest { get; set; }
-    public Dynamic Dynamic { get; set; }
+    public DynamicQuery DynamicQuery { get; set; }
 
     public class GetListCarByDynamicQueryHandler : IRequestHandler<GetListCarByDynamicQuery, CarListModel>
     {
@@ -29,7 +29,7 @@ public class GetListCarByDynamicQuery : IRequest<CarListModel>
         public async Task<CarListModel> Handle(GetListCarByDynamicQuery request, CancellationToken cancellationToken)
         {
             IPaginate<Car> cars = await _carRepository.GetListByDynamicAsync(
-                                      request.Dynamic,
+                                      request.DynamicQuery,
                                       c => c.Include(c => c.Model)
                                             .Include(c => c.Model.Brand)
                                             .Include(c => c.Color),

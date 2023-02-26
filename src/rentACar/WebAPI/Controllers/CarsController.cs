@@ -36,9 +36,9 @@ public class CarsController : BaseController
 
     [HttpPost("GetList/ByDynamic")]
     public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest,
-                                                      [FromBody] Dynamic? dynamic = null)
+                                                      [FromBody] DynamicQuery? dynamicQuery = null)
     {
-        GetListCarByDynamicQuery getListCarByDynamicQuery = new() { PageRequest = pageRequest, Dynamic = dynamic };
+        GetListCarByDynamicQuery getListCarByDynamicQuery = new() { PageRequest = pageRequest, DynamicQuery = dynamicQuery };
         CarListModel result = await Mediator.Send(getListCarByDynamicQuery);
         return Ok(result);
     }

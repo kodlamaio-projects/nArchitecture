@@ -1,6 +1,7 @@
 ﻿using Core.Persistence.Paging;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
+using Core.Persistence.Dynamic;
 
 namespace Core.Persistence.Repositories;
 
@@ -16,7 +17,7 @@ public interface IAsyncRepository<T> : IQuery<T> where T : Entity
                                     int index = 0, int size = 10, bool enableTracking = true,
                                     CancellationToken cancellationToken = default);
 
-    Task<IPaginate<T>> GetListByDynamicAsync(Dynamic.Dynamic dynamic,
+    Task<IPaginate<T>> GetListByDynamicAsync(DynamicQuery dynamicQuery,
                                              Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
                                              int index = 0, int size = 10, bool enableTracking = true,
                                              CancellationToken cancellationToken = default);

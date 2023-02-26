@@ -13,7 +13,7 @@ namespace Application.Features.Models.Queries.GetListModelByDynamic;
 public class GetListModelByDynamicQuery : IRequest<ModelListModel>
 {
     public PageRequest PageRequest { get; set; }
-    public Dynamic Dynamic { get; set; }
+    public DynamicQuery DynamicQuery { get; set; }
 
     public class GetListModelByDynamicQueryHandler : IRequestHandler<GetListModelByDynamicQuery, ModelListModel>
     {
@@ -30,7 +30,7 @@ public class GetListModelByDynamicQuery : IRequest<ModelListModel>
                                                  CancellationToken cancellationToken)
         {
             IPaginate<Model> models = await _modelRepository.GetListByDynamicAsync(
-                                          request.Dynamic,
+                                          request.DynamicQuery,
                                           c => c.Include(c => c.Brand)
                                                 .Include(c => c.Fuel)
                                                 .Include(c => c.Transmission),
