@@ -17,7 +17,7 @@ public class OperationClaimBusinessRules : BaseBusinessRules
 
     public async Task OperationClaimIdShouldExistWhenSelected(int id)
     {
-        OperationClaim? result = await _operationClaimRepository.GetAsync(b => b.Id == id);
+        OperationClaim? result = await _operationClaimRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(OperationClaimMessages.OperationClaimNotExists);
     }
 }

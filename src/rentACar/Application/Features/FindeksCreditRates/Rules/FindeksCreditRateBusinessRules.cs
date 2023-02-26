@@ -17,7 +17,7 @@ public class FindeksCreditRateBusinessRules : BaseBusinessRules
 
     public async Task FindeksCreditRateIdShouldExistWhenSelected(int id)
     {
-        FindeksCreditRate? result = await _findeksCreditRateRepository.GetAsync(b => b.Id == id);
+        FindeksCreditRate? result = await _findeksCreditRateRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(FindeksCreditRateMessage.FindeksCreditRateNotExists);
     }
 

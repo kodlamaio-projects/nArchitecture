@@ -18,18 +18,18 @@ public class BrandBusinessRules : BaseBusinessRules
 
     public async Task BrandIdShouldExistWhenSelected(int id)
     {
-        Brand? result = await _brandRepository.GetAsync(b => b.Id == id);
+        Brand? result = await _brandRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(BrandMessages.BrandNotExists);
     }
 
     public async Task BrandNameCanNotBeDuplicatedWhenInserted(string name)
     {
-        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => b.Name == name);
+        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => b.Name == name, enableTracking: false);
         if (result.Items.Any()) throw new BusinessException(BrandMessages.BrandNameExists);
     }
     public async Task BrandNameListCanNotBeDuplicatedWhenInserted(List<string> nameList)
     {
-        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => nameList.Contains(b.Name));
+        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => nameList.Contains(b.Name), enableTracking: false);
         if (result.Items.Any()) throw new BusinessException(BrandMessages.BrandNameExists);
     }
 }

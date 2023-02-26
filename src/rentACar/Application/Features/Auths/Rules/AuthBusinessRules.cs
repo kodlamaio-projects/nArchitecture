@@ -72,13 +72,13 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public async Task UserEmailShouldBeNotExists(string email)
     {
-        User? user = await _userRepository.GetAsync(u => u.Email == email);
+        User? user = await _userRepository.GetAsync(u => u.Email == email, enableTracking: false);
         if (user != null) throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
     public async Task UserPasswordShouldBeMatch(int id, string password)
     {
-        User? user = await _userRepository.GetAsync(u => u.Id == id);
+        User? user = await _userRepository.GetAsync(u => u.Id == id, enableTracking: false);
         if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             throw new BusinessException(AuthMessages.PasswordDontMatch);
     }

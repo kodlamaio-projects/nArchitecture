@@ -18,7 +18,7 @@ public class RentalBusinessRules : BaseBusinessRules
 
     public async Task RentalIdShouldExistWhenSelected(int id)
     {
-        Rental? result = await _rentalRepository.GetAsync(b => b.Id == id);
+        Rental? result = await _rentalRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(RentalMessages.RentalNotExists);
     }
 
@@ -28,7 +28,7 @@ public class RentalBusinessRules : BaseBusinessRules
         IPaginate<Rental> rentals = await _rentalRepository.GetListAsync(
                                         r => r.Id != id && r.CarId == carId &&
                                              r.RentEndDate >= rentStartDate &&
-                                             r.RentStartDate <= rentEndDate);
+                                             r.RentStartDate <= rentEndDate, enableTracking: false);
         if (rentals.Items.Any())
             throw new BusinessException(RentalMessages.RentalCanNotBeUpdatedWhenThereIsAnotherRentedCarForTheDate);
     }

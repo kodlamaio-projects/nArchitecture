@@ -17,7 +17,7 @@ public class CustomerBusinessRules : BaseBusinessRules
 
     public async Task CustomerIdShouldExist(int id)
     {
-        Customer? result = await _customerRepository.GetAsync(b => b.Id == id);
+        Customer? result = await _customerRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(CustomerMessages.CustomerNotExists);
     }
 

@@ -18,13 +18,13 @@ public class FuelBusinessRules : BaseBusinessRules
 
     public async Task FuelIdShouldExistWhenSelected(int id)
     {
-        Fuel? result = await _fuelRepository.GetAsync(b => b.Id == id);
+        Fuel? result = await _fuelRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(FuelMessages.FuelNotExists);
     }
 
     public async Task FuelNameCanNotBeDuplicatedWhenInserted(string name)
     {
-        IPaginate<Fuel> result = await _fuelRepository.GetListAsync(b => b.Name == name);
+        IPaginate<Fuel> result = await _fuelRepository.GetListAsync(b => b.Name == name, enableTracking: false);
         if (result.Items.Any()) throw new BusinessException(FuelMessages.FuelNameExists);
     }
 }

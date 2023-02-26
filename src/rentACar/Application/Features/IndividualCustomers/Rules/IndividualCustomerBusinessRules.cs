@@ -18,7 +18,7 @@ public class IndividualCustomerBusinessRules : BaseBusinessRules
 
     public async Task IndividualCustomerIdShouldExistWhenSelected(int id)
     {
-        IndividualCustomer? result = await _individualCustomerRepository.GetAsync(b => b.Id == id);
+        IndividualCustomer? result = await _individualCustomerRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(IndividualCustomerMessages.IndividualCustomerNotExists);
     }
 
