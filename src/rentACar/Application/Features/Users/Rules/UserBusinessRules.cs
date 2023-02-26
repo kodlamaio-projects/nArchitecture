@@ -1,4 +1,4 @@
-using Application.Features.Auths.Constants;
+using Application.Features.Auth.Constants;
 using Application.Services.Repositories;
 using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;

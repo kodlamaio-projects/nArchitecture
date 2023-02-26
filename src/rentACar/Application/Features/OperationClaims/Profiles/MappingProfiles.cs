@@ -1,8 +1,8 @@
-using Application.Features.OperationClaims.Commands.CreateOperationClaim;
-using Application.Features.OperationClaims.Commands.DeleteOperationClaim;
-using Application.Features.OperationClaims.Commands.UpdateOperationClaim;
-using Application.Features.OperationClaims.Dtos;
-using Application.Features.OperationClaims.Models;
+using Application.Features.OperationClaims.Commands.Create;
+using Application.Features.OperationClaims.Commands.Delete;
+using Application.Features.OperationClaims.Commands.Update;
+using Application.Features.OperationClaims.Queries.GetById;
+using Application.Features.OperationClaims.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
@@ -14,13 +14,13 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<OperationClaim, CreateOperationClaimCommand>().ReverseMap();
-        CreateMap<OperationClaim, CreatedOperationClaimDto>().ReverseMap();
+        CreateMap<OperationClaim, CreatedOperationClaimResponse>().ReverseMap();
         CreateMap<OperationClaim, UpdateOperationClaimCommand>().ReverseMap();
-        CreateMap<OperationClaim, UpdatedOperationClaimDto>().ReverseMap();
+        CreateMap<OperationClaim, UpdatedOperationClaimResponse>().ReverseMap();
         CreateMap<OperationClaim, DeleteOperationClaimCommand>().ReverseMap();
-        CreateMap<OperationClaim, DeletedOperationClaimDto>().ReverseMap();
-        CreateMap<OperationClaim, OperationClaimDto>().ReverseMap();
-        CreateMap<OperationClaim, OperationClaimListDto>().ReverseMap();
-        CreateMap<IPaginate<OperationClaim>, OperationClaimListModel>().ReverseMap();
+        CreateMap<OperationClaim, DeletedOperationClaimResponse>().ReverseMap();
+        CreateMap<OperationClaim, GetByIdOperationClaimResponse>().ReverseMap();
+        CreateMap<OperationClaim, GetListOperationClaimListItemDto>().ReverseMap();
+        CreateMap<IPaginate<OperationClaim>, GetListResponse<GetListOperationClaimListItemDto>>().ReverseMap();
     }
 }

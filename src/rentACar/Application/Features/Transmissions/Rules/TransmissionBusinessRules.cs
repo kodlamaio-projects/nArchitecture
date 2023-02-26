@@ -19,12 +19,12 @@ public class TransmissionBusinessRules : BaseBusinessRules
     public async Task TransmissionIdShouldExistWhenSelected(int id)
     {
         Transmission? result = await _transmissionRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(TransmissionMessages.TransmissionNotExists);
+        if (result == null) throw new BusinessException(TransmissionsMessages.TransmissionNotExists);
     }
 
     public async Task TransmissionNameCanNotBeDuplicatedWhenInserted(string name)
     {
         IPaginate<Transmission> result = await _transmissionRepository.GetListAsync(b => b.Name == name, enableTracking: false);
-        if (result.Items.Any()) throw new BusinessException(TransmissionMessages.TransmissionNameExists);
+        if (result.Items.Any()) throw new BusinessException(TransmissionsMessages.TransmissionNameExists);
     }
 }

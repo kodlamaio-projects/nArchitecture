@@ -19,26 +19,26 @@ public class CarBusinessRules : BaseBusinessRules
     public async Task CarIdShouldExistWhenSelected(int id)
     {
         Car? result = await _carRepository.GetAsync(c => c.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(CarMessages.CarNotExists);
+        if (result == null) throw new BusinessException(CarsMessages.CarNotExists);
     }
 
     public async Task CarCanNotBeMaintainWhenIsRented(int id)
     {
         Car? car = await _carRepository.GetAsync(c => c.Id == id, enableTracking: false);
-        if (car.CarState == CarState.Rented) throw new BusinessException(CarMessages.CarCanNotBeMaintainWhenIsRented);
+        if (car.CarState == CarState.Rented) throw new BusinessException(CarsMessages.CarCanNotBeMaintainWhenIsRented);
     }
 
     public async Task CarCanNotBeRentWhenIsInMaintenance(int carId)
     {
         Car? car = await _carRepository.GetAsync(c => c.Id == carId, enableTracking: false);
         if (car.CarState == CarState.Maintenance)
-            throw new BusinessException(CarMessages.CarCanNotBeRentWhenIsInMaintenance);
+            throw new BusinessException(CarsMessages.CarCanNotBeRentWhenIsInMaintenance);
     }
 
     public async Task CarCanNotBeRentWhenIsRented(int carId)
     {
         Car? car = await _carRepository.GetAsync(c => c.Id == carId, enableTracking: false);
         if (car.CarState == CarState.Rented)
-            throw new BusinessException(CarMessages.CarCanNotBeRentWhenIsRented);
+            throw new BusinessException(CarsMessages.CarCanNotBeRentWhenIsRented);
     }
 }

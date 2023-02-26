@@ -1,11 +1,11 @@
-﻿using Application.Features.Colors.Queries.GetListColor;
+﻿using Application.Features.Colors.Queries.GetList;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.Application.Requests;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using static Application.Features.Colors.Queries.GetListColor.GetListColorQuery;
+using static Application.Features.Colors.Queries.GetList.GetListColorQuery;
 
 namespace Application.Tests.Features.Colors.Queries.GetListColor
 {

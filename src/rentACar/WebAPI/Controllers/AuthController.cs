@@ -1,12 +1,11 @@
-﻿using Application.Features.Auths.Commands.EnableEmailAuthenticator;
-using Application.Features.Auths.Commands.EnableOtpAuthenticator;
-using Application.Features.Auths.Commands.Login;
-using Application.Features.Auths.Commands.RefleshToken;
-using Application.Features.Auths.Commands.Register;
-using Application.Features.Auths.Commands.RevokeToken;
-using Application.Features.Auths.Commands.VerifyEmailAuthenticator;
-using Application.Features.Auths.Commands.VerifyOtpAuthenticator;
-using Application.Features.Auths.Dtos;
+﻿using Application.Features.Auth.Commands.EnableEmailAuthenticator;
+using Application.Features.Auth.Commands.EnableOtpAuthenticator;
+using Application.Features.Auth.Commands.Login;
+using Application.Features.Auth.Commands.RefleshToken;
+using Application.Features.Auth.Commands.Register;
+using Application.Features.Auth.Commands.RevokeToken;
+using Application.Features.Auth.Commands.VerifyEmailAuthenticator;
+using Application.Features.Auth.Commands.VerifyOtpAuthenticator;
 using Core.Application.Dtos;
 using Core.Security.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -29,18 +28,18 @@ public class AuthController : BaseController
     public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
     {
         LoginCommand loginCommand = new() { UserForLoginDto = userForLoginDto, IPAddress = getIpAddress() };
-        LoggedDto result = await Mediator.Send(loginCommand);
+        LoggedResponse result = await Mediator.Send(loginCommand);
 
         if (result.RefreshToken is not null) setRefreshTokenToCookie(result.RefreshToken);
 
-        return Ok(result.CreateResponseDto());
+        return Ok(result.ToHttpResponse());
     }
 
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
     {
         RegisterCommand registerCommand = new() { UserForRegisterDto = userForRegisterDto, IPAddress = getIpAddress() };
-        RegisteredDto result = await Mediator.Send(registerCommand);
+        RegisteredResponse result = await Mediator.Send(registerCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created("", result.AccessToken);
     }
@@ -50,7 +49,7 @@ public class AuthController : BaseController
     {
         RefreshTokenCommand refreshTokenCommand = new()
         { RefleshToken = getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
-        RefreshedTokensDto result = await Mediator.Send(refreshTokenCommand);
+        RefreshedTokensResponse result = await Mediator.Send(refreshTokenCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created("", result.AccessToken);
     }
@@ -65,7 +64,7 @@ public class AuthController : BaseController
             Token = refreshToken ?? getRefreshTokenFromCookies(),
             IPAddress = getIpAddress()
         };
-        RevokedTokenDto result = await Mediator.Send(revokeTokenCommand);
+        RevokedTokenResponse result = await Mediator.Send(revokeTokenCommand);
         return Ok(result);
     }
 
@@ -89,7 +88,7 @@ public class AuthController : BaseController
         {
             UserId = getUserIdFromRequest()
         };
-        EnabledOtpAuthenticatorDto result = await Mediator.Send(enableOtpAuthenticatorCommand);
+        EnabledOtpAuthenticatorResponse result = await Mediator.Send(enableOtpAuthenticatorCommand);
 
         return Ok(result);
     }

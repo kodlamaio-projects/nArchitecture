@@ -1,11 +1,11 @@
-﻿using Application.Features.Brands.Queries.GetListBrand;
+﻿using Application.Features.Brands.Queries.GetList;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.Application.Requests;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using static Application.Features.Brands.Queries.GetListBrand.GetListBrandQuery;
+using static Application.Features.Brands.Queries.GetList.GetListBrandQuery;
 
 namespace Application.Tests.Features.Brands.Queries.GetListBrand
 {

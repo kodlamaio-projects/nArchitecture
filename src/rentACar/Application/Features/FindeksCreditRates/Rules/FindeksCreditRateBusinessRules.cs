@@ -18,12 +18,12 @@ public class FindeksCreditRateBusinessRules : BaseBusinessRules
     public async Task FindeksCreditRateIdShouldExistWhenSelected(int id)
     {
         FindeksCreditRate? result = await _findeksCreditRateRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(FindeksCreditRateMessage.FindeksCreditRateNotExists);
+        if (result == null) throw new BusinessException(FindeksCreditRatesMessages.FindeksCreditRateNotExists);
     }
 
     public Task FindeksCreditShouldBeExist(FindeksCreditRate? findeksCreditRate)
     {
-        if (findeksCreditRate is null) throw new BusinessException(FindeksCreditRateMessage.FindeksCreditRateNotExists);
+        if (findeksCreditRate is null) throw new BusinessException(FindeksCreditRatesMessages.FindeksCreditRateNotExists);
         return Task.CompletedTask;
     }
 }

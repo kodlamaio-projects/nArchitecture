@@ -19,12 +19,12 @@ public class ColorBusinessRules : BaseBusinessRules
     public async Task ColorIdShouldExistWhenSelected(int id)
     {
         Color? result = await _colorRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(ColorMessages.ColorNotExists);
+        if (result == null) throw new BusinessException(ColorsMessages.ColorNotExists);
     }
 
     public async Task ColorNameCanNotBeDuplicatedWhenInserted(string name)
     {
         IPaginate<Color> result = await _colorRepository.GetListAsync(b => b.Name == name, enableTracking: false);
-        if (result.Items.Any()) throw new BusinessException(ColorMessages.ColorNameExists);
+        if (result.Items.Any()) throw new BusinessException(ColorsMessages.ColorNameExists);
     }
 }

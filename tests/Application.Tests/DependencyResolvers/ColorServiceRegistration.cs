@@ -1,8 +1,8 @@
-﻿using Application.Features.Colors.Commands.CreateColor;
-using Application.Features.Colors.Commands.DeleteColor;
-using Application.Features.Colors.Commands.UpdateColor;
-using Application.Features.Colors.Queries.GetByIdColor;
-using Application.Features.Colors.Queries.GetListColor;
+﻿using Application.Features.Colors.Commands.Create;
+using Application.Features.Colors.Commands.Delete;
+using Application.Features.Colors.Commands.Update;
+using Application.Features.Colors.Queries.GetById;
+using Application.Features.Colors.Queries.GetList;
 using Application.Tests.Mocks.FakeData;
 using Microsoft.Extensions.DependencyInjection;
 

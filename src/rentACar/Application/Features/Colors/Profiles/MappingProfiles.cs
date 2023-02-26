@@ -1,8 +1,8 @@
-﻿using Application.Features.Colors.Commands.CreateColor;
-using Application.Features.Colors.Commands.DeleteColor;
-using Application.Features.Colors.Commands.UpdateColor;
-using Application.Features.Colors.Dtos;
-using Application.Features.Colors.Models;
+﻿using Application.Features.Colors.Commands.Create;
+using Application.Features.Colors.Commands.Delete;
+using Application.Features.Colors.Commands.Update;
+using Application.Features.Colors.Queries.GetById;
+using Application.Features.Colors.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -14,13 +14,13 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<Color, CreateColorCommand>().ReverseMap();
-        CreateMap<Color, CreatedColorDto>().ReverseMap();
+        CreateMap<Color, CreatedColorResponse>().ReverseMap();
         CreateMap<Color, UpdateColorCommand>().ReverseMap();
-        CreateMap<Color, UpdatedColorDto>().ReverseMap();
+        CreateMap<Color, UpdatedColorResponse>().ReverseMap();
         CreateMap<Color, DeleteColorCommand>().ReverseMap();
-        CreateMap<Color, DeletedColorDto>().ReverseMap();
-        CreateMap<Color, ColorDto>().ReverseMap();
-        CreateMap<Color, ColorListDto>().ReverseMap();
-        CreateMap<IPaginate<Color>, ColorListModel>().ReverseMap();
+        CreateMap<Color, DeletedColorResponse>().ReverseMap();
+        CreateMap<Color, GetByIdColorResponse>().ReverseMap();
+        CreateMap<Color, GetListColorListItemDto>().ReverseMap();
+        CreateMap<IPaginate<Color>, GetListResponse<GetListColorListItemDto>>().ReverseMap();
     }
 }

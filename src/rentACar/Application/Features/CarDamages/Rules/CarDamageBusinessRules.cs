@@ -18,6 +18,6 @@ public class CarDamageBusinessRules : BaseBusinessRules
     public async Task CarDamageIdShouldExistWhenSelected(int id)
     {
         CarDamage? result = await _carDamageRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(CarDamageMessages.CarDamageNotExists);
+        if (result == null) throw new BusinessException(CarDamagesMessages.CarDamageNotExists);
     }
 }

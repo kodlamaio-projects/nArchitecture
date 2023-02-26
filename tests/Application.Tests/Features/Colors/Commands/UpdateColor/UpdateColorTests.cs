@@ -1,4 +1,4 @@
-﻿using Application.Features.Colors.Commands.UpdateColor;
+﻿using Application.Features.Colors.Commands.Update;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using static Application.Features.Colors.Commands.UpdateColor.UpdateColorCommand;
+using static Application.Features.Colors.Commands.Update.UpdateColorCommand;
 
 namespace Application.Tests.Features.Colors.Commands.UpdateColor
 {

@@ -1,11 +1,11 @@
-﻿using Application.Features.Colors.Commands.DeleteColor;
+﻿using Application.Features.Colors.Commands.Delete;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using static Application.Features.Colors.Commands.DeleteColor.DeleteColorCommand;
+using static Application.Features.Colors.Commands.Delete.DeleteColorCommand;
 
 namespace Application.Tests.Features.Colors.Commands.DeleteColor
 {

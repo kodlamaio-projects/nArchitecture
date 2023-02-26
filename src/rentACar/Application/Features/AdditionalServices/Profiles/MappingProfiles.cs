@@ -1,8 +1,8 @@
-using Application.Features.AdditionalServices.Commands.CreateAdditionalService;
-using Application.Features.AdditionalServices.Commands.DeleteAdditionalService;
-using Application.Features.AdditionalServices.Commands.UpdateAdditionalService;
-using Application.Features.AdditionalServices.Dtos;
-using Application.Features.AdditionalServices.Models;
+using Application.Features.AdditionalServices.Commands.Create;
+using Application.Features.AdditionalServices.Commands.Delete;
+using Application.Features.AdditionalServices.Commands.Update;
+using Application.Features.AdditionalServices.Queries.GetById;
+using Application.Features.AdditionalServices.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -14,13 +14,13 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<AdditionalService, CreateAdditionalServiceCommand>().ReverseMap();
-        CreateMap<AdditionalService, CreatedAdditionalServiceDto>().ReverseMap();
+        CreateMap<AdditionalService, CreatedAdditionalServiceResponse>().ReverseMap();
         CreateMap<AdditionalService, UpdateAdditionalServiceCommand>().ReverseMap();
-        CreateMap<AdditionalService, UpdatedAdditionalServiceDto>().ReverseMap();
+        CreateMap<AdditionalService, UpdatedAdditionalServiceResponse>().ReverseMap();
         CreateMap<AdditionalService, DeleteAdditionalServiceCommand>().ReverseMap();
-        CreateMap<AdditionalService, DeletedAdditionalServiceDto>().ReverseMap();
-        CreateMap<AdditionalService, AdditionalServiceDto>().ReverseMap();
-        CreateMap<AdditionalService, AdditionalServiceListDto>().ReverseMap();
-        CreateMap<IPaginate<AdditionalService>, AdditionalServiceListModel>().ReverseMap();
+        CreateMap<AdditionalService, DeletedAdditionalServiceResponse>().ReverseMap();
+        CreateMap<AdditionalService, GetByIdAdditionalServiceResponse>().ReverseMap();
+        CreateMap<AdditionalService, GetListAdditionalServiceListItemDto>().ReverseMap();
+        CreateMap<IPaginate<AdditionalService>, GetListResponse<GetListAdditionalServiceListItemDto>>().ReverseMap();
     }
 }

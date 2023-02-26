@@ -1,9 +1,11 @@
-using Application.Features.FindeksCreditRates.Commands.CreateFindeksCreditRate;
-using Application.Features.FindeksCreditRates.Commands.DeleteFindeksCreditRate;
-using Application.Features.FindeksCreditRates.Commands.UpdateFindeksCreditRate;
-using Application.Features.FindeksCreditRates.Commands.UpdateFindeksCreditRateFromService;
-using Application.Features.FindeksCreditRates.Dtos;
-using Application.Features.FindeksCreditRates.Models;
+using Application.Features.CorporateCustomers.Queries.GetByCustomerId;
+using Application.Features.FindeksCreditRates.Commands.Create;
+using Application.Features.FindeksCreditRates.Commands.Delete;
+using Application.Features.FindeksCreditRates.Commands.Update;
+using Application.Features.FindeksCreditRates.Commands.UpdateByUserIdFromService;
+using Application.Features.FindeksCreditRates.Commands.UpdateFromService;
+using Application.Features.FindeksCreditRates.Queries.GetByIdFindeksCreditRate;
+using Application.Features.FindeksCreditRates.Queries.GetListFindeksCreditRate;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -15,14 +17,18 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<FindeksCreditRate, CreateFindeksCreditRateCommand>().ReverseMap();
-        CreateMap<FindeksCreditRate, CreatedFindeksCreditRateDto>().ReverseMap();
+        CreateMap<FindeksCreditRate, CreatedFindeksCreditRateResponse>().ReverseMap();
         CreateMap<FindeksCreditRate, UpdateFindeksCreditRateCommand>().ReverseMap();
-        CreateMap<FindeksCreditRate, UpdatedFindeksCreditRateDto>().ReverseMap();
+        CreateMap<FindeksCreditRate, UpdatedFindeksCreditRateResponse>().ReverseMap();
         CreateMap<FindeksCreditRate, UpdateFindeksCreditRateFromServiceCommand>().ReverseMap();
+        CreateMap<FindeksCreditRate, UpdateFindeksCreditRateFromServiceResponse>().ReverseMap();
+        CreateMap<FindeksCreditRate, UpdateByUserIdFindeksCreditRateFromServiceCommand>().ReverseMap();
+        CreateMap<FindeksCreditRate, UpdateByUserIdFindeksCreditRateFromServiceResponse>().ReverseMap();
         CreateMap<FindeksCreditRate, DeleteFindeksCreditRateCommand>().ReverseMap();
-        CreateMap<FindeksCreditRate, DeletedFindeksCreditRateDto>().ReverseMap();
-        CreateMap<FindeksCreditRate, FindeksCreditRateDto>().ReverseMap();
-        CreateMap<FindeksCreditRate, FindeksCreditRateListDto>().ReverseMap();
-        CreateMap<IPaginate<FindeksCreditRate>, FindeksCreditRateListModel>().ReverseMap();
+        CreateMap<FindeksCreditRate, DeletedFindeksCreditRateResponse>().ReverseMap();
+        CreateMap<FindeksCreditRate, GetByIdFindeksCreditRateResponse>().ReverseMap();
+        CreateMap<FindeksCreditRate, GetByCustomerIdCorporateCustomerResponse>().ReverseMap();
+        CreateMap<FindeksCreditRate, GetListFindeksCreditRateListItemDto>().ReverseMap();
+        CreateMap<IPaginate<FindeksCreditRate>, GetListResponse<GetListFindeksCreditRateListItemDto>>().ReverseMap();
     }
 }

@@ -1,11 +1,11 @@
-﻿using Application.Features.Colors.Queries.GetByIdColor;
+﻿using Application.Features.Colors.Queries.GetById;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using static Application.Features.Colors.Queries.GetByIdColor.GetByIdColorQuery;
+using static Application.Features.Colors.Queries.GetById.GetByIdColorQuery;
 
 namespace Application.Tests.Features.Colors.Queries.GetByIdColor
 {
