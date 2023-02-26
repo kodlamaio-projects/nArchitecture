@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -69,7 +70,10 @@ WebApplication app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(opt =>
+    {
+        opt.DocExpansion(DocExpansion.None);
+    });
 }
 
 if (app.Environment.IsProduction())
