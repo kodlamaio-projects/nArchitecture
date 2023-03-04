@@ -1,8 +1,8 @@
-using Application.Features.RentalBranches.Commands.CreateRentalBranch;
-using Application.Features.RentalBranches.Commands.DeleteRentalBranch;
-using Application.Features.RentalBranches.Commands.UpdateRentalBranch;
-using Application.Features.RentalBranches.Dtos;
-using Application.Features.RentalBranches.Models;
+using Application.Features.RentalBranches.Commands.Create;
+using Application.Features.RentalBranches.Commands.Delete;
+using Application.Features.RentalBranches.Commands.Update;
+using Application.Features.RentalBranches.Queries.GetById;
+using Application.Features.RentalBranches.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -14,13 +14,13 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<RentalBranch, CreateRentalBranchCommand>().ReverseMap();
-        CreateMap<RentalBranch, CreatedRentalBranchDto>().ReverseMap();
+        CreateMap<RentalBranch, CreatedRentalBranchResponse>().ReverseMap();
         CreateMap<RentalBranch, UpdateRentalBranchCommand>().ReverseMap();
-        CreateMap<RentalBranch, UpdatedRentalBranchDto>().ReverseMap();
+        CreateMap<RentalBranch, UpdatedRentalBranchResponse>().ReverseMap();
         CreateMap<RentalBranch, DeleteRentalBranchCommand>().ReverseMap();
-        CreateMap<RentalBranch, DeletedRentalBranchDto>().ReverseMap();
-        CreateMap<RentalBranch, RentalBranchDto>().ReverseMap();
-        CreateMap<RentalBranch, RentalBranchListDto>().ReverseMap();
-        CreateMap<IPaginate<RentalBranch>, RentalBranchListModel>().ReverseMap();
+        CreateMap<RentalBranch, DeletedRentalBranchResponse>().ReverseMap();
+        CreateMap<RentalBranch, GetByIdRentalBranchResponse>().ReverseMap();
+        CreateMap<RentalBranch, GetListRentalBranchListItemDto>().ReverseMap();
+        CreateMap<IPaginate<RentalBranch>, GetListResponse<GetListRentalBranchListItemDto>>().ReverseMap();
     }
 }

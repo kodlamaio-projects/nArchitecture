@@ -1,11 +1,10 @@
-﻿using Application.Features.Transmissions.Commands.CreateTransmission;
-using Application.Features.Transmissions.Commands.DeleteTransmission;
-using Application.Features.Transmissions.Commands.UpdateTransmission;
-using Application.Features.Transmissions.Dtos;
-using Application.Features.Transmissions.Models;
-using Application.Features.Transmissions.Queries.GetByIdTransmission;
-using Application.Features.Transmissions.Queries.GetListTransmission;
+﻿using Application.Features.Transmissions.Commands.Create;
+using Application.Features.Transmissions.Commands.Delete;
+using Application.Features.Transmissions.Commands.Update;
+using Application.Features.Transmissions.Queries.GetById;
+using Application.Features.Transmissions.Queries.GetList;
 using Core.Application.Requests;
+using Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -17,7 +16,7 @@ public class TransmissionsController : BaseController
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetById([FromRoute] GetByIdTransmissionQuery getByIdTransmissionQuery)
     {
-        TransmissionDto result = await Mediator.Send(getByIdTransmissionQuery);
+        GetByIdTransmissionResponse result = await Mediator.Send(getByIdTransmissionQuery);
         return Ok(result);
     }
 
@@ -25,28 +24,28 @@ public class TransmissionsController : BaseController
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
         GetListTransmissionQuery getListTransmissionQuery = new() { PageRequest = pageRequest };
-        TransmissionListModel result = await Mediator.Send(getListTransmissionQuery);
+        GetListResponse<GetListTransmissionListItemDto> result = await Mediator.Send(getListTransmissionQuery);
         return Ok(result);
     }
 
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] CreateTransmissionCommand createTransmissionCommand)
     {
-        CreatedTransmissionDto result = await Mediator.Send(createTransmissionCommand);
+        CreatedTransmissionResponse result = await Mediator.Send(createTransmissionCommand);
         return Created("", result);
     }
 
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateTransmissionCommand updateTransmissionCommand)
     {
-        UpdatedTransmissionDto result = await Mediator.Send(updateTransmissionCommand);
+        UpdatedTransmissionResponse result = await Mediator.Send(updateTransmissionCommand);
         return Ok(result);
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromBody] DeleteTransmissionCommand deleteTransmissionCommand)
     {
-        DeletedTransmissionDto result = await Mediator.Send(deleteTransmissionCommand);
+        DeletedTransmissionResponse result = await Mediator.Send(deleteTransmissionCommand);
         return Ok(result);
     }
 }

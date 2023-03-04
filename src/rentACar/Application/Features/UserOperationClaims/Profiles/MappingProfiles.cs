@@ -1,8 +1,8 @@
-using Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
-using Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim;
-using Application.Features.UserOperationClaims.Commands.UpdateUserOperationClaim;
-using Application.Features.UserOperationClaims.Dtos;
-using Application.Features.UserOperationClaims.Models;
+using Application.Features.UserOperationClaims.Commands.Create;
+using Application.Features.UserOperationClaims.Commands.Delete;
+using Application.Features.UserOperationClaims.Commands.Update;
+using Application.Features.UserOperationClaims.Queries.GetById;
+using Application.Features.UserOperationClaims.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
@@ -14,13 +14,13 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<UserOperationClaim, CreateUserOperationClaimCommand>().ReverseMap();
-        CreateMap<UserOperationClaim, CreatedUserOperationClaimDto>().ReverseMap();
+        CreateMap<UserOperationClaim, CreatedUserOperationClaimResponse>().ReverseMap();
         CreateMap<UserOperationClaim, UpdateUserOperationClaimCommand>().ReverseMap();
-        CreateMap<UserOperationClaim, UpdatedUserOperationClaimDto>().ReverseMap();
+        CreateMap<UserOperationClaim, UpdatedUserOperationClaimResponse>().ReverseMap();
         CreateMap<UserOperationClaim, DeleteUserOperationClaimCommand>().ReverseMap();
-        CreateMap<UserOperationClaim, DeletedUserOperationClaimDto>().ReverseMap();
-        CreateMap<UserOperationClaim, UserOperationClaimDto>().ReverseMap();
-        CreateMap<UserOperationClaim, UserOperationClaimListDto>().ReverseMap();
-        CreateMap<IPaginate<UserOperationClaim>, UserOperationClaimListModel>().ReverseMap();
+        CreateMap<UserOperationClaim, DeletedUserOperationClaimResponse>().ReverseMap();
+        CreateMap<UserOperationClaim, GetByIdUserOperationClaimResponse>().ReverseMap();
+        CreateMap<UserOperationClaim, GetListUserOperationClaimListItemDto>().ReverseMap();
+        CreateMap<IPaginate<UserOperationClaim>, GetListResponse<GetListUserOperationClaimListItemDto>>().ReverseMap();
     }
 }

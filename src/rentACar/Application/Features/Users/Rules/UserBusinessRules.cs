@@ -1,4 +1,4 @@
-using Application.Features.Auths.Constants;
+using Application.Features.Auth.Constants;
 using Application.Services.Repositories;
 using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
@@ -18,7 +18,7 @@ public class UserBusinessRules : BaseBusinessRules
 
     public async Task UserIdShouldExistWhenSelected(int id)
     {
-        User? result = await _userRepository.GetAsync(b => b.Id == id);
+        User? result = await _userRepository.GetAsync(b => b.Id == id, enableTracking: false);
         if (result == null) throw new BusinessException(AuthMessages.UserDontExists);
     }
 

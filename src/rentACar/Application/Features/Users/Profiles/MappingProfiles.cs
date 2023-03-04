@@ -1,9 +1,9 @@
-using Application.Features.Users.Commands.CreateUser;
-using Application.Features.Users.Commands.DeleteUser;
-using Application.Features.Users.Commands.UpdateUser;
-using Application.Features.Users.Commands.UpdateUserFromAuth;
-using Application.Features.Users.Dtos;
-using Application.Features.Users.Models;
+using Application.Features.Users.Commands.Create;
+using Application.Features.Users.Commands.Delete;
+using Application.Features.Users.Commands.Update;
+using Application.Features.Users.Commands.UpdateFromAuth;
+using Application.Features.Users.Queries.GetById;
+using Application.Features.Users.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
@@ -15,15 +15,15 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<User, CreateUserCommand>().ReverseMap();
-        CreateMap<User, CreatedUserDto>().ReverseMap();
+        CreateMap<User, CreatedUserResponse>().ReverseMap();
         CreateMap<User, UpdateUserCommand>().ReverseMap();
-        CreateMap<User, UpdatedUserDto>().ReverseMap();
+        CreateMap<User, UpdatedUserResponse>().ReverseMap();
         CreateMap<User, UpdateUserFromAuthCommand>().ReverseMap();
-        CreateMap<User, UpdatedUserFromAuthDto>().ReverseMap();
+        CreateMap<User, UpdatedUserFromAuthResponse>().ReverseMap();
         CreateMap<User, DeleteUserCommand>().ReverseMap();
-        CreateMap<User, DeletedUserDto>().ReverseMap();
-        CreateMap<User, UserDto>().ReverseMap();
-        CreateMap<User, UserListDto>().ReverseMap();
-        CreateMap<IPaginate<User>, UserListModel>().ReverseMap();
+        CreateMap<User, DeletedUserResponse>().ReverseMap();
+        CreateMap<User, GetByIdUserResponse>().ReverseMap();
+        CreateMap<User, GetListUserListItemDto>().ReverseMap();
+        CreateMap<IPaginate<User>, GetListResponse<GetListUserListItemDto>>().ReverseMap();
     }
 }

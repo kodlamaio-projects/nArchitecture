@@ -1,12 +1,5 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Services.ImageService;
 

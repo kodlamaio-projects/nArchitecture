@@ -1,8 +1,9 @@
-using Application.Features.CorporateCustomers.Commands.CreateCorporateCustomer;
-using Application.Features.CorporateCustomers.Commands.DeleteCorporateCustomer;
-using Application.Features.CorporateCustomers.Commands.UpdateCorporateCustomer;
-using Application.Features.CorporateCustomers.Dtos;
-using Application.Features.CorporateCustomers.Models;
+using Application.Features.CorporateCustomers.Commands.Create;
+using Application.Features.CorporateCustomers.Commands.Delete;
+using Application.Features.CorporateCustomers.Commands.Update;
+using Application.Features.CorporateCustomers.Queries.GetByCustomerId;
+using Application.Features.CorporateCustomers.Queries.GetById;
+using Application.Features.CorporateCustomers.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -14,13 +15,14 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<CorporateCustomer, CreateCorporateCustomerCommand>().ReverseMap();
-        CreateMap<CorporateCustomer, CreatedCorporateCustomerDto>().ReverseMap();
+        CreateMap<CorporateCustomer, CreatedCorporateCustomerResponse>().ReverseMap();
         CreateMap<CorporateCustomer, UpdateCorporateCustomerCommand>().ReverseMap();
-        CreateMap<CorporateCustomer, UpdatedCorporateCustomerDto>().ReverseMap();
+        CreateMap<CorporateCustomer, UpdatedCorporateCustomerResponse>().ReverseMap();
         CreateMap<CorporateCustomer, DeleteCorporateCustomerCommand>().ReverseMap();
-        CreateMap<CorporateCustomer, DeletedCorporateCustomerDto>().ReverseMap();
-        CreateMap<CorporateCustomer, CorporateCustomerDto>().ReverseMap();
-        CreateMap<CorporateCustomer, CorporateCustomerListDto>().ReverseMap();
-        CreateMap<IPaginate<CorporateCustomer>, CorporateCustomerListModel>().ReverseMap();
+        CreateMap<CorporateCustomer, DeletedCorporateCustomerResponse>().ReverseMap();
+        CreateMap<CorporateCustomer, GetByIdCorporateCustomerResponse>().ReverseMap();
+        CreateMap<CorporateCustomer, GetByCustomerIdCorporateCustomerResponse>().ReverseMap();
+        CreateMap<CorporateCustomer, GetListCorporateCustomerListItemDto>().ReverseMap();
+        CreateMap<IPaginate<CorporateCustomer>, GetListResponse<GetListCorporateCustomerListItemDto>>().ReverseMap();
     }
 }

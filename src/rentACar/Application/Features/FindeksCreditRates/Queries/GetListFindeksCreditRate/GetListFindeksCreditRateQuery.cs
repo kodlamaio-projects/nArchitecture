@@ -1,4 +1,3 @@
-using Application.Features.FindeksCreditRates.Models;
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Requests;
@@ -8,13 +7,13 @@ using MediatR;
 
 namespace Application.Features.FindeksCreditRates.Queries.GetListFindeksCreditRate;
 
-public class GetListFindeksCreditRateQuery : IRequest<FindeksCreditRateListModel>
+public class GetListFindeksCreditRateQuery : IRequest<GetListResponse<GetListFindeksCreditRateListItemDto>>
 {
     public PageRequest PageRequest { get; set; }
 
     public class
         GetListFindeksCreditRateQueryHandler : IRequestHandler<GetListFindeksCreditRateQuery,
-            FindeksCreditRateListModel>
+            GetListResponse<GetListFindeksCreditRateListItemDto>>
     {
         private readonly IFindeksCreditRateRepository _findeksCreditRateRepository;
         private readonly IMapper _mapper;
@@ -26,14 +25,14 @@ public class GetListFindeksCreditRateQuery : IRequest<FindeksCreditRateListModel
             _mapper = mapper;
         }
 
-        public async Task<FindeksCreditRateListModel> Handle(GetListFindeksCreditRateQuery request,
+        public async Task<GetListResponse<GetListFindeksCreditRateListItemDto>> Handle(GetListFindeksCreditRateQuery request,
                                                              CancellationToken cancellationToken)
         {
             IPaginate<FindeksCreditRate> findeksCreditRates = await _findeksCreditRateRepository.GetListAsync(
                                                                   index: request.PageRequest.Page,
                                                                   size: request.PageRequest.PageSize);
-            FindeksCreditRateListModel mappedFindeksCreditRateListModel =
-                _mapper.Map<FindeksCreditRateListModel>(findeksCreditRates);
+            var mappedFindeksCreditRateListModel =
+                _mapper.Map<GetListResponse<GetListFindeksCreditRateListItemDto>>(findeksCreditRates);
             return mappedFindeksCreditRateListModel;
         }
     }

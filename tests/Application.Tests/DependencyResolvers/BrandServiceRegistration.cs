@@ -1,8 +1,8 @@
-﻿using Application.Features.Brands.Commands.CreateBrand;
-using Application.Features.Brands.Commands.DeleteBrand;
-using Application.Features.Brands.Commands.UpdateBrand;
-using Application.Features.Brands.Queries.GetByIdBrand;
-using Application.Features.Brands.Queries.GetListBrand;
+﻿using Application.Features.Brands.Commands.Create;
+using Application.Features.Brands.Commands.Delete;
+using Application.Features.Brands.Commands.Update;
+using Application.Features.Brands.Queries.GetById;
+using Application.Features.Brands.Queries.GetList;
 using Application.Tests.Mocks.FakeData;
 using Microsoft.Extensions.DependencyInjection;
 

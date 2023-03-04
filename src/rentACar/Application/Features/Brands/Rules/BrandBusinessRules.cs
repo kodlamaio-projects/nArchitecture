@@ -19,24 +19,33 @@ public class BrandBusinessRules : BaseBusinessRules
 
     public void BrandIdShouldExistWhenSelected(Brand? brand)
     {
-        if (brand == null) throw new BusinessException(BrandMessages.BrandNotExists);
+        if (brand == null) throw new BusinessException(BrandsMessages.BrandNotExists);
+    }
+
+    public async Task BrandIdShouldExistWhenSelected(int id)
+    {
+        Brand? brand = await _brandRepository.GetAsync(b => b.Id == id, enableTracking: false);
+        BrandIdShouldExistWhenSelected(brand);
     }
 
     public async Task BrandNameCanNotBeDuplicatedWhenInserted(string name)
     {
-        var result = await _brandRepository.Query().Where(x => x.Name.ToLower() == name.ToLower()).AnyAsync();
-        if (result) throw new BusinessException(BrandMessages.BrandNameExists);
+        bool result = await _brandRepository.Query().Where(x => string.Equals(x.Name.ToLower(), name.ToLower(),
+                                                                              StringComparison.Ordinal)).AnyAsync();
+        if (result) throw new BusinessException(BrandsMessages.BrandNameExists);
     }
 
-    public async Task BrandNameCanNotBeDuplicatedWhenUpdated(Brand? brand)
+    public async Task BrandNameCanNotBeDuplicatedWhenUpdated(Brand brand)
     {
-        var result = await _brandRepository.Query().Where(x => (x.Id != brand.Id) && (x.Name.ToLower() == brand.Name.ToLower())).AnyAsync();
-        if (result) throw new BusinessException(BrandMessages.BrandNameExists);
+        var result = await _brandRepository.Query().Where(x => (x.Id != brand.Id) && (string.Equals(x.Name.ToLower(),
+                                                                           brand.Name.ToLower(),
+                                                                           StringComparison.Ordinal))).AnyAsync();
+        if (result) throw new BusinessException(BrandsMessages.BrandNameExists);
     }
 
     public async Task BrandNameListCanNotBeDuplicatedWhenInserted(List<string> nameList)
     {
-        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => nameList.Contains(b.Name));
-        if (result.Items.Any()) throw new BusinessException(BrandMessages.BrandNameExists);
+        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => nameList.Contains(b.Name), enableTracking: false);
+        if (result.Items.Any()) throw new BusinessException(BrandsMessages.BrandNameExists);
     }
 }
