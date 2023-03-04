@@ -27,11 +27,11 @@ public class GetByIdBrandQuery : IRequest<GetByIdBrandResponse>
 
         public async Task<GetByIdBrandResponse> Handle(GetByIdBrandQuery request, CancellationToken cancellationToken)
         {
-            await _brandBusinessRules.BrandIdShouldExistWhenSelected(request.Id);
+            Brand? brand = await _brandRepository.GetAsync(x => x.Id == request.Id);
+            _brandBusinessRules.BrandIdShouldExistWhenSelected(brand);
 
-            Brand? brand = await _brandRepository.GetAsync(b => b.Id == request.Id);
-            GetByIdBrandResponse getByIdBrandResponse = _mapper.Map<GetByIdBrandResponse>(brand);
-            return getByIdBrandResponse;
+            var response = _mapper.Map<GetByIdBrandResponse>(brand);
+            return response;
         }
     }
 }

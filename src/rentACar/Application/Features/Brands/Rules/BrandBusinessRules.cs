@@ -4,6 +4,8 @@ using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace Application.Features.Brands.Rules;
 
@@ -16,17 +18,32 @@ public class BrandBusinessRules : BaseBusinessRules
         _brandRepository = brandRepository;
     }
 
+    public void BrandIdShouldExistWhenSelected(Brand? brand)
+    {
+        if (brand == null) throw new BusinessException(BrandsMessages.BrandNotExists);
+    }
+
     public async Task BrandIdShouldExistWhenSelected(int id)
     {
-        Brand? result = await _brandRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(BrandsMessages.BrandNotExists);
+        Brand? brand = await _brandRepository.GetAsync(b => b.Id == id, enableTracking: false);
+        BrandIdShouldExistWhenSelected(brand);
     }
 
     public async Task BrandNameCanNotBeDuplicatedWhenInserted(string name)
     {
-        IPaginate<Brand> result = await _brandRepository.GetListAsync(b => b.Name == name, enableTracking: false);
-        if (result.Items.Any()) throw new BusinessException(BrandsMessages.BrandNameExists);
+        Brand? result = await _brandRepository.GetAsync(x => string.Equals(x.Name.ToLower(), name.ToLower(),
+                                                                           StringComparison.Ordinal));
+        if (result != null) throw new BusinessException(BrandsMessages.BrandNameExists);
     }
+
+    public async Task BrandNameCanNotBeDuplicatedWhenUpdated(Brand brand)
+    {
+        Brand? result = await _brandRepository.GetAsync(x => (x.Id != brand.Id) && (string.Equals(x.Name.ToLower(),
+                                                                         brand.Name.ToLower(),
+                                                                         StringComparison.Ordinal)));
+        if (result != null) throw new BusinessException(BrandsMessages.BrandNameExists);
+    }
+
     public async Task BrandNameListCanNotBeDuplicatedWhenInserted(List<string> nameList)
     {
         IPaginate<Brand> result = await _brandRepository.GetListAsync(b => nameList.Contains(b.Name), enableTracking: false);

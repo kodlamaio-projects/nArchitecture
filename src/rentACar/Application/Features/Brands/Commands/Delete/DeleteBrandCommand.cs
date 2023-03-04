@@ -35,11 +35,14 @@ public class DeleteBrandCommand : IRequest<DeletedBrandResponse>, ISecuredReques
 
         public async Task<DeletedBrandResponse> Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
         {
-            await _brandBusinessRules.BrandIdShouldExistWhenSelected(request.Id);
-            Brand mappedBrand = _mapper.Map<Brand>(request);
-            Brand deletedBrand = await _brandRepository.DeleteAsync(mappedBrand);
-            DeletedBrandResponse deletedBrandResponse = _mapper.Map<DeletedBrandResponse>(deletedBrand);
-            return deletedBrandResponse;
+            Brand? brand = await _brandRepository.GetAsync(x => x.Id == request.Id);
+            _brandBusinessRules.BrandIdShouldExistWhenSelected(brand);
+
+            _mapper.Map(request, brand);
+            Brand deletedBrand = await _brandRepository.DeleteAsync(brand);
+
+            var response = _mapper.Map<DeletedBrandResponse>(deletedBrand);
+            return response;
         }
     }
 }
