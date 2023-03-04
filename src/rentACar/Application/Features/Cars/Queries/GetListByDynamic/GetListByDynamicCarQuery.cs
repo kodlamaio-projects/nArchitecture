@@ -34,8 +34,8 @@ public class GetListByDynamicCarQuery : IRequest<GetListResponse<GetListByDynami
                                       include: c => c.Include(c => c.Model)
                                                      .Include(c => c.Model.Brand)
                                                      .Include(c => c.Color),
-                                      request.PageRequest.Page,
-                                      request.PageRequest.PageSize);
+                                      index: request.PageRequest.Page,
+                                      size: request.PageRequest.PageSize);
             var mappedCarListModel =
                 _mapper.Map<GetListResponse<GetListByDynamicCarListItemDto>>(cars);
             return mappedCarListModel;
