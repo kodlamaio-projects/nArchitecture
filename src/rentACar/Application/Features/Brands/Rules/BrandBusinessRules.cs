@@ -5,6 +5,7 @@ using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace Application.Features.Brands.Rules;
 
@@ -30,17 +31,17 @@ public class BrandBusinessRules : BaseBusinessRules
 
     public async Task BrandNameCanNotBeDuplicatedWhenInserted(string name)
     {
-        bool result = await _brandRepository.Query().Where(x => string.Equals(x.Name.ToLower(), name.ToLower(),
-                                                                              StringComparison.Ordinal)).AnyAsync();
-        if (result) throw new BusinessException(BrandsMessages.BrandNameExists);
+        Brand? result = await _brandRepository.GetAsync(x => string.Equals(x.Name.ToLower(), name.ToLower(),
+                                                                           StringComparison.Ordinal));
+        if (result != null) throw new BusinessException(BrandsMessages.BrandNameExists);
     }
 
     public async Task BrandNameCanNotBeDuplicatedWhenUpdated(Brand brand)
     {
-        var result = await _brandRepository.Query().Where(x => (x.Id != brand.Id) && (string.Equals(x.Name.ToLower(),
-                                                                           brand.Name.ToLower(),
-                                                                           StringComparison.Ordinal))).AnyAsync();
-        if (result) throw new BusinessException(BrandsMessages.BrandNameExists);
+        Brand? result = await _brandRepository.GetAsync(x => (x.Id != brand.Id) && (string.Equals(x.Name.ToLower(),
+                                                                         brand.Name.ToLower(),
+                                                                         StringComparison.Ordinal)));
+        if (result != null) throw new BusinessException(BrandsMessages.BrandNameExists);
     }
 
     public async Task BrandNameListCanNotBeDuplicatedWhenInserted(List<string> nameList)
