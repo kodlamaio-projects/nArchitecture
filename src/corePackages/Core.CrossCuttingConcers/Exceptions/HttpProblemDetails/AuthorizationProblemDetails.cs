@@ -11,6 +11,5 @@ internal class AuthorizationProblemDetails : ProblemDetails
         Detail = detail;
         Status = StatusCodes.Status401Unauthorized;
         Type = "https://example.com/probs/authorization";
-        Instance = "";
     }
 }

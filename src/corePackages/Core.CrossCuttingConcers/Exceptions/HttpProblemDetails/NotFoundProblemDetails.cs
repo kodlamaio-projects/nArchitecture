@@ -11,6 +11,5 @@ internal class NotFoundProblemDetails : ProblemDetails
         Detail = detail;
         Status = StatusCodes.Status404NotFound;
         Type = "https://example.com/probs/notfound";
-        Instance = "";
     }
 }

@@ -1,5 +1,5 @@
 using Application;
-using Core.CrossCuttingConcerns.Exceptions;
+using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using WebAPI;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -84,8 +85,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseCors(opt =>
-                opt.WithOrigins("http://localhost:4200", "http://localhost:5278")
-                   .AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowCredentials());
+    opt.WithOrigins(app.Configuration.GetSection("WebAPIConfiguration").Get<WebAPIConfiguration>().AllowedOrigins)
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials());
 app.Run();

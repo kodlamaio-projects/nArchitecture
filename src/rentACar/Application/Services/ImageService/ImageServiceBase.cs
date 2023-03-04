@@ -1,4 +1,4 @@
-﻿using Core.CrossCuttingConcerns.Exceptions;
+﻿using Core.CrossCuttingConcerns.Exceptions.Types;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.ImageService;

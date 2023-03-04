@@ -16,13 +16,13 @@ public class ElasticSearchManager : IElasticSearch
         ElasticSearchConfig? settings = configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>();
         SingleNodeConnectionPool pool = new(new Uri(settings.ConnectionString));
         _connectionSettings = new ConnectionSettings(pool, (builtInSerializer, connectionSettings) =>
-                                                         new JsonNetSerializer(
-                                                             builtInSerializer, connectionSettings, () =>
-                                                                 new JsonSerializerSettings
-                                                                 {
-                                                                     ReferenceLoopHandling =
-                                                                         ReferenceLoopHandling.Ignore
-                                                                 }));
+            new JsonNetSerializer(
+                builtInSerializer, connectionSettings, () =>
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling =
+                            ReferenceLoopHandling.Ignore
+                    }));
     }
 
 
@@ -37,8 +37,8 @@ public class ElasticSearchManager : IElasticSearch
     {
         ElasticClient elasticClient = GetElasticClient(indexName);
         BulkResponse? response = await elasticClient.BulkAsync(a =>
-                                                                   a.Index(indexName)
-                                                                    .IndexMany(items));
+            a.Index(indexName)
+                .IndexMany(items));
 
         return new ElasticSearchResult(
             response.IsValid,
@@ -52,11 +52,11 @@ public class ElasticSearchManager : IElasticSearch
             return new ElasticSearchResult(false, "Index already exists");
 
         CreateIndexResponse? response = await elasticClient.Indices.CreateAsync(indexModel.IndexName, se =>
-                                            se.Settings(a => a.NumberOfReplicas(
-                                                                  indexModel.NumberOfReplicas)
-                                                              .NumberOfShards(
-                                                                  indexModel.NumberOfShards))
-                                              .Aliases(x => x.Alias(indexModel.AliasName)));
+            se.Settings(a => a.NumberOfReplicas(
+                        indexModel.NumberOfReplicas)
+                    .NumberOfShards(
+                        indexModel.NumberOfShards))
+                .Aliases(x => x.Alias(indexModel.AliasName)));
 
         return new ElasticSearchResult(
             response.IsValid,
@@ -82,9 +82,9 @@ public class ElasticSearchManager : IElasticSearch
 
         ElasticClient elasticClient = GetElasticClient(parameters.IndexName);
         ISearchResponse<T>? searchResponse = await elasticClient.SearchAsync<T>(s => s
-                                                 .Index(Indices.Index(parameters.IndexName))
-                                                 .From(parameters.From)
-                                                 .Size(parameters.Size));
+            .Index(Indices.Index(parameters.IndexName))
+            .From(parameters.From)
+            .Size(parameters.Size));
 
 
         List<ElasticSearchGetModel<T>> list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>
@@ -101,9 +101,9 @@ public class ElasticSearchManager : IElasticSearch
     {
         ElasticClient elasticClient = GetElasticClient(fieldParameters.IndexName);
         ISearchResponse<T>? searchResponse = await elasticClient.SearchAsync<T>(s => s
-                                                 .Index(fieldParameters.IndexName)
-                                                 .From(fieldParameters.From)
-                                                 .Size(fieldParameters.Size));
+            .Index(fieldParameters.IndexName)
+            .From(fieldParameters.From)
+            .Size(fieldParameters.Size));
 
         List<ElasticSearchGetModel<T>> list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>
         {
@@ -121,27 +121,27 @@ public class ElasticSearchManager : IElasticSearch
     {
         ElasticClient elasticClient = GetElasticClient(queryParameters.IndexName);
         ISearchResponse<T>? searchResponse = await elasticClient.SearchAsync<T>(s => s
-                                                 .Index(queryParameters.IndexName)
-                                                 .From(queryParameters.From)
-                                                 .Size(queryParameters.Size)
-                                                 .MatchAll()
-                                                 .Query(a => a.SimpleQueryString(c => c
-                                                            .Name(queryParameters.QueryName)
-                                                            .Boost(1.1)
-                                                            .Fields(queryParameters.Fields)
-                                                            .Query(queryParameters.Query)
-                                                            .Analyzer("standard")
-                                                            .DefaultOperator(Operator.Or)
-                                                            .Flags(SimpleQueryStringFlags.And |
-                                                                   SimpleQueryStringFlags.Near)
-                                                            .Lenient()
-                                                            .AnalyzeWildcard(false)
-                                                            .MinimumShouldMatch("30%")
-                                                            .FuzzyPrefixLength(0)
-                                                            .FuzzyMaxExpansions(50)
-                                                            .FuzzyTranspositions()
-                                                            .AutoGenerateSynonymsPhraseQuery(
-                                                                false))));
+            .Index(queryParameters.IndexName)
+            .From(queryParameters.From)
+            .Size(queryParameters.Size)
+            .MatchAll()
+            .Query(a => a.SimpleQueryString(c => c
+                .Name(queryParameters.QueryName)
+                .Boost(1.1)
+                .Fields(queryParameters.Fields)
+                .Query(queryParameters.Query)
+                .Analyzer("standard")
+                .DefaultOperator(Operator.Or)
+                .Flags(SimpleQueryStringFlags.And |
+                       SimpleQueryStringFlags.Near)
+                .Lenient()
+                .AnalyzeWildcard(false)
+                .MinimumShouldMatch("30%")
+                .FuzzyPrefixLength(0)
+                .FuzzyMaxExpansions(50)
+                .FuzzyTranspositions()
+                .AutoGenerateSynonymsPhraseQuery(
+                    false))));
 
         List<ElasticSearchGetModel<T>> list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>
         {
@@ -158,8 +158,8 @@ public class ElasticSearchManager : IElasticSearch
         ElasticClient elasticClient = GetElasticClient(model.IndexName);
 
         IndexResponse? response = await elasticClient.IndexAsync(model.Item, i => i.Index(model.IndexName)
-                                                                     .Id(model.ElasticId)
-                                                                     .Refresh(Refresh.True));
+            .Id(model.ElasticId)
+            .Refresh(Refresh.True));
 
         return new ElasticSearchResult(
             response.IsValid,

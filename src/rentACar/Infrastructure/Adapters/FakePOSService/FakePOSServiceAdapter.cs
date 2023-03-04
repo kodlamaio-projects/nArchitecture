@@ -1,5 +1,5 @@
 ﻿using Application.Services.POSService;
-using Core.CrossCuttingConcerns.Exceptions;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 
 namespace Infrastructure.Adapters.FakePOSService;
 

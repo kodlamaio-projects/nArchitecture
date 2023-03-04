@@ -11,17 +11,17 @@ public class VerifyEmailAuthenticatorCommand : IRequest
 
     public class VerifyEmailAuthenticatorCommandHandler : IRequestHandler<VerifyEmailAuthenticatorCommand>
     {
-        private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
         private readonly AuthBusinessRules _authBusinessRules;
+        private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
 
         public VerifyEmailAuthenticatorCommandHandler(IEmailAuthenticatorRepository emailAuthenticatorRepository,
-                                                      AuthBusinessRules authBusinessRules)
+            AuthBusinessRules authBusinessRules)
         {
             _emailAuthenticatorRepository = emailAuthenticatorRepository;
             _authBusinessRules = authBusinessRules;
         }
 
-        public async Task<Unit> Handle(VerifyEmailAuthenticatorCommand request, CancellationToken cancellationToken)
+        public async Task Handle(VerifyEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
             EmailAuthenticator? emailAuthenticator =
                 await _emailAuthenticatorRepository.GetAsync(
@@ -32,8 +32,6 @@ public class VerifyEmailAuthenticatorCommand : IRequest
             emailAuthenticator.ActivationKey = null;
             emailAuthenticator.IsVerified = true;
             await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
-
-            return Unit.Value;
         }
     }
 }

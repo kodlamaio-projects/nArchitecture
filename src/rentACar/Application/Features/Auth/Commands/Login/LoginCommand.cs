@@ -1,4 +1,5 @@
 ﻿using Application.Features.Auth.Rules;
+using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UserService;
 using Core.Application.Dtos;
@@ -16,16 +17,18 @@ public class LoginCommand : IRequest<LoggedResponse>
 
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoggedResponse>
     {
-        private readonly IUserService _userService;
-        private readonly IAuthService _authService;
         private readonly AuthBusinessRules _authBusinessRules;
+        private readonly IAuthenticatorService _authenticatorService;
+        private readonly IAuthService _authService;
+        private readonly IUserService _userService;
 
         public LoginCommandHandler(IUserService userService, IAuthService authService,
-                                   AuthBusinessRules authBusinessRules)
+            AuthBusinessRules authBusinessRules, IAuthenticatorService authenticatorService)
         {
             _userService = userService;
             _authService = authService;
             _authBusinessRules = authBusinessRules;
+            _authenticatorService = authenticatorService;
         }
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -40,12 +43,12 @@ public class LoginCommand : IRequest<LoggedResponse>
             {
                 if (request.UserForLoginDto.AuthenticatorCode is null)
                 {
-                    await _authService.SendAuthenticatorCode(user);
+                    await _authenticatorService.SendAuthenticatorCode(user);
                     loggedResponse.RequiredAuthenticatorType = user.AuthenticatorType;
                     return loggedResponse;
                 }
 
-                await _authService.VerifyAuthenticatorCode(user, request.UserForLoginDto.AuthenticatorCode);
+                await _authenticatorService.VerifyAuthenticatorCode(user, request.UserForLoginDto.AuthenticatorCode);
             }
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);

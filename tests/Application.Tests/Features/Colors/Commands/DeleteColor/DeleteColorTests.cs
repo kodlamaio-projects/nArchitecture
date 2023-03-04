@@ -1,9 +1,9 @@
 ﻿using Application.Features.Colors.Commands.Delete;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
-using Core.CrossCuttingConcerns.Exceptions;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Xunit;
 using static Application.Features.Colors.Commands.Delete.DeleteColorCommand;
 

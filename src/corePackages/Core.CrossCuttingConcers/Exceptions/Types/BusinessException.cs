@@ -1,4 +1,4 @@
-﻿namespace Core.CrossCuttingConcerns.Exceptions;
+﻿namespace Core.CrossCuttingConcerns.Exceptions.Types;
 
 public class BusinessException : Exception
 {

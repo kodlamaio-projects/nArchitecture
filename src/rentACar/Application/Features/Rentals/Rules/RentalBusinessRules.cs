@@ -1,7 +1,7 @@
 ﻿using Application.Features.Rentals.Constants;
 using Application.Services.Repositories;
 using Core.Application.Rules;
-using Core.CrossCuttingConcerns.Exceptions;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Persistence.Paging;
 using Domain.Entities;
 
