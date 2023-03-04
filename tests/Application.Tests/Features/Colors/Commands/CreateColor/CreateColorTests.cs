@@ -1,4 +1,4 @@
-﻿using Application.Features.Colors.Commands.CreateColor;
+﻿using Application.Features.Colors.Commands.Create;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.Test.Application.Constants;
@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Xunit;
-using static Application.Features.Colors.Commands.CreateColor.CreateColorCommand;
+using static Application.Features.Colors.Commands.Create.CreateColorCommand;
 
 namespace Application.Tests.Features.Colors.Commands.CreateColor
 {

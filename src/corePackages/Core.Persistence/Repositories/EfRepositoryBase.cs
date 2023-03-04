@@ -10,58 +10,55 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
     where TEntity : Entity
     where TContext : DbContext
 {
+    protected readonly TContext Context;
+
     public EfRepositoryBase(TContext context)
     {
         Context = context;
     }
 
-    protected TContext Context { get; }
+    public IQueryable<TEntity> Query() => Context.Set<TEntity>();
 
     public async Task<TEntity> AddAsync(TEntity entity)
     {
-        Context.Entry(entity).State = EntityState.Added;
+        await Context.AddAsync(entity);
         await Context.SaveChangesAsync();
         return entity;
     }
 
-    public async Task<List<TEntity>> AddRangeAsync(List<TEntity> entityList)
+    public async Task<IList<TEntity>> AddRangeAsync(IList<TEntity> entities)
     {
-        await Context.Set<TEntity>().AddRangeAsync(entityList);
+        await Context.AddRangeAsync(entities);
         await Context.SaveChangesAsync();
-        return entityList;
+        return entities;
     }
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        Context.Entry(entity).State = EntityState.Modified;
+        Context.Update(entity);
         await Context.SaveChangesAsync();
         return entity;
     }
 
-    public async Task<List<TEntity>> UpdateRangeAsync(List<TEntity> entityList)
+    public async Task<IList<TEntity>> UpdateRangeAsync(IList<TEntity> entities)
     {
-        Context.Set<TEntity>().UpdateRange(entityList);
+        Context.UpdateRange(entities);
         await Context.SaveChangesAsync();
-        return entityList;
+        return entities;
     }
 
     public async Task<TEntity> DeleteAsync(TEntity entity)
     {
-        Context.Entry(entity).State = EntityState.Deleted;
+        Context.Remove(entity);
         await Context.SaveChangesAsync();
         return entity;
     }
 
-    public async Task<List<TEntity>> DeleteRangeAsync(List<TEntity> entityList)
+    public async Task<IList<TEntity>> DeleteRangeAsync(IList<TEntity> entities)
     {
-        Context.Set<TEntity>().RemoveRange(entityList);
-        await Context.SaveChangesAsync();
-        return entityList;
-    }
-
-    public IQueryable<TEntity> Query()
-    {
-        return Context.Set<TEntity>();
+        Context.RemoveRange(entities);
+        Context.SaveChanges();
+        return entities;
     }
 
     public async Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
@@ -89,7 +86,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return await queryable.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public async Task<IPaginate<TEntity>> GetListByDynamicAsync(Dynamic.Dynamic dynamic,
+    public async Task<IPaginate<TEntity>> GetListByDynamicAsync(DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int index = 0, int size = 10, bool enableTracking = true,
@@ -113,44 +110,44 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
 
     public TEntity Add(TEntity entity)
     {
-        Context.Entry(entity).State = EntityState.Added;
+        Context.Add(entity);
         Context.SaveChanges();
         return entity;
     }
 
-    public List<TEntity> AddRange(List<TEntity> entityList)
+    public IList<TEntity> AddRange(IList<TEntity> entities)
     {
-        Context.Set<TEntity>().AddRange(entityList);
+        Context.AddRange(entities);
         Context.SaveChanges();
-        return entityList;
+        return entities;
     }
 
     public TEntity Update(TEntity entity)
     {
-        Context.Entry(entity).State = EntityState.Modified;
+        Context.Update(entity);
         Context.SaveChanges();
         return entity;
     }
 
-    public List<TEntity> UpdateRange(List<TEntity> entityList)
+    public IList<TEntity> UpdateRange(IList<TEntity> entities)
     {
-        Context.Set<TEntity>().UpdateRange(entityList);
+        Context.UpdateRange(entities);
         Context.SaveChanges();
-        return entityList;
+        return entities;
     }
 
     public TEntity Delete(TEntity entity)
     {
-        Context.Entry(entity).State = EntityState.Deleted;
+        Context.Remove(entity);
         Context.SaveChanges();
         return entity;
     }
 
-    public List<TEntity> DeleteRange(List<TEntity> entityList)
+    public IList<TEntity> DeleteRange(IList<TEntity> entities)
     {
-        Context.Set<TEntity>().RemoveRange(entityList);
+        Context.RemoveRange(entities);
         Context.SaveChanges();
-        return entityList;
+        return entities;
     }
 
     public TEntity? Get(Expression<Func<TEntity, bool>> predicate,
@@ -176,7 +173,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return queryable.ToPaginate(index, size);
     }
 
-    public IPaginate<TEntity> GetListByDynamic(Dynamic.Dynamic dynamic,
+    public IPaginate<TEntity> GetListByDynamic(DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, int index = 0, int size = 10,
         bool enableTracking = true)
@@ -195,4 +192,4 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         if (!enableTracking) queryable = queryable.AsNoTracking();
         return queryable.Any();
     }
-}
+}   

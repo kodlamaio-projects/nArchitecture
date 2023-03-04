@@ -1,6 +1,6 @@
 ﻿namespace Core.Persistence.Paging;
 
-public class BasePageableModel
+public abstract class BasePageableModel
 {
     public int Index { get; set; }
     public int Size { get; set; }

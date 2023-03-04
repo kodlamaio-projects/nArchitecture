@@ -1,4 +1,4 @@
-﻿using Application.Features.Brands.Commands.CreateBrand;
+﻿using Application.Features.Brands.Commands.Create;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.Test.Application.Constants;
@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Xunit;
-using static Application.Features.Brands.Commands.CreateBrand.CreateBrandCommand;
+using static Application.Features.Brands.Commands.Create.CreateBrandCommand;
 
 namespace Application.Tests.Features.Brands.Commands.CreateBrand
 {

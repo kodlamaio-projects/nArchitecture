@@ -1,5 +1,5 @@
-﻿using Application.Features.Models.Commands.CreateModel;
-using Application.Features.Models.Dtos;
+﻿using Application.Features.Models.Commands.Create;
+using Application.Features.Models.Queries.GetList;
 using Core.ElasticSearch;
 using Core.ElasticSearch.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -40,8 +40,8 @@ public class ElasticTestController : BaseController
 
         IEnumerable<IndexName> result3 = _elasticSearch.GetIndexList().Keys;
 
-        List<ElasticSearchGetModel<ModelListDto>> result4 = await
-                                                                _elasticSearch.GetSearchByField<ModelListDto>(
+        List<ElasticSearchGetModel<GetListModelListItemDto>> result4 = await
+                                                                _elasticSearch.GetSearchByField<GetListModelListItemDto>(
                                                                     new SearchByFieldParameters
                                                                     {
                                                                         IndexName = "models",

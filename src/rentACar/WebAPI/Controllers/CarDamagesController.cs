@@ -1,12 +1,11 @@
-﻿using Application.Features.CarDamages.Commands.CreateCarDamage;
-using Application.Features.CarDamages.Commands.DeleteCarDamage;
-using Application.Features.CarDamages.Commands.UpdateCarDamage;
-using Application.Features.CarDamages.Dtos;
-using Application.Features.CarDamages.Models;
-using Application.Features.CarDamages.Queries.GetByIdCarDamage;
-using Application.Features.CarDamages.Queries.GetListByCarIdCarDamage;
-using Application.Features.CarDamages.Queries.GetListCarDamage;
+﻿using Application.Features.CarDamages.Commands.Create;
+using Application.Features.CarDamages.Commands.Delete;
+using Application.Features.CarDamages.Commands.Update;
+using Application.Features.CarDamages.Queries.GetById;
+using Application.Features.CarDamages.Queries.GetList;
+using Application.Features.CarDamages.Queries.GetListByCarId;
 using Core.Application.Requests;
+using Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -18,7 +17,7 @@ public class CarDamagesController : BaseController
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetById([FromRoute] GetByIdCarDamageQuery getByIdCarDamageQuery)
     {
-        CarDamageDto result = await Mediator.Send(getByIdCarDamageQuery);
+        GetByIdCarDamageResponse result = await Mediator.Send(getByIdCarDamageQuery);
         return Ok(result);
     }
 
@@ -26,7 +25,7 @@ public class CarDamagesController : BaseController
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
         GetListCarDamageQuery getListCarDamageQuery = new() { PageRequest = pageRequest };
-        CarDamageListModel result = await Mediator.Send(getListCarDamageQuery);
+        GetListResponse<GetListCarDamageListItemDto> result = await Mediator.Send(getListCarDamageQuery);
         return Ok(result);
     }
 
@@ -34,28 +33,28 @@ public class CarDamagesController : BaseController
     public async Task<IActionResult> GetListByCarId([FromRoute] int carId, [FromQuery] PageRequest pageRequest)
     {
         GetListByCarIdCarDamageQuery getListCarDamageQuery = new() { CarId = carId, PageRequest = pageRequest };
-        CarDamageListModel result = await Mediator.Send(getListCarDamageQuery);
+        GetListResponse<GetListByCarIdCarDamageListItemDto> result = await Mediator.Send(getListCarDamageQuery);
         return Ok(result);
     }
 
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] CreateCarDamageCommand createCarDamageCommand)
     {
-        CreatedCarDamageDto result = await Mediator.Send(createCarDamageCommand);
+        CreatedCarDamageResponse result = await Mediator.Send(createCarDamageCommand);
         return Created("", result);
     }
 
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateCarDamageCommand updateCarDamageCommand)
     {
-        UpdatedCarDamageDto result = await Mediator.Send(updateCarDamageCommand);
+        UpdatedCarDamageResponse result = await Mediator.Send(updateCarDamageCommand);
         return Ok(result);
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromBody] DeleteCarDamageCommand deleteCarDamageCommand)
     {
-        DeletedCarDamageDto result = await Mediator.Send(deleteCarDamageCommand);
+        DeletedCarDamageResponse result = await Mediator.Send(deleteCarDamageCommand);
         return Ok(result);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Application.Features.FindeksCreditRates.Dtos;
-using Application.Features.FindeksCreditRates.Rules;
+﻿using Application.Features.FindeksCreditRates.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -7,13 +6,13 @@ using MediatR;
 
 namespace Application.Features.FindeksCreditRates.Queries.GetByCustomerIdFindeksCreditRate;
 
-public class GetByCustomerIdFindeksCreditRateQuery : IRequest<FindeksCreditRateDto>
+public class GetByCustomerIdFindeksCreditRateQuery : IRequest<GetByCustomerIdFindeksCreditRateResponse>
 {
     public int CustomerId { get; set; }
 
     public class
         GetByIdFindeksCreditRateQueryHandler : IRequestHandler<GetByCustomerIdFindeksCreditRateQuery,
-            FindeksCreditRateDto>
+            GetByCustomerIdFindeksCreditRateResponse>
     {
         private readonly IFindeksCreditRateRepository _findeksCreditRateRepository;
         private readonly IMapper _mapper;
@@ -29,14 +28,16 @@ public class GetByCustomerIdFindeksCreditRateQuery : IRequest<FindeksCreditRateD
         }
 
 
-        public async Task<FindeksCreditRateDto> Handle(GetByCustomerIdFindeksCreditRateQuery request,
-                                                       CancellationToken cancellationToken)
+        public async Task<GetByCustomerIdFindeksCreditRateResponse> Handle(
+            GetByCustomerIdFindeksCreditRateQuery request,
+            CancellationToken cancellationToken)
         {
             FindeksCreditRate? findeksCreditRate =
                 await _findeksCreditRateRepository.GetAsync(b => b.CustomerId == request.CustomerId);
             await _findeksCreditRateBusinessRules.FindeksCreditShouldBeExist(findeksCreditRate);
 
-            FindeksCreditRateDto findeksCreditRateDto = _mapper.Map<FindeksCreditRateDto>(findeksCreditRate);
+            GetByCustomerIdFindeksCreditRateResponse? findeksCreditRateDto =
+                _mapper.Map<GetByCustomerIdFindeksCreditRateResponse>(findeksCreditRate);
             return findeksCreditRateDto;
         }
     }

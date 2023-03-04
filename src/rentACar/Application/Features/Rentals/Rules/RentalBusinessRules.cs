@@ -18,8 +18,8 @@ public class RentalBusinessRules : BaseBusinessRules
 
     public async Task RentalIdShouldExistWhenSelected(int id)
     {
-        Rental? result = await _rentalRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException(RentalMessages.RentalNotExists);
+        Rental? result = await _rentalRepository.GetAsync(b => b.Id == id, enableTracking: false);
+        if (result == null) throw new BusinessException(RentalsMessages.RentalNotExists);
     }
 
     public async Task RentalCanNotBeUpdateWhenThereIsARentedCarInDate(int id, int carId, DateTime rentStartDate,
@@ -28,9 +28,9 @@ public class RentalBusinessRules : BaseBusinessRules
         IPaginate<Rental> rentals = await _rentalRepository.GetListAsync(
                                         r => r.Id != id && r.CarId == carId &&
                                              r.RentEndDate >= rentStartDate &&
-                                             r.RentStartDate <= rentEndDate);
+                                             r.RentStartDate <= rentEndDate, enableTracking: false);
         if (rentals.Items.Any())
-            throw new BusinessException(RentalMessages.RentalCanNotBeUpdatedWhenThereIsAnotherRentedCarForTheDate);
+            throw new BusinessException(RentalsMessages.RentalCanNotBeUpdatedWhenThereIsAnotherRentedCarForTheDate);
     }
 
     public Task RentalCanNotBeCreatedWhenCustomerFindeksScoreLowerThanCarMinFindeksScore(
@@ -38,7 +38,7 @@ public class RentalBusinessRules : BaseBusinessRules
     {
         if (customerFindeksCreditRate < carMinFindeksCreditRate)
             throw new BusinessException(
-                RentalMessages.RentalCanNotBeCreatedWhenCustomerFindeksCreditScoreLowerThanCarMinFindeksScore);
+                RentalsMessages.RentalCanNotBeCreatedWhenCustomerFindeksCreditScoreLowerThanCarMinFindeksScore);
         return Task.CompletedTask;
     }
 }

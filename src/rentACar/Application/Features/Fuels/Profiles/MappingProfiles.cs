@@ -1,8 +1,8 @@
-﻿using Application.Features.Fuels.Commands.CreateFuel;
-using Application.Features.Fuels.Commands.DeleteFuel;
-using Application.Features.Fuels.Commands.UpdateFuel;
-using Application.Features.Fuels.Dtos;
-using Application.Features.Fuels.Models;
+﻿using Application.Features.Fuels.Commands.Create;
+using Application.Features.Fuels.Commands.Delete;
+using Application.Features.Fuels.Commands.Update;
+using Application.Features.Fuels.Queries.GetById;
+using Application.Features.Fuels.Queries.GetList;
 using AutoMapper;
 using Core.Persistence.Paging;
 using Domain.Entities;
@@ -14,13 +14,13 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<Fuel, CreateFuelCommand>().ReverseMap();
-        CreateMap<Fuel, CreatedFuelDto>().ReverseMap();
+        CreateMap<Fuel, CreatedFuelResponse>().ReverseMap();
         CreateMap<Fuel, UpdateFuelCommand>().ReverseMap();
-        CreateMap<Fuel, UpdatedFuelDto>().ReverseMap();
+        CreateMap<Fuel, UpdatedFuelResponse>().ReverseMap();
         CreateMap<Fuel, DeleteFuelCommand>().ReverseMap();
-        CreateMap<Fuel, DeletedFuelDto>().ReverseMap();
-        CreateMap<Fuel, FuelDto>().ReverseMap();
-        CreateMap<Fuel, FuelListDto>().ReverseMap();
-        CreateMap<IPaginate<Fuel>, FuelListModel>().ReverseMap();
+        CreateMap<Fuel, DeletedFuelResponse>().ReverseMap();
+        CreateMap<Fuel, GetByIdFuelResponse>().ReverseMap();
+        CreateMap<Fuel, GetListFuelListItemDto>().ReverseMap();
+        CreateMap<IPaginate<Fuel>, GetListResponse<GetListFuelListItemDto>>().ReverseMap();
     }
 }

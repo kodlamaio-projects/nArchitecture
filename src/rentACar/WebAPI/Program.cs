@@ -71,7 +71,10 @@ WebApplication app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => { c.DocExpansion(DocExpansion.None); });
+    app.UseSwaggerUI(opt =>
+    {
+        opt.DocExpansion(DocExpansion.None);
+    });
 }
 
 if (app.Environment.IsProduction())

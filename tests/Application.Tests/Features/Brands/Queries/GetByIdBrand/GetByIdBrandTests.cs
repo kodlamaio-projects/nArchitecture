@@ -1,11 +1,11 @@
-﻿using Application.Features.Brands.Queries.GetByIdBrand;
+﻿using Application.Features.Brands.Queries.GetById;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Xunit;
-using static Application.Features.Brands.Queries.GetByIdBrand.GetByIdBrandQuery;
+using static Application.Features.Brands.Queries.GetById.GetByIdBrandQuery;
 
 namespace Application.Tests.Features.Brands.Queries.GetByIdBrand
 {

@@ -17,13 +17,13 @@ public class CustomerBusinessRules : BaseBusinessRules
 
     public async Task CustomerIdShouldExist(int id)
     {
-        Customer? result = await _customerRepository.GetAsync(b => b.Id == id);
-        if (result == null) throw new BusinessException(CustomerMessages.CustomerNotExists);
+        Customer? result = await _customerRepository.GetAsync(b => b.Id == id, enableTracking: false);
+        if (result == null) throw new BusinessException(CustomersMessages.CustomerNotExists);
     }
 
     public Task CustomerShouldBeExist(Customer? customer)
     {
-        if (customer is null) throw new BusinessException(CustomerMessages.CustomerNotExists);
+        if (customer is null) throw new BusinessException(CustomersMessages.CustomerNotExists);
         return Task.CompletedTask;
     }
 }

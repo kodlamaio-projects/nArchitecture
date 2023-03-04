@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
 using Microsoft.EntityFrameworkCore.Query;
 
@@ -14,15 +15,15 @@ public interface IRepository<T> : IQuery<T> where T : Entity
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10,
         bool enableTracking = true);
 
-    IPaginate<T> GetListByDynamic(Dynamic.Dynamic dynamic, Expression<Func<T, bool>>? predicate = null,
+    IPaginate<T> GetListByDynamic(DynamicQuery dynamic, Expression<Func<T, bool>>? predicate = null,
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10,
         bool enableTracking = true);
 
-    T Add(T entity);
-    List<T> AddRange(List<T> entity);
-    T Update(T entity);
-    List<T> UpdateRange(List<T> entity);
-    T Delete(T entity);
-    List<T> DeleteRange(List<T> entity);
     bool Any(Expression<Func<T, bool>>? predicate = null, bool enableTracking = true);
+    T Add(T entity);
+    IList<T> AddRange(IList<T> entities);
+    T Update(T entity);
+    IList<T> UpdateRange(IList<T> entities);
+    T Delete(T entity);
+    IList<T> DeleteRange(IList<T> entity);
 }

@@ -1,12 +1,11 @@
-﻿using Application.Features.CorporateCustomers.Commands.CreateCorporateCustomer;
-using Application.Features.CorporateCustomers.Commands.DeleteCorporateCustomer;
-using Application.Features.CorporateCustomers.Commands.UpdateCorporateCustomer;
-using Application.Features.CorporateCustomers.Dtos;
-using Application.Features.CorporateCustomers.Models;
-using Application.Features.CorporateCustomers.Queries.GetByCustomerIdCorporateCustomer;
-using Application.Features.CorporateCustomers.Queries.GetByIdCorporateCustomer;
-using Application.Features.CorporateCustomers.Queries.GetListCorporateCustomer;
+﻿using Application.Features.CorporateCustomers.Commands.Create;
+using Application.Features.CorporateCustomers.Commands.Delete;
+using Application.Features.CorporateCustomers.Commands.Update;
+using Application.Features.CorporateCustomers.Queries.GetByCustomerId;
+using Application.Features.CorporateCustomers.Queries.GetById;
+using Application.Features.CorporateCustomers.Queries.GetList;
 using Core.Application.Requests;
+using Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -18,7 +17,7 @@ public class CorporateCustomersController : BaseController
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetById([FromRoute] GetByIdCorporateCustomerQuery getByIdCorporateCustomerQuery)
     {
-        CorporateCustomerDto result = await Mediator.Send(getByIdCorporateCustomerQuery);
+        GetByIdCorporateCustomerResponse result = await Mediator.Send(getByIdCorporateCustomerQuery);
         return Ok(result);
     }
 
@@ -26,7 +25,7 @@ public class CorporateCustomersController : BaseController
     public async Task<IActionResult> GetById(
         [FromRoute] GetByCustomerIdCorporateCustomerQuery getByCustomerIdCorporateCustomerQuery)
     {
-        CorporateCustomerDto result = await Mediator.Send(getByCustomerIdCorporateCustomerQuery);
+        GetByCustomerIdCorporateCustomerResponse result = await Mediator.Send(getByCustomerIdCorporateCustomerQuery);
         return Ok(result);
     }
 
@@ -34,28 +33,28 @@ public class CorporateCustomersController : BaseController
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
         GetListCorporateCustomerQuery getListCorporateCustomerQuery = new() { PageRequest = pageRequest };
-        CorporateCustomerListModel result = await Mediator.Send(getListCorporateCustomerQuery);
+        GetListResponse<GetListCorporateCustomerListItemDto> result = await Mediator.Send(getListCorporateCustomerQuery);
         return Ok(result);
     }
 
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] CreateCorporateCustomerCommand createCorporateCustomerCommand)
     {
-        CreatedCorporateCustomerDto result = await Mediator.Send(createCorporateCustomerCommand);
+        CreatedCorporateCustomerResponse result = await Mediator.Send(createCorporateCustomerCommand);
         return Created("", result);
     }
 
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateCorporateCustomerCommand updateCorporateCustomerCommand)
     {
-        UpdatedCorporateCustomerDto result = await Mediator.Send(updateCorporateCustomerCommand);
+        UpdatedCorporateCustomerResponse result = await Mediator.Send(updateCorporateCustomerCommand);
         return Ok(result);
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromBody] DeleteCorporateCustomerCommand deleteCorporateCustomerCommand)
     {
-        DeletedCorporateCustomerDto result = await Mediator.Send(deleteCorporateCustomerCommand);
+        DeletedCorporateCustomerResponse result = await Mediator.Send(deleteCorporateCustomerCommand);
         return Ok(result);
     }
 }
