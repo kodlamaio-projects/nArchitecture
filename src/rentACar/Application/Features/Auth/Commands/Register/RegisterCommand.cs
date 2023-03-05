@@ -20,8 +20,7 @@ public class RegisterCommand : IRequest<RegisteredResponse>
         private readonly IAuthService _authService;
         private readonly AuthBusinessRules _authBusinessRules;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService,
-                                      AuthBusinessRules authBusinessRules)
+        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService, AuthBusinessRules authBusinessRules)
         {
             _userRepository = userRepository;
             _authService = authService;
@@ -32,17 +31,19 @@ public class RegisterCommand : IRequest<RegisteredResponse>
         {
             await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
 
-            byte[] passwordHash, passwordSalt;
+            byte[] passwordHash,
+                passwordSalt;
             HashingHelper.CreatePasswordHash(request.UserForRegisterDto.Password, out passwordHash, out passwordSalt);
-            User newUser = new()
-            {
-                Email = request.UserForRegisterDto.Email,
-                FirstName = request.UserForRegisterDto.FirstName,
-                LastName = request.UserForRegisterDto.LastName,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Status = true
-            };
+            User newUser =
+                new()
+                {
+                    Email = request.UserForRegisterDto.Email,
+                    FirstName = request.UserForRegisterDto.FirstName,
+                    LastName = request.UserForRegisterDto.LastName,
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    Status = true
+                };
             User createdUser = await _userRepository.AddAsync(newUser);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
@@ -50,8 +51,7 @@ public class RegisterCommand : IRequest<RegisteredResponse>
             RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IPAddress);
             RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
-            RegisteredResponse registeredResponse = new()
-            { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+            RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return registeredResponse;
         }
     }

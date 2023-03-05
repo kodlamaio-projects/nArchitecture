@@ -25,13 +25,15 @@ public class MappingProfiles : Profile
         CreateMap<Car, DeleteCarCommand>().ReverseMap();
         CreateMap<Car, DeletedCarResponse>().ReverseMap();
         CreateMap<Car, GetByIdCarResponse>().ReverseMap();
-        CreateMap<Car, GetListCarListItemDto>().ForMember(c => c.ColorName, opt => opt.MapFrom(c => c.Color.Name))
-                                    .ForMember(c => c.ModelName, opt => opt.MapFrom(c => c.Model.Name))
-                                    .ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Model.Brand.Name));
+        CreateMap<Car, GetListCarListItemDto>()
+            .ForMember(destinationMember: c => c.ColorName, memberOptions: opt => opt.MapFrom(c => c.Color.Name))
+            .ForMember(destinationMember: c => c.ModelName, memberOptions: opt => opt.MapFrom(c => c.Model.Name))
+            .ForMember(destinationMember: c => c.BrandName, memberOptions: opt => opt.MapFrom(c => c.Model.Brand.Name));
         CreateMap<IPaginate<Car>, GetListResponse<GetListCarListItemDto>>().ReverseMap();
-        CreateMap<Car, GetListByDynamicCarListItemDto>().ForMember(c => c.ColorName, opt => opt.MapFrom(c => c.Color.Name))
-                                               .ForMember(c => c.ModelName, opt => opt.MapFrom(c => c.Model.Name))
-                                               .ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Model.Brand.Name));
+        CreateMap<Car, GetListByDynamicCarListItemDto>()
+            .ForMember(destinationMember: c => c.ColorName, memberOptions: opt => opt.MapFrom(c => c.Color.Name))
+            .ForMember(destinationMember: c => c.ModelName, memberOptions: opt => opt.MapFrom(c => c.Model.Name))
+            .ForMember(destinationMember: c => c.BrandName, memberOptions: opt => opt.MapFrom(c => c.Model.Brand.Name));
         CreateMap<IPaginate<Car>, GetListResponse<GetListByDynamicCarListItemDto>>().ReverseMap();
     }
 }

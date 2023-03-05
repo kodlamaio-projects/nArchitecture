@@ -16,8 +16,7 @@ public class GetByIdFuelQuery : IRequest<GetByIdFuelResponse>
         private readonly IMapper _mapper;
         private readonly FuelBusinessRules _fuelBusinessRules;
 
-        public GetByIdFuelQueryHandler(IFuelRepository fuelRepository, FuelBusinessRules fuelBusinessRules,
-                                       IMapper mapper)
+        public GetByIdFuelQueryHandler(IFuelRepository fuelRepository, FuelBusinessRules fuelBusinessRules, IMapper mapper)
         {
             _fuelRepository = fuelRepository;
             _fuelBusinessRules = fuelBusinessRules;

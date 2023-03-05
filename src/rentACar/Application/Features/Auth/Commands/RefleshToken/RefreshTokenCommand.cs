@@ -18,23 +18,24 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
         private readonly IUserService _userService;
         private readonly AuthBusinessRules _authBusinessRules;
 
-        public RefreshTokenCommandHandler(IAuthService authService, IUserService userService,
-                                          AuthBusinessRules authBusinessRules)
+        public RefreshTokenCommandHandler(IAuthService authService, IUserService userService, AuthBusinessRules authBusinessRules)
         {
             _authService = authService;
             _userService = userService;
             _authBusinessRules = authBusinessRules;
         }
 
-        public async Task<RefreshedTokensResponse> Handle(RefreshTokenCommand request,
-                                                     CancellationToken cancellationToken)
+        public async Task<RefreshedTokensResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
             RefreshToken? refreshToken = await _authService.GetRefreshTokenByToken(request.RefleshToken);
             await _authBusinessRules.RefreshTokenShouldBeExists(refreshToken);
 
             if (refreshToken.Revoked != null)
-                await _authService.RevokeDescendantRefreshTokens(refreshToken, request.IPAddress,
-                                                                 $"Attempted reuse of revoked ancestor token: {refreshToken.Token}");
+                await _authService.RevokeDescendantRefreshTokens(
+                    refreshToken,
+                    request.IPAddress,
+                    reason: $"Attempted reuse of revoked ancestor token: {refreshToken.Token}"
+                );
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
             User user = await _userService.GetById(refreshToken.UserId);
@@ -46,8 +47,7 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
 
-            RefreshedTokensResponse refreshedTokensResponse = new()
-            { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+            RefreshedTokensResponse refreshedTokensResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return refreshedTokensResponse;
         }
     }

@@ -21,24 +21,42 @@ public class MappingProfiles : Profile
         CreateMap<Invoice, DeleteInvoiceCommand>().ReverseMap();
         CreateMap<Invoice, DeletedInvoiceResponse>().ReverseMap();
         CreateMap<Invoice, GetListInvoiceListItemDto>()
-            .ForMember(i => i.CustomerName,
-                       opt => opt.MapFrom(i => i.Customer.IndividualCustomer != null
-                                                   ? $"{i.Customer.IndividualCustomer.FirstName} {i.Customer.IndividualCustomer.LastName}"
-                                                   : i.Customer.CorporateCustomer.CompanyName))
+            .ForMember(
+                destinationMember: i => i.CustomerName,
+                memberOptions: opt =>
+                    opt.MapFrom(
+                        i =>
+                            i.Customer.IndividualCustomer != null
+                                ? $"{i.Customer.IndividualCustomer.FirstName} {i.Customer.IndividualCustomer.LastName}"
+                                : i.Customer.CorporateCustomer.CompanyName
+                    )
+            )
             .ReverseMap();
         CreateMap<IPaginate<Invoice>, GetListResponse<GetListInvoiceListItemDto>>().ReverseMap();
         CreateMap<Invoice, GetListByCustomerInvoiceListItemDto>()
-            .ForMember(i => i.CustomerName,
-                       opt => opt.MapFrom(i => i.Customer.IndividualCustomer != null
-                                                   ? $"{i.Customer.IndividualCustomer.FirstName} {i.Customer.IndividualCustomer.LastName}"
-                                                   : i.Customer.CorporateCustomer.CompanyName))
+            .ForMember(
+                destinationMember: i => i.CustomerName,
+                memberOptions: opt =>
+                    opt.MapFrom(
+                        i =>
+                            i.Customer.IndividualCustomer != null
+                                ? $"{i.Customer.IndividualCustomer.FirstName} {i.Customer.IndividualCustomer.LastName}"
+                                : i.Customer.CorporateCustomer.CompanyName
+                    )
+            )
             .ReverseMap();
         CreateMap<IPaginate<Invoice>, GetListResponse<GetListByCustomerInvoiceListItemDto>>().ReverseMap();
         CreateMap<Invoice, GetListByDatesInvoiceListItemDto>()
-            .ForMember(i => i.CustomerName,
-                       opt => opt.MapFrom(i => i.Customer.IndividualCustomer != null
-                                                   ? $"{i.Customer.IndividualCustomer.FirstName} {i.Customer.IndividualCustomer.LastName}"
-                                                   : i.Customer.CorporateCustomer.CompanyName))
+            .ForMember(
+                destinationMember: i => i.CustomerName,
+                memberOptions: opt =>
+                    opt.MapFrom(
+                        i =>
+                            i.Customer.IndividualCustomer != null
+                                ? $"{i.Customer.IndividualCustomer.FirstName} {i.Customer.IndividualCustomer.LastName}"
+                                : i.Customer.CorporateCustomer.CompanyName
+                    )
+            )
             .ReverseMap();
         CreateMap<IPaginate<Invoice>, GetListResponse<GetListByDatesInvoiceListItemDto>>().ReverseMap();
     }

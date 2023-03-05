@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Fuels.Commands.Update
+namespace Application.Features.Fuels.Commands.Update;
+
+public class UpdateFuelCommandValidator : AbstractValidator<UpdateFuelCommand>
 {
-    public class UpdateFuelCommandValidator : AbstractValidator<UpdateFuelCommand>
+    public UpdateFuelCommandValidator()
     {
-        public UpdateFuelCommandValidator()
-        {
-            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
-        }
+        RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
     }
 }

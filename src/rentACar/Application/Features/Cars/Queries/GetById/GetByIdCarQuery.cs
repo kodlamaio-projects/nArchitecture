@@ -23,7 +23,6 @@ public class GetByIdCarQuery : IRequest<GetByIdCarResponse>
             _mapper = mapper;
         }
 
-
         public async Task<GetByIdCarResponse> Handle(GetByIdCarQuery request, CancellationToken cancellationToken)
         {
             await _carBusinessRules.CarIdShouldExistWhenSelected(request.Id);

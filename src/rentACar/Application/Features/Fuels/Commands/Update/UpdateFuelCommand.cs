@@ -5,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Fuels.Constants.FuelsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Fuels.Commands.Update;
 
@@ -14,7 +13,7 @@ public class UpdateFuelCommand : IRequest<UpdatedFuelResponse>, ISecuredRequest
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, FuelsOperationClaims.Admin, Write, FuelsOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, FuelsOperationClaims.Delete };
 
     public class UpdateFuelCommandHandler : IRequestHandler<UpdateFuelCommand, UpdatedFuelResponse>
     {

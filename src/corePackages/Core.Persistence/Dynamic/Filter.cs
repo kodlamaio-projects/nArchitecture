@@ -8,11 +8,10 @@ public class Filter
     public string? Logic { get; set; }
     public IEnumerable<Filter>? Filters { get; set; }
 
-    public Filter()
-    {
-    }
+    public Filter() { }
 
-    public Filter(string field, string @operator, string? value, string? logic, IEnumerable<Filter>? filters) : this()
+    public Filter(string field, string @operator, string? value, string? logic, IEnumerable<Filter>? filters)
+        : this()
     {
         Field = field;
         Operator = @operator;

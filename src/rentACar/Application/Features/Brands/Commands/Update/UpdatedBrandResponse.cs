@@ -1,6 +1,4 @@
-﻿using Core.Application.Dtos;
-
-namespace Application.Features.Brands.Commands.Update;
+﻿namespace Application.Features.Brands.Commands.Update;
 
 public class UpdatedBrandResponse
 {

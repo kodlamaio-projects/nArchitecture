@@ -22,8 +22,7 @@ public class IndividualCustomersController : BaseController
     }
 
     [HttpGet("ByCustomerId/{CustomerId}")]
-    public async Task<IActionResult> GetById(
-        [FromRoute] GetByCustomerIdIndividualCustomerQuery getByCustomerIdIndividualCustomerQuery)
+    public async Task<IActionResult> GetById([FromRoute] GetByCustomerIdIndividualCustomerQuery getByCustomerIdIndividualCustomerQuery)
     {
         GetByCustomerIdIndividualCustomerResponse result = await Mediator.Send(getByCustomerIdIndividualCustomerQuery);
         return Ok(result);
@@ -41,7 +40,7 @@ public class IndividualCustomersController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateIndividualCustomerCommand createIndividualCustomerCommand)
     {
         CreatedIndividualCustomerResponse result = await Mediator.Send(createIndividualCustomerCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

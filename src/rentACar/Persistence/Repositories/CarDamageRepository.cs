@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class CarDamageRepository : EfRepositoryBase<CarDamage, BaseDbContext>, ICarDamageRepository
 {
-    public CarDamageRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public CarDamageRepository(BaseDbContext context)
+        : base(context) { }
 }

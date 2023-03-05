@@ -6,11 +6,10 @@ public class Entity
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
 
-    public Entity()
-    {
-    }
+    public Entity() { }
 
-    public Entity(int id) : this()
+    public Entity(int id)
+        : this()
     {
         Id = id;
     }

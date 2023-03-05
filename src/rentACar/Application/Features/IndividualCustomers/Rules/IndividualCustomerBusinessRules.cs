@@ -18,20 +18,24 @@ public class IndividualCustomerBusinessRules : BaseBusinessRules
 
     public async Task IndividualCustomerIdShouldExistWhenSelected(int id)
     {
-        IndividualCustomer? result = await _individualCustomerRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(IndividualCustomersMessages.IndividualCustomerNotExists);
+        IndividualCustomer? result = await _individualCustomerRepository.GetAsync(predicate: b => b.Id == id, enableTracking: false);
+        if (result == null)
+            throw new BusinessException(IndividualCustomersMessages.IndividualCustomerNotExists);
     }
 
     public Task IndividualCustomerShouldBeExist(IndividualCustomer? individualCustomer)
     {
-        if (individualCustomer is null) throw new BusinessException(IndividualCustomersMessages.IndividualCustomerNotExists);
+        if (individualCustomer is null)
+            throw new BusinessException(IndividualCustomersMessages.IndividualCustomerNotExists);
         return Task.CompletedTask;
     }
 
     public async Task IndividualCustomerNationalIdentityCanNotBeDuplicatedWhenInserted(string nationalIdentity)
     {
-        IPaginate<IndividualCustomer> result =
-            await _individualCustomerRepository.GetListAsync(c => c.NationalIdentity == nationalIdentity);
-        if (result.Items.Any()) throw new BusinessException(IndividualCustomersMessages.IndividualCustomerNationalIdentityAlreadyExists);
+        IPaginate<IndividualCustomer> result = await _individualCustomerRepository.GetListAsync(
+            c => c.NationalIdentity == nationalIdentity
+        );
+        if (result.Items.Any())
+            throw new BusinessException(IndividualCustomersMessages.IndividualCustomerNationalIdentityAlreadyExists);
     }
 }

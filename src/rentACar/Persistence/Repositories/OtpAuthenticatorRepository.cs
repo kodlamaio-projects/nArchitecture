@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class OtpAuthenticatorRepository : EfRepositoryBase<OtpAuthenticator, BaseDbContext>, IOtpAuthenticatorRepository
 {
-    public OtpAuthenticatorRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public OtpAuthenticatorRepository(BaseDbContext context)
+        : base(context) { }
 }

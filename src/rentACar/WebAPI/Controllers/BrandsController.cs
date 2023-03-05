@@ -32,7 +32,7 @@ public class BrandsController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateBrandCommand createBrandCommand)
     {
         CreatedBrandResponse result = await Mediator.Send(createBrandCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]
@@ -53,7 +53,6 @@ public class BrandsController : BaseController
     public async Task<IActionResult> BulkInsert([FromBody] CreateBulkBrandCommand bulkBrandCommand)
     {
         List<CreatedBrandResponse> result = await Mediator.Send(bulkBrandCommand);
-        return Created("", result);
-
+        return Created(uri: "", result);
     }
 }

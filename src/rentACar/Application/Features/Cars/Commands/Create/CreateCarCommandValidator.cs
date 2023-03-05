@@ -8,9 +8,6 @@ public class CreateCarCommandValidator : AbstractValidator<CreateCarCommand>
     public CreateCarCommandValidator()
     {
         RuleFor(c => c.ModelYear).GreaterThan((short)1900);
-        RuleFor(c => c.Plate)
-            .NotEmpty()
-            .Must(CarCustomValidationRules.IsTurkeyPlate)
-            .WithMessage("Plate is not valid.");
+        RuleFor(c => c.Plate).NotEmpty().Must(CarCustomValidationRules.IsTurkeyPlate).WithMessage("Plate is not valid.");
     }
 }

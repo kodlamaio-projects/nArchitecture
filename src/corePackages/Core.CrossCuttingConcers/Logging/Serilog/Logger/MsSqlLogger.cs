@@ -4,32 +4,25 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 
-namespace Core.CrossCuttingConcerns.Logging.Serilog.Logger
+namespace Core.CrossCuttingConcerns.Logging.Serilog.Logger;
+
+public class MsSqlLogger : LoggerServiceBase
 {
-    public class MsSqlLogger : LoggerServiceBase
+    public MsSqlLogger(IConfiguration configuration)
     {
-        public MsSqlLogger(IConfiguration configuration)
-        {
-            var logConfiguration = configuration.GetSection("SeriLogConfigurations:MsSqlConfiguration")
-                .Get<MsSqlConfiguration>() ??
-                throw new Exception(SerilogMessages.NullOptionsMessage);
+        MsSqlConfiguration logConfiguration =
+            configuration.GetSection("SeriLogConfigurations:MsSqlConfiguration").Get<MsSqlConfiguration>()
+            ?? throw new Exception(SerilogMessages.NullOptionsMessage);
 
-            var sinkOptions = new MSSqlServerSinkOptions()
-            {
-                TableName = logConfiguration.TableName,
-                AutoCreateSqlTable = logConfiguration.AutoCreateSqlTable
-            };
+        MSSqlServerSinkOptions sinkOptions =
+            new() { TableName = logConfiguration.TableName, AutoCreateSqlTable = logConfiguration.AutoCreateSqlTable };
 
-            ColumnOptions columnOptions = new();
+        ColumnOptions columnOptions = new();
 
-            var serilogConfig = new LoggerConfiguration()
-                .WriteTo.MSSqlServer(
-                connectionString: logConfiguration.ConnectionString,
-                sinkOptions: sinkOptions,
-                columnOptions: columnOptions)
-                .CreateLogger();
+        global::Serilog.Core.Logger serilogConfig = new LoggerConfiguration().WriteTo
+            .MSSqlServer(logConfiguration.ConnectionString, sinkOptions, columnOptions: columnOptions)
+            .CreateLogger();
 
-            Logger = serilogConfig;
-        }
+        Logger = serilogConfig;
     }
 }

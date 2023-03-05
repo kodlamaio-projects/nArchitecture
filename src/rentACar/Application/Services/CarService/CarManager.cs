@@ -21,10 +21,10 @@ public class CarManager : ICarService
     public async Task<Car> GetById(int id)
     {
         Car car = await _carRepository.GetAsync(c => c.Id == id);
-        if (car == null) throw new BusinessException("The car doesn't exist.");
+        if (car == null)
+            throw new BusinessException("The car doesn't exist.");
         return car;
     }
-
 
     public async Task<Car> PickUpCar(Rental rental)
     {
@@ -35,14 +35,17 @@ public class CarManager : ICarService
         return updatedCar;
     }
 
-    public async Task<Car?> GetAvailableCarToRent(int modelId, int rentStartRentalBranch, DateTime rentStartDate,
-                                                  DateTime rentEndDate)
+    public async Task<Car?> GetAvailableCarToRent(int modelId, int rentStartRentalBranch, DateTime rentStartDate, DateTime rentEndDate)
     {
-        Car? carToFind = await _carRepository.GetAsync(c => c.ModelId == modelId &&
-                                                            c.RentalBranchId == rentStartRentalBranch &&
-                                                            !c.Rentals.Any(r => r.RentStartDate <= rentStartDate && r.RentEndDate >= rentEndDate),
-                                                            include: i => i.Include(i => i.Rentals));
-        if (carToFind != null) return carToFind;
+        Car? carToFind = await _carRepository.GetAsync(
+            predicate: c =>
+                c.ModelId == modelId
+                && c.RentalBranchId == rentStartRentalBranch
+                && !c.Rentals.Any(r => r.RentStartDate <= rentStartDate && r.RentEndDate >= rentEndDate),
+            include: i => i.Include(i => i.Rentals)
+        );
+        if (carToFind != null)
+            return carToFind;
         throw new BusinessException("Available car doesn't exist.");
     }
 }

@@ -3,6 +3,4 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface ICarDamageRepository : IAsyncRepository<CarDamage>, IRepository<CarDamage>
-{
-}
+public interface ICarDamageRepository : IAsyncRepository<CarDamage>, IRepository<CarDamage> { }

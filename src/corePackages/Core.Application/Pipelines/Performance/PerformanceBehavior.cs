@@ -16,8 +16,7 @@ public class PerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
         _stopwatch = stopwatch;
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         string requestName = request.GetType().Name;
 

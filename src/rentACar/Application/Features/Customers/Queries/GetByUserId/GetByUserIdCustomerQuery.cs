@@ -16,8 +16,7 @@ public class GetByUserIdCustomerQuery : IRequest<GetByUserIdCustomerResponse>
         private readonly IMapper _mapper;
         private readonly CustomerBusinessRules _businessRules;
 
-        public GetByUserIdCustomerQueryHandler(ICustomerRepository customerRepository, IMapper mapper,
-                                               CustomerBusinessRules businessRules)
+        public GetByUserIdCustomerQueryHandler(ICustomerRepository customerRepository, IMapper mapper, CustomerBusinessRules businessRules)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
@@ -28,7 +27,7 @@ public class GetByUserIdCustomerQuery : IRequest<GetByUserIdCustomerResponse>
         {
             Customer? customer = await _customerRepository.GetAsync(c => c.UserId == request.UserId);
             await _businessRules.CustomerShouldBeExist(customer);
-            var customerDto = _mapper.Map<GetByUserIdCustomerResponse>(customer);
+            GetByUserIdCustomerResponse? customerDto = _mapper.Map<GetByUserIdCustomerResponse>(customer);
             return customerDto;
         }
     }

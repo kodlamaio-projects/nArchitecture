@@ -14,8 +14,10 @@ public class VerifyEmailAuthenticatorCommand : IRequest
         private readonly AuthBusinessRules _authBusinessRules;
         private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
 
-        public VerifyEmailAuthenticatorCommandHandler(IEmailAuthenticatorRepository emailAuthenticatorRepository,
-            AuthBusinessRules authBusinessRules)
+        public VerifyEmailAuthenticatorCommandHandler(
+            IEmailAuthenticatorRepository emailAuthenticatorRepository,
+            AuthBusinessRules authBusinessRules
+        )
         {
             _emailAuthenticatorRepository = emailAuthenticatorRepository;
             _authBusinessRules = authBusinessRules;
@@ -23,9 +25,9 @@ public class VerifyEmailAuthenticatorCommand : IRequest
 
         public async Task Handle(VerifyEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            EmailAuthenticator? emailAuthenticator =
-                await _emailAuthenticatorRepository.GetAsync(
-                    e => e.ActivationKey == request.ActivationKey);
+            EmailAuthenticator? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(
+                e => e.ActivationKey == request.ActivationKey
+            );
             await _authBusinessRules.EmailAuthenticatorShouldBeExists(emailAuthenticator);
             await _authBusinessRules.EmailAuthenticatorActivationKeyShouldBeExists(emailAuthenticator);
 

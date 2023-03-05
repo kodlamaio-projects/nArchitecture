@@ -1,12 +1,10 @@
-﻿using Application.Features.Cars.Constants;
-using Application.Services.Repositories;
+﻿using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 using static Application.Features.Cars.Constants.CarsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Cars.Commands.Create;
 
@@ -21,8 +19,7 @@ public class CreateCarCommand : IRequest<CreatedCarResponse>, ISecuredRequest
     public string Plate { get; set; }
     public short MinFindeksCreditRate { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CarsOperationClaims.Admin, Write, Add };
-
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
 
     public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, CreatedCarResponse>
     {

@@ -13,7 +13,8 @@ public class Transmission : Entity
         Models = new HashSet<Model>();
     }
 
-    public Transmission(int id, string name) : this()
+    public Transmission(int id, string name)
+        : this()
     {
         Id = id;
         Name = name;

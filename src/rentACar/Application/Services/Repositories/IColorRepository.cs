@@ -3,6 +3,4 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IColorRepository : IAsyncRepository<Color>, IRepository<Color>
-{
-}
+public interface IColorRepository : IAsyncRepository<Color>, IRepository<Color> { }

@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Models.Constants.ModelsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Models.Commands.Update;
 
@@ -22,7 +21,8 @@ public class UpdateModelCommand : IRequest<UpdatedModelResponse>, ISecuredReques
 
     public bool BypassCache { get; }
     public string CacheKey => "models-list";
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, ModelsOperationClaims.Admin, Write, ModelsOperationClaims.Update };
+
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, ModelsOperationClaims.Update };
 
     public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand, UpdatedModelResponse>
     {

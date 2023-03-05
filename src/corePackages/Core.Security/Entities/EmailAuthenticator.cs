@@ -10,11 +10,10 @@ public class EmailAuthenticator : Entity
 
     public virtual User User { get; set; }
 
-    public EmailAuthenticator()
-    {
-    }
+    public EmailAuthenticator() { }
 
-    public EmailAuthenticator(int id, int userId, string? activationKey, bool isVerified) : this()
+    public EmailAuthenticator(int id, int userId, string? activationKey, bool isVerified)
+        : this()
     {
         Id = id;
         UserId = userId;

@@ -8,53 +8,55 @@ public static class IQueryableDynamicFilterExtensions
     private static readonly string[] _orders = { "asc", "desc" };
     private static readonly string[] _logics = { "and", "or" };
 
-    private static readonly IDictionary<string, string>
-        _operators = new Dictionary<string, string>
-        {
-            { "eq", "=" },
-            { "neq", "!=" },
-            { "lt", "<" },
-            { "lte", "<=" },
-            { "gt", ">" },
-            { "gte", ">=" },
-            { "isnull", "== null" },
-            { "isnotnull", "!= null" },
-            { "startswith", "StartsWith" },
-            { "endswith", "EndsWith" },
-            { "contains", "Contains" },
-            { "doesnotcontain", "Contains" }
-        };
-
-    public static IQueryable<T> ToDynamic<T>(
-        this IQueryable<T> query, DynamicQuery dynamicQuery)
+    private static readonly IDictionary<string, string> _operators = new Dictionary<string, string>
     {
-        if (dynamicQuery.Filter is not null) query = Filter(query, dynamicQuery.Filter);
-        if (dynamicQuery.Sort is not null && dynamicQuery.Sort.Any()) query = Sort(query, dynamicQuery.Sort);
+        { "eq", "=" },
+        { "neq", "!=" },
+        { "lt", "<" },
+        { "lte", "<=" },
+        { "gt", ">" },
+        { "gte", ">=" },
+        { "isnull", "== null" },
+        { "isnotnull", "!= null" },
+        { "startswith", "StartsWith" },
+        { "endswith", "EndsWith" },
+        { "contains", "Contains" },
+        { "doesnotcontain", "Contains" }
+    };
+
+    public static IQueryable<T> ToDynamic<T>(this IQueryable<T> query, DynamicQuery dynamicQuery)
+    {
+        if (dynamicQuery.Filter is not null)
+            query = Filter(query, dynamicQuery.Filter);
+        if (dynamicQuery.Sort is not null && dynamicQuery.Sort.Any())
+            query = Sort(query, dynamicQuery.Sort);
         return query;
     }
 
-    private static IQueryable<T> Filter<T>(
-        IQueryable<T> queryable, Filter filter)
+    private static IQueryable<T> Filter<T>(IQueryable<T> queryable, Filter filter)
     {
         IList<Filter> filters = GetAllFilters(filter);
         string?[] values = filters.Select(f => f.Value).ToArray();
         string where = Transform(filter, filters);
-        if (!string.IsNullOrEmpty(where) && values != null) queryable = queryable.Where(where, values);
+        if (!string.IsNullOrEmpty(where) && values != null)
+            queryable = queryable.Where(where, values);
 
         return queryable;
     }
 
-    private static IQueryable<T> Sort<T>(
-        IQueryable<T> queryable, IEnumerable<Sort> sort)
+    private static IQueryable<T> Sort<T>(IQueryable<T> queryable, IEnumerable<Sort> sort)
     {
-        foreach (var item in sort)
+        foreach (Sort item in sort)
         {
-            if (string.IsNullOrEmpty(item.Field)) throw new ArgumentException("Invalid Field");
-            if (string.IsNullOrEmpty(item.Dir) || !_orders.Contains(item.Dir)) throw new ArgumentException("Invalid Order Type");
+            if (string.IsNullOrEmpty(item.Field))
+                throw new ArgumentException("Invalid Field");
+            if (string.IsNullOrEmpty(item.Dir) || !_orders.Contains(item.Dir))
+                throw new ArgumentException("Invalid Order Type");
         }
+
         if (sort.Any())
         {
-            string ordering = string.Join(",", sort.Select(s => $"{s.Field} {s.Dir}"));
+            string ordering = string.Join(separator: ",", values: sort.Select(s => $"{s.Field} {s.Dir}"));
             return queryable.OrderBy(ordering);
         }
 
@@ -78,8 +80,10 @@ public static class IQueryableDynamicFilterExtensions
 
     public static string Transform(Filter filter, IList<Filter> filters)
     {
-        if (string.IsNullOrEmpty(filter.Field)) throw new ArgumentException("Invalid Field");
-        if (string.IsNullOrEmpty(filter.Operator) || !_operators.ContainsKey(filter.Operator)) throw new ArgumentException("Invalid Operator");
+        if (string.IsNullOrEmpty(filter.Field))
+            throw new ArgumentException("Invalid Field");
+        if (string.IsNullOrEmpty(filter.Operator) || !_operators.ContainsKey(filter.Operator))
+            throw new ArgumentException("Invalid Operator");
 
         int index = filters.IndexOf(filter);
         string comparison = _operators[filter.Operator];
@@ -89,9 +93,7 @@ public static class IQueryableDynamicFilterExtensions
         {
             if (filter.Operator == "doesnotcontain")
                 where.Append($"(!np({filter.Field}).{comparison}(@{index}))");
-            else if (comparison == "StartsWith" ||
-                     comparison == "EndsWith" ||
-                     comparison == "Contains")
+            else if (comparison == "StartsWith" || comparison == "EndsWith" || comparison == "Contains")
                 where.Append($"(np({filter.Field}).{comparison}(@{index}))");
             else
                 where.Append($"np({filter.Field}) {comparison} @{index}");
@@ -103,9 +105,9 @@ public static class IQueryableDynamicFilterExtensions
 
         if (filter.Logic is not null && filter.Filters is not null && filter.Filters.Any())
         {
-            if (!_logics.Contains(filter.Logic)) throw new ArgumentException("Invalid Logic");
-            return
-                $"{where} {filter.Logic} ({string.Join($" {filter.Logic} ", filter.Filters.Select(f => Transform(f, filters)).ToArray())})";
+            if (!_logics.Contains(filter.Logic))
+                throw new ArgumentException("Invalid Logic");
+            return $"{where} {filter.Logic} ({string.Join(separator: $" {filter.Logic} ", value: filter.Filters.Select(f => Transform(f, filters)).ToArray())})";
         }
 
         return where.ToString();

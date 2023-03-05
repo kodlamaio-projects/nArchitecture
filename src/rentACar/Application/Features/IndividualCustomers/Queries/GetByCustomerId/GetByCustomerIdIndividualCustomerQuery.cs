@@ -10,32 +10,35 @@ public class GetByCustomerIdIndividualCustomerQuery : IRequest<GetByCustomerIdIn
 {
     public int CustomerId { get; set; }
 
-    public class
-        GetByCustomerIdIndividualCustomerHandler : IRequestHandler<GetByCustomerIdIndividualCustomerQuery,
-            GetByCustomerIdIndividualCustomerResponse>
+    public class GetByCustomerIdIndividualCustomerHandler
+        : IRequestHandler<GetByCustomerIdIndividualCustomerQuery, GetByCustomerIdIndividualCustomerResponse>
     {
         private readonly IIndividualCustomerRepository _individualCustomerRepository;
         private readonly IMapper _mapper;
         private readonly IndividualCustomerBusinessRules _individualCustomerBusinessRules;
 
-        public GetByCustomerIdIndividualCustomerHandler(IIndividualCustomerRepository individualCustomerRepository,
-                                                        IndividualCustomerBusinessRules individualCustomerBusinessRules,
-                                                        IMapper mapper)
+        public GetByCustomerIdIndividualCustomerHandler(
+            IIndividualCustomerRepository individualCustomerRepository,
+            IndividualCustomerBusinessRules individualCustomerBusinessRules,
+            IMapper mapper
+        )
         {
             _individualCustomerRepository = individualCustomerRepository;
             _individualCustomerBusinessRules = individualCustomerBusinessRules;
             _mapper = mapper;
         }
 
-
-        public async Task<GetByCustomerIdIndividualCustomerResponse> Handle(GetByCustomerIdIndividualCustomerQuery request,
-                                                                            CancellationToken cancellationToken)
+        public async Task<GetByCustomerIdIndividualCustomerResponse> Handle(
+            GetByCustomerIdIndividualCustomerQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            IndividualCustomer? individualCustomer =
-                await _individualCustomerRepository.GetAsync(b => b.CustomerId == request.CustomerId);
+            IndividualCustomer? individualCustomer = await _individualCustomerRepository.GetAsync(b => b.CustomerId == request.CustomerId);
             await _individualCustomerBusinessRules.IndividualCustomerShouldBeExist(individualCustomer);
 
-            var individualCustomerDto = _mapper.Map<GetByCustomerIdIndividualCustomerResponse>(individualCustomer);
+            GetByCustomerIdIndividualCustomerResponse? individualCustomerDto = _mapper.Map<GetByCustomerIdIndividualCustomerResponse>(
+                individualCustomer
+            );
             return individualCustomerDto;
         }
     }

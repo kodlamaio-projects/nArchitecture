@@ -10,25 +10,27 @@ public class GetByIdAdditionalServiceQuery : IRequest<GetByIdAdditionalServiceRe
 {
     public int Id { get; set; }
 
-    public class
-        GetByIdAdditionalServiceQueryHandler : IRequestHandler<GetByIdAdditionalServiceQuery, GetByIdAdditionalServiceResponse>
+    public class GetByIdAdditionalServiceQueryHandler : IRequestHandler<GetByIdAdditionalServiceQuery, GetByIdAdditionalServiceResponse>
     {
         private readonly IAdditionalServiceRepository _additionalServiceRepository;
         private readonly IMapper _mapper;
         private readonly AdditionalServiceBusinessRules _additionalServiceBusinessRules;
 
-        public GetByIdAdditionalServiceQueryHandler(IAdditionalServiceRepository additionalServiceRepository,
-                                                    IMapper mapper,
-                                                    AdditionalServiceBusinessRules additionalServiceBusinessRules)
+        public GetByIdAdditionalServiceQueryHandler(
+            IAdditionalServiceRepository additionalServiceRepository,
+            IMapper mapper,
+            AdditionalServiceBusinessRules additionalServiceBusinessRules
+        )
         {
             _additionalServiceRepository = additionalServiceRepository;
             _mapper = mapper;
             _additionalServiceBusinessRules = additionalServiceBusinessRules;
         }
 
-
-        public async Task<GetByIdAdditionalServiceResponse> Handle(GetByIdAdditionalServiceQuery request,
-                                                       CancellationToken cancellationToken)
+        public async Task<GetByIdAdditionalServiceResponse> Handle(
+            GetByIdAdditionalServiceQuery request,
+            CancellationToken cancellationToken
+        )
         {
             await _additionalServiceBusinessRules.AdditionalServiceIdShouldExistWhenSelected(request.Id);
 

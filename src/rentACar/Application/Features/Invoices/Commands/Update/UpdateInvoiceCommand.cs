@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Invoices.Constants.InvoicesOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Invoices.Commands.Update;
 
@@ -21,7 +20,7 @@ public class UpdateInvoiceCommand : IRequest<UpdatedInvoiceResponse>, ISecuredRe
     public short TotalRentalDate { get; set; }
     public decimal RentalPrice { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, InvoicesOperationClaims.Admin, Write, InvoicesOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, InvoicesOperationClaims.Update };
 
     public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand, UpdatedInvoiceResponse>
     {
@@ -29,8 +28,7 @@ public class UpdateInvoiceCommand : IRequest<UpdatedInvoiceResponse>, ISecuredRe
         private readonly IMapper _mapper;
         private readonly InvoiceBusinessRules _invoiceBusinessRules;
 
-        public UpdateInvoiceCommandHandler(IInvoiceRepository invoiceRepository, IMapper mapper,
-                                           InvoiceBusinessRules invoiceBusinessRules)
+        public UpdateInvoiceCommandHandler(IInvoiceRepository invoiceRepository, IMapper mapper, InvoiceBusinessRules invoiceBusinessRules)
         {
             _invoiceRepository = invoiceRepository;
             _mapper = mapper;

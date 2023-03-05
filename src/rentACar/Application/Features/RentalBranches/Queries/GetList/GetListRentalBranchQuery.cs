@@ -11,7 +11,8 @@ public class GetListRentalBranchQuery : IRequest<GetListResponse<GetListRentalBr
 {
     public PageRequest PageRequest { get; set; }
 
-    public class GetListRentalBranchQueryHandler : IRequestHandler<GetListRentalBranchQuery, GetListResponse<GetListRentalBranchListItemDto>>
+    public class GetListRentalBranchQueryHandler
+        : IRequestHandler<GetListRentalBranchQuery, GetListResponse<GetListRentalBranchListItemDto>>
     {
         private readonly IRentalBranchRepository _rentalBranchRepository;
         private readonly IMapper _mapper;
@@ -22,12 +23,15 @@ public class GetListRentalBranchQuery : IRequest<GetListResponse<GetListRentalBr
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListRentalBranchListItemDto>> Handle(GetListRentalBranchQuery request,
-                                                        CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListRentalBranchListItemDto>> Handle(
+            GetListRentalBranchQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<RentalBranch> rentalBranchs = await _rentalBranchRepository.GetListAsync(
-                                                        index: request.PageRequest.Page,
-                                                        size: request.PageRequest.PageSize);
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedRentalBranchListModel = _mapper.Map<GetListResponse<GetListRentalBranchListItemDto>>(rentalBranchs);
             return mappedRentalBranchListModel;
         }

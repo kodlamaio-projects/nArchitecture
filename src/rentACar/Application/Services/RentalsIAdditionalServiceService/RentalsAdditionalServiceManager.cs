@@ -13,11 +13,13 @@ public class RentalsAdditionalServiceManager : IRentalsAdditionalServiceService
     }
 
     public async Task<IList<RentalsAdditionalService>> AddManyByRentalIdAndAdditionalServices(
-        int rentalId, IList<AdditionalService> additionalServices)
+        int rentalId,
+        IList<AdditionalService> additionalServices
+    )
     {
-        IList<RentalsAdditionalService> rentalsAdditionalServices =
-            additionalServices.Select(a => new RentalsAdditionalService
-            { RentalId = rentalId, AdditionalServiceId = a.Id }).ToList();
+        IList<RentalsAdditionalService> rentalsAdditionalServices = additionalServices
+            .Select(a => new RentalsAdditionalService { RentalId = rentalId, AdditionalServiceId = a.Id })
+            .ToList();
 
         foreach (RentalsAdditionalService rentalsAdditionalService in rentalsAdditionalServices)
             await _additionalServiceRepository.AddAsync(rentalsAdditionalService);

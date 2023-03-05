@@ -14,8 +14,8 @@ public class GetListByDynamicCarQuery : IRequest<GetListResponse<GetListByDynami
     public PageRequest PageRequest { get; set; }
     public DynamicQuery DynamicQuery { get; set; }
 
-    public class GetListCarByDynamicQueryHandler : IRequestHandler<GetListByDynamicCarQuery,
-        GetListResponse<GetListByDynamicCarListItemDto>>
+    public class GetListCarByDynamicQueryHandler
+        : IRequestHandler<GetListByDynamicCarQuery, GetListResponse<GetListByDynamicCarListItemDto>>
     {
         private readonly ICarRepository _carRepository;
         private readonly IMapper _mapper;
@@ -27,17 +27,17 @@ public class GetListByDynamicCarQuery : IRequest<GetListResponse<GetListByDynami
         }
 
         public async Task<GetListResponse<GetListByDynamicCarListItemDto>> Handle(
-            GetListByDynamicCarQuery request, CancellationToken cancellationToken)
+            GetListByDynamicCarQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Car> cars = await _carRepository.GetListByDynamicAsync(
-                                      request.DynamicQuery,
-                                      include: c => c.Include(c => c.Model)
-                                                     .Include(c => c.Model.Brand)
-                                                     .Include(c => c.Color),
-                                      index: request.PageRequest.Page,
-                                      size: request.PageRequest.PageSize);
-            var mappedCarListModel =
-                _mapper.Map<GetListResponse<GetListByDynamicCarListItemDto>>(cars);
+                request.DynamicQuery,
+                include: c => c.Include(c => c.Model).Include(c => c.Model.Brand).Include(c => c.Color),
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
+            var mappedCarListModel = _mapper.Map<GetListResponse<GetListByDynamicCarListItemDto>>(cars);
             return mappedCarListModel;
         }
     }

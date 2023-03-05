@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Customers.Commands.Create
+namespace Application.Features.Customers.Commands.Create;
+
+public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
 {
-    public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
+    public CreateCustomerCommandValidator()
     {
-        public CreateCustomerCommandValidator()
-        {
-            RuleFor(c => c.UserId).GreaterThan(0);
-        }
+        RuleFor(c => c.UserId).GreaterThan(0);
     }
 }

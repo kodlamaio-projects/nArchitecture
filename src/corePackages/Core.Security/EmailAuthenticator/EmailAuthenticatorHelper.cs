@@ -12,7 +12,10 @@ public class EmailAuthenticatorHelper : IEmailAuthenticatorHelper
 
     public Task<string> CreateEmailActivationCode()
     {
-        string code = RandomNumberGenerator.GetInt32(Convert.ToInt32(Math.Pow(10, 6))).ToString().PadLeft(6, '0');
+        string code = RandomNumberGenerator
+            .GetInt32(Convert.ToInt32(Math.Pow(x: 10, y: 6)))
+            .ToString()
+            .PadLeft(totalWidth: 6, paddingChar: '0');
         return Task.FromResult(code);
     }
 }

@@ -24,9 +24,13 @@ public class EnableEmailAuthenticatorCommand : IRequest
         private readonly IMailService _mailService;
         private readonly IUserService _userService;
 
-        public EnableEmailAuthenticatorCommandHandler(IUserService userService,
-            IEmailAuthenticatorRepository emailAuthenticatorRepository, IMailService mailService,
-            AuthBusinessRules authBusinessRules, IAuthenticatorService authenticatorService)
+        public EnableEmailAuthenticatorCommandHandler(
+            IUserService userService,
+            IEmailAuthenticatorRepository emailAuthenticatorRepository,
+            IMailService mailService,
+            AuthBusinessRules authBusinessRules,
+            IAuthenticatorService authenticatorService
+        )
         {
             _userService = userService;
             _emailAuthenticatorRepository = emailAuthenticatorRepository;
@@ -45,21 +49,19 @@ public class EnableEmailAuthenticatorCommand : IRequest
             await _userService.Update(user);
 
             EmailAuthenticator emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(user);
-            EmailAuthenticator addedEmailAuthenticator =
-                await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
+            EmailAuthenticator addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
 
-            var toEmailList = new List<MailboxAddress>
-            {
-                new($"{user.FirstName} {user.LastName}", user.Email)
-            };
+            var toEmailList = new List<MailboxAddress> { new(name: $"{user.FirstName} {user.LastName}", user.Email) };
 
-            _mailService.SendMail(new Mail
-            {
-                ToList = toEmailList,
-                Subject = "Verify Your Email - RentACar",
-                TextBody =
-                    $"Click on the link to verify your email: {request.VerifyEmailUrlPrefix}?ActivationKey={HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey)}"
-            });
+            _mailService.SendMail(
+                new Mail
+                {
+                    ToList = toEmailList,
+                    Subject = "Verify Your Email - RentACar",
+                    TextBody =
+                        $"Click on the link to verify your email: {request.VerifyEmailUrlPrefix}?ActivationKey={HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey)}"
+                }
+            );
         }
     }
 }

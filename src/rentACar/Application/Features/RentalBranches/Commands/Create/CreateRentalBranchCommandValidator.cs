@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.RentalBranches.Commands.Create
+namespace Application.Features.RentalBranches.Commands.Create;
+
+public class CreateRentalBranchCommandValidator : AbstractValidator<CreateRentalBranchCommand>
 {
-    public class CreateRentalBranchCommandValidator : AbstractValidator<CreateRentalBranchCommand>
+    public CreateRentalBranchCommandValidator()
     {
-        public CreateRentalBranchCommandValidator()
-        {
-            RuleFor(c => c.City).NotEmpty();
-        }
+        RuleFor(c => c.City).NotEmpty();
     }
 }

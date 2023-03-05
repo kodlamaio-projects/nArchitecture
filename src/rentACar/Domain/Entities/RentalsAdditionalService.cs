@@ -10,11 +10,10 @@ public class RentalsAdditionalService : Entity
     public virtual Rental Rental { get; set; }
     public virtual AdditionalService AdditionalService { get; set; }
 
-    public RentalsAdditionalService()
-    {
-    }
+    public RentalsAdditionalService() { }
 
-    public RentalsAdditionalService(int id, int rentalId, int additionalServiceId) : base(id)
+    public RentalsAdditionalService(int id, int rentalId, int additionalServiceId)
+        : base(id)
     {
         RentalId = rentalId;
         AdditionalServiceId = additionalServiceId;

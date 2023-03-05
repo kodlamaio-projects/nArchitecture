@@ -3,6 +3,4 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IRentalRepository : IAsyncRepository<Rental>, IRepository<Rental>
-{
-}
+public interface IRentalRepository : IAsyncRepository<Rental>, IRepository<Rental> { }

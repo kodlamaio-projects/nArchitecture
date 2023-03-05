@@ -32,7 +32,7 @@ public class OperationClaimsController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateOperationClaimCommand createOperationClaimCommand)
     {
         CreatedOperationClaimResponse result = await Mediator.Send(createOperationClaimCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

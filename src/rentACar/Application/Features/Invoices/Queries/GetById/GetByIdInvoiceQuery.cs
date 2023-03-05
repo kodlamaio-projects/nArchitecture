@@ -16,14 +16,12 @@ public class GetByIdInvoiceQuery : IRequest<GetByIdInvoiceResponse>
         private readonly IMapper _mapper;
         private readonly InvoiceBusinessRules _invoiceBusinessRules;
 
-        public GetByIdInvoiceQueryHandler(IInvoiceRepository invoiceRepository,
-                                          InvoiceBusinessRules invoiceBusinessRules, IMapper mapper)
+        public GetByIdInvoiceQueryHandler(IInvoiceRepository invoiceRepository, InvoiceBusinessRules invoiceBusinessRules, IMapper mapper)
         {
             _invoiceRepository = invoiceRepository;
             _invoiceBusinessRules = invoiceBusinessRules;
             _mapper = mapper;
         }
-
 
         public async Task<GetByIdInvoiceResponse> Handle(GetByIdInvoiceQuery request, CancellationToken cancellationToken)
         {

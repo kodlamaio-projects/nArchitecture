@@ -5,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Transmissions.Constants.TransmissionsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Transmissions.Commands.Delete;
 
@@ -13,7 +12,7 @@ public class DeleteTransmissionCommand : IRequest<DeletedTransmissionResponse>, 
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, TransmissionsOperationClaims.Admin, Write, TransmissionsOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, TransmissionsOperationClaims.Delete };
 
     public class DeleteTransmissionCommandHandler : IRequestHandler<DeleteTransmissionCommand, DeletedTransmissionResponse>
     {
@@ -26,8 +25,7 @@ public class DeleteTransmissionCommand : IRequest<DeletedTransmissionResponse>, 
             _mapper = mapper;
         }
 
-        public async Task<DeletedTransmissionResponse> Handle(DeleteTransmissionCommand request,
-                                                         CancellationToken cancellationToken)
+        public async Task<DeletedTransmissionResponse> Handle(DeleteTransmissionCommand request, CancellationToken cancellationToken)
         {
             Transmission mappedTransmission = _mapper.Map<Transmission>(request);
             Transmission deletedTransmission = await _transmissionRepository.DeleteAsync(mappedTransmission);

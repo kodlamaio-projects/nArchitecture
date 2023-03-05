@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Colors.Commands.Update
+namespace Application.Features.Colors.Commands.Update;
+
+public class UpdateColorCommandValidator : AbstractValidator<UpdateColorCommand>
 {
-    public class UpdateColorCommandValidator : AbstractValidator<UpdateColorCommand>
+    public UpdateColorCommandValidator()
     {
-        public UpdateColorCommandValidator()
-        {
-            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
-        }
+        RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
     }
 }

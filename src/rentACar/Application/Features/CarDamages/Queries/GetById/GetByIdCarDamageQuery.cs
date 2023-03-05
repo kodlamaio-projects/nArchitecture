@@ -16,14 +16,16 @@ public class GetByIdCarDamageQuery : IRequest<GetByIdCarDamageResponse>
         private readonly IMapper _mapper;
         private readonly CarDamageBusinessRules _carDamageBusinessRules;
 
-        public GetByIdCarDamageQueryHandler(ICarDamageRepository carDamageRepository,
-                                            CarDamageBusinessRules carDamageBusinessRules, IMapper mapper)
+        public GetByIdCarDamageQueryHandler(
+            ICarDamageRepository carDamageRepository,
+            CarDamageBusinessRules carDamageBusinessRules,
+            IMapper mapper
+        )
         {
             _carDamageRepository = carDamageRepository;
             _carDamageBusinessRules = carDamageBusinessRules;
             _mapper = mapper;
         }
-
 
         public async Task<GetByIdCarDamageResponse> Handle(GetByIdCarDamageQuery request, CancellationToken cancellationToken)
         {

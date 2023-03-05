@@ -31,8 +31,7 @@ public class ModelsController : BaseController
     }
 
     [HttpPost("GetList/ByDynamic")]
-    public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest,
-                                                      [FromBody] DynamicQuery? dynamicQuery = null)
+    public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] DynamicQuery? dynamicQuery = null)
     {
         GetListByDynamicModelQuery getListModelByDynamicQuery = new() { PageRequest = pageRequest, DynamicQuery = dynamicQuery };
         GetListResponse<GetListByDynamicModelListItemDto> result = await Mediator.Send(getListModelByDynamicQuery);
@@ -43,7 +42,7 @@ public class ModelsController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateModelCommand createModelCommand)
     {
         CreatedModelResponse result = await Mediator.Send(createModelCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

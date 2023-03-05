@@ -30,7 +30,8 @@ public class AuthController : BaseController
         LoginCommand loginCommand = new() { UserForLoginDto = userForLoginDto, IPAddress = getIpAddress() };
         LoggedResponse result = await Mediator.Send(loginCommand);
 
-        if (result.RefreshToken is not null) setRefreshTokenToCookie(result.RefreshToken);
+        if (result.RefreshToken is not null)
+            setRefreshTokenToCookie(result.RefreshToken);
 
         return Ok(result.ToHttpResponse());
     }
@@ -41,29 +42,22 @@ public class AuthController : BaseController
         RegisterCommand registerCommand = new() { UserForRegisterDto = userForRegisterDto, IPAddress = getIpAddress() };
         RegisteredResponse result = await Mediator.Send(registerCommand);
         setRefreshTokenToCookie(result.RefreshToken);
-        return Created("", result.AccessToken);
+        return Created(uri: "", result.AccessToken);
     }
 
     [HttpGet("RefreshToken")]
     public async Task<IActionResult> RefreshToken()
     {
-        RefreshTokenCommand refreshTokenCommand = new()
-        { RefleshToken = getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
+        RefreshTokenCommand refreshTokenCommand = new() { RefleshToken = getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
         RefreshedTokensResponse result = await Mediator.Send(refreshTokenCommand);
         setRefreshTokenToCookie(result.RefreshToken);
-        return Created("", result.AccessToken);
+        return Created(uri: "", result.AccessToken);
     }
 
     [HttpPut("RevokeToken")]
-    public async Task<IActionResult> RevokeToken(
-        [FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)]
-        string? refreshToken)
+    public async Task<IActionResult> RevokeToken([FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)] string? refreshToken)
     {
-        RevokeTokenCommand revokeTokenCommand = new()
-        {
-            Token = refreshToken ?? getRefreshTokenFromCookies(),
-            IPAddress = getIpAddress()
-        };
+        RevokeTokenCommand revokeTokenCommand = new() { Token = refreshToken ?? getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
         RevokedTokenResponse result = await Mediator.Send(revokeTokenCommand);
         return Ok(result);
     }
@@ -71,11 +65,8 @@ public class AuthController : BaseController
     [HttpGet("EnableEmailAuthenticator")]
     public async Task<IActionResult> EnableEmailAuthenticator()
     {
-        EnableEmailAuthenticatorCommand enableEmailAuthenticatorCommand = new()
-        {
-            UserId = getUserIdFromRequest(),
-            VerifyEmailUrlPrefix = $"{_configuration.APIDomain}/Auth/VerifyEmailAuthenticator"
-        };
+        EnableEmailAuthenticatorCommand enableEmailAuthenticatorCommand =
+            new() { UserId = getUserIdFromRequest(), VerifyEmailUrlPrefix = $"{_configuration.APIDomain}/Auth/VerifyEmailAuthenticator" };
         await Mediator.Send(enableEmailAuthenticatorCommand);
 
         return Ok();
@@ -84,26 +75,21 @@ public class AuthController : BaseController
     [HttpGet("EnableOtpAuthenticator")]
     public async Task<IActionResult> EnableOtpAuthenticator()
     {
-        EnableOtpAuthenticatorCommand enableOtpAuthenticatorCommand = new()
-        {
-            UserId = getUserIdFromRequest()
-        };
+        EnableOtpAuthenticatorCommand enableOtpAuthenticatorCommand = new() { UserId = getUserIdFromRequest() };
         EnabledOtpAuthenticatorResponse result = await Mediator.Send(enableOtpAuthenticatorCommand);
 
         return Ok(result);
     }
 
     [HttpGet("VerifyEmailAuthenticator")]
-    public async Task<IActionResult> VerifyEmailAuthenticator(
-        [FromQuery] VerifyEmailAuthenticatorCommand verifyEmailAuthenticatorCommand)
+    public async Task<IActionResult> VerifyEmailAuthenticator([FromQuery] VerifyEmailAuthenticatorCommand verifyEmailAuthenticatorCommand)
     {
         await Mediator.Send(verifyEmailAuthenticatorCommand);
         return Ok();
     }
 
     [HttpPost("VerifyOtpAuthenticator")]
-    public async Task<IActionResult> VerifyOtpAuthenticator(
-        [FromBody] string authenticatorCode)
+    public async Task<IActionResult> VerifyOtpAuthenticator([FromBody] string authenticatorCode)
     {
         VerifyOtpAuthenticatorCommand verifyEmailAuthenticatorCommand =
             new() { UserId = getUserIdFromRequest(), ActivationCode = authenticatorCode };
@@ -112,14 +98,11 @@ public class AuthController : BaseController
         return Ok();
     }
 
-    private string? getRefreshTokenFromCookies()
-    {
-        return Request.Cookies["refreshToken"];
-    }
+    private string? getRefreshTokenFromCookies() => Request.Cookies["refreshToken"];
 
     private void setRefreshTokenToCookie(RefreshToken refreshToken)
     {
         CookieOptions cookieOptions = new() { HttpOnly = true, Expires = DateTime.UtcNow.AddDays(7) };
-        Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+        Response.Cookies.Append(key: "refreshToken", refreshToken.Token, cookieOptions);
     }
 }

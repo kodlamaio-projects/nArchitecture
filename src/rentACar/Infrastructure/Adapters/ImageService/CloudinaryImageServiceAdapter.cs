@@ -20,13 +20,14 @@ public class CloudinaryImageServiceAdapter : ImageServiceBase
     {
         await FileMustBeInImageFormat(formFile);
 
-        ImageUploadParams imageUploadParams = new()
-        {
-            File = new(formFile.FileName, formFile.OpenReadStream()),
-            UseFilename = false,
-            UniqueFilename = true,
-            Overwrite = false
-        };
+        ImageUploadParams imageUploadParams =
+            new()
+            {
+                File = new FileDescription(formFile.FileName, stream: formFile.OpenReadStream()),
+                UseFilename = false,
+                UniqueFilename = true,
+                Overwrite = false
+            };
         ImageUploadResult imageUploadResult = await _cloudinary.UploadAsync(imageUploadParams);
 
         return imageUploadResult.Url.ToString();

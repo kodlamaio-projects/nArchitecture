@@ -22,8 +22,12 @@ public class LoginCommand : IRequest<LoggedResponse>
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
 
-        public LoginCommandHandler(IUserService userService, IAuthService authService,
-            AuthBusinessRules authBusinessRules, IAuthenticatorService authenticatorService)
+        public LoginCommandHandler(
+            IUserService userService,
+            IAuthService authService,
+            AuthBusinessRules authBusinessRules,
+            IAuthenticatorService authenticatorService
+        )
         {
             _userService = userService;
             _authService = authService;

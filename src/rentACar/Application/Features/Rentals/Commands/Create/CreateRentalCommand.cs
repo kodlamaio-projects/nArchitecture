@@ -41,13 +41,19 @@ public class CreateRentalCommand : IRequest<CreatedRentalResponse>, ILoggableReq
         private readonly IPOSService _posService;
         private readonly IRentalsAdditionalServiceService _rentalsAdditionalServiceService;
 
-        public CreateRentalCommandHandler(IRentalRepository rentalRepository, IMapper mapper,
-                                          RentalBusinessRules rentalBusinessRules,
-                                          IAdditionalServiceService additionalServiceService, ICarService carService,
-                                          IFindeksCreditRateService findeksCreditRateService,
-                                          IInvoiceService invoiceService, IModelService modelService,
-                                          IMailService mailService, IPOSService posService,
-                                          IRentalsAdditionalServiceService rentalsAdditionalServiceService)
+        public CreateRentalCommandHandler(
+            IRentalRepository rentalRepository,
+            IMapper mapper,
+            RentalBusinessRules rentalBusinessRules,
+            IAdditionalServiceService additionalServiceService,
+            ICarService carService,
+            IFindeksCreditRateService findeksCreditRateService,
+            IInvoiceService invoiceService,
+            IModelService modelService,
+            IMailService mailService,
+            IPOSService posService,
+            IRentalsAdditionalServiceService rentalsAdditionalServiceService
+        )
         {
             _rentalRepository = rentalRepository;
             _mapper = mapper;
@@ -64,15 +70,21 @@ public class CreateRentalCommand : IRequest<CreatedRentalResponse>, ILoggableReq
 
         public async Task<CreatedRentalResponse> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
         {
-            FindeksCreditRate customerFindeksCreditRate =
-                await _findeksCreditRateService.GetFindeksCreditRateByCustomerId(request.CustomerId);
+            FindeksCreditRate customerFindeksCreditRate = await _findeksCreditRateService.GetFindeksCreditRateByCustomerId(
+                request.CustomerId
+            );
 
             Car? carToBeRented = await _carService.GetAvailableCarToRent(
-                                     request.ModelId, request.RentStartRentalBranchId, request.RentStartDate,
-                                     request.RentEndDate);
+                request.ModelId,
+                request.RentStartRentalBranchId,
+                request.RentStartDate,
+                request.RentEndDate
+            );
 
             await _rentalBusinessRules.RentalCanNotBeCreatedWhenCustomerFindeksScoreLowerThanCarMinFindeksScore(
-                customerFindeksCreditRate.Score, carToBeRented.MinFindeksCreditRate);
+                customerFindeksCreditRate.Score,
+                carToBeRented.MinFindeksCreditRate
+            );
 
             Model model = await _modelService.GetById(carToBeRented.ModelId);
 
@@ -81,8 +93,7 @@ public class CreateRentalCommand : IRequest<CreatedRentalResponse>, ILoggableReq
             //mappedRental.RentStartRentalBranchId = carToBeRented.RentalBranchId;
             mappedRental.RentStartKilometer = carToBeRented.Kilometer;
 
-            IList<AdditionalService> additionalServices =
-                await _additionalServiceService.GetListByIds(request.AdditionalServiceIds);
+            IList<AdditionalService> additionalServices = await _additionalServiceService.GetListByIds(request.AdditionalServiceIds);
             decimal totalAdditionalServicesPrice = additionalServices.Sum(a => a.DailyPrice);
 
             decimal dailyPrice = model.DailyPrice + totalAdditionalServicesPrice;
@@ -93,20 +104,18 @@ public class CreateRentalCommand : IRequest<CreatedRentalResponse>, ILoggableReq
             await _invoiceService.Add(newInvoice);
 
             Rental createdRental = await _rentalRepository.AddAsync(mappedRental);
-            await _rentalsAdditionalServiceService.AddManyByRentalIdAndAdditionalServices(
-                createdRental.Id, additionalServices);
+            await _rentalsAdditionalServiceService.AddManyByRentalIdAndAdditionalServices(createdRental.Id, additionalServices);
 
-            var toEmailList = new List<MailboxAddress>
-            {
-                new("Ahmet Çetinkaya","ahmetcetinkaya7@outlook.com")
-            };
+            var toEmailList = new List<MailboxAddress> { new(name: "Ahmet Çetinkaya", address: "ahmetcetinkaya7@outlook.com") };
 
-            _mailService.SendMail(new Mail
-            {
-                Subject = "New Rental",
-                TextBody = "A rental has been created.",
-                ToList = toEmailList
-            });
+            _mailService.SendMail(
+                new Mail
+                {
+                    Subject = "New Rental",
+                    TextBody = "A rental has been created.",
+                    ToList = toEmailList
+                }
+            );
 
             CreatedRentalResponse createdRentalDto = _mapper.Map<CreatedRentalResponse>(createdRental);
             return createdRentalDto;

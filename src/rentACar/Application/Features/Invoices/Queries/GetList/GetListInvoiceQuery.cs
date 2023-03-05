@@ -22,10 +22,15 @@ public class GetListInvoiceQuery : IRequest<GetListResponse<GetListInvoiceListIt
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListInvoiceListItemDto>> Handle(GetListInvoiceQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListInvoiceListItemDto>> Handle(
+            GetListInvoiceQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            IPaginate<Invoice> invoices = await _invoiceRepository.GetListAsync(index: request.PageRequest.Page,
-                                              size: request.PageRequest.PageSize);
+            IPaginate<Invoice> invoices = await _invoiceRepository.GetListAsync(
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedInvoiceListModel = _mapper.Map<GetListResponse<GetListInvoiceListItemDto>>(invoices);
             return mappedInvoiceListModel;
         }

@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.CarDamages.Commands.Create
+namespace Application.Features.CarDamages.Commands.Create;
+
+public class CreateCarDamageCommandValidator : AbstractValidator<CreateCarDamageCommand>
 {
-    public class CreateCarDamageCommandValidator : AbstractValidator<CreateCarDamageCommand>
+    public CreateCarDamageCommandValidator()
     {
-        public CreateCarDamageCommandValidator()
-        {
-            RuleFor(c => c.CarId).GreaterThan(0);
-            RuleFor(c => c.DamageDescription).NotEmpty().MinimumLength(2);
-        }
+        RuleFor(c => c.CarId).GreaterThan(0);
+        RuleFor(c => c.DamageDescription).NotEmpty().MinimumLength(2);
     }
 }

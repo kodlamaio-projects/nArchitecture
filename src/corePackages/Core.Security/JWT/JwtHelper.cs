@@ -1,11 +1,11 @@
-﻿using Core.Security.Encryption;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using Core.Security.Encryption;
 using Core.Security.Entities;
 using Core.Security.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
 
 namespace Core.Security.JWT;
 
@@ -30,39 +30,40 @@ public class JwtHelper : ITokenHelper
         JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
         string? token = jwtSecurityTokenHandler.WriteToken(jwt);
 
-        return new AccessToken
-        {
-            Token = token,
-            Expiration = _accessTokenExpiration
-        };
+        return new AccessToken { Token = token, Expiration = _accessTokenExpiration };
     }
 
     public RefreshToken CreateRefreshToken(User user, string ipAddress)
     {
-        RefreshToken refreshToken = new()
-        {
-            UserId = user.Id,
-            Token = RandomRefreshToken(),
-            Expires = DateTime.UtcNow.AddDays(7),
-            Created = DateTime.UtcNow,
-            CreatedByIp = ipAddress
-        };
+        RefreshToken refreshToken =
+            new()
+            {
+                UserId = user.Id,
+                Token = RandomRefreshToken(),
+                Expires = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow,
+                CreatedByIp = ipAddress
+            };
 
         return refreshToken;
     }
 
-    public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
-                                                   SigningCredentials signingCredentials,
-                                                   IList<OperationClaim> operationClaims)
+    public JwtSecurityToken CreateJwtSecurityToken(
+        TokenOptions tokenOptions,
+        User user,
+        SigningCredentials signingCredentials,
+        IList<OperationClaim> operationClaims
+    )
     {
-        JwtSecurityToken jwt = new(
-            tokenOptions.Issuer,
-            tokenOptions.Audience,
-            expires: _accessTokenExpiration,
-            notBefore: DateTime.Now,
-            claims: SetClaims(user, operationClaims),
-            signingCredentials: signingCredentials
-        );
+        JwtSecurityToken jwt =
+            new(
+                tokenOptions.Issuer,
+                tokenOptions.Audience,
+                expires: _accessTokenExpiration,
+                notBefore: DateTime.Now,
+                claims: SetClaims(user, operationClaims),
+                signingCredentials: signingCredentials
+            );
         return jwt;
     }
 
@@ -78,7 +79,7 @@ public class JwtHelper : ITokenHelper
 
     private string RandomRefreshToken()
     {
-        byte[] numberByte = new Byte[32];
+        byte[] numberByte = new byte[32];
         using RandomNumberGenerator random = RandomNumberGenerator.Create();
         random.GetBytes(numberByte);
         return Convert.ToBase64String(numberByte);

@@ -26,13 +26,12 @@ public class GetListCarQuery : IRequest<GetListResponse<GetListCarListItemDto>>
 
         public async Task<GetListResponse<GetListCarListItemDto>> Handle(GetListCarQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<Car> cars = await _carRepository.GetListAsync(c => c.CarState != CarState.Maintenance,
-                                                                    include:
-                                                                    c => c.Include(c => c.Model)
-                                                                          .Include(c => c.Model.Brand)
-                                                                          .Include(c => c.Color),
-                                                                    index: request.PageRequest.Page,
-                                                                    size: request.PageRequest.PageSize);
+            IPaginate<Car> cars = await _carRepository.GetListAsync(
+                predicate: c => c.CarState != CarState.Maintenance,
+                include: c => c.Include(c => c.Model).Include(c => c.Model.Brand).Include(c => c.Color),
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedCarListModel = _mapper.Map<GetListResponse<GetListCarListItemDto>>(cars);
             return mappedCarListModel;
         }

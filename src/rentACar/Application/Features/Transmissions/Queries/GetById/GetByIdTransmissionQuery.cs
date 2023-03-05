@@ -16,8 +16,11 @@ public class GetByIdTransmissionQuery : IRequest<GetByIdTransmissionResponse>
         private readonly IMapper _mapper;
         private readonly TransmissionBusinessRules _transmissionBusinessRules;
 
-        public GetByIdTransmissionQueryHandler(ITransmissionRepository transmissionRepository,
-                                               TransmissionBusinessRules transmissionBusinessRules, IMapper mapper)
+        public GetByIdTransmissionQueryHandler(
+            ITransmissionRepository transmissionRepository,
+            TransmissionBusinessRules transmissionBusinessRules,
+            IMapper mapper
+        )
         {
             _transmissionRepository = transmissionRepository;
             _transmissionBusinessRules = transmissionBusinessRules;

@@ -1,4 +1,3 @@
-using Application.Features.Invoices.Constants;
 using Application.Features.Invoices.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -6,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Invoices.Constants.InvoicesOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Invoices.Commands.Create;
 
@@ -20,7 +18,7 @@ public class CreateInvoiceCommand : IRequest<CreatedInvoiceResponse>, ISecuredRe
     public short TotalRentalDate { get; set; }
     public decimal RentalPrice { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, InvoicesOperationClaims.Admin, Write, Add };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
 
     public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, CreatedInvoiceResponse>
     {
@@ -28,8 +26,7 @@ public class CreateInvoiceCommand : IRequest<CreatedInvoiceResponse>, ISecuredRe
         private readonly IMapper _mapper;
         private readonly InvoiceBusinessRules _invoiceBusinessRules;
 
-        public CreateInvoiceCommandHandler(IInvoiceRepository invoiceRepository, IMapper mapper,
-                                           InvoiceBusinessRules invoiceBusinessRules)
+        public CreateInvoiceCommandHandler(IInvoiceRepository invoiceRepository, IMapper mapper, InvoiceBusinessRules invoiceBusinessRules)
         {
             _invoiceRepository = invoiceRepository;
             _mapper = mapper;

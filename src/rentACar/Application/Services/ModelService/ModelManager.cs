@@ -16,7 +16,8 @@ public class ModelManager : IModelService
     public async Task<Model> GetById(int id)
     {
         Model model = await _modelRepository.GetAsync(m => m.Id == id);
-        if (model == null) throw new BusinessException("Model doesn't exist.");
+        if (model == null)
+            throw new BusinessException("Model doesn't exist.");
         return model;
     }
 }

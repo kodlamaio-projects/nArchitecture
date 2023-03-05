@@ -1,4 +1,3 @@
-using Application.Features.Customers.Constants;
 using Application.Features.Customers.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -6,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Customers.Constants.CustomersOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Customers.Commands.Create;
 
@@ -14,7 +12,7 @@ public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>, ISecured
 {
     public int UserId { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CustomersOperationClaims.Admin, Write, Add };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
 
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CreatedCustomerResponse>
     {
@@ -22,8 +20,11 @@ public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>, ISecured
         private readonly IMapper _mapper;
         private readonly CustomerBusinessRules _customerBusinessRules;
 
-        public CreateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper,
-                                            CustomerBusinessRules customerBusinessRules)
+        public CreateCustomerCommandHandler(
+            ICustomerRepository customerRepository,
+            IMapper mapper,
+            CustomerBusinessRules customerBusinessRules
+        )
         {
             _customerRepository = customerRepository;
             _mapper = mapper;

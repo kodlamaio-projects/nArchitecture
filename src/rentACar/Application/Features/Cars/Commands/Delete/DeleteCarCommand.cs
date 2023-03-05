@@ -5,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Cars.Constants.CarsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Cars.Commands.Delete;
 
@@ -13,7 +12,7 @@ public class DeleteCarCommand : IRequest<DeletedCarResponse>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CarsOperationClaims.Admin, Write, CarsOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarsOperationClaims.Delete };
 
     public class DeleteCarCommandHandler : IRequestHandler<DeleteCarCommand, DeletedCarResponse>
     {

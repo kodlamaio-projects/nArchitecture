@@ -1,12 +1,11 @@
-﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels
-{
-    public class ElasticSearchConfiguration
-    {
-        public string ConnectionString { get; set; }
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
 
-        public ElasticSearchConfiguration()
-        {
-            this.ConnectionString = String.Empty;
-        }
+public class ElasticSearchConfiguration
+{
+    public string ConnectionString { get; set; }
+
+    public ElasticSearchConfiguration()
+    {
+        ConnectionString = string.Empty;
     }
 }

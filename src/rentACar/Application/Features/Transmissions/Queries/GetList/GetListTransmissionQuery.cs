@@ -11,7 +11,8 @@ public class GetListTransmissionQuery : IRequest<GetListResponse<GetListTransmis
 {
     public PageRequest PageRequest { get; set; }
 
-    public class GetListTransmissionQueryHandler : IRequestHandler<GetListTransmissionQuery, GetListResponse<GetListTransmissionListItemDto>>
+    public class GetListTransmissionQueryHandler
+        : IRequestHandler<GetListTransmissionQuery, GetListResponse<GetListTransmissionListItemDto>>
     {
         private readonly ITransmissionRepository _transmissionRepository;
         private readonly IMapper _mapper;
@@ -22,12 +23,15 @@ public class GetListTransmissionQuery : IRequest<GetListResponse<GetListTransmis
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListTransmissionListItemDto>> Handle(GetListTransmissionQuery request,
-                                                        CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListTransmissionListItemDto>> Handle(
+            GetListTransmissionQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Transmission> transmissions = await _transmissionRepository.GetListAsync(
-                                                        index: request.PageRequest.Page,
-                                                        size: request.PageRequest.PageSize);
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedTransmissionListModel = _mapper.Map<GetListResponse<GetListTransmissionListItemDto>>(transmissions);
             return mappedTransmissionListModel;
         }

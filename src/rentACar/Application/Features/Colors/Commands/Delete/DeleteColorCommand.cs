@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Colors.Constants.ColorsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Colors.Commands.Delete;
 
@@ -14,7 +13,7 @@ public class DeleteColorCommand : IRequest<DeletedColorResponse>, ISecuredReques
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, ColorsOperationClaims.Admin, Write, ColorsOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, ColorsOperationClaims.Delete };
 
     public class DeleteColorCommandHandler : IRequestHandler<DeleteColorCommand, DeletedColorResponse>
     {

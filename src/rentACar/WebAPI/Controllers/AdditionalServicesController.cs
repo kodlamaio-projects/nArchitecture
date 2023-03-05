@@ -32,7 +32,7 @@ public class AdditionalServicesController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateAdditionalServiceCommand createAdditionalServiceCommand)
     {
         CreatedAdditionalServiceResponse result = await Mediator.Send(createAdditionalServiceCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

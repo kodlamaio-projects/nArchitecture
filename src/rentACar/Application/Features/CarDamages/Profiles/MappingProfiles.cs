@@ -22,17 +22,17 @@ public class MappingProfiles : Profile
         CreateMap<CarDamage, DeletedCarDamageResponse>().ReverseMap();
         CreateMap<CarDamage, GetByIdCarDamageResponse>().ReverseMap();
         CreateMap<CarDamage, GetListCarDamageListItemDto>()
-            .ForMember(c => c.CarModelBrandName, opt => opt.MapFrom(c => c.Car.Model.Brand.Name))
-            .ForMember(c => c.CarModelName, opt => opt.MapFrom(c => c.Car.Model.Name))
-            .ForMember(c => c.CarModelYear, opt => opt.MapFrom(c => c.Car.ModelYear))
-            .ForMember(c => c.CarPlate, opt => opt.MapFrom(c => c.Car.Plate))
+            .ForMember(destinationMember: c => c.CarModelBrandName, memberOptions: opt => opt.MapFrom(c => c.Car.Model.Brand.Name))
+            .ForMember(destinationMember: c => c.CarModelName, memberOptions: opt => opt.MapFrom(c => c.Car.Model.Name))
+            .ForMember(destinationMember: c => c.CarModelYear, memberOptions: opt => opt.MapFrom(c => c.Car.ModelYear))
+            .ForMember(destinationMember: c => c.CarPlate, memberOptions: opt => opt.MapFrom(c => c.Car.Plate))
             .ReverseMap();
         CreateMap<IPaginate<CarDamage>, GetListResponse<GetListCarDamageListItemDto>>().ReverseMap();
         CreateMap<CarDamage, GetListByCarIdCarDamageListItemDto>()
-            .ForMember(c => c.CarModelBrandName, opt => opt.MapFrom(c => c.Car.Model.Brand.Name))
-            .ForMember(c => c.CarModelName, opt => opt.MapFrom(c => c.Car.Model.Name))
-            .ForMember(c => c.CarModelYear, opt => opt.MapFrom(c => c.Car.ModelYear))
-            .ForMember(c => c.CarPlate, opt => opt.MapFrom(c => c.Car.Plate))
+            .ForMember(destinationMember: c => c.CarModelBrandName, memberOptions: opt => opt.MapFrom(c => c.Car.Model.Brand.Name))
+            .ForMember(destinationMember: c => c.CarModelName, memberOptions: opt => opt.MapFrom(c => c.Car.Model.Name))
+            .ForMember(destinationMember: c => c.CarModelYear, memberOptions: opt => opt.MapFrom(c => c.Car.ModelYear))
+            .ForMember(destinationMember: c => c.CarPlate, memberOptions: opt => opt.MapFrom(c => c.Car.Plate))
             .ReverseMap();
         CreateMap<IPaginate<CarDamage>, GetListResponse<GetListByCarIdCarDamageListItemDto>>().ReverseMap();
     }

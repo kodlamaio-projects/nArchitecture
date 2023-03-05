@@ -23,14 +23,16 @@ public class GetListCarDamageQuery : IRequest<GetListResponse<GetListCarDamageLi
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListCarDamageListItemDto>> Handle(GetListCarDamageQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListCarDamageListItemDto>> Handle(
+            GetListCarDamageQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<CarDamage> carDamages = await _carDamageRepository.GetListAsync(
-                                                  include: c => c.Include(cd => cd.Car)
-                                                                 .ThenInclude(c => c.Model)
-                                                                 .ThenInclude(m => m.Brand),
-                                                  index: request.PageRequest.Page,
-                                                  size: request.PageRequest.PageSize);
+                include: c => c.Include(cd => cd.Car).ThenInclude(c => c.Model).ThenInclude(m => m.Brand),
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedCarDamageListModel = _mapper.Map<GetListResponse<GetListCarDamageListItemDto>>(carDamages);
             return mappedCarDamageListModel;
         }

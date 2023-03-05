@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 using static Application.Features.Users.Constants.UsersOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Users.Commands.Delete;
 
@@ -14,7 +13,7 @@ public class DeleteUserCommand : IRequest<DeletedUserResponse>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, UsersOperationClaims.Admin, Write, UsersOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, UsersOperationClaims.Delete };
 
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, DeletedUserResponse>
     {
@@ -22,8 +21,7 @@ public class DeleteUserCommand : IRequest<DeletedUserResponse>, ISecuredRequest
         private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
 
-        public DeleteUserCommandHandler(IUserRepository userRepository, IMapper mapper,
-                                        UserBusinessRules userBusinessRules)
+        public DeleteUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
         {
             _userRepository = userRepository;
             _mapper = mapper;

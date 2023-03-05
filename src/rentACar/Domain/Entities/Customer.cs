@@ -14,14 +14,14 @@ public class Customer : Entity
     public virtual ICollection<Invoice> Invoices { get; set; }
     public virtual ICollection<Rental> Rentals { get; set; }
 
-
     public Customer()
     {
         Invoices = new HashSet<Invoice>();
         Rentals = new HashSet<Rental>();
     }
 
-    public Customer(int id, int userId) : this()
+    public Customer(int id, int userId)
+        : this()
     {
         Id = id;
         UserId = userId;

@@ -7,7 +7,6 @@ using Core.Security.Entities;
 using Core.Security.Hashing;
 using MediatR;
 using static Application.Features.Users.Constants.UsersOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Users.Commands.Update;
 
@@ -19,7 +18,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, UsersOperationClaims.Admin, Write, UsersOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, UsersOperationClaims.Update };
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>
     {
@@ -27,8 +26,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
         private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
 
-        public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper,
-                                        UserBusinessRules userBusinessRules)
+        public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -39,7 +37,8 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
         {
             User mappedUser = _mapper.Map<User>(request);
 
-            byte[] passwordHash, passwordSalt;
+            byte[] passwordHash,
+                passwordSalt;
             HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
             mappedUser.PasswordHash = passwordHash;
             mappedUser.PasswordSalt = passwordSalt;

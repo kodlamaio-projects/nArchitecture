@@ -5,36 +5,36 @@ using NpgsqlTypes;
 using Serilog;
 using Serilog.Sinks.PostgreSQL;
 
-namespace Core.CrossCuttingConcerns.Logging.Serilog.Logger
+namespace Core.CrossCuttingConcerns.Logging.Serilog.Logger;
+
+public class PostgreSqlLogger : LoggerServiceBase
 {
-    public class PostgreSqlLogger : LoggerServiceBase
+    public PostgreSqlLogger(IConfiguration configuration)
     {
-        public PostgreSqlLogger(IConfiguration configuration)
+        PostgreSqlConfiguration postgreConfiguration =
+            configuration.GetSection("SeriLogConfigurations:PostgreConfiguration").Get<PostgreSqlConfiguration>()
+            ?? throw new Exception(SerilogMessages.NullOptionsMessage);
+
+        IDictionary<string, ColumnWriterBase> columnWriters = new Dictionary<string, ColumnWriterBase>
         {
-            var postgreConfiguration = configuration.GetSection("SeriLogConfigurations:PostgreConfiguration")
-                .Get<PostgreSqlConfiguration>() ??
-                throw new Exception(SerilogMessages.NullOptionsMessage);
+            { "message", new RenderedMessageColumnWriter() },
+            { "message_template", new MessageTemplateColumnWriter() },
+            { "level", new LevelColumnWriter(renderAsText: true, NpgsqlDbType.Varchar) },
+            { "raise_date", new TimestampColumnWriter() },
+            { "exception", new ExceptionColumnWriter() },
+            { "properties", new LogEventSerializedColumnWriter() },
+            { "props_test", new PropertiesColumnWriter() },
+            { "machine_name", new SinglePropertyColumnWriter(propertyName: "MachineName", PropertyWriteMethod.ToString, format: "l") }
+        };
 
-            IDictionary<string, ColumnWriterBase> columnWriters = new Dictionary<string, ColumnWriterBase>
-            {
-                {"message", new RenderedMessageColumnWriter(NpgsqlDbType.Text) },
-                {"message_template", new MessageTemplateColumnWriter(NpgsqlDbType.Text) },
-                {"level", new LevelColumnWriter(true, NpgsqlDbType.Varchar) },
-                {"raise_date", new TimestampColumnWriter(NpgsqlDbType.Timestamp) },
-                {"exception", new ExceptionColumnWriter(NpgsqlDbType.Text) },
-                {"properties", new LogEventSerializedColumnWriter(NpgsqlDbType.Jsonb) },
-                {"props_test", new PropertiesColumnWriter(NpgsqlDbType.Jsonb) },
-                {"machine_name", new SinglePropertyColumnWriter("MachineName", PropertyWriteMethod.ToString, NpgsqlDbType.Text, "l") }
-            };
-
-            var loggerConfiguration = new LoggerConfiguration()
-                .WriteTo.PostgreSQL(
-                connectionString: postgreConfiguration.ConnectionString,
-                tableName: postgreConfiguration.TableName,
-                columnOptions: columnWriters,
-                needAutoCreateTable: postgreConfiguration.NeedAutoCreateTable)
-                .CreateLogger();
-            Logger = loggerConfiguration;
-        }
+        global::Serilog.Core.Logger loggerConfiguration = new LoggerConfiguration().WriteTo
+            .PostgreSQL(
+                postgreConfiguration.ConnectionString,
+                postgreConfiguration.TableName,
+                columnWriters,
+                needAutoCreateTable: postgreConfiguration.NeedAutoCreateTable
+            )
+            .CreateLogger();
+        Logger = loggerConfiguration;
     }
 }

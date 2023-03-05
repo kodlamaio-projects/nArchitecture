@@ -1,12 +1,10 @@
-﻿using Application.Features.Colors.Constants;
-using Application.Features.Colors.Rules;
+﻿using Application.Features.Colors.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Colors.Constants.ColorsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Colors.Commands.Create;
 
@@ -14,7 +12,7 @@ public class CreateColorCommand : IRequest<CreatedColorResponse>, ISecuredReques
 {
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, ColorsOperationClaims.Admin, Write, Add };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
 
     public class CreateColorCommandHandler : IRequestHandler<CreateColorCommand, CreatedColorResponse>
     {
@@ -22,8 +20,7 @@ public class CreateColorCommand : IRequest<CreatedColorResponse>, ISecuredReques
         private readonly IMapper _mapper;
         private readonly ColorBusinessRules _colorBusinessRules;
 
-        public CreateColorCommandHandler(IColorRepository colorRepository, IMapper mapper,
-                                         ColorBusinessRules colorBusinessRules)
+        public CreateColorCommandHandler(IColorRepository colorRepository, IMapper mapper, ColorBusinessRules colorBusinessRules)
         {
             _colorRepository = colorRepository;
             _mapper = mapper;

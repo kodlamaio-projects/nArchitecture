@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.IndividualCustomers.Constants.IndividualCustomersOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.IndividualCustomers.Commands.Update;
 
@@ -18,36 +17,40 @@ public class UpdateIndividualCustomerCommand : IRequest<UpdatedIndividualCustome
     public string LastName { get; set; }
     public string NationalIdentity { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, IndividualCustomersOperationClaims.Admin, Write, IndividualCustomersOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, IndividualCustomersOperationClaims.Update };
 
-    public class
-        UpdateIndividualCustomerCommandHandler : IRequestHandler<UpdateIndividualCustomerCommand,
-            UpdatedIndividualCustomerResponse>
+    public class UpdateIndividualCustomerCommandHandler
+        : IRequestHandler<UpdateIndividualCustomerCommand, UpdatedIndividualCustomerResponse>
     {
         private readonly IIndividualCustomerRepository _individualCustomerRepository;
         private readonly IMapper _mapper;
         private readonly IndividualCustomerBusinessRules _individualCustomerBusinessRules;
 
-        public UpdateIndividualCustomerCommandHandler(IIndividualCustomerRepository individualCustomerRepository,
-                                                      IMapper mapper,
-                                                      IndividualCustomerBusinessRules individualCustomerBusinessRules)
+        public UpdateIndividualCustomerCommandHandler(
+            IIndividualCustomerRepository individualCustomerRepository,
+            IMapper mapper,
+            IndividualCustomerBusinessRules individualCustomerBusinessRules
+        )
         {
             _individualCustomerRepository = individualCustomerRepository;
             _mapper = mapper;
             _individualCustomerBusinessRules = individualCustomerBusinessRules;
         }
 
-        public async Task<UpdatedIndividualCustomerResponse> Handle(UpdateIndividualCustomerCommand request,
-                                                               CancellationToken cancellationToken)
+        public async Task<UpdatedIndividualCustomerResponse> Handle(
+            UpdateIndividualCustomerCommand request,
+            CancellationToken cancellationToken
+        )
         {
             await _individualCustomerBusinessRules.IndividualCustomerNationalIdentityCanNotBeDuplicatedWhenInserted(
-                request.NationalIdentity);
+                request.NationalIdentity
+            );
 
             IndividualCustomer mappedIndividualCustomer = _mapper.Map<IndividualCustomer>(request);
-            IndividualCustomer updatedIndividualCustomer =
-                await _individualCustomerRepository.UpdateAsync(mappedIndividualCustomer);
-            UpdatedIndividualCustomerResponse updatedIndividualCustomerDto =
-                _mapper.Map<UpdatedIndividualCustomerResponse>(updatedIndividualCustomer);
+            IndividualCustomer updatedIndividualCustomer = await _individualCustomerRepository.UpdateAsync(mappedIndividualCustomer);
+            UpdatedIndividualCustomerResponse updatedIndividualCustomerDto = _mapper.Map<UpdatedIndividualCustomerResponse>(
+                updatedIndividualCustomer
+            );
             return updatedIndividualCustomerDto;
         }
     }

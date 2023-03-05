@@ -22,10 +22,15 @@ public class GetListCustomerQuery : IRequest<GetListResponse<GetListCustomerList
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListCustomerListItemDto>> Handle(GetListCustomerQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListCustomerListItemDto>> Handle(
+            GetListCustomerQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            IPaginate<Customer> customers = await _customerRepository.GetListAsync(index: request.PageRequest.Page,
-                                                size: request.PageRequest.PageSize);
+            IPaginate<Customer> customers = await _customerRepository.GetListAsync(
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedCustomerListModel = _mapper.Map<GetListResponse<GetListCustomerListItemDto>>(customers);
             return mappedCustomerListModel;
         }

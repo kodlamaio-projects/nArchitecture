@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class ColorRepository : EfRepositoryBase<Color, BaseDbContext>, IColorRepository
 {
-    public ColorRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public ColorRepository(BaseDbContext context)
+        : base(context) { }
 }

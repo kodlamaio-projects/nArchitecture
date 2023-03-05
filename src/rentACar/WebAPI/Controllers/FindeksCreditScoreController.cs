@@ -25,8 +25,7 @@ public class FindeksCreditRatesController : BaseController
     }
 
     [HttpGet("ByCustomerId/{CustomerId}")]
-    public async Task<IActionResult> GetById(
-        [FromRoute] GetByCustomerIdFindeksCreditRateQuery getByCustomerIdFindeksCreditRateQuery)
+    public async Task<IActionResult> GetById([FromRoute] GetByCustomerIdFindeksCreditRateQuery getByCustomerIdFindeksCreditRateQuery)
     {
         GetByCustomerIdFindeksCreditRateResponse result = await Mediator.Send(getByCustomerIdFindeksCreditRateQuery);
         return Ok(result);
@@ -44,7 +43,7 @@ public class FindeksCreditRatesController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateFindeksCreditRateCommand createFindeksCreditRateCommand)
     {
         CreatedFindeksCreditRateResponse result = await Mediator.Send(createFindeksCreditRateCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]
@@ -56,22 +55,18 @@ public class FindeksCreditRatesController : BaseController
 
     [HttpPut("FromService")]
     public async Task<IActionResult> UpdateFromService(
-        [FromBody] UpdateFindeksCreditRateFromServiceCommand findeksCreditRateFromServiceCommand)
+        [FromBody] UpdateFindeksCreditRateFromServiceCommand findeksCreditRateFromServiceCommand
+    )
     {
         UpdateFindeksCreditRateFromServiceResponse result = await Mediator.Send(findeksCreditRateFromServiceCommand);
         return Ok(result);
     }
 
     [HttpPut("ByAuth/FromService")]
-    public async Task<IActionResult> UpdateByAuthFromService(
-        [FromBody] UpdateByAuthFromServiceRequestDto updateByAuthFromServiceRequestDto)
+    public async Task<IActionResult> UpdateByAuthFromService([FromBody] UpdateByAuthFromServiceRequestDto updateByAuthFromServiceRequestDto)
     {
         UpdateByUserIdFindeksCreditRateFromServiceCommand updateByUserIdFindeksCreditRateFromServiceCommand =
-            new()
-            {
-                UserId = getUserIdFromRequest(),
-                IdentityNumber = updateByAuthFromServiceRequestDto.IdentityNumber
-            };
+            new() { UserId = getUserIdFromRequest(), IdentityNumber = updateByAuthFromServiceRequestDto.IdentityNumber };
 
         UpdateByUserIdFindeksCreditRateFromServiceResponse result = await Mediator.Send(updateByUserIdFindeksCreditRateFromServiceCommand);
         return Ok(result);

@@ -18,19 +18,25 @@ public class CorporateCustomerBusinessRules : BaseBusinessRules
 
     public async Task CorporateCustomerIdShouldExistWhenSelected(int id)
     {
-        CorporateCustomer? result = await _corporateCustomerRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(CorporateCustomersMessages.CorporateCustomerNotExists);
+        CorporateCustomer? result = await _corporateCustomerRepository.GetAsync(predicate: b => b.Id == id, enableTracking: false);
+        if (result == null)
+            throw new BusinessException(CorporateCustomersMessages.CorporateCustomerNotExists);
     }
 
     public Task CorporateCustomerShouldBeExist(CorporateCustomer corporateCustomer)
     {
-        if (corporateCustomer is null) throw new BusinessException(CorporateCustomersMessages.CorporateCustomerNotExists);
+        if (corporateCustomer is null)
+            throw new BusinessException(CorporateCustomersMessages.CorporateCustomerNotExists);
         return Task.CompletedTask;
     }
 
     public async Task CorporateCustomerTaxNoCanNotBeDuplicatedWhenInserted(string taxNo)
     {
-        IPaginate<CorporateCustomer> result = await _corporateCustomerRepository.GetListAsync(c => c.TaxNo == taxNo, enableTracking: false);
-        if (result.Items.Any()) throw new BusinessException(CorporateCustomersMessages.CorporateCustomerTaxNoAlreadyExists);
+        IPaginate<CorporateCustomer> result = await _corporateCustomerRepository.GetListAsync(
+            predicate: c => c.TaxNo == taxNo,
+            enableTracking: false
+        );
+        if (result.Items.Any())
+            throw new BusinessException(CorporateCustomersMessages.CorporateCustomerTaxNoAlreadyExists);
     }
 }

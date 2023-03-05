@@ -33,7 +33,7 @@ public class RentalsController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateRentalCommand createRentalCommand)
     {
         CreatedRentalResponse result = await Mediator.Send(createRentalCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

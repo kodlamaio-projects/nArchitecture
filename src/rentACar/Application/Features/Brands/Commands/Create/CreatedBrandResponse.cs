@@ -1,6 +1,4 @@
-﻿using Core.Application.Dtos;
-
-namespace Application.Features.Brands.Commands.Create;
+﻿namespace Application.Features.Brands.Commands.Create;
 
 public class CreatedBrandResponse
 {

@@ -16,14 +16,16 @@ public class GetByIdCustomerQuery : IRequest<GetByIdCustomerResponse>
         private readonly IMapper _mapper;
         private readonly CustomerBusinessRules _customerBusinessRules;
 
-        public GetByIdCustomerQueryHandler(ICustomerRepository customerRepository,
-                                           CustomerBusinessRules customerBusinessRules, IMapper mapper)
+        public GetByIdCustomerQueryHandler(
+            ICustomerRepository customerRepository,
+            CustomerBusinessRules customerBusinessRules,
+            IMapper mapper
+        )
         {
             _customerRepository = customerRepository;
             _customerBusinessRules = customerBusinessRules;
             _mapper = mapper;
         }
-
 
         public async Task<GetByIdCustomerResponse> Handle(GetByIdCustomerQuery request, CancellationToken cancellationToken)
         {

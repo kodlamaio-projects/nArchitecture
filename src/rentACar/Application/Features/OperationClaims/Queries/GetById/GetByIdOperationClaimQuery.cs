@@ -16,17 +16,18 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
         private readonly IMapper _mapper;
         private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
 
-        public GetByIdOperationClaimQueryHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper,
-                                                 OperationClaimBusinessRules operationClaimBusinessRules)
+        public GetByIdOperationClaimQueryHandler(
+            IOperationClaimRepository operationClaimRepository,
+            IMapper mapper,
+            OperationClaimBusinessRules operationClaimBusinessRules
+        )
         {
             _operationClaimRepository = operationClaimRepository;
             _mapper = mapper;
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
-
-        public async Task<GetByIdOperationClaimResponse> Handle(GetByIdOperationClaimQuery request,
-                                                    CancellationToken cancellationToken)
+        public async Task<GetByIdOperationClaimResponse> Handle(GetByIdOperationClaimQuery request, CancellationToken cancellationToken)
         {
             await _operationClaimBusinessRules.OperationClaimIdShouldExistWhenSelected(request.Id);
 

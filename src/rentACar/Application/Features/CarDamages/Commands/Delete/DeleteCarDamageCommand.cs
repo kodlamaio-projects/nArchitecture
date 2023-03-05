@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.CarDamages.Constants.CarDamagesOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.CarDamages.Commands.Delete;
 
@@ -14,7 +13,7 @@ public class DeleteCarDamageCommand : IRequest<DeletedCarDamageResponse>, ISecur
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CarDamagesOperationClaims.Admin, Write, CarDamagesOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarDamagesOperationClaims.Delete };
 
     public class DeleteCarDamageCommandHandler : IRequestHandler<DeleteCarDamageCommand, DeletedCarDamageResponse>
     {
@@ -22,16 +21,18 @@ public class DeleteCarDamageCommand : IRequest<DeletedCarDamageResponse>, ISecur
         private readonly IMapper _mapper;
         private readonly CarDamageBusinessRules _carDamageBusinessRules;
 
-        public DeleteCarDamageCommandHandler(ICarDamageRepository carDamageRepository, IMapper mapper,
-                                             CarDamageBusinessRules carDamageBusinessRules)
+        public DeleteCarDamageCommandHandler(
+            ICarDamageRepository carDamageRepository,
+            IMapper mapper,
+            CarDamageBusinessRules carDamageBusinessRules
+        )
         {
             _carDamageRepository = carDamageRepository;
             _mapper = mapper;
             _carDamageBusinessRules = carDamageBusinessRules;
         }
 
-        public async Task<DeletedCarDamageResponse> Handle(DeleteCarDamageCommand request,
-                                                      CancellationToken cancellationToken)
+        public async Task<DeletedCarDamageResponse> Handle(DeleteCarDamageCommand request, CancellationToken cancellationToken)
         {
             await _carDamageBusinessRules.CarDamageIdShouldExistWhenSelected(request.Id);
 

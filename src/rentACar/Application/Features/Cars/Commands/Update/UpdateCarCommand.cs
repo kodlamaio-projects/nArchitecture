@@ -6,8 +6,6 @@ using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 using static Application.Features.Cars.Constants.CarsOperationClaims;
-using static Domain.Constants.OperationClaims;
-
 
 namespace Application.Features.Cars.Commands.Update;
 
@@ -23,7 +21,7 @@ public class UpdateCarCommand : IRequest<UpdatedCarResponse>, ISecuredRequest
     public string Plate { get; set; }
     public short MinFindeksCreditRate { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CarsOperationClaims.Admin, Write, CarsOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarsOperationClaims.Update };
 
     public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand, UpdatedCarResponse>
     {

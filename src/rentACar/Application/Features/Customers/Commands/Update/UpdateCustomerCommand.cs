@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Customers.Constants.CustomersOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Customers.Commands.Update;
 
@@ -15,7 +14,7 @@ public class UpdateCustomerCommand : IRequest<UpdatedCustomerResponse>, ISecured
     public int Id { get; set; }
     public int UserId { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CustomersOperationClaims.Admin, Write, CustomersOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CustomersOperationClaims.Update };
 
     public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, UpdatedCustomerResponse>
     {
@@ -23,8 +22,11 @@ public class UpdateCustomerCommand : IRequest<UpdatedCustomerResponse>, ISecured
         private readonly IMapper _mapper;
         private readonly CustomerBusinessRules _customerBusinessRules;
 
-        public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper,
-                                            CustomerBusinessRules customerBusinessRules)
+        public UpdateCustomerCommandHandler(
+            ICustomerRepository customerRepository,
+            IMapper mapper,
+            CustomerBusinessRules customerBusinessRules
+        )
         {
             _customerRepository = customerRepository;
             _mapper = mapper;

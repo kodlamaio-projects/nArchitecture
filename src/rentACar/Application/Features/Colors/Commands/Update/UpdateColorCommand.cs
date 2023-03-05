@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Colors.Constants.ColorsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Colors.Commands.Update;
 
@@ -15,7 +14,7 @@ public class UpdateColorCommand : IRequest<UpdatedColorResponse>, ISecuredReques
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, ColorsOperationClaims.Admin, Write, ColorsOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, ColorsOperationClaims.Update };
 
     public class UpdateColorCommandHandler : IRequestHandler<UpdateColorCommand, UpdatedColorResponse>
     {

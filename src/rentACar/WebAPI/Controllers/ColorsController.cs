@@ -32,7 +32,7 @@ public class ColorsController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateColorCommand createColorCommand)
     {
         CreatedColorResponse result = await Mediator.Send(createColorCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

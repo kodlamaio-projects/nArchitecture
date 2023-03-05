@@ -16,14 +16,12 @@ public class GetByIdColorQuery : IRequest<GetByIdColorResponse>
         private readonly IMapper _mapper;
         private readonly ColorBusinessRules _colorBusinessRules;
 
-        public GetByIdColorQueryHandler(IColorRepository colorRepository, ColorBusinessRules colorBusinessRules,
-                                        IMapper mapper)
+        public GetByIdColorQueryHandler(IColorRepository colorRepository, ColorBusinessRules colorBusinessRules, IMapper mapper)
         {
             _colorRepository = colorRepository;
             _colorBusinessRules = colorBusinessRules;
             _mapper = mapper;
         }
-
 
         public async Task<GetByIdColorResponse> Handle(GetByIdColorQuery request, CancellationToken cancellationToken)
         {

@@ -18,8 +18,18 @@ public class MailSettings
         AuthenticationRequired = false;
     }
 
-    public MailSettings(string server, int port, string senderFullName, string senderEmail, string userName,
-                        string password, bool authenticationRequired = false, string? dkimPrivateKey = null, string? dkimSelector = null, string? domainName = null)
+    public MailSettings(
+        string server,
+        int port,
+        string senderFullName,
+        string senderEmail,
+        string userName,
+        string password,
+        bool authenticationRequired = false,
+        string? dkimPrivateKey = null,
+        string? dkimSelector = null,
+        string? domainName = null
+    )
     {
         Server = server;
         Port = port;

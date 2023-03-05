@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.FindeksCreditRates.Commands.UpdateByUserIdFromService
+namespace Application.Features.FindeksCreditRates.Commands.UpdateByUserIdFromService;
+
+public class UpdateByUserIdFindeksCreditRateFromServiceCommandValidator
+    : AbstractValidator<UpdateByUserIdFindeksCreditRateFromServiceCommand>
 {
-    public class UpdateByUserIdFindeksCreditRateFromServiceCommandValidator : AbstractValidator<UpdateByUserIdFindeksCreditRateFromServiceCommand>
+    public UpdateByUserIdFindeksCreditRateFromServiceCommandValidator()
     {
-        public UpdateByUserIdFindeksCreditRateFromServiceCommandValidator()
-        {
-            RuleFor(c => c.UserId).GreaterThan(0);
-            RuleFor(c => c.IdentityNumber).NotEmpty().MinimumLength(2);
-        }
+        RuleFor(c => c.UserId).GreaterThan(0);
+        RuleFor(c => c.IdentityNumber).NotEmpty().MinimumLength(2);
     }
 }

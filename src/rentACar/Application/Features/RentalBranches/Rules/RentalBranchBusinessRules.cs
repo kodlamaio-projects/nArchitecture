@@ -17,7 +17,8 @@ public class RentalBranchBusinessRules : BaseBusinessRules
 
     public async Task RentalBranchIdShouldExistWhenSelected(int id)
     {
-        RentalBranch? result = await _rentalBranchRepository.GetAsync(b => b.Id == id, enableTracking: false);
-        if (result == null) throw new BusinessException(RentalBranchesMessages.RentalBranchNotExists);
+        RentalBranch? result = await _rentalBranchRepository.GetAsync(predicate: b => b.Id == id, enableTracking: false);
+        if (result == null)
+            throw new BusinessException(RentalBranchesMessages.RentalBranchNotExists);
     }
 }

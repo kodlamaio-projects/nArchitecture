@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class AdditionalServiceRepository : EfRepositoryBase<AdditionalService, BaseDbContext>, IAdditionalServiceRepository
 {
-    public AdditionalServiceRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public AdditionalServiceRepository(BaseDbContext context)
+        : base(context) { }
 }

@@ -16,14 +16,16 @@ public class GetByIdRentalBranchQuery : IRequest<GetByIdRentalBranchResponse>
         private readonly IMapper _mapper;
         private readonly RentalBranchBusinessRules _rentalBranchBusinessRules;
 
-        public GetByIdRentalBranchQueryHandler(IRentalBranchRepository rentalBranchRepository, IMapper mapper,
-                                               RentalBranchBusinessRules rentalBranchBusinessRules)
+        public GetByIdRentalBranchQueryHandler(
+            IRentalBranchRepository rentalBranchRepository,
+            IMapper mapper,
+            RentalBranchBusinessRules rentalBranchBusinessRules
+        )
         {
             _rentalBranchRepository = rentalBranchRepository;
             _mapper = mapper;
             _rentalBranchBusinessRules = rentalBranchBusinessRules;
         }
-
 
         public async Task<GetByIdRentalBranchResponse> Handle(GetByIdRentalBranchQuery request, CancellationToken cancellationToken)
         {

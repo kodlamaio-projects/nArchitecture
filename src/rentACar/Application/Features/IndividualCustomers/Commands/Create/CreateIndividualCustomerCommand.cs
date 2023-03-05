@@ -1,4 +1,3 @@
-using Application.Features.IndividualCustomers.Constants;
 using Application.Features.IndividualCustomers.Rules;
 using Application.Services.FindeksCreditRateService;
 using Application.Services.Repositories;
@@ -7,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.IndividualCustomers.Constants.IndividualCustomersOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.IndividualCustomers.Commands.Create;
 
@@ -18,21 +16,22 @@ public class CreateIndividualCustomerCommand : IRequest<CreatedIndividualCustome
     public string LastName { get; set; }
     public string NationalIdentity { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, IndividualCustomersOperationClaims.Admin, Write, Add };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
 
-    public class
-        CreateIndividualCustomerCommandHandler : IRequestHandler<CreateIndividualCustomerCommand,
-            CreatedIndividualCustomerResponse>
+    public class CreateIndividualCustomerCommandHandler
+        : IRequestHandler<CreateIndividualCustomerCommand, CreatedIndividualCustomerResponse>
     {
         private readonly IIndividualCustomerRepository _individualCustomerRepository;
         private readonly IMapper _mapper;
         private readonly IndividualCustomerBusinessRules _individualCustomerBusinessRules;
         private readonly IFindeksCreditRateService _findeksCreditRateService;
 
-        public CreateIndividualCustomerCommandHandler(IIndividualCustomerRepository individualCustomerRepository,
-                                                      IMapper mapper,
-                                                      IndividualCustomerBusinessRules individualCustomerBusinessRules,
-                                                      IFindeksCreditRateService findeksCreditRateService)
+        public CreateIndividualCustomerCommandHandler(
+            IIndividualCustomerRepository individualCustomerRepository,
+            IMapper mapper,
+            IndividualCustomerBusinessRules individualCustomerBusinessRules,
+            IFindeksCreditRateService findeksCreditRateService
+        )
         {
             _individualCustomerRepository = individualCustomerRepository;
             _mapper = mapper;
@@ -40,22 +39,23 @@ public class CreateIndividualCustomerCommand : IRequest<CreatedIndividualCustome
             _findeksCreditRateService = findeksCreditRateService;
         }
 
-        public async Task<CreatedIndividualCustomerResponse> Handle(CreateIndividualCustomerCommand request,
-                                                               CancellationToken cancellationToken)
+        public async Task<CreatedIndividualCustomerResponse> Handle(
+            CreateIndividualCustomerCommand request,
+            CancellationToken cancellationToken
+        )
         {
             await _individualCustomerBusinessRules.IndividualCustomerNationalIdentityCanNotBeDuplicatedWhenInserted(
-                request.NationalIdentity);
+                request.NationalIdentity
+            );
 
             IndividualCustomer mappedIndividualCustomer = _mapper.Map<IndividualCustomer>(request);
-            IndividualCustomer createdIndividualCustomer =
-                await _individualCustomerRepository.AddAsync(mappedIndividualCustomer);
+            IndividualCustomer createdIndividualCustomer = await _individualCustomerRepository.AddAsync(mappedIndividualCustomer);
 
-            await _findeksCreditRateService.Add(new FindeksCreditRate
-            { CustomerId = createdIndividualCustomer.CustomerId });
+            await _findeksCreditRateService.Add(new FindeksCreditRate { CustomerId = createdIndividualCustomer.CustomerId });
 
-
-            CreatedIndividualCustomerResponse createdIndividualCustomerDto =
-                _mapper.Map<CreatedIndividualCustomerResponse>(createdIndividualCustomer);
+            CreatedIndividualCustomerResponse createdIndividualCustomerDto = _mapper.Map<CreatedIndividualCustomerResponse>(
+                createdIndividualCustomer
+            );
             return createdIndividualCustomerDto;
         }
     }

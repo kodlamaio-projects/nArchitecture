@@ -5,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Fuels.Constants.FuelsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Fuels.Commands.Delete;
 
@@ -13,7 +12,7 @@ public class DeleteFuelCommand : IRequest<DeletedFuelResponse>, ISecuredRequest
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, FuelsOperationClaims.Admin, Write, FuelsOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, FuelsOperationClaims.Delete };
 
     public class DeleteFuelCommandHandler : IRequestHandler<DeleteFuelCommand, DeletedFuelResponse>
     {

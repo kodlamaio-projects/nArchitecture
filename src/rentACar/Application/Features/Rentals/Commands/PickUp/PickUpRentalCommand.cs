@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Rentals.Constants.RentalsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Rentals.Commands.PickUp;
 
@@ -17,7 +16,7 @@ public class PickUpRentalCommand : IRequest<PickUpRentalResponse>, ISecuredReque
     public DateTime? ReturnDate { get; set; }
     public int RentEndKilometer { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, RentalsOperationClaims.Admin, Write, RentalsOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, RentalsOperationClaims.Update };
 
     public class PickUpRentalCommandHandler : IRequestHandler<PickUpRentalCommand, PickUpRentalResponse>
     {

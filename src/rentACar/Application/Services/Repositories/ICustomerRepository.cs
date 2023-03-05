@@ -3,6 +3,4 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface ICustomerRepository : IAsyncRepository<Customer>, IRepository<Customer>
-{
-}
+public interface ICustomerRepository : IAsyncRepository<Customer>, IRepository<Customer> { }

@@ -6,9 +6,7 @@ public class UpdateRentalCommandValidator : AbstractValidator<UpdateRentalComman
 {
     public UpdateRentalCommandValidator()
     {
-        RuleFor(c => c.RentStartDate)
-            .LessThan(c => c.RentEndDate);
-        RuleFor(c => c.RentEndDate)
-            .GreaterThan(c => c.RentStartDate);
+        RuleFor(c => c.RentStartDate).LessThan(c => c.RentEndDate);
+        RuleFor(c => c.RentEndDate).GreaterThan(c => c.RentStartDate);
     }
 }

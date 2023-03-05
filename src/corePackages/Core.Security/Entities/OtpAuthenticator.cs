@@ -10,11 +10,10 @@ public class OtpAuthenticator : Entity
 
     public virtual User User { get; set; }
 
-    public OtpAuthenticator()
-    {
-    }
+    public OtpAuthenticator() { }
 
-    public OtpAuthenticator(int id, int userId, byte[] secretKey, bool isVerified) : this()
+    public OtpAuthenticator(int id, int userId, byte[] secretKey, bool isVerified)
+        : this()
     {
         Id = id;
         UserId = userId;

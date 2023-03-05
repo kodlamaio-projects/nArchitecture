@@ -22,14 +22,18 @@ public class MappingProfiles : Profile
         CreateMap<Rental, DeletedRentalResponse>().ReverseMap();
         CreateMap<Rental, GetByIdRentalResponse>();
         CreateMap<Rental, GetListRentalListItemDto>()
-            .ForMember(r => r.CarModelBrandName, opt => opt.MapFrom(r => r.Car.Model.Brand.Name))
-            .ForMember(r => r.CarModelName, opt => opt.MapFrom(r => r.Car.Model.Name))
-            .ForMember(r => r.CustomerFullName,
-                       opt => opt.MapFrom(
-                           r =>
-                               r.Customer.IndividualCustomer != null
-                                   ? $"{r.Customer.IndividualCustomer.FirstName} {r.Customer.IndividualCustomer.FirstName}"
-                                   : r.Customer.CorporateCustomer.CompanyName))
+            .ForMember(destinationMember: r => r.CarModelBrandName, memberOptions: opt => opt.MapFrom(r => r.Car.Model.Brand.Name))
+            .ForMember(destinationMember: r => r.CarModelName, memberOptions: opt => opt.MapFrom(r => r.Car.Model.Name))
+            .ForMember(
+                destinationMember: r => r.CustomerFullName,
+                memberOptions: opt =>
+                    opt.MapFrom(
+                        r =>
+                            r.Customer.IndividualCustomer != null
+                                ? $"{r.Customer.IndividualCustomer.FirstName} {r.Customer.IndividualCustomer.FirstName}"
+                                : r.Customer.CorporateCustomer.CompanyName
+                    )
+            )
             .ReverseMap();
         CreateMap<IPaginate<Rental>, GetListResponse<GetListRentalListItemDto>>().ReverseMap();
     }

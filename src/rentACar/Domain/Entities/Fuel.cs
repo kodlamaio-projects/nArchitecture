@@ -13,8 +13,8 @@ public class Fuel : Entity
         Models = new HashSet<Model>();
     }
 
-    public Fuel(int id, string name) : this()
-
+    public Fuel(int id, string name)
+        : this()
     {
         Id = id;
         Name = name;

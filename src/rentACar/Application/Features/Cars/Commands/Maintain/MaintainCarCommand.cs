@@ -7,7 +7,6 @@ using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 using static Application.Features.Cars.Constants.CarsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Cars.Commands.Maintain;
 
@@ -15,7 +14,7 @@ public class MaintainCarCommand : IRequest<MaintainedCarResponse>, ISecuredReque
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CarsOperationClaims.Admin, Write, CarsOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarsOperationClaims.Update };
 
     public class MaintainCarCommandHandler : IRequestHandler<MaintainCarCommand, MaintainedCarResponse>
     {
@@ -23,8 +22,7 @@ public class MaintainCarCommand : IRequest<MaintainedCarResponse>, ISecuredReque
         private readonly IMapper _mapper;
         private readonly CarBusinessRules _carBusinessRules;
 
-        public MaintainCarCommandHandler(ICarRepository carRepository, CarBusinessRules carBusinessRules,
-                                         IMapper mapper)
+        public MaintainCarCommandHandler(ICarRepository carRepository, CarBusinessRules carBusinessRules, IMapper mapper)
         {
             _carRepository = carRepository;
             _carBusinessRules = carBusinessRules;
@@ -39,7 +37,7 @@ public class MaintainCarCommand : IRequest<MaintainedCarResponse>, ISecuredReque
             Car? updatedCar = await _carRepository.GetAsync(c => c.Id == request.Id);
             updatedCar.CarState = CarState.Maintenance;
             await _carRepository.UpdateAsync(updatedCar);
-            var updatedCarDto = _mapper.Map<MaintainedCarResponse>(updatedCar);
+            MaintainedCarResponse? updatedCarDto = _mapper.Map<MaintainedCarResponse>(updatedCar);
             return updatedCarDto;
         }
     }

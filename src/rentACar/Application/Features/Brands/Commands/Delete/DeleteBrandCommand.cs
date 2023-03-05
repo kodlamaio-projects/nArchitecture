@@ -7,7 +7,6 @@ using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Brands.Constants.BrandsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Brands.Commands.Delete;
 
@@ -17,7 +16,8 @@ public class DeleteBrandCommand : IRequest<DeletedBrandResponse>, ISecuredReques
 
     public bool BypassCache { get; }
     public string CacheKey => "brands-list";
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, BrandsOperationClaims.Admin, Write, BrandsOperationClaims.Delete };
+
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, BrandsOperationClaims.Delete };
 
     public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, DeletedBrandResponse>
     {
@@ -25,8 +25,7 @@ public class DeleteBrandCommand : IRequest<DeletedBrandResponse>, ISecuredReques
         private readonly IMapper _mapper;
         private readonly BrandBusinessRules _brandBusinessRules;
 
-        public DeleteBrandCommandHandler(IBrandRepository brandRepository, IMapper mapper,
-                                         BrandBusinessRules brandBusinessRules)
+        public DeleteBrandCommandHandler(IBrandRepository brandRepository, IMapper mapper, BrandBusinessRules brandBusinessRules)
         {
             _brandRepository = brandRepository;
             _mapper = mapper;
@@ -41,7 +40,7 @@ public class DeleteBrandCommand : IRequest<DeletedBrandResponse>, ISecuredReques
             _mapper.Map(request, brand);
             Brand deletedBrand = await _brandRepository.DeleteAsync(brand);
 
-            var response = _mapper.Map<DeletedBrandResponse>(deletedBrand);
+            DeletedBrandResponse? response = _mapper.Map<DeletedBrandResponse>(deletedBrand);
             return response;
         }
     }

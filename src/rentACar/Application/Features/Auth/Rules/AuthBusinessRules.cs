@@ -21,13 +21,15 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public Task EmailAuthenticatorShouldBeExists(EmailAuthenticator? emailAuthenticator)
     {
-        if (emailAuthenticator is null) throw new BusinessException(AuthMessages.EmailAuthenticatorDontExists);
+        if (emailAuthenticator is null)
+            throw new BusinessException(AuthMessages.EmailAuthenticatorDontExists);
         return Task.CompletedTask;
     }
 
     public Task OtpAuthenticatorShouldBeExists(OtpAuthenticator? otpAuthenticator)
     {
-        if (otpAuthenticator is null) throw new BusinessException(AuthMessages.OtpAuthenticatorDontExists);
+        if (otpAuthenticator is null)
+            throw new BusinessException(AuthMessages.OtpAuthenticatorDontExists);
         return Task.CompletedTask;
     }
 
@@ -40,13 +42,15 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public Task EmailAuthenticatorActivationKeyShouldBeExists(EmailAuthenticator emailAuthenticator)
     {
-        if (emailAuthenticator.ActivationKey is null) throw new BusinessException(AuthMessages.EmailActivationKeyDontExists);
+        if (emailAuthenticator.ActivationKey is null)
+            throw new BusinessException(AuthMessages.EmailActivationKeyDontExists);
         return Task.CompletedTask;
     }
 
     public Task UserShouldBeExists(User? user)
     {
-        if (user == null) throw new BusinessException(AuthMessages.UserDontExists);
+        if (user == null)
+            throw new BusinessException(AuthMessages.UserDontExists);
         return Task.CompletedTask;
     }
 
@@ -59,7 +63,8 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public Task RefreshTokenShouldBeExists(RefreshToken? refreshToken)
     {
-        if (refreshToken == null) throw new BusinessException(AuthMessages.RefreshDontExists);
+        if (refreshToken == null)
+            throw new BusinessException(AuthMessages.RefreshDontExists);
         return Task.CompletedTask;
     }
 
@@ -72,13 +77,14 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public async Task UserEmailShouldBeNotExists(string email)
     {
-        User? user = await _userRepository.GetAsync(u => u.Email == email, enableTracking: false);
-        if (user != null) throw new BusinessException(AuthMessages.UserMailAlreadyExists);
+        User? user = await _userRepository.GetAsync(predicate: u => u.Email == email, enableTracking: false);
+        if (user != null)
+            throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
     public async Task UserPasswordShouldBeMatch(int id, string password)
     {
-        User? user = await _userRepository.GetAsync(u => u.Id == id, enableTracking: false);
+        User? user = await _userRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
         if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             throw new BusinessException(AuthMessages.PasswordDontMatch);
     }

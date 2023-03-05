@@ -25,18 +25,18 @@ public class GetListRentalQuery : IRequest<GetListResponse<GetListRentalListItem
 
         public async Task<GetListResponse<GetListRentalListItemDto>> Handle(GetListRentalQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<Rental> rentals = await _rentalRepository.GetListAsync(include: r =>
-                                                                                 r.Include(r => r.Car)
-                                                                                     .Include(r => r.Car.Model)
-                                                                                     .Include(r => r.Car.Model.Brand)
-                                                                                     .Include(r => r.Car.Color)
-                                                                                     .Include(r => r.Customer)
-                                                                                     .Include(r => r.Customer
-                                                                                         .IndividualCustomer)
-                                                                                     .Include(r => r.Customer
-                                                                                         .CorporateCustomer),
-                                                                             index: request.PageRequest.Page,
-                                                                             size: request.PageRequest.PageSize);
+            IPaginate<Rental> rentals = await _rentalRepository.GetListAsync(
+                include: r =>
+                    r.Include(r => r.Car)
+                        .Include(r => r.Car.Model)
+                        .Include(r => r.Car.Model.Brand)
+                        .Include(r => r.Car.Color)
+                        .Include(r => r.Customer)
+                        .Include(r => r.Customer.IndividualCustomer)
+                        .Include(r => r.Customer.CorporateCustomer),
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedRentalListModel = _mapper.Map<GetListResponse<GetListRentalListItemDto>>(rentals);
             return mappedRentalListModel;
         }

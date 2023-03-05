@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class FuelRepository : EfRepositoryBase<Fuel, BaseDbContext>, IFuelRepository
 {
-    public FuelRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public FuelRepository(BaseDbContext context)
+        : base(context) { }
 }

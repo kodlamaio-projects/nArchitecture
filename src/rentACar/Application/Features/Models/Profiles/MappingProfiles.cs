@@ -21,15 +21,15 @@ public class MappingProfiles : Profile
         CreateMap<Model, DeleteModelCommand>().ReverseMap();
         CreateMap<Model, DeletedModelResponse>().ReverseMap();
         CreateMap<Model, GetByIdModelResponse>().ReverseMap();
-        CreateMap<Model, GetListModelListItemDto>().ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Brand.Name))
-                                        .ForMember(c => c.FuelName, opt => opt.MapFrom(c => c.Fuel.Name))
-                                        .ForMember(c => c.TransmissionName,
-                                                   opt => opt.MapFrom(c => c.Transmission.Name));
+        CreateMap<Model, GetListModelListItemDto>()
+            .ForMember(destinationMember: c => c.BrandName, memberOptions: opt => opt.MapFrom(c => c.Brand.Name))
+            .ForMember(destinationMember: c => c.FuelName, memberOptions: opt => opt.MapFrom(c => c.Fuel.Name))
+            .ForMember(destinationMember: c => c.TransmissionName, memberOptions: opt => opt.MapFrom(c => c.Transmission.Name));
         CreateMap<IPaginate<Model>, GetListResponse<GetListModelListItemDto>>().ReverseMap();
-        CreateMap<Model, GetListByDynamicModelListItemDto>().ForMember(c => c.BrandName, opt => opt.MapFrom(c => c.Brand.Name))
-                                                            .ForMember(c => c.FuelName, opt => opt.MapFrom(c => c.Fuel.Name))
-                                                            .ForMember(c => c.TransmissionName,
-                                                                       opt => opt.MapFrom(c => c.Transmission.Name));
+        CreateMap<Model, GetListByDynamicModelListItemDto>()
+            .ForMember(destinationMember: c => c.BrandName, memberOptions: opt => opt.MapFrom(c => c.Brand.Name))
+            .ForMember(destinationMember: c => c.FuelName, memberOptions: opt => opt.MapFrom(c => c.Fuel.Name))
+            .ForMember(destinationMember: c => c.TransmissionName, memberOptions: opt => opt.MapFrom(c => c.Transmission.Name));
         CreateMap<IPaginate<Model>, GetListResponse<GetListByDynamicModelListItemDto>>().ReverseMap();
     }
 }

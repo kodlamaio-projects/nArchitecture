@@ -5,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Transmissions.Constants.TransmissionsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Transmissions.Commands.Update;
 
@@ -14,7 +13,7 @@ public class UpdateTransmissionCommand : IRequest<UpdatedTransmissionResponse>, 
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, TransmissionsOperationClaims.Admin, Write, TransmissionsOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, TransmissionsOperationClaims.Update };
 
     public class UpdateTransmissionCommandHandler : IRequestHandler<UpdateTransmissionCommand, UpdatedTransmissionResponse>
     {
@@ -27,8 +26,7 @@ public class UpdateTransmissionCommand : IRequest<UpdatedTransmissionResponse>, 
             _mapper = mapper;
         }
 
-        public async Task<UpdatedTransmissionResponse> Handle(UpdateTransmissionCommand request,
-                                                         CancellationToken cancellationToken)
+        public async Task<UpdatedTransmissionResponse> Handle(UpdateTransmissionCommand request, CancellationToken cancellationToken)
         {
             Transmission mappedTransmission = _mapper.Map<Transmission>(request);
             Transmission updatedTransmission = await _transmissionRepository.UpdateAsync(mappedTransmission);

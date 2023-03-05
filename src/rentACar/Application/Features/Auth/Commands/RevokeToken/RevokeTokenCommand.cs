@@ -30,7 +30,7 @@ public class RevokeTokenCommand : IRequest<RevokedTokenResponse>
             await _authBusinessRules.RefreshTokenShouldBeExists(refreshToken);
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
-            await _authService.RevokeRefreshToken(refreshToken, request.IPAddress, "Revoked without replacement");
+            await _authService.RevokeRefreshToken(refreshToken, request.IPAddress, reason: "Revoked without replacement");
 
             RevokedTokenResponse revokedTokenResponse = _mapper.Map<RevokedTokenResponse>(refreshToken);
             return revokedTokenResponse;

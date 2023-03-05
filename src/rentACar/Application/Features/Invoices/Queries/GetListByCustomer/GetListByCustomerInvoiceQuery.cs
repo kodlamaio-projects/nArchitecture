@@ -12,7 +12,8 @@ public class GetListByCustomerInvoiceQuery : IRequest<GetListResponse<GetListByC
     public int Page { get; set; }
     public int PageSize { get; set; }
 
-    public class GetListInvoiceByCustomerQueryHandler : IRequestHandler<GetListByCustomerInvoiceQuery, GetListResponse<GetListByCustomerInvoiceListItemDto>>
+    public class GetListInvoiceByCustomerQueryHandler
+        : IRequestHandler<GetListByCustomerInvoiceQuery, GetListResponse<GetListByCustomerInvoiceListItemDto>>
     {
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly IMapper _mapper;
@@ -23,12 +24,16 @@ public class GetListByCustomerInvoiceQuery : IRequest<GetListResponse<GetListByC
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListByCustomerInvoiceListItemDto>> Handle(GetListByCustomerInvoiceQuery request,
-                                                   CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListByCustomerInvoiceListItemDto>> Handle(
+            GetListByCustomerInvoiceQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            IPaginate<Invoice> invoices = await _invoiceRepository.GetListAsync(i => i.CustomerId == request.CustomerId,
-                                              index: request.Page,
-                                              size: request.PageSize);
+            IPaginate<Invoice> invoices = await _invoiceRepository.GetListAsync(
+                predicate: i => i.CustomerId == request.CustomerId,
+                index: request.Page,
+                size: request.PageSize
+            );
             var mappedInvoiceListModel = _mapper.Map<GetListResponse<GetListByCustomerInvoiceListItemDto>>(invoices);
             return mappedInvoiceListModel;
         }

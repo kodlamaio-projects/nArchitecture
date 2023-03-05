@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.AdditionalServices.Commands.Update
+namespace Application.Features.AdditionalServices.Commands.Update;
+
+public class UpdateAdditionalServiceCommandValidator : AbstractValidator<UpdateAdditionalServiceCommand>
 {
-    public class UpdateAdditionalServiceCommandValidator : AbstractValidator<UpdateAdditionalServiceCommand>
+    public UpdateAdditionalServiceCommandValidator()
     {
-        public UpdateAdditionalServiceCommandValidator()
-        {
-            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
-            RuleFor(c => c.DailyPrice).GreaterThan(0);
-        }
+        RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
+        RuleFor(c => c.DailyPrice).GreaterThan(0);
     }
 }

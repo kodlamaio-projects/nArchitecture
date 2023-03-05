@@ -11,9 +11,8 @@ public class UpdateFindeksCreditRateFromServiceCommand : IRequest<UpdateFindeksC
     public int Id { get; set; }
     public string IdentityNumber { get; set; }
 
-    public class UpdateFindeksCreditRateFromServiceCommandHandler : IRequestHandler<
-        UpdateFindeksCreditRateFromServiceCommand,
-        UpdateFindeksCreditRateFromServiceResponse>
+    public class UpdateFindeksCreditRateFromServiceCommandHandler
+        : IRequestHandler<UpdateFindeksCreditRateFromServiceCommand, UpdateFindeksCreditRateFromServiceResponse>
     {
         private readonly IFindeksCreditRateRepository _findeksCreditRateRepository;
         private readonly IFindeksService _findeksCreditRateService;
@@ -21,21 +20,24 @@ public class UpdateFindeksCreditRateFromServiceCommand : IRequest<UpdateFindeksC
 
         public UpdateFindeksCreditRateFromServiceCommandHandler(
             IFindeksCreditRateRepository findeksCreditRateRepository,
-            IFindeksService findeksCreditRateService, IMapper mapper)
+            IFindeksService findeksCreditRateService,
+            IMapper mapper
+        )
         {
             _findeksCreditRateRepository = findeksCreditRateRepository;
             _findeksCreditRateService = findeksCreditRateService;
             _mapper = mapper;
         }
 
-        public async Task<UpdateFindeksCreditRateFromServiceResponse> Handle(UpdateFindeksCreditRateFromServiceCommand request,
-                                                                             CancellationToken cancellationToken)
+        public async Task<UpdateFindeksCreditRateFromServiceResponse> Handle(
+            UpdateFindeksCreditRateFromServiceCommand request,
+            CancellationToken cancellationToken
+        )
         {
             FindeksCreditRate? findeksCreditRate = await _findeksCreditRateRepository.GetAsync(f => f.Id == request.Id);
             findeksCreditRate.Score = _findeksCreditRateService.GetScore(request.IdentityNumber);
-            FindeksCreditRate updatedFindeksCreditRate =
-                await _findeksCreditRateRepository.UpdateAsync(findeksCreditRate);
-            var updatedFindeksCreditRateDto =
+            FindeksCreditRate updatedFindeksCreditRate = await _findeksCreditRateRepository.UpdateAsync(findeksCreditRate);
+            UpdateFindeksCreditRateFromServiceResponse? updatedFindeksCreditRateDto =
                 _mapper.Map<UpdateFindeksCreditRateFromServiceResponse>(updatedFindeksCreditRate);
             return updatedFindeksCreditRateDto;
         }

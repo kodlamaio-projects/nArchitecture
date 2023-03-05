@@ -1,5 +1,4 @@
-﻿using Application.Features.Models.Constants;
-using Application.Features.Models.Rules;
+﻿using Application.Features.Models.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Authorization;
@@ -7,7 +6,6 @@ using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Models.Constants.ModelsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Models.Commands.Create;
 
@@ -22,7 +20,7 @@ public class CreateModelCommand : IRequest<CreatedModelResponse>, ISecuredReques
 
     public bool BypassCache { get; }
     public string CacheKey => "models-list";
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, ModelsOperationClaims.Admin, Write, Add };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
 
     public class CreateModelCommandHandler : IRequestHandler<CreateModelCommand, CreatedModelResponse>
     {
@@ -30,8 +28,7 @@ public class CreateModelCommand : IRequest<CreatedModelResponse>, ISecuredReques
         private readonly IMapper _mapper;
         private readonly ModelBusinessRules _modelBusinessRules;
 
-        public CreateModelCommandHandler(IModelRepository modelRepository, IMapper mapper,
-                                         ModelBusinessRules modelBusinessRules)
+        public CreateModelCommandHandler(IModelRepository modelRepository, IMapper mapper, ModelBusinessRules modelBusinessRules)
         {
             _modelRepository = modelRepository;
             _mapper = mapper;

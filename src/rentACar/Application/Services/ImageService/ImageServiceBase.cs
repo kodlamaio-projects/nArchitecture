@@ -22,8 +22,8 @@ public abstract class ImageServiceBase
         List<string> extensions = new() { ".jpg", ".png", ".jpeg", ".webp" };
 
         string extension = Path.GetExtension(formFile.FileName).ToLower();
-        if (!extensions.Contains(extension)) throw new BusinessException("Unsupported format");
+        if (!extensions.Contains(extension))
+            throw new BusinessException("Unsupported format");
         await Task.CompletedTask;
     }
 }
-

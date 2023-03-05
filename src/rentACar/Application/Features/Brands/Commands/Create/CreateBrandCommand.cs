@@ -1,5 +1,4 @@
-﻿using Application.Features.Brands.Constants;
-using Application.Features.Brands.Rules;
+﻿using Application.Features.Brands.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Authorization;
@@ -7,7 +6,6 @@ using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Brands.Constants.BrandsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Brands.Commands.Create;
 
@@ -17,7 +15,7 @@ public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ISecuredReques
 
     public bool BypassCache { get; }
     public string CacheKey => "brands-list";
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, BrandsOperationClaims.Admin, Write, Add };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
 
     public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>
     {
@@ -25,8 +23,7 @@ public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ISecuredReques
         private readonly IMapper _mapper;
         private readonly BrandBusinessRules _brandBusinessRules;
 
-        public CreateBrandCommandHandler(IBrandRepository brandRepository, IMapper mapper,
-                                         BrandBusinessRules brandBusinessRules)
+        public CreateBrandCommandHandler(IBrandRepository brandRepository, IMapper mapper, BrandBusinessRules brandBusinessRules)
         {
             _brandRepository = brandRepository;
             _mapper = mapper;

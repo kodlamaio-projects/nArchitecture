@@ -1,14 +1,12 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Models.Commands.Update
+namespace Application.Features.Models.Commands.Update;
+
+public class UpdateModelCommandValidator : AbstractValidator<UpdateModelCommand>
 {
-    public class UpdateModelCommandValidator : AbstractValidator<UpdateModelCommand>
+    public UpdateModelCommandValidator()
     {
-        public UpdateModelCommandValidator()
-        {
-            RuleFor(c => c.Name)
-                .MinimumLength(2);
-            RuleFor(c => c.DailyPrice).GreaterThan(0);
-        }
+        RuleFor(c => c.Name).MinimumLength(2);
+        RuleFor(c => c.DailyPrice).GreaterThan(0);
     }
 }

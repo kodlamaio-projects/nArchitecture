@@ -11,28 +11,28 @@ public class GetListFindeksCreditRateQuery : IRequest<GetListResponse<GetListFin
 {
     public PageRequest PageRequest { get; set; }
 
-    public class
-        GetListFindeksCreditRateQueryHandler : IRequestHandler<GetListFindeksCreditRateQuery,
-            GetListResponse<GetListFindeksCreditRateListItemDto>>
+    public class GetListFindeksCreditRateQueryHandler
+        : IRequestHandler<GetListFindeksCreditRateQuery, GetListResponse<GetListFindeksCreditRateListItemDto>>
     {
         private readonly IFindeksCreditRateRepository _findeksCreditRateRepository;
         private readonly IMapper _mapper;
 
-        public GetListFindeksCreditRateQueryHandler(IFindeksCreditRateRepository findeksCreditRateRepository,
-                                                    IMapper mapper)
+        public GetListFindeksCreditRateQueryHandler(IFindeksCreditRateRepository findeksCreditRateRepository, IMapper mapper)
         {
             _findeksCreditRateRepository = findeksCreditRateRepository;
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListFindeksCreditRateListItemDto>> Handle(GetListFindeksCreditRateQuery request,
-                                                             CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListFindeksCreditRateListItemDto>> Handle(
+            GetListFindeksCreditRateQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<FindeksCreditRate> findeksCreditRates = await _findeksCreditRateRepository.GetListAsync(
-                                                                  index: request.PageRequest.Page,
-                                                                  size: request.PageRequest.PageSize);
-            var mappedFindeksCreditRateListModel =
-                _mapper.Map<GetListResponse<GetListFindeksCreditRateListItemDto>>(findeksCreditRates);
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
+            var mappedFindeksCreditRateListModel = _mapper.Map<GetListResponse<GetListFindeksCreditRateListItemDto>>(findeksCreditRates);
             return mappedFindeksCreditRateListModel;
         }
     }

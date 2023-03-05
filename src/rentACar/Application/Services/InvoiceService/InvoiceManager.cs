@@ -20,22 +20,23 @@ public class InvoiceManager : IInvoiceService
 
     public Task<Invoice> CreateInvoice(Rental rental, decimal dailyPrice)
     {
-        short totalRentalDate = Convert.ToInt16(rental.RentEndDate.Day - rental.RentStartDate.Day > 0
-                                                    ? rental.RentEndDate.Day - rental.RentStartDate.Day
-                                                    : 1);
+        short totalRentalDate = Convert.ToInt16(
+            rental.RentEndDate.Day - rental.RentStartDate.Day > 0 ? rental.RentEndDate.Day - rental.RentStartDate.Day : 1
+        );
 
         decimal rentalPrice = Convert.ToDecimal(dailyPrice * totalRentalDate);
         //if (rental.RentStartRentalBranchId != rental.RentEndRentalBranchId) rentalPrice += 500;
 
-        Invoice newInvoice = new()
-        {
-            CustomerId = rental.CustomerId,
-            No = Guid.NewGuid().ToString(),
-            RentalStartDate = rental.RentStartDate,
-            RentalEndDate = rental.RentEndDate,
-            TotalRentalDate = totalRentalDate,
-            RentalPrice = rentalPrice
-        };
+        Invoice newInvoice =
+            new()
+            {
+                CustomerId = rental.CustomerId,
+                No = Guid.NewGuid().ToString(),
+                RentalStartDate = rental.RentStartDate,
+                RentalEndDate = rental.RentEndDate,
+                TotalRentalDate = totalRentalDate,
+                RentalPrice = rentalPrice
+            };
         return Task.FromResult(newInvoice);
     }
 }

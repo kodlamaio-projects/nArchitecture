@@ -1,5 +1,4 @@
 ﻿using MailKit.Net.Smtp;
-using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Cryptography;
@@ -21,8 +20,9 @@ public class MailKitMailService : IMailService
 
     public void SendMail(Mail mail)
     {
-        if (mail.ToList == null || mail.ToList.Count < 1) return;
-        EmailPrepare(mail, out MimeMessage email, out SmtpClient smtp);
+        if (mail.ToList == null || mail.ToList.Count < 1)
+            return;
+        EmailPrepare(mail, email: out MimeMessage email, smtp: out SmtpClient smtp);
         smtp.Send(email);
         smtp.Disconnect(true);
         email.Dispose();
@@ -31,8 +31,9 @@ public class MailKitMailService : IMailService
 
     public async Task SendEmailAsync(Mail mail)
     {
-        if (mail.ToList == null || mail.ToList.Count < 1) return;
-        EmailPrepare(mail, out MimeMessage email, out SmtpClient smtp);
+        if (mail.ToList == null || mail.ToList.Count < 1)
+            return;
+        EmailPrepare(mail, email: out MimeMessage email, smtp: out SmtpClient smtp);
         await smtp.SendAsync(email);
         smtp.Disconnect(true);
         email.Dispose();
@@ -44,19 +45,18 @@ public class MailKitMailService : IMailService
         email = new MimeMessage();
         email.From.Add(new MailboxAddress(_mailSettings.SenderFullName, _mailSettings.SenderEmail));
         email.To.AddRange(mail.ToList);
-        if (mail.CcList != null && mail.CcList.Any()) email.Cc.AddRange(mail.CcList);
-        if (mail.BccList != null && mail.BccList.Any()) email.Bcc.AddRange(mail.BccList);
+        if (mail.CcList != null && mail.CcList.Any())
+            email.Cc.AddRange(mail.CcList);
+        if (mail.BccList != null && mail.BccList.Any())
+            email.Bcc.AddRange(mail.BccList);
 
         email.Subject = mail.Subject;
-        if (mail.UnscribeLink != null) email.Headers.Add("List-Unsubscribe", $"<{mail.UnscribeLink}>");
-        var bodyBuilder = new BodyBuilder
-        {
-            TextBody = mail.TextBody,
-            HtmlBody = mail.HtmlBody
-        };
+        if (mail.UnscribeLink != null)
+            email.Headers.Add(field: "List-Unsubscribe", value: $"<{mail.UnscribeLink}>");
+        BodyBuilder bodyBuilder = new() { TextBody = mail.TextBody, HtmlBody = mail.HtmlBody };
 
         if (mail.Attachments != null)
-            foreach (var attachment in mail.Attachments)
+            foreach (MimeEntity? attachment in mail.Attachments)
                 if (attachment != null)
                     bodyBuilder.Attachments.Add(attachment);
 
@@ -65,30 +65,31 @@ public class MailKitMailService : IMailService
 
         if (_mailSettings.DkimPrivateKey != null && _mailSettings.DkimSelector != null && _mailSettings.DomainName != null)
         {
-            _signer = new DkimSigner(ReadPrivateKeyFromPemEncodedString(), _mailSettings.DomainName, _mailSettings.DkimSelector)
+            _signer = new DkimSigner(key: ReadPrivateKeyFromPemEncodedString(), _mailSettings.DomainName, _mailSettings.DkimSelector)
             {
                 HeaderCanonicalizationAlgorithm = DkimCanonicalizationAlgorithm.Simple,
                 BodyCanonicalizationAlgorithm = DkimCanonicalizationAlgorithm.Simple,
                 AgentOrUserIdentifier = $"@{_mailSettings.DomainName}",
                 QueryMethod = "dns/txt"
             };
-            var headers = new HeaderId[] { HeaderId.From, HeaderId.Subject, HeaderId.To };
+            var headers = new[] { HeaderId.From, HeaderId.Subject, HeaderId.To };
             _signer.Sign(email, headers);
         }
 
         smtp = new SmtpClient();
-        smtp.Connect(_mailSettings.Server, _mailSettings.Port, SecureSocketOptions.Auto);
-        if (_mailSettings.AuthenticationRequired) smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+        smtp.Connect(_mailSettings.Server, _mailSettings.Port);
+        if (_mailSettings.AuthenticationRequired)
+            smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
     }
 
     private AsymmetricKeyParameter ReadPrivateKeyFromPemEncodedString()
     {
         AsymmetricKeyParameter result;
-        var pemEncodedKey = "-----BEGIN RSA PRIVATE KEY-----\n" + _mailSettings.DkimPrivateKey + "\n-----END RSA PRIVATE KEY-----";
-        using (var stringReader = new StringReader(pemEncodedKey))
+        string pemEncodedKey = "-----BEGIN RSA PRIVATE KEY-----\n" + _mailSettings.DkimPrivateKey + "\n-----END RSA PRIVATE KEY-----";
+        using (StringReader stringReader = new(pemEncodedKey))
         {
-            var pemReader = new PemReader(stringReader);
-            var pemObject = pemReader.ReadObject();
+            PemReader pemReader = new(stringReader);
+            object? pemObject = pemReader.ReadObject();
             result = ((AsymmetricCipherKeyPair)pemObject).Private;
         }
 

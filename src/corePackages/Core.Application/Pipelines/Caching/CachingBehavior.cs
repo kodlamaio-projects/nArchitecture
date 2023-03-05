@@ -15,25 +15,23 @@ public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     private readonly CacheSettings _cacheSettings;
     private readonly ILogger<CachingBehavior<TRequest, TResponse>> _logger;
 
-    public CachingBehavior(IDistributedCache cache, ILogger<CachingBehavior<TRequest, TResponse>> logger,
-        IConfiguration configuration)
+    public CachingBehavior(IDistributedCache cache, ILogger<CachingBehavior<TRequest, TResponse>> logger, IConfiguration configuration)
     {
         _cache = cache;
         _logger = logger;
         _cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>();
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         TResponse response;
-        if (request.BypassCache) return await next();
+        if (request.BypassCache)
+            return await next();
 
         async Task<TResponse> GetResponseAndAddToCache()
         {
             response = await next();
-            TimeSpan? slidingExpiration =
-                request.SlidingExpiration ?? TimeSpan.FromDays(_cacheSettings.SlidingExpiration);
+            TimeSpan? slidingExpiration = request.SlidingExpiration ?? TimeSpan.FromDays(_cacheSettings.SlidingExpiration);
             DistributedCacheEntryOptions cacheOptions = new() { SlidingExpiration = slidingExpiration };
             byte[] serializeData = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(response));
             await _cache.SetAsync(request.CacheKey, serializeData, cacheOptions, cancellationToken);

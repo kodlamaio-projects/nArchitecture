@@ -13,12 +13,18 @@ public class Mail
     public List<MailboxAddress>? BccList { get; set; }
     public string? UnscribeLink { get; set; }
 
-    public Mail()
-    {
-    }
+    public Mail() { }
 
-    public Mail(string subject, string textBody, string htmlBody, AttachmentCollection? attachments, List<MailboxAddress> toList,
-                List<MailboxAddress>? ccList = null, List<MailboxAddress>? bccList = null, string? unscribeLink = null)
+    public Mail(
+        string subject,
+        string textBody,
+        string htmlBody,
+        AttachmentCollection? attachments,
+        List<MailboxAddress> toList,
+        List<MailboxAddress>? ccList = null,
+        List<MailboxAddress>? bccList = null,
+        string? unscribeLink = null
+    )
     {
         Subject = subject;
         TextBody = textBody;

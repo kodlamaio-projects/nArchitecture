@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Transmissions.Commands.Update
+namespace Application.Features.Transmissions.Commands.Update;
+
+public class UpdateTransmissionCommandValidator : AbstractValidator<UpdateTransmissionCommand>
 {
-    public class UpdateTransmissionCommandValidator : AbstractValidator<UpdateTransmissionCommand>
+    public UpdateTransmissionCommandValidator()
     {
-        public UpdateTransmissionCommandValidator()
-        {
-            RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
-        }
+        RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
     }
 }

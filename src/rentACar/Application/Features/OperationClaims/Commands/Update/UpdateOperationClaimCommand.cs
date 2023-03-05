@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 using static Application.Features.OperationClaims.Constants.OperationClaimsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.OperationClaims.Commands.Update;
 
@@ -15,30 +14,30 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, OperationClaimsOperationClaims.Admin, Write, OperationClaimsOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, OperationClaimsOperationClaims.Update };
 
-    public class
-        UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, UpdatedOperationClaimResponse>
+    public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, UpdatedOperationClaimResponse>
     {
         private readonly IOperationClaimRepository _operationClaimRepository;
         private readonly IMapper _mapper;
         private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
 
-        public UpdateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper,
-                                                  OperationClaimBusinessRules operationClaimBusinessRules)
+        public UpdateOperationClaimCommandHandler(
+            IOperationClaimRepository operationClaimRepository,
+            IMapper mapper,
+            OperationClaimBusinessRules operationClaimBusinessRules
+        )
         {
             _operationClaimRepository = operationClaimRepository;
             _mapper = mapper;
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
-        public async Task<UpdatedOperationClaimResponse> Handle(UpdateOperationClaimCommand request,
-                                                           CancellationToken cancellationToken)
+        public async Task<UpdatedOperationClaimResponse> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
         {
             OperationClaim mappedOperationClaim = _mapper.Map<OperationClaim>(request);
             OperationClaim updatedOperationClaim = await _operationClaimRepository.UpdateAsync(mappedOperationClaim);
-            UpdatedOperationClaimResponse updatedOperationClaimDto =
-                _mapper.Map<UpdatedOperationClaimResponse>(updatedOperationClaim);
+            UpdatedOperationClaimResponse updatedOperationClaimDto = _mapper.Map<UpdatedOperationClaimResponse>(updatedOperationClaim);
             return updatedOperationClaimDto;
         }
     }

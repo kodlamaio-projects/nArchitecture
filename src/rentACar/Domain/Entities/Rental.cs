@@ -25,9 +25,19 @@ public class Rental : Entity
         RentalsAdditionalServices = new HashSet<RentalsAdditionalService>();
     }
 
-    public Rental(int id, int customerId, int carId, int rentStartRentalBranchId, int rentEndRentalBranchId,
-                  DateTime rentStartDate, DateTime rentEndDate, DateTime? returnDate, int rentStartKilometer,
-                  int rentEndKilometer) : this()
+    public Rental(
+        int id,
+        int customerId,
+        int carId,
+        int rentStartRentalBranchId,
+        int rentEndRentalBranchId,
+        DateTime rentStartDate,
+        DateTime rentEndDate,
+        DateTime? returnDate,
+        int rentStartKilometer,
+        int rentEndKilometer
+    )
+        : this()
     {
         Id = id;
         CustomerId = customerId;

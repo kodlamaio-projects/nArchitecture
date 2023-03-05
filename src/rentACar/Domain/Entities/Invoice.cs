@@ -14,12 +14,19 @@ public class Invoice : Entity
 
     public virtual Customer? Customer { get; set; }
 
-    public Invoice()
-    {
-    }
+    public Invoice() { }
 
-    public Invoice(int id, int customerId, string no, DateTime createdDate, DateTime rentalStartDate,
-                   DateTime rentalEndDate, short totalRentalDate, decimal rentalPrice) : base(id)
+    public Invoice(
+        int id,
+        int customerId,
+        string no,
+        DateTime createdDate,
+        DateTime rentalStartDate,
+        DateTime rentalEndDate,
+        short totalRentalDate,
+        decimal rentalPrice
+    )
+        : base(id)
     {
         CustomerId = customerId;
         No = no;

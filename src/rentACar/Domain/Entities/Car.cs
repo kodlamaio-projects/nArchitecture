@@ -26,10 +26,18 @@ public class Car : Entity
         CarDamages = new HashSet<CarDamage>();
     }
 
-    public Car(int id, int colorId, int modelId, int rentalBranchId, CarState carState, int kilometer,
-               short modelYear,
-               string plate,
-               short minFindeksCreditRate) : this()
+    public Car(
+        int id,
+        int colorId,
+        int modelId,
+        int rentalBranchId,
+        CarState carState,
+        int kilometer,
+        short modelYear,
+        string plate,
+        short minFindeksCreditRate
+    )
+        : this()
     {
         Id = id;
         ColorId = colorId;

@@ -11,8 +11,8 @@ public class LoggedResponse : IDto
     public RefreshToken? RefreshToken { get; set; }
     public AuthenticatorType? RequiredAuthenticatorType { get; set; }
 
-    public LoggedHttpResponse ToHttpResponse()
-        => new() { AccessToken = AccessToken, RequiredAuthenticatorType = RequiredAuthenticatorType };
+    public LoggedHttpResponse ToHttpResponse() =>
+        new() { AccessToken = AccessToken, RequiredAuthenticatorType = RequiredAuthenticatorType };
 
     public class LoggedHttpResponse
     {

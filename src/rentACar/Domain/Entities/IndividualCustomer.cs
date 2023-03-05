@@ -11,12 +11,10 @@ public class IndividualCustomer : Entity
 
     public virtual Customer Customer { get; set; }
 
-    public IndividualCustomer()
-    {
-    }
+    public IndividualCustomer() { }
 
-    public IndividualCustomer(int id, int customerId, string firstName, string lastName, string nationalIdentity) :
-        base(id)
+    public IndividualCustomer(int id, int customerId, string firstName, string lastName, string nationalIdentity)
+        : base(id)
     {
         CustomerId = customerId;
         FirstName = firstName;

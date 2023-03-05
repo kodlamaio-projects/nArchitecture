@@ -6,7 +6,6 @@ using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Models.Constants.ModelsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Models.Commands.Delete;
 
@@ -16,7 +15,8 @@ public class DeleteModelCommand : IRequest<DeletedModelResponse>, ISecuredReques
 
     public bool BypassCache { get; }
     public string CacheKey => "models-list";
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, ModelsOperationClaims.Admin, Write, ModelsOperationClaims.Delete };
+
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, ModelsOperationClaims.Delete };
 
     public class DeleteModelCommandHandler : IRequestHandler<DeleteModelCommand, DeletedModelResponse>
     {

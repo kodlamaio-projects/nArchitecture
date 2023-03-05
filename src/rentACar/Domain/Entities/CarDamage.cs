@@ -10,11 +10,10 @@ public class CarDamage : Entity
 
     public virtual Car? Car { get; set; }
 
-    public CarDamage()
-    {
-    }
+    public CarDamage() { }
 
-    public CarDamage(int id, int carId, string damageDescription, bool isFixed) : base(id)
+    public CarDamage(int id, int carId, string damageDescription, bool isFixed)
+        : base(id)
     {
         CarId = carId;
         DamageDescription = damageDescription;

@@ -48,7 +48,7 @@ public class InvoicesController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateInvoiceCommand createInvoiceCommand)
     {
         CreatedInvoiceResponse result = await Mediator.Send(createInvoiceCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

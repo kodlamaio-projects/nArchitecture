@@ -41,7 +41,7 @@ public class CustomersController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateCustomerCommand createCustomerCommand)
     {
         CreatedCustomerResponse result = await Mediator.Send(createCustomerCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

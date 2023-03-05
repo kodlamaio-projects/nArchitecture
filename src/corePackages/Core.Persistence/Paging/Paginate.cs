@@ -55,14 +55,14 @@ public class Paginate<TSource, TResult> : IPaginate<TResult>
         if (source is IQueryable<TSource> queryable)
         {
             Count = queryable.Count();
-            var items = queryable.Skip((Index - From) * Size).Take(Size).ToArray();
+            TSource[] items = queryable.Skip((Index - From) * Size).Take(Size).ToArray();
             Items = new List<TResult>(converter(items));
         }
         else
         {
-            var enumerable = source as TSource[] ?? source.ToArray();
+            TSource[] enumerable = source as TSource[] ?? source.ToArray();
             Count = enumerable.Count();
-            var items = enumerable.Skip((Index - From) * Size).Take(Size).ToArray();
+            TSource[] items = enumerable.Skip((Index - From) * Size).Take(Size).ToArray();
             Items = new List<TResult>(converter(items));
         }
     }
@@ -99,7 +99,8 @@ public static class Paginate
 {
     public static IPaginate<T> Empty<T>() => new Paginate<T>();
 
-    public static IPaginate<TResult> From<TResult, TSource>
-        (IPaginate<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter)
-        => new Paginate<TSource, TResult>(source, converter);
+    public static IPaginate<TResult> From<TResult, TSource>(
+        IPaginate<TSource> source,
+        Func<IEnumerable<TSource>, IEnumerable<TResult>> converter
+    ) => new Paginate<TSource, TResult>(source, converter);
 }

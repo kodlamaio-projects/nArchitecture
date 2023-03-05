@@ -41,7 +41,7 @@ public class UsersController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateUserCommand createUserCommand)
     {
         CreatedUserResponse result = await Mediator.Send(createUserCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

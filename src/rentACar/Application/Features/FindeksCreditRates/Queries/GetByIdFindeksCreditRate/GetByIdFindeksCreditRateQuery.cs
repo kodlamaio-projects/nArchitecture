@@ -10,25 +10,27 @@ public class GetByIdFindeksCreditRateQuery : IRequest<GetByIdFindeksCreditRateRe
 {
     public int Id { get; set; }
 
-    public class
-        GetByIdFindeksCreditRateQueryHandler : IRequestHandler<GetByIdFindeksCreditRateQuery, GetByIdFindeksCreditRateResponse>
+    public class GetByIdFindeksCreditRateQueryHandler : IRequestHandler<GetByIdFindeksCreditRateQuery, GetByIdFindeksCreditRateResponse>
     {
         private readonly IFindeksCreditRateRepository _findeksCreditRateRepository;
         private readonly IMapper _mapper;
         private readonly FindeksCreditRateBusinessRules _findeksCreditRateBusinessRules;
 
-        public GetByIdFindeksCreditRateQueryHandler(IFindeksCreditRateRepository findeksCreditRateRepository,
-                                                    FindeksCreditRateBusinessRules findeksCreditRateBusinessRules,
-                                                    IMapper mapper)
+        public GetByIdFindeksCreditRateQueryHandler(
+            IFindeksCreditRateRepository findeksCreditRateRepository,
+            FindeksCreditRateBusinessRules findeksCreditRateBusinessRules,
+            IMapper mapper
+        )
         {
             _findeksCreditRateRepository = findeksCreditRateRepository;
             _findeksCreditRateBusinessRules = findeksCreditRateBusinessRules;
             _mapper = mapper;
         }
 
-
-        public async Task<GetByIdFindeksCreditRateResponse> Handle(GetByIdFindeksCreditRateQuery request,
-                                                       CancellationToken cancellationToken)
+        public async Task<GetByIdFindeksCreditRateResponse> Handle(
+            GetByIdFindeksCreditRateQuery request,
+            CancellationToken cancellationToken
+        )
         {
             await _findeksCreditRateBusinessRules.FindeksCreditRateIdShouldExistWhenSelected(request.Id);
 

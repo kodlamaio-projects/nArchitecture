@@ -1,8 +1,7 @@
-﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+
+public class GraylogConfiguration
 {
-    public class GraylogConfiguration
-    {
-        public string? HostnameOrAddress { get; set; }
-        public int Port { get; set; }
-    }
+    public string? HostnameOrAddress { get; set; }
+    public int Port { get; set; }
 }

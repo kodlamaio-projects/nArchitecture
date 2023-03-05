@@ -23,8 +23,12 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
         private readonly UserBusinessRules _userBusinessRules;
         private readonly IAuthService _authService;
 
-        public UpdateUserFromAuthCommandHandler(IUserRepository userRepository, IMapper mapper,
-                                                UserBusinessRules userBusinessRules, IAuthService authService)
+        public UpdateUserFromAuthCommandHandler(
+            IUserRepository userRepository,
+            IMapper mapper,
+            UserBusinessRules userBusinessRules,
+            IAuthService authService
+        )
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -32,8 +36,7 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
             _authService = authService;
         }
 
-        public async Task<UpdatedUserFromAuthResponse> Handle(UpdateUserFromAuthCommand request,
-                                                         CancellationToken cancellationToken)
+        public async Task<UpdatedUserFromAuthResponse> Handle(UpdateUserFromAuthCommand request, CancellationToken cancellationToken)
         {
             User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
             await _userBusinessRules.UserShouldBeExist(user);
@@ -43,7 +46,8 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
             user.LastName = request.LastName;
             if (request.NewPassword is not null && !string.IsNullOrWhiteSpace(request.NewPassword))
             {
-                byte[] passwordHash, passwordSalt;
+                byte[] passwordHash,
+                    passwordSalt;
                 HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;

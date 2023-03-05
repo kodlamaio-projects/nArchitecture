@@ -32,7 +32,7 @@ public class TransmissionsController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateTransmissionCommand createTransmissionCommand)
     {
         CreatedTransmissionResponse result = await Mediator.Send(createTransmissionCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

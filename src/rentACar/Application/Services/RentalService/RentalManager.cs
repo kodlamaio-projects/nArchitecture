@@ -14,9 +14,9 @@ public class RentalManager : IRentalService
 
     public async Task<IList<Rental>> GetAllByInDates(int carId, DateTime rentStartDate, DateTime rentEndDate)
     {
-        IList<Rental> rentals = (await _rentalRepository.GetListAsync(
-                                     r => r.CarId == carId && r.RentEndDate >= rentStartDate &&
-                                          r.RentStartDate <= rentEndDate)).Items;
+        IList<Rental> rentals = (
+            await _rentalRepository.GetListAsync(r => r.CarId == carId && r.RentEndDate >= rentStartDate && r.RentStartDate <= rentEndDate)
+        ).Items;
         return rentals;
     }
 }

@@ -29,9 +29,11 @@ public class GetListBrandQuery : IRequest<GetListResponse<GetListBrandListItemDt
 
         public async Task<GetListResponse<GetListBrandListItemDto>> Handle(GetListBrandQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<Brand> brands = await _brandRepository.GetListAsync(index: request.PageRequest.Page,
-                                                                          size: request.PageRequest.PageSize);
-            GetListResponse<GetListBrandListItemDto> mappedBrandListModel = _mapper.Map<GetListResponse<GetListBrandListItemDto>>(brands);
+            IPaginate<Brand> brands = await _brandRepository.GetListAsync(
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
+            var mappedBrandListModel = _mapper.Map<GetListResponse<GetListBrandListItemDto>>(brands);
             return mappedBrandListModel;
         }
     }

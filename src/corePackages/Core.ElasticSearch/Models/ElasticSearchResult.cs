@@ -2,7 +2,8 @@
 
 public class ElasticSearchResult : IElasticSearchResult //todo: refactor
 {
-    public ElasticSearchResult(bool success, string message) : this(success)
+    public ElasticSearchResult(bool success, string message)
+        : this(success)
     {
         Message = message;
     }

@@ -1,5 +1,3 @@
 ﻿namespace Core.Application.Pipelines.Logging;
 
-public interface ILoggableRequest
-{
-}
+public interface ILoggableRequest { }

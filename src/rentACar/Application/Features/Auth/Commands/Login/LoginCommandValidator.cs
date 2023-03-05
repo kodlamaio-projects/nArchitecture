@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Auth.Commands.Login
+namespace Application.Features.Auth.Commands.Login;
+
+public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
-    public class LoginCommandValidator : AbstractValidator<LoginCommand>
+    public LoginCommandValidator()
     {
-        public LoginCommandValidator()
-        {
-            RuleFor(c => c.UserForLoginDto.Email).NotEmpty().EmailAddress();
-            RuleFor(c => c.UserForLoginDto.Password).NotEmpty().MinimumLength(4);
-        }
+        RuleFor(c => c.UserForLoginDto.Email).NotEmpty().EmailAddress();
+        RuleFor(c => c.UserForLoginDto.Password).NotEmpty().MinimumLength(4);
     }
 }

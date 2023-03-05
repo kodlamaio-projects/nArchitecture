@@ -5,7 +5,6 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Rentals.Constants.RentalsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Rentals.Commands.Delete;
 
@@ -13,7 +12,7 @@ public class DeleteRentalCommand : IRequest<DeletedRentalResponse>, ISecuredRequ
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, RentalsOperationClaims.Admin, Write, RentalsOperationClaims.Delete };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, RentalsOperationClaims.Delete };
 
     public class DeleteRentalCommandHandler : IRequestHandler<DeleteRentalCommand, DeletedRentalResponse>
     {

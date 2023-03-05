@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class InvoiceRepository : EfRepositoryBase<Invoice, BaseDbContext>, IInvoiceRepository
 {
-    public InvoiceRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public InvoiceRepository(BaseDbContext context)
+        : base(context) { }
 }

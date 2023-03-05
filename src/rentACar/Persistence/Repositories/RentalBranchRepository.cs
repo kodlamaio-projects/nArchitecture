@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class RentalBranchRepository : EfRepositoryBase<RentalBranch, BaseDbContext>, IRentalBranchRepository
 {
-    public RentalBranchRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public RentalBranchRepository(BaseDbContext context)
+        : base(context) { }
 }

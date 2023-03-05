@@ -41,7 +41,7 @@ public class CarDamagesController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateCarDamageCommand createCarDamageCommand)
     {
         CreatedCarDamageResponse result = await Mediator.Send(createCarDamageCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

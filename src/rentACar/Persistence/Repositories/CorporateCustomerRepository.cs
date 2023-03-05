@@ -5,10 +5,8 @@ using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class CorporateCustomerRepository : EfRepositoryBase<CorporateCustomer, BaseDbContext>,
-                                           ICorporateCustomerRepository
+public class CorporateCustomerRepository : EfRepositoryBase<CorporateCustomer, BaseDbContext>, ICorporateCustomerRepository
 {
-    public CorporateCustomerRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public CorporateCustomerRepository(BaseDbContext context)
+        : base(context) { }
 }

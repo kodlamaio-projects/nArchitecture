@@ -14,8 +14,7 @@ public class AdditionalServiceManager : IAdditionalServiceService
 
     public async Task<IList<AdditionalService>> GetListByIds(int[] ids)
     {
-        IList<AdditionalService> additionalServices =
-            (await _additionalServiceRepository.GetListAsync(a => ids.Contains(a.Id))).Items;
+        IList<AdditionalService> additionalServices = (await _additionalServiceRepository.GetListAsync(a => ids.Contains(a.Id))).Items;
 
         return additionalServices;
     }

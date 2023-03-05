@@ -20,8 +20,12 @@ public class VerifyOtpAuthenticatorCommand : IRequest
         private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
         private readonly IUserService _userService;
 
-        public VerifyOtpAuthenticatorCommandHandler(IOtpAuthenticatorRepository otpAuthenticatorRepository,
-            AuthBusinessRules authBusinessRules, IUserService userService, IAuthenticatorService authenticatorService)
+        public VerifyOtpAuthenticatorCommandHandler(
+            IOtpAuthenticatorRepository otpAuthenticatorRepository,
+            AuthBusinessRules authBusinessRules,
+            IUserService userService,
+            IAuthenticatorService authenticatorService
+        )
         {
             _otpAuthenticatorRepository = otpAuthenticatorRepository;
             _authBusinessRules = authBusinessRules;
@@ -31,8 +35,7 @@ public class VerifyOtpAuthenticatorCommand : IRequest
 
         public async Task Handle(VerifyOtpAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            OtpAuthenticator? otpAuthenticator =
-                await _otpAuthenticatorRepository.GetAsync(e => e.UserId == request.UserId);
+            OtpAuthenticator? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(e => e.UserId == request.UserId);
             await _authBusinessRules.OtpAuthenticatorShouldBeExists(otpAuthenticator);
 
             User user = await _userService.GetById(request.UserId);

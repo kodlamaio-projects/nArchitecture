@@ -30,13 +30,11 @@ public class GetListModelQuery : IRequest<GetListResponse<GetListModelListItemDt
 
         public async Task<GetListResponse<GetListModelListItemDto>> Handle(GetListModelQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<Model> models = await _modelRepository.GetListAsync(include:
-                                                                          c => c.Include(c => c.Brand)
-                                                                              .Include(c => c.Fuel)
-                                                                              .Include(c => c.Transmission),
-                                                                          index: request.PageRequest.Page,
-                                                                          size: request.PageRequest.PageSize
-                                      );
+            IPaginate<Model> models = await _modelRepository.GetListAsync(
+                include: c => c.Include(c => c.Brand).Include(c => c.Fuel).Include(c => c.Transmission),
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedModelListModel = _mapper.Map<GetListResponse<GetListModelListItemDto>>(models);
             return mappedModelListModel;
         }

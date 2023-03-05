@@ -10,11 +10,10 @@ public class CorporateCustomer : Entity
 
     public virtual Customer Customer { get; set; }
 
-    public CorporateCustomer()
-    {
-    }
+    public CorporateCustomer() { }
 
-    public CorporateCustomer(int id, int customerId, string companyName, string taxNo) : base(id)
+    public CorporateCustomer(int id, int customerId, string companyName, string taxNo)
+        : base(id)
     {
         CustomerId = customerId;
         CompanyName = companyName;

@@ -16,21 +16,19 @@ public class GetByIdBrandQuery : IRequest<GetByIdBrandResponse>
         private readonly IMapper _mapper;
         private readonly BrandBusinessRules _brandBusinessRules;
 
-        public GetByIdBrandQueryHandler(IBrandRepository brandRepository, BrandBusinessRules brandBusinessRules,
-                                        IMapper mapper)
+        public GetByIdBrandQueryHandler(IBrandRepository brandRepository, BrandBusinessRules brandBusinessRules, IMapper mapper)
         {
             _brandRepository = brandRepository;
             _brandBusinessRules = brandBusinessRules;
             _mapper = mapper;
         }
 
-
         public async Task<GetByIdBrandResponse> Handle(GetByIdBrandQuery request, CancellationToken cancellationToken)
         {
             Brand? brand = await _brandRepository.GetAsync(x => x.Id == request.Id);
             _brandBusinessRules.BrandIdShouldExistWhenSelected(brand);
 
-            var response = _mapper.Map<GetByIdBrandResponse>(brand);
+            GetByIdBrandResponse? response = _mapper.Map<GetByIdBrandResponse>(brand);
             return response;
         }
     }

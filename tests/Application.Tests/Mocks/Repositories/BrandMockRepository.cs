@@ -5,10 +5,10 @@ using Application.Tests.Mocks.FakeData;
 using Core.Test.Application.Repositories;
 using Domain.Entities;
 
-namespace Application.Tests.Mocks.Repositories
+namespace Application.Tests.Mocks.Repositories;
+
+public class BrandMockRepository : BaseMockRepository<IBrandRepository, Brand, MappingProfiles, BrandBusinessRules, BrandFakeData>
 {
-    public class BrandMockRepository : BaseMockRepository<IBrandRepository, Brand, MappingProfiles, BrandBusinessRules, BrandFakeData>
-    {
-        public BrandMockRepository(BrandFakeData fakeData) : base(fakeData) { }
-    }
+    public BrandMockRepository(BrandFakeData fakeData)
+        : base(fakeData) { }
 }

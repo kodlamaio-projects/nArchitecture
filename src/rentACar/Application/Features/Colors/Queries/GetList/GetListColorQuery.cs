@@ -24,8 +24,10 @@ public class GetListColorQuery : IRequest<GetListResponse<GetListColorListItemDt
 
         public async Task<GetListResponse<GetListColorListItemDto>> Handle(GetListColorQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<Color> colors = await _colorRepository.GetListAsync(index: request.PageRequest.Page,
-                                                                          size: request.PageRequest.PageSize);
+            IPaginate<Color> colors = await _colorRepository.GetListAsync(
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
             var mappedColorListModel = _mapper.Map<GetListResponse<GetListColorListItemDto>>(colors);
             return mappedColorListModel;
         }

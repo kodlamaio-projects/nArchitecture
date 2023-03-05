@@ -7,7 +7,6 @@ using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 using static Application.Features.Cars.Constants.CarsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Cars.Commands.DeliverRental;
 
@@ -15,7 +14,7 @@ public class DeliverRentalCarCommand : IRequest<DeliveredCarResponse>, ISecuredR
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, CarsOperationClaims.Admin, Write, CarsOperationClaims.Update };
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarsOperationClaims.Update };
 
     public class DeliverRentalCarCommandHandler : IRequestHandler<DeliverRentalCarCommand, DeliveredCarResponse>
     {
@@ -23,9 +22,7 @@ public class DeliverRentalCarCommand : IRequest<DeliveredCarResponse>, ISecuredR
         private readonly IMapper _mapper;
         private readonly CarBusinessRules _carBusinessRules;
 
-
-        public DeliverRentalCarCommandHandler(ICarRepository carRepository, CarBusinessRules carBusinessRules,
-                                              IMapper mapper)
+        public DeliverRentalCarCommandHandler(ICarRepository carRepository, CarBusinessRules carBusinessRules, IMapper mapper)
         {
             _carRepository = carRepository;
             _carBusinessRules = carBusinessRules;
@@ -40,7 +37,7 @@ public class DeliverRentalCarCommand : IRequest<DeliveredCarResponse>, ISecuredR
             Car? updatedCar = await _carRepository.GetAsync(c => c.Id == request.Id);
             updatedCar.CarState = CarState.Rented;
             await _carRepository.UpdateAsync(updatedCar);
-            var updatedCarDto = _mapper.Map<DeliveredCarResponse>(updatedCar);
+            DeliveredCarResponse? updatedCarDto = _mapper.Map<DeliveredCarResponse>(updatedCar);
             return updatedCarDto;
         }
     }

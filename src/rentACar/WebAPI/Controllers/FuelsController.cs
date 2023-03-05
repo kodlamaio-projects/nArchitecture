@@ -32,7 +32,7 @@ public class FuelsController : BaseController
     public async Task<IActionResult> Add([FromBody] CreateFuelCommand createFuelCommand)
     {
         CreatedFuelResponse result = await Mediator.Send(createFuelCommand);
-        return Created("", result);
+        return Created(uri: "", result);
     }
 
     [HttpPut]

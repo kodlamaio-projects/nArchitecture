@@ -21,8 +21,8 @@ public class Model : Entity
         Cars = new HashSet<Car>();
     }
 
-    public Model(int id, int brandId, int fuelId, int transmissionId, string name, decimal dailyPrice,
-                 string imageUrl) : this()
+    public Model(int id, int brandId, int fuelId, int transmissionId, string name, decimal dailyPrice, string imageUrl)
+        : this()
     {
         Id = id;
         BrandId = brandId;

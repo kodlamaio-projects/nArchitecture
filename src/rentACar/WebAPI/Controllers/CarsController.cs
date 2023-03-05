@@ -27,18 +27,15 @@ public class CarsController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
-        GetListCarQuery getListCarQuery = new()
-            { PageRequest = pageRequest };
+        GetListCarQuery getListCarQuery = new() { PageRequest = pageRequest };
         GetListResponse<GetListCarListItemDto> result = await Mediator.Send(getListCarQuery);
         return Ok(result);
     }
 
     [HttpPost("GetList/ByDynamic")]
-    public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest,
-                                                      [FromBody] DynamicQuery? dynamicQuery = null)
+    public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] DynamicQuery? dynamicQuery = null)
     {
-        GetListByDynamicCarQuery getListCarByDynamicQuery =
-            new() { PageRequest = pageRequest, DynamicQuery = dynamicQuery };
+        GetListByDynamicCarQuery getListCarByDynamicQuery = new() { PageRequest = pageRequest, DynamicQuery = dynamicQuery };
         GetListResponse<GetListByDynamicCarListItemDto> result = await Mediator.Send(getListCarByDynamicQuery);
         return Ok(result);
     }

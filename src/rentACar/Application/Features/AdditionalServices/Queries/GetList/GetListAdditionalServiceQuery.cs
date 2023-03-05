@@ -11,7 +11,8 @@ public class GetListAdditionalServiceQuery : IRequest<GetListResponse<GetListAdd
 {
     public PageRequest PageRequest { get; set; }
 
-    public class GetListAdditionalServiceQueryHandler : IRequestHandler<GetListAdditionalServiceQuery, GetListResponse<GetListAdditionalServiceListItemDto>>
+    public class GetListAdditionalServiceQueryHandler
+        : IRequestHandler<GetListAdditionalServiceQuery, GetListResponse<GetListAdditionalServiceListItemDto>>
     {
         private readonly IAdditionalServiceRepository _additionalServiceRepository;
         private readonly IMapper _mapper;
@@ -22,11 +23,16 @@ public class GetListAdditionalServiceQuery : IRequest<GetListResponse<GetListAdd
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListAdditionalServiceListItemDto>> Handle(GetListAdditionalServiceQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListAdditionalServiceListItemDto>> Handle(
+            GetListAdditionalServiceQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            IPaginate<AdditionalService> additionalServices = await _additionalServiceRepository.GetListAsync(index: request.PageRequest.Page,
-                                                                          size: request.PageRequest.PageSize);
-            GetListResponse<GetListAdditionalServiceListItemDto> mappedAdditionalServiceListModel = _mapper.Map<GetListResponse<GetListAdditionalServiceListItemDto>>(additionalServices);
+            IPaginate<AdditionalService> additionalServices = await _additionalServiceRepository.GetListAsync(
+                index: request.PageRequest.Page,
+                size: request.PageRequest.PageSize
+            );
+            var mappedAdditionalServiceListModel = _mapper.Map<GetListResponse<GetListAdditionalServiceListItemDto>>(additionalServices);
             return mappedAdditionalServiceListModel;
         }
     }

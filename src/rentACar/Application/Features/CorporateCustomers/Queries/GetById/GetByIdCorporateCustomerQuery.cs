@@ -10,28 +10,29 @@ public class GetByIdCorporateCustomerQuery : IRequest<GetByIdCorporateCustomerRe
 {
     public int Id { get; set; }
 
-    public class
-        GetByIdCorporateCustomerQueryHandler : IRequestHandler<GetByIdCorporateCustomerQuery, GetByIdCorporateCustomerResponse>
+    public class GetByIdCorporateCustomerQueryHandler : IRequestHandler<GetByIdCorporateCustomerQuery, GetByIdCorporateCustomerResponse>
     {
         private readonly ICorporateCustomerRepository _corporateCustomerRepository;
         private readonly IMapper _mapper;
         private readonly CorporateCustomerBusinessRules _corporateCustomerBusinessRules;
 
-        public GetByIdCorporateCustomerQueryHandler(ICorporateCustomerRepository corporateCustomerRepository,
-                                                    CorporateCustomerBusinessRules corporateCustomerBusinessRules,
-                                                    IMapper mapper)
+        public GetByIdCorporateCustomerQueryHandler(
+            ICorporateCustomerRepository corporateCustomerRepository,
+            CorporateCustomerBusinessRules corporateCustomerBusinessRules,
+            IMapper mapper
+        )
         {
             _corporateCustomerRepository = corporateCustomerRepository;
             _corporateCustomerBusinessRules = corporateCustomerBusinessRules;
             _mapper = mapper;
         }
 
-
-        public async Task<GetByIdCorporateCustomerResponse> Handle(GetByIdCorporateCustomerQuery request,
-                                                       CancellationToken cancellationToken)
+        public async Task<GetByIdCorporateCustomerResponse> Handle(
+            GetByIdCorporateCustomerQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            CorporateCustomer? corporateCustomer =
-                await _corporateCustomerRepository.GetAsync(b => b.Id == request.Id);
+            CorporateCustomer? corporateCustomer = await _corporateCustomerRepository.GetAsync(b => b.Id == request.Id);
             await _corporateCustomerBusinessRules.CorporateCustomerShouldBeExist(corporateCustomer);
             GetByIdCorporateCustomerResponse corporateCustomerDto = _mapper.Map<GetByIdCorporateCustomerResponse>(corporateCustomer);
             return corporateCustomerDto;

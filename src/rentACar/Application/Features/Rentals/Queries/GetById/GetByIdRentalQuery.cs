@@ -16,14 +16,12 @@ public class GetByIdRentalQuery : IRequest<GetByIdRentalResponse>
         private readonly IMapper _mapper;
         private readonly RentalBusinessRules _rentalBusinessRules;
 
-        public GetByIdRentalQueryHandler(IRentalRepository rentalRepository, RentalBusinessRules rentalBusinessRules,
-                                         IMapper mapper)
+        public GetByIdRentalQueryHandler(IRentalRepository rentalRepository, RentalBusinessRules rentalBusinessRules, IMapper mapper)
         {
             _rentalRepository = rentalRepository;
             _rentalBusinessRules = rentalBusinessRules;
             _mapper = mapper;
         }
-
 
         public async Task<GetByIdRentalResponse> Handle(GetByIdRentalQuery request, CancellationToken cancellationToken)
         {

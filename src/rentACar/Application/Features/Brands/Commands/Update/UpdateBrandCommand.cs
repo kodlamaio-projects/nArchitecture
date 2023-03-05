@@ -7,7 +7,6 @@ using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using static Application.Features.Brands.Constants.BrandsOperationClaims;
-using static Domain.Constants.OperationClaims;
 
 namespace Application.Features.Brands.Commands.Update;
 
@@ -18,7 +17,8 @@ public class UpdateBrandCommand : IRequest<UpdatedBrandResponse>, ISecuredReques
 
     public bool BypassCache { get; }
     public string CacheKey => "brands-list";
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, BrandsOperationClaims.Admin, Write, BrandsOperationClaims.Update };
+
+    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, BrandsOperationClaims.Update };
 
     public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, UpdatedBrandResponse>
     {
@@ -26,8 +26,7 @@ public class UpdateBrandCommand : IRequest<UpdatedBrandResponse>, ISecuredReques
         private readonly IMapper _mapper;
         private readonly BrandBusinessRules _brandBusinessRules;
 
-        public UpdateBrandCommandHandler(IBrandRepository brandRepository, IMapper mapper,
-                                         BrandBusinessRules brandBusinessRules)
+        public UpdateBrandCommandHandler(IBrandRepository brandRepository, IMapper mapper, BrandBusinessRules brandBusinessRules)
         {
             _brandRepository = brandRepository;
             _mapper = mapper;
@@ -43,7 +42,7 @@ public class UpdateBrandCommand : IRequest<UpdatedBrandResponse>, ISecuredReques
             await _brandBusinessRules.BrandNameCanNotBeDuplicatedWhenUpdated(brand);
 
             Brand updatedBrand = await _brandRepository.UpdateAsync(brand);
-            var response = _mapper.Map<UpdatedBrandResponse>(updatedBrand);
+            UpdatedBrandResponse? response = _mapper.Map<UpdatedBrandResponse>(updatedBrand);
             return response;
         }
     }

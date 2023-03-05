@@ -9,11 +9,10 @@ public class FindeksCreditRate : Entity
 
     public virtual Customer? Customer { get; set; }
 
-    public FindeksCreditRate()
-    {
-    }
+    public FindeksCreditRate() { }
 
-    public FindeksCreditRate(int id, int customerId, short score) : base(id)
+    public FindeksCreditRate(int id, int customerId, short score)
+        : base(id)
     {
         CustomerId = customerId;
         Score = score;
