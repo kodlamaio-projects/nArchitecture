@@ -14,10 +14,11 @@ public class DeleteBrandCommand : IRequest<DeletedBrandResponse>, ISecuredReques
 {
     public int Id { get; set; }
 
-    public bool BypassCache { get; }
-    public string CacheKey => "brands-list";
-
     public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, BrandsOperationClaims.Delete };
+
+    public bool BypassCache { get; }
+    public string? CacheKey { get; }
+    public string CacheGroupKey => "GetBrands";
 
     public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, DeletedBrandResponse>
     {

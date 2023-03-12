@@ -13,9 +13,11 @@ public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ISecuredReques
 {
     public string Name { get; set; }
 
-    public bool BypassCache { get; }
-    public string CacheKey => "brands-list";
     public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+
+    public bool BypassCache { get; }
+    public string? CacheKey { get; }
+    public string CacheGroupKey => "GetBrands";
 
     public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>
     {

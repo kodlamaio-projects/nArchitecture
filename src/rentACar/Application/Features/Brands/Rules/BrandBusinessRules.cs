@@ -30,16 +30,14 @@ public class BrandBusinessRules : BaseBusinessRules
 
     public async Task BrandNameCanNotBeDuplicatedWhenInserted(string name)
     {
-        Brand? result = await _brandRepository.GetAsync(x => string.Equals(x.Name.ToLower(), name.ToLower(), StringComparison.Ordinal));
+        Brand? result = await _brandRepository.GetAsync(x => x.Name.ToLower() == name.ToLower());
         if (result != null)
             throw new BusinessException(BrandsMessages.BrandNameExists);
     }
 
     public async Task BrandNameCanNotBeDuplicatedWhenUpdated(Brand brand)
     {
-        Brand? result = await _brandRepository.GetAsync(
-            x => x.Id != brand.Id && string.Equals(x.Name.ToLower(), brand.Name.ToLower(), StringComparison.Ordinal)
-        );
+        Brand? result = await _brandRepository.GetAsync(x => x.Id != brand.Id && x.Name.ToLower() == brand.Name.ToLower());
         if (result != null)
             throw new BusinessException(BrandsMessages.BrandNameExists);
     }

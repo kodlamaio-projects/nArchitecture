@@ -14,7 +14,8 @@ public class GetListModelQuery : IRequest<GetListResponse<GetListModelListItemDt
     public PageRequest PageRequest { get; set; }
 
     public bool BypassCache { get; set; }
-    public string CacheKey => "models-list";
+    public string CacheKey => $"GetListModels({PageRequest.Page},{PageRequest.PageSize})";
+    public string CacheGroupKey => "GetModels";
     public TimeSpan? SlidingExpiration { get; set; }
 
     public class GetListModelQueryHandler : IRequestHandler<GetListModelQuery, GetListResponse<GetListModelListItemDto>>
