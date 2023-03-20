@@ -14,17 +14,16 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         builder.Property(o => o.Name).HasColumnName("Name");
         builder.HasIndex(indexExpression: o => o.Name, name: "UK_OperationClaims_Name").IsUnique();
 
-        int id = 1;
-        HashSet<OperationClaim> operationClaimSeeds = new();
+        builder.HasData(getSeeds());
+    }
 
-        #region OperationClaimSeedItems
+    private HashSet<OperationClaim> getSeeds()
+    {
+        int id = 0;
+        HashSet<OperationClaim> seeds = new();
 
-        operationClaimSeeds.Add(new OperationClaim { Id = id++, Name = Admin });
+        seeds.Add(new OperationClaim { Id = ++id, Name = Admin });
 
-        //TODO: add feature operation claim seeds
-
-        #endregion
-
-        builder.HasData(operationClaimSeeds);
+        return seeds;
     }
 }
