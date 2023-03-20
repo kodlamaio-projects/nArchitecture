@@ -2,6 +2,7 @@
 using AutoMapper;
 using Core.Application.Pipelines.Caching;
 using Core.Application.Requests;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;

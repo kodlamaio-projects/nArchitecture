@@ -7,6 +7,7 @@ using Application.Features.FindeksCreditRates.Queries.GetByCustomerIdFindeksCred
 using Application.Features.FindeksCreditRates.Queries.GetByIdFindeksCreditRate;
 using Application.Features.FindeksCreditRates.Queries.GetListFindeksCreditRate;
 using Core.Application.Requests;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers.Dtos;

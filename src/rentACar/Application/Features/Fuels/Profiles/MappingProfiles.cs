@@ -4,6 +4,7 @@ using Application.Features.Fuels.Commands.Update;
 using Application.Features.Fuels.Queries.GetById;
 using Application.Features.Fuels.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 

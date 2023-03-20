@@ -5,6 +5,7 @@ using Application.Features.CorporateCustomers.Queries.GetByCustomerId;
 using Application.Features.CorporateCustomers.Queries.GetById;
 using Application.Features.CorporateCustomers.Queries.GetList;
 using Core.Application.Requests;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 

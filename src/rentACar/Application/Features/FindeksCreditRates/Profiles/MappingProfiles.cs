@@ -7,6 +7,7 @@ using Application.Features.FindeksCreditRates.Commands.UpdateFromService;
 using Application.Features.FindeksCreditRates.Queries.GetByIdFindeksCreditRate;
 using Application.Features.FindeksCreditRates.Queries.GetListFindeksCreditRate;
 using AutoMapper;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 

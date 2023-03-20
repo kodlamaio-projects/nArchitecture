@@ -4,6 +4,7 @@ using Application.Features.Fuels.Commands.Update;
 using Application.Features.Fuels.Queries.GetById;
 using Application.Features.Fuels.Queries.GetList;
 using Core.Application.Requests;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 

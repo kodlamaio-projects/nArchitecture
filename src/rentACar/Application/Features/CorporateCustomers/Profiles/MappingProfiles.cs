@@ -5,6 +5,7 @@ using Application.Features.CorporateCustomers.Queries.GetByCustomerId;
 using Application.Features.CorporateCustomers.Queries.GetById;
 using Application.Features.CorporateCustomers.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 

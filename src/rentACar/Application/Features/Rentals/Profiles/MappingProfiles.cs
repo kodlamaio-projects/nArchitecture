@@ -5,6 +5,7 @@ using Application.Features.Rentals.Commands.Update;
 using Application.Features.Rentals.Queries.GetById;
 using Application.Features.Rentals.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 

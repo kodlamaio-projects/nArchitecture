@@ -1,5 +1,6 @@
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
