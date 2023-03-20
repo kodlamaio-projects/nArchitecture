@@ -12,7 +12,7 @@ public class CreateColorCommand : IRequest<CreatedColorResponse>, ISecuredReques
 {
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateColorCommandHandler : IRequestHandler<CreateColorCommand, CreatedColorResponse>
     {

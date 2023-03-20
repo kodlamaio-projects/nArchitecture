@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.Invoices.Commands.Update;
 
-public class UpdatedInvoiceResponse : IDto
+public class UpdatedInvoiceResponse : IResponse
 {
     public int Id { get; set; }
     public int CustomerId { get; set; }

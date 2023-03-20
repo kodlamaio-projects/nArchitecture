@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.Invoices.Queries.GetById;
 
-public class GetByIdInvoiceResponse : IDto
+public class GetByIdInvoiceResponse : IResponse
 {
     public int CustomerId { get; set; }
     public string No { get; set; }

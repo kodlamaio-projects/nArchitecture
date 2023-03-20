@@ -13,7 +13,7 @@ public class DeleteCarDamageCommand : IRequest<DeletedCarDamageResponse>, ISecur
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarDamagesOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, CarDamagesOperationClaims.Delete };
 
     public class DeleteCarDamageCommandHandler : IRequestHandler<DeleteCarDamageCommand, DeletedCarDamageResponse>
     {

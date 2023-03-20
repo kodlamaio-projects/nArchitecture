@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Models.Queries.GetById;
 
-public class GetByIdModelResponse : IDto
+public class GetByIdModelResponse : IResponse
 {
     public int Id { get; set; }
     public int BrandId { get; set; }

@@ -15,7 +15,7 @@ public class UpdateRentalBranchCommand : IRequest<UpdatedRentalBranchResponse>, 
     public int Id { get; set; }
     public City City { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, RentalBranchesOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, RentalBranchesOperationClaims.Update };
 
     public class UpdateRentalBranchCommandHandler : IRequestHandler<UpdateRentalBranchCommand, UpdatedRentalBranchResponse>
     {

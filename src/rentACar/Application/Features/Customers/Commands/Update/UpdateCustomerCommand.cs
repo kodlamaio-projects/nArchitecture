@@ -14,7 +14,7 @@ public class UpdateCustomerCommand : IRequest<UpdatedCustomerResponse>, ISecured
     public int Id { get; set; }
     public int UserId { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CustomersOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, CustomersOperationClaims.Update };
 
     public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, UpdatedCustomerResponse>
     {

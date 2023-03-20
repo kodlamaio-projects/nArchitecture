@@ -13,7 +13,7 @@ public class UpdateTransmissionCommand : IRequest<UpdatedTransmissionResponse>, 
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, TransmissionsOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, TransmissionsOperationClaims.Update };
 
     public class UpdateTransmissionCommandHandler : IRequestHandler<UpdateTransmissionCommand, UpdatedTransmissionResponse>
     {

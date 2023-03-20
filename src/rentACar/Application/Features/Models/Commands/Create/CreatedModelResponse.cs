@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Models.Commands.Create;
 
-public class CreatedModelResponse : IDto
+public class CreatedModelResponse : IResponse
 {
     public int Id { get; set; }
     public int BrandId { get; set; }

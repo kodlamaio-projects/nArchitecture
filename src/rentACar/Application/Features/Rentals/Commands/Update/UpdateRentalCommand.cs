@@ -22,7 +22,7 @@ public class UpdateRentalCommand : IRequest<UpdatedRentalResponse>, ISecuredRequ
     public int RentStartKilometer { get; set; }
     public int? RentEndKilometer { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, RentalsOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, RentalsOperationClaims.Update };
 
     public class UpdateRentalCommandHandler : IRequestHandler<UpdateRentalCommand, UpdatedRentalResponse>
     {

@@ -21,7 +21,7 @@ public class UpdateCarCommand : IRequest<UpdatedCarResponse>, ISecuredRequest
     public string Plate { get; set; }
     public short MinFindeksCreditRate { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarsOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, CarsOperationClaims.Update };
 
     public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand, UpdatedCarResponse>
     {

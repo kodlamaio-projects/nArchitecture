@@ -13,7 +13,7 @@ public class DeleteInvoiceCommand : IRequest<DeletedInvoiceResponse>, ISecuredRe
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, InvoicesOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, InvoicesOperationClaims.Delete };
 
     public class DeleteInvoiceCommandHandler : IRequestHandler<DeleteInvoiceCommand, DeletedInvoiceResponse>
     {

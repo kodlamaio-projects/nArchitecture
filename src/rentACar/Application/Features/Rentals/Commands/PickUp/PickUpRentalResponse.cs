@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Rentals.Commands.PickUp;
 
-public class PickUpRentalResponse : IDto
+public class PickUpRentalResponse : IResponse
 {
     public int Id { get; set; }
     public int CarId { get; set; }

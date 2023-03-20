@@ -1,7 +1,7 @@
+using Application.Features.OperationClaims.Constants;
 using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Domain.Constants.OperationClaims;
 
 namespace Persistence.EntityConfigurations;
 
@@ -22,7 +22,7 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         int id = 0;
         HashSet<OperationClaim> seeds = new();
 
-        seeds.Add(new OperationClaim { Id = ++id, Name = Admin });
+        seeds.Add(new OperationClaim { Id = ++id, Name = GeneralOperationClaims.Admin });
 
         return seeds;
     }

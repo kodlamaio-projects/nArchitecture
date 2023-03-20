@@ -13,7 +13,7 @@ public class DeleteAdditionalServiceCommand : IRequest<DeletedAdditionalServiceR
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, AdditionalServicesOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, AdditionalServicesOperationClaims.Delete };
 
     public class DeleteAdditionalServiceCommandHandler : IRequestHandler<DeleteAdditionalServiceCommand, DeletedAdditionalServiceResponse>
     {

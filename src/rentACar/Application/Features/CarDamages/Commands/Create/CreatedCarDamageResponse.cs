@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.CarDamages.Commands.Create;
 
-public class CreatedCarDamageResponse : IDto
+public class CreatedCarDamageResponse : IResponse
 {
     public int Id { get; set; }
     public int CarId { get; set; }

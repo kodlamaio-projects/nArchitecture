@@ -17,7 +17,7 @@ public class UpdateIndividualCustomerCommand : IRequest<UpdatedIndividualCustome
     public string LastName { get; set; }
     public string NationalIdentity { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, IndividualCustomersOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, IndividualCustomersOperationClaims.Update };
 
     public class UpdateIndividualCustomerCommandHandler
         : IRequestHandler<UpdateIndividualCustomerCommand, UpdatedIndividualCustomerResponse>

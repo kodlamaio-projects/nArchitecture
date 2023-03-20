@@ -15,7 +15,7 @@ public class CreateCorporateCustomerCommand : IRequest<CreatedCorporateCustomerR
     public string CompanyName { get; set; }
     public string TaxNo { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateCorporateCustomerCommandHandler : IRequestHandler<CreateCorporateCustomerCommand, CreatedCorporateCustomerResponse>
     {

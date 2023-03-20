@@ -16,7 +16,7 @@ public class UpdateCorporateCustomerCommand : IRequest<UpdatedCorporateCustomerR
     public string CompanyName { get; set; }
     public string TaxNo { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CorporateCustomersOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, CorporateCustomersOperationClaims.Update };
 
     public class UpdateCorporateCustomerCommandHandler : IRequestHandler<UpdateCorporateCustomerCommand, UpdatedCorporateCustomerResponse>
     {

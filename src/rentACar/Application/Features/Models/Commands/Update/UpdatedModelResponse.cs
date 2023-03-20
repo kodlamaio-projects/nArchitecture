@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Models.Commands.Update;
 
-public class UpdatedModelResponse : IDto
+public class UpdatedModelResponse : IResponse
 {
     public int Id { get; set; }
     public int BrandId { get; set; }

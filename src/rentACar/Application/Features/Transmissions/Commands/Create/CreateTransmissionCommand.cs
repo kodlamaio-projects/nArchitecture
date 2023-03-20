@@ -12,7 +12,7 @@ public class CreateTransmissionCommand : IRequest<CreatedTransmissionResponse>, 
 {
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateTransmissionCommandHandler : IRequestHandler<CreateTransmissionCommand, CreatedTransmissionResponse>
     {

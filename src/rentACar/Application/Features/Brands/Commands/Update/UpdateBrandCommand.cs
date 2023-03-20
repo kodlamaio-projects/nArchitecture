@@ -15,11 +15,11 @@ public class UpdateBrandCommand : IRequest<UpdatedBrandResponse>, ISecuredReques
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, BrandsOperationClaims.Update };
-
     public bool BypassCache { get; }
     public string? CacheKey { get; }
     public string CacheGroupKey => "GetBrands";
+
+    public string[] Roles => new[] { Admin, Write, BrandsOperationClaims.Update };
 
     public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, UpdatedBrandResponse>
     {

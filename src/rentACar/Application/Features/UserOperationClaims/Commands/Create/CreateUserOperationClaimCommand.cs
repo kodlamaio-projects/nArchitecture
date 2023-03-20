@@ -13,7 +13,7 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
     public int UserId { get; set; }
     public int OperationClaimId { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateUserOperationClaimCommandHandler
         : IRequestHandler<CreateUserOperationClaimCommand, CreatedUserOperationClaimResponse>

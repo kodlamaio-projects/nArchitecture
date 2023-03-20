@@ -1,9 +1,9 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 using Domain.Enums;
 
 namespace Application.Features.Cars.Commands.DeliverRental;
 
-public class DeliveredCarResponse : IDto
+public class DeliveredCarResponse : IResponse
 {
     public int Id { get; set; }
     public int ColorId { get; set; }

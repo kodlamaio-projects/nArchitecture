@@ -12,7 +12,7 @@ public class DeleteTransmissionCommand : IRequest<DeletedTransmissionResponse>, 
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, TransmissionsOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, TransmissionsOperationClaims.Delete };
 
     public class DeleteTransmissionCommandHandler : IRequestHandler<DeleteTransmissionCommand, DeletedTransmissionResponse>
     {

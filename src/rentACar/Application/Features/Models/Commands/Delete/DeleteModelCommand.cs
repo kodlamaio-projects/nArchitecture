@@ -13,11 +13,11 @@ public class DeleteModelCommand : IRequest<DeletedModelResponse>, ISecuredReques
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, ModelsOperationClaims.Delete };
-
     public bool BypassCache { get; }
     public string? CacheKey { get; }
     public string CacheGroupKey => "GetModels";
+
+    public string[] Roles => new[] { Admin, Write, ModelsOperationClaims.Delete };
 
     public class DeleteModelCommandHandler : IRequestHandler<DeleteModelCommand, DeletedModelResponse>
     {

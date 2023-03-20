@@ -18,7 +18,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, UsersOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, UsersOperationClaims.Update };
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>
     {

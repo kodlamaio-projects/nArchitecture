@@ -19,7 +19,7 @@ public class CreateCarCommand : IRequest<CreatedCarResponse>, ISecuredRequest
     public string Plate { get; set; }
     public short MinFindeksCreditRate { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, CreatedCarResponse>
     {

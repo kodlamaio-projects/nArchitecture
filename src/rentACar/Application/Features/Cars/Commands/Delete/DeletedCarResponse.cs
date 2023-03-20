@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Cars.Commands.Delete;
 
-public class DeletedCarResponse : IDto
+public class DeletedCarResponse : IResponse
 {
     public int Id { get; set; }
 }

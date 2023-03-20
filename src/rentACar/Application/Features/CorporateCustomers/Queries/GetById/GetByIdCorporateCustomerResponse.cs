@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.CorporateCustomers.Queries.GetById;
 
-public class GetByIdCorporateCustomerResponse : IDto
+public class GetByIdCorporateCustomerResponse : IResponse
 {
     public int Id { get; set; }
     public string CompanyName { get; set; }

@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Rentals.Queries.GetById;
 
-public class GetByIdRentalResponse : IDto
+public class GetByIdRentalResponse : IResponse
 {
     public int Id { get; set; }
     public int CarId { get; set; }

@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.IndividualCustomers.Queries.GetById;
 
-public class GetByIdIndividualCustomerResponse : IDto
+public class GetByIdIndividualCustomerResponse : IResponse
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

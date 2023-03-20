@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Rentals.Commands.Update;
 
-public class UpdatedRentalResponse : IDto
+public class UpdatedRentalResponse : IResponse
 {
     public int Id { get; set; }
     public int CarId { get; set; }

@@ -1,8 +1,8 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 
 namespace Application.Features.Rentals.Commands.Create;
 
-public class CreatedRentalResponse : IDto
+public class CreatedRentalResponse : IResponse
 {
     public int Id { get; set; }
     public string CarModelBrandName { get; set; }

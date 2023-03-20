@@ -13,7 +13,7 @@ public class UpdateFuelCommand : IRequest<UpdatedFuelResponse>, ISecuredRequest
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, FuelsOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, FuelsOperationClaims.Delete };
 
     public class UpdateFuelCommandHandler : IRequestHandler<UpdateFuelCommand, UpdatedFuelResponse>
     {

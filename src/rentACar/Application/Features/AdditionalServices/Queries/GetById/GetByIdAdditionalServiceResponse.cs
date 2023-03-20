@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.AdditionalServices.Queries.GetById;
 
-public class GetByIdAdditionalServiceResponse : IDto
+public class GetByIdAdditionalServiceResponse : IResponse
 {
     public int Id { get; set; }
     public string Name { get; set; }

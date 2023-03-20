@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.Users.Commands.Create;
 
-public class CreatedUserResponse : IDto
+public class CreatedUserResponse : IResponse
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

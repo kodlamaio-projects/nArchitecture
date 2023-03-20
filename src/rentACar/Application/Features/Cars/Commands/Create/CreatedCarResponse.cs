@@ -1,9 +1,9 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 using Domain.Enums;
 
 namespace Application.Features.Cars.Commands.Create;
 
-public class CreatedCarResponse : IDto
+public class CreatedCarResponse : IResponse
 {
     public int Id { get; set; }
     public int ColorId { get; set; }

@@ -14,7 +14,7 @@ public class DeliverRentalCarCommand : IRequest<DeliveredCarResponse>, ISecuredR
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarsOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, CarsOperationClaims.Update };
 
     public class DeliverRentalCarCommandHandler : IRequestHandler<DeliverRentalCarCommand, DeliveredCarResponse>
     {

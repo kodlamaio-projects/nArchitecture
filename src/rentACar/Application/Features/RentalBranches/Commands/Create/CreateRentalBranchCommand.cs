@@ -13,7 +13,7 @@ public class CreateRentalBranchCommand : IRequest<CreatedRentalBranchResponse>, 
 {
     public City City { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateRentalBranchCommandHandler : IRequestHandler<CreateRentalBranchCommand, CreatedRentalBranchResponse>
     {

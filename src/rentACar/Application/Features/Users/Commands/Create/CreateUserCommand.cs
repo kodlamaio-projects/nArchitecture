@@ -16,7 +16,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserResponse>
     {

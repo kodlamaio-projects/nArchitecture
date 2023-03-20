@@ -14,7 +14,7 @@ public class UpdateColorCommand : IRequest<UpdatedColorResponse>, ISecuredReques
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, ColorsOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, ColorsOperationClaims.Update };
 
     public class UpdateColorCommandHandler : IRequestHandler<UpdateColorCommand, UpdatedColorResponse>
     {

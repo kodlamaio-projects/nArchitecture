@@ -16,7 +16,7 @@ public class UpdateCarDamageCommand : IRequest<UpdatedCarDamageResponse>, ISecur
     public string DamageDescription { get; set; }
     public bool IsFixed { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarDamagesOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, CarDamagesOperationClaims.Update };
 
     public class UpdateCarDamageCommandHandler : IRequestHandler<UpdateCarDamageCommand, UpdatedCarDamageResponse>
     {

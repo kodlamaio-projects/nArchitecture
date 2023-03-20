@@ -20,7 +20,7 @@ public class UpdateInvoiceCommand : IRequest<UpdatedInvoiceResponse>, ISecuredRe
     public short TotalRentalDate { get; set; }
     public decimal RentalPrice { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, InvoicesOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, InvoicesOperationClaims.Update };
 
     public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand, UpdatedInvoiceResponse>
     {

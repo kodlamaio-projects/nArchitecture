@@ -18,11 +18,11 @@ public class CreateModelCommand : IRequest<CreatedModelResponse>, ISecuredReques
     public int FuelId { get; set; }
     public string ImageUrl { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
-
     public bool BypassCache { get; }
     public string? CacheKey { get; }
     public string CacheGroupKey => "GetModels";
+
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateModelCommandHandler : IRequestHandler<CreateModelCommand, CreatedModelResponse>
     {

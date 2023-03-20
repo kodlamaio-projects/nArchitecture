@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.Invoices.Commands.Create;
 
-public class CreatedInvoiceResponse : IDto
+public class CreatedInvoiceResponse : IResponse
 {
     public int Id { get; set; }
     public int CustomerId { get; set; }

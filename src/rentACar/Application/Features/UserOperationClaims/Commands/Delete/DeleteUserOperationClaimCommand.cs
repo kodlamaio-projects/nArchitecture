@@ -13,7 +13,7 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, UserOperationClaimsOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, UserOperationClaimsOperationClaims.Delete };
 
     public class DeleteUserOperationClaimCommandHandler
         : IRequestHandler<DeleteUserOperationClaimCommand, DeletedUserOperationClaimResponse>

@@ -14,7 +14,7 @@ public class MaintainCarCommand : IRequest<MaintainedCarResponse>, ISecuredReque
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, CarsOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, CarsOperationClaims.Update };
 
     public class MaintainCarCommandHandler : IRequestHandler<MaintainCarCommand, MaintainedCarResponse>
     {

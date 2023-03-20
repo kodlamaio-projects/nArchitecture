@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Brands.Commands.Create;
+﻿using Core.Application.Responses;
 
-public class CreatedBrandResponse
+namespace Application.Features.Brands.Commands.Create;
+
+public class CreatedBrandResponse : IResponse
 {
     public int Id { get; set; }
     public string Name { get; set; }

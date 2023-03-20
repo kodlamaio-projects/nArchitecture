@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.Users.Commands.Update;
 
-public class UpdatedUserResponse : IDto
+public class UpdatedUserResponse : IResponse
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

@@ -1,11 +1,11 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 using Core.Security.Entities;
 using Core.Security.Enums;
 using Core.Security.JWT;
 
 namespace Application.Features.Auth.Commands.Login;
 
-public class LoggedResponse : IDto
+public class LoggedResponse : IResponse
 {
     public AccessToken? AccessToken { get; set; }
     public RefreshToken? RefreshToken { get; set; }

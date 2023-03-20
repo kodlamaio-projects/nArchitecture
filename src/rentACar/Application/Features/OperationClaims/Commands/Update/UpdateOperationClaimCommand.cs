@@ -14,7 +14,7 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, OperationClaimsOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, OperationClaimsOperationClaims.Update };
 
     public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, UpdatedOperationClaimResponse>
     {

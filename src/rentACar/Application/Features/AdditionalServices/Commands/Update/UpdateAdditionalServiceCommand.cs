@@ -15,7 +15,7 @@ public class UpdateAdditionalServiceCommand : IRequest<UpdatedAdditionalServiceR
     public string Name { get; set; }
     public decimal DailyPrice { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, AdditionalServicesOperationClaims.Update };
+    public string[] Roles => new[] { Admin, Write, AdditionalServicesOperationClaims.Update };
 
     public class UpdateAdditionalServiceCommandHandler : IRequestHandler<UpdateAdditionalServiceCommand, UpdatedAdditionalServiceResponse>
     {

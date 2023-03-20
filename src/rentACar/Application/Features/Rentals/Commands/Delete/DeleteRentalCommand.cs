@@ -12,7 +12,7 @@ public class DeleteRentalCommand : IRequest<DeletedRentalResponse>, ISecuredRequ
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, RentalsOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, RentalsOperationClaims.Delete };
 
     public class DeleteRentalCommandHandler : IRequestHandler<DeleteRentalCommand, DeletedRentalResponse>
     {

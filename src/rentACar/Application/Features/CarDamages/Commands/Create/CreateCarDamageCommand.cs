@@ -13,7 +13,7 @@ public class CreateCarDamageCommand : IRequest<CreatedCarDamageResponse>, ISecur
     public int CarId { get; set; }
     public string DamageDescription { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateCarDamageCommandHandler : IRequestHandler<CreateCarDamageCommand, CreatedCarDamageResponse>
     {

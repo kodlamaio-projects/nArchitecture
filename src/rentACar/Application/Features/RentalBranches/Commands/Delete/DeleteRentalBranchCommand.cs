@@ -13,7 +13,7 @@ public class DeleteRentalBranchCommand : IRequest<DeletedRentalBranchResponse>, 
 {
     public int Id { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, RentalBranchesOperationClaims.Delete };
+    public string[] Roles => new[] { Admin, Write, RentalBranchesOperationClaims.Delete };
 
     public class DeleteRentalBranchCommandHandler : IRequestHandler<DeleteRentalBranchCommand, DeletedRentalBranchResponse>
     {

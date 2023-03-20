@@ -1,8 +1,8 @@
-using Core.Application.Dtos;
+using Core.Application.Responses;
 
 namespace Application.Features.IndividualCustomers.Commands.Update;
 
-public class UpdatedIndividualCustomerResponse : IDto
+public class UpdatedIndividualCustomerResponse : IResponse
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

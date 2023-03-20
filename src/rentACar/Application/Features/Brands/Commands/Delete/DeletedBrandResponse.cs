@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Brands.Commands.Delete;
+﻿using Core.Application.Responses;
 
-public class DeletedBrandResponse
+namespace Application.Features.Brands.Commands.Delete;
+
+public class DeletedBrandResponse : IResponse
 {
     public int Id { get; set; }
 }

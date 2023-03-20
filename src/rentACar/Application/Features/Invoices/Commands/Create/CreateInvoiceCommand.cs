@@ -18,7 +18,7 @@ public class CreateInvoiceCommand : IRequest<CreatedInvoiceResponse>, ISecuredRe
     public short TotalRentalDate { get; set; }
     public decimal RentalPrice { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, CreatedInvoiceResponse>
     {

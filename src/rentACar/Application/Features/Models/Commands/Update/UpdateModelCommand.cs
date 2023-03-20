@@ -19,11 +19,11 @@ public class UpdateModelCommand : IRequest<UpdatedModelResponse>, ISecuredReques
     public decimal DailyPrice { get; set; }
     public string ImageUrl { get; set; }
 
-    public string[] Roles => new[] { Domain.Constants.OperationClaims.Admin, Admin, Write, ModelsOperationClaims.Update };
-
     public bool BypassCache { get; }
     public string? CacheKey { get; }
     public string CacheGroupKey => "GetModels";
+
+    public string[] Roles => new[] { Admin, Write, ModelsOperationClaims.Update };
 
     public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand, UpdatedModelResponse>
     {

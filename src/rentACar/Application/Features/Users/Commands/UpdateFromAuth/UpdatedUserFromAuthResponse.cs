@@ -1,9 +1,9 @@
-﻿using Core.Application.Dtos;
+﻿using Core.Application.Responses;
 using Core.Security.JWT;
 
 namespace Application.Features.Users.Commands.UpdateFromAuth;
 
-public class UpdatedUserFromAuthResponse : IDto
+public class UpdatedUserFromAuthResponse : IResponse
 {
     public int Id { get; set; }
     public string FirstName { get; set; }
