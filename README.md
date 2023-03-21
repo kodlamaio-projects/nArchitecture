@@ -49,6 +49,11 @@ To get a local copy up and running follow these simple steps.
 2. Configure `appsettings.json` in WebAPI.
 3. Run `Update-Database` command with Package Manager Console in WebAPI to create tables in sql server.
 
+- Run the following command to update submodules
+  ```sh
+   git submodule update --remote
+   ```
+
 ## 🚀 Usage
 
 1. Run example WebAPI project `dotnet run --project src\rentACar\WebAPI`
