@@ -44,7 +44,7 @@ To get a local copy up and running follow these simple steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/kodlamaio-projects/nArchitecture.RentACarProject.git
+   git clone --recurse-submodules https://github.com/kodlamaio-projects/nArchitecture.RentACarProject.git
    ```
 2. Configure `appsettings.json` in WebAPI.
 3. Run `Update-Database` command with Package Manager Console in WebAPI to create tables in sql server.
