@@ -1,26 +1,26 @@
 <p align="center">
-  <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/graphs/contributors"><img src="https://img.shields.io/github/contributors/kodlamaio-projects/nArchitecture.RentACarProject.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/network/members"><img src="https://img.shields.io/github/forks/kodlamaio-projects/nArchitecture.RentACarProject.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/stargazers"><img src="https://img.shields.io/github/stars/kodlamaio-projects/nArchitecture.RentACarProject.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/issues"><img src="https://img.shields.io/github/issues/kodlamaio-projects/nArchitecture.RentACarProject.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/blob/master/LICENSE"><img src="https://img.shields.io/github/license/kodlamaio-projects/nArchitecture.RentACarProject.svg?style=for-the-badge"></a>
+  <a href="https://github.com/kodlamaio-projects/nArchitecture/graphs/contributors"><img src="https://img.shields.io/github/contributors/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/kodlamaio-projects/nArchitecture/network/members"><img src="https://img.shields.io/github/forks/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/kodlamaio-projects/nArchitecture/stargazers"><img src="https://img.shields.io/github/stars/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/kodlamaio-projects/nArchitecture/issues"><img src="https://img.shields.io/github/issues/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/kodlamaio-projects/nArchitecture/blob/master/LICENSE"><img src="https://img.shields.io/github/license/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
 </p><br />
 
 <p align="center">
-  <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject"><img src="https://user-images.githubusercontent.com/53148314/194872467-827dc967-acee-4bca-88a2-59ed5695bebf.png" height="125"></a>
-  <h3 align="center">nArchitecture RentACar Project
+  <a href="https://github.com/kodlamaio-projects/nArchitecture"><img src="https://user-images.githubusercontent.com/53148314/194872467-827dc967-acee-4bca-88a2-59ed5695bebf.png" height="125"></a>
+  <h3 align="center">nArchitecture Project
 </h3>
   <p align="center">
     <!-- PROJECT_DESCRIPTION -->
     <!-- <br />
-    <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/kodlamaio-projects/nArchitecture"><strong>Explore the docs »</strong></a>
     <br /> -->
     <!-- <br />
-    <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject">View Demo</a>
+    <a href="https://github.com/kodlamaio-projects/nArchitecture">View Demo</a>
     · -->
-    <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/issues">Report Bug</a>
+    <a href="https://github.com/kodlamaio-projects/nArchitecture/issues">Report Bug</a>
     ·
-    <a href="https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/issues">Request Feature</a>
+    <a href="https://github.com/kodlamaio-projects/nArchitecture/issues">Request Feature</a>
   </p>
 </p>
 
@@ -44,7 +44,7 @@ To get a local copy up and running follow these simple steps.
 
 1. Clone the repo
    ```sh
-   git clone --recurse-submodules https://github.com/kodlamaio-projects/nArchitecture.RentACarProject.git
+   git clone --recurse-submodules https://github.com/kodlamaio-projects/nArchitecture.git
    ```
 2. Configure `appsettings.json` in WebAPI.
 3. Run `Update-Database` command with Package Manager Console in WebAPI to create tables in sql server.
@@ -70,7 +70,7 @@ To get a local copy up and running follow these simple steps.
 
 ## 🚧 Roadmap
 
-See the [open issues](https://github.com/kodlamaio-projects/nArchitecture.RentACarProject/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/kodlamaio-projects/nArchitecture/issues) for a list of proposed features (and known issues).
 
 ## 🤝 Contributing
 
@@ -89,7 +89,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📧 Contact
 
-**Project Link:** [https://github.com/kodlamaio-projects/nArchitecture.RentACarProject](https://github.com/kodlamaio-projects/nArchitecture.RentACarProject)
+**Project Link:** [https://github.com/kodlamaio-projects/nArchitecture](https://github.com/kodlamaio-projects/nArchitecture)
 
 <!-- ## 🙏 Acknowledgements
 - []() -->

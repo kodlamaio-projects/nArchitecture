@@ -7,7 +7,6 @@ public sealed class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddBrandServices();
-        services.AddColorServices();
+        services.AddUsersServices();
     }
 }
