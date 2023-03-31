@@ -23,21 +23,6 @@ public class BaseDbContext : DbContext
         Configuration = configuration;
     }
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
-    {
-        IEnumerable<EntityEntry<Entity>> entries = ChangeTracker
-            .Entries<Entity>()
-            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
-
-        foreach (EntityEntry<Entity> entry in entries)
-            _ = entry.State switch
-            {
-                EntityState.Added => entry.Entity.CreatedDate = DateTime.UtcNow,
-                EntityState.Modified => entry.Entity.UpdatedDate = DateTime.UtcNow
-            };
-        return await base.SaveChangesAsync(cancellationToken);
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

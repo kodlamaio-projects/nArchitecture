@@ -7,7 +7,7 @@ using Core.Test.Application.Repositories;
 
 namespace Application.Tests.Mocks.Repositories;
 
-public class UserMockRepository : BaseMockRepository<IUserRepository, User, MappingProfiles, UserBusinessRules, UserFakeData>
+public class UserMockRepository : BaseMockRepository<IUserRepository, User, int, MappingProfiles, UserBusinessRules, UserFakeData>
 {
     public UserMockRepository(UserFakeData fakeData)
         : base(fakeData) { }

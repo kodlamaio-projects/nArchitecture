@@ -5,7 +5,7 @@ using Core.Test.Application.FakeData;
 
 namespace Application.Tests.Mocks.FakeData;
 
-public class UserFakeData : BaseFakeData<User>
+public class UserFakeData : BaseFakeData<User, int>
 {
     public override List<User> CreateFakeData()
     {
