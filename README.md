@@ -76,12 +76,35 @@ See the [open issues](https://github.com/kodlamaio-projects/nArchitecture/issues
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b <feature>/<amazingFeature>'`)
-3. Commit your Changes (`git commit -m '<semanticCommitType>(<scope>): <amazingFeature>'`)
+1. Fork the project and clone your local machine
+2. Create your Feature Branch (`git checkout -b <Feature>/<AmazingFeature>'`)
+3. Develop
+4. Commit your Changes (`git add . && git commit -m '<SemanticCommitType>(<Scope>): <AmazingFeature>'`)
    💡 Check [Semantic Commit Messages](./docs/Semantic%20Commit%20Messages.md)
-4. Push to the Branch (`git push origin <feature>/<amazingFeature>`)
-5. Open a Pull Request
+5. Push to the Branch (`git push origin <Feature>/<AmazingFeature>`)
+6. Open a Pull Request
+
+Contributing on Core Packages With This Repo:
+
+1. Fork the [nArchitecture.Core](https://github.com/kodlamaio-projects/nArchitecture.Core) project
+2. Locate to `src/corePackages` path (`cd .\src\corePackages\`)
+3. Add your forked nArchitecture.Core repository remote address (`git remote add <YourUserName> https://github.com/<YourUserName>/nArchitecture.Core.git`)
+4. Create your Feature Branch (`git checkout -b <Feature>/<AmazingFeature>'`)
+5. Develop
+6. Commit your changes (`git add . && git commit -m '<SemanticCommitType>(<Scope>): <AmazingFeature>'`)
+   💡 Check [Semantic Commit Messages](./docs/Semantic%20Commit%20Messages.md)
+7. Push to the branch (`git push <YourUserName> --set-upstream HEAD:refs/heads/<Feature>/<AmazingFeature>`)
+8. Open a Pull Request
+
+If your pull request is accepted and merged:
+
+9. Locate to `src/corePackages` path (`cd .\src\corePackages\`)
+10. Switch to main branch `git checkout main`
+11. Locate root path `/` path (`cd ..\..\`)
+12. Pull repo and submodule `git submodule update --remote`
+13. Commit your changes (`git add . && git commit -m 'build(corePackages): update submodule'`)
+14. Push to the Branch (`git push origin <Feature>/<AmazingFeature>`)
+15. Open a Pull Request
 
 ## ⚖️ License
 
@@ -93,5 +116,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- ## 🙏 Acknowledgements
 - []() -->
-
-<!-- readme template author: https://github.com/ahmet-cetinkaya-core -->
