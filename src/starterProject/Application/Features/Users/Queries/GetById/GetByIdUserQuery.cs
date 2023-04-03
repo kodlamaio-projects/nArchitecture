@@ -25,9 +25,9 @@ public class GetByIdUserQuery : IRequest<GetByIdUserResponse>
 
         public async Task<GetByIdUserResponse> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
         {
-            await _userBusinessRules.UserIdShouldExistWhenSelected(request.Id);
-
             User? user = await _userRepository.GetAsync(b => b.Id == request.Id);
+            await _userBusinessRules.UserShouldBeExistWhenSelected(user);
+
             GetByIdUserResponse userDto = _mapper.Map<GetByIdUserResponse>(user);
             return userDto;
         }

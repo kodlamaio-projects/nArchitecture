@@ -15,10 +15,16 @@ public class OperationClaimBusinessRules : BaseBusinessRules
         _operationClaimRepository = operationClaimRepository;
     }
 
+    public Task OperationClaimShouldExistWhenSelected(OperationClaim? operationClaim)
+    {
+        if (operationClaim == null)
+            throw new BusinessException(OperationClaimsMessages.OperationClaimNotExists);
+        return Task.CompletedTask;
+    }
+
     public async Task OperationClaimIdShouldExistWhenSelected(int id)
     {
-        OperationClaim? result = await _operationClaimRepository.GetAsync(predicate: b => b.Id == id, enableTracking: false);
-        if (result == null)
-            throw new BusinessException(OperationClaimsMessages.OperationClaimNotExists);
+        OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(predicate: b => b.Id == id, enableTracking: false);
+        await OperationClaimShouldExistWhenSelected(operationClaim);
     }
 }

@@ -39,24 +39,25 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
         public async Task<UpdatedUserFromAuthResponse> Handle(UpdateUserFromAuthCommand request, CancellationToken cancellationToken)
         {
             User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
-            await _userBusinessRules.UserShouldBeExist(user);
-            await _userBusinessRules.UserPasswordShouldBeMatch(user, request.Password);
+            await _userBusinessRules.UserShouldBeExistWhenSelected(user);
+            await _userBusinessRules.UserPasswordShouldBeMatch(user: user!, request.Password);
 
-            user.FirstName = request.FirstName;
-            user.LastName = request.LastName;
-            if (request.NewPassword is not null && !string.IsNullOrWhiteSpace(request.NewPassword))
+            user = _mapper.Map(request, user);
+            if (request.NewPassword != null && !string.IsNullOrWhiteSpace(request.NewPassword))
             {
-                byte[] passwordHash,
-                    passwordSalt;
-                HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
+                HashingHelper.CreatePasswordHash(
+                    request.Password,
+                    passwordHash: out byte[] passwordHash,
+                    passwordSalt: out byte[] passwordSalt
+                );
+                user!.PasswordHash = passwordHash;
+                user!.PasswordSalt = passwordSalt;
             }
+            User updatedUser = await _userRepository.UpdateAsync(user!);
 
-            User updatedUser = await _userRepository.UpdateAsync(user);
-            UpdatedUserFromAuthResponse updatedUserFromAuthDto = _mapper.Map<UpdatedUserFromAuthResponse>(updatedUser);
-            updatedUserFromAuthDto.AccessToken = await _authService.CreateAccessToken(user);
-            return updatedUserFromAuthDto;
+            UpdatedUserFromAuthResponse? response = _mapper.Map<UpdatedUserFromAuthResponse>(updatedUser);
+            response.AccessToken = await _authService.CreateAccessToken(user!);
+            return response;
         }
     }
 }

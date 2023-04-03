@@ -15,10 +15,25 @@ public class UserOperationClaimBusinessRules : BaseBusinessRules
         _userOperationClaimRepository = userOperationClaimRepository;
     }
 
+    public Task UserOperationClaimShouldExistWhenSelected(UserOperationClaim? userOperationClaim)
+    {
+        if (userOperationClaim == null)
+            throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimNotExists);
+        return Task.CompletedTask;
+    }
+
     public async Task UserOperationClaimIdShouldExistWhenSelected(int id)
     {
-        UserOperationClaim? result = await _userOperationClaimRepository.GetAsync(predicate: b => b.Id == id, enableTracking: false);
-        if (result == null)
-            throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimNotExists);
+        UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+            predicate: b => b.Id == id,
+            enableTracking: false
+        );
+        await UserOperationClaimShouldExistWhenSelected(userOperationClaim);
+    }
+    public async Task UserShouldNotHasOperationClaimIdWhenInsert(int userId, int operationClaimId)
+    {
+        bool isExist = await _userOperationClaimRepository.AnyAsync(u => u.UserId == userId && u.OperationClaimId == operationClaimId);
+        if(isExist)
+            throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);
     }
 }

@@ -35,18 +35,21 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            await _userBusinessRules.UserIdShouldExistWhenSelected(request.Id);
-            User mappedUser = _mapper.Map<User>(request);
+            User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
+            await _userBusinessRules.UserShouldBeExistWhenSelected(user);
+            user = _mapper.Map(request, user);
 
-            byte[] passwordHash,
-                passwordSalt;
-            HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
-            mappedUser.PasswordHash = passwordHash;
-            mappedUser.PasswordSalt = passwordSalt;
+            HashingHelper.CreatePasswordHash(
+                request.Password,
+                passwordHash: out byte[] passwordHash,
+                passwordSalt: out byte[] passwordSalt
+            );
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            await _userRepository.UpdateAsync(user);
 
-            User updatedUser = await _userRepository.UpdateAsync(mappedUser);
-            UpdatedUserResponse updatedUserDto = _mapper.Map<UpdatedUserResponse>(updatedUser);
-            return updatedUserDto;
+            UpdatedUserResponse? response = _mapper.Map<UpdatedUserResponse>(user);
+            return response;
         }
     }
 }
