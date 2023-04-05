@@ -30,10 +30,11 @@ public class UserOperationClaimBusinessRules : BaseBusinessRules
         );
         await UserOperationClaimShouldExistWhenSelected(userOperationClaim);
     }
+
     public async Task UserShouldNotHasOperationClaimIdWhenInsert(int userId, int operationClaimId)
     {
         bool isExist = await _userOperationClaimRepository.AnyAsync(u => u.UserId == userId && u.OperationClaimId == operationClaimId);
-        if(isExist)
+        if (isExist)
             throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);
     }
 }

@@ -3,6 +3,7 @@ using Application.Services.Repositories;
 using AutoMapper;
 using Core.Security.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.OperationClaims.Queries.GetById;
 
@@ -31,7 +32,10 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
         {
             await _operationClaimBusinessRules.OperationClaimIdShouldExistWhenSelected(request.Id);
 
-            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(b => b.Id == request.Id);
+            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
+                b => b.Id == request.Id,
+                include: e => e.Include(e => e.UserOperationClaims)
+            );
             GetByIdOperationClaimResponse operationClaimDto = _mapper.Map<GetByIdOperationClaimResponse>(operationClaim);
             return operationClaimDto;
         }

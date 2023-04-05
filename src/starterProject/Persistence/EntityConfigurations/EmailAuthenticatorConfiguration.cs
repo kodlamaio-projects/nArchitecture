@@ -8,10 +8,18 @@ public class EmailAuthenticatorConfiguration : IEntityTypeConfiguration<EmailAut
 {
     public void Configure(EntityTypeBuilder<EmailAuthenticator> builder)
     {
-        builder.ToTable("EmailAuthenticators").HasKey(e => e.Id);
-        builder.Property(e => e.UserId).HasColumnName("UserId");
-        builder.Property(e => e.ActivationKey).HasColumnName("ActivationKey");
-        builder.Property(e => e.IsVerified).HasColumnName("IsVerified");
-        builder.HasOne(e => e.User);
+        builder.ToTable("EmailAuthenticators").HasKey(ea => ea.Id);
+
+        builder.Property(ea => ea.Id).HasColumnName("Id").IsRequired();
+        builder.Property(ea => ea.UserId).HasColumnName("UserId").IsRequired();
+        builder.Property(ea => ea.ActivationKey).HasColumnName("ActivationKey");
+        builder.Property(ea => ea.IsVerified).HasColumnName("IsVerified").IsRequired();
+        builder.Property(ea => ea.CreatedDate).HasColumnName("CreatedDate").IsRequired();
+        builder.Property(ea => ea.UpdatedDate).HasColumnName("UpdatedDate");
+        builder.Property(ea => ea.DeletedDate).HasColumnName("DeletedDate");
+
+        builder.HasQueryFilter(ea => !ea.DeletedDate.HasValue);
+
+        builder.HasOne(ea => ea.User);
     }
 }

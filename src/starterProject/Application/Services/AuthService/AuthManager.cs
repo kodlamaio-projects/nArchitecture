@@ -55,7 +55,7 @@ public class AuthManager : IAuthService
                     r.UserId == userId
                     && r.Revoked == null
                     && r.Expires >= DateTime.UtcNow
-                    && r.Created.AddDays(_tokenOptions.RefreshTokenTTL) <= DateTime.UtcNow
+                    && r.CreatedDate.AddDays(_tokenOptions.RefreshTokenTTL) <= DateTime.UtcNow
             )
             .ToListAsync();
 
