@@ -38,14 +38,17 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
             CancellationToken cancellationToken
         )
         {
-            await _userOperationClaimBusinessRules.UserOperationClaimIdShouldExistWhenSelected(request.Id);
-
-            UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
-            UserOperationClaim deletedUserOperationClaim = await _userOperationClaimRepository.DeleteAsync(mappedUserOperationClaim);
-            DeletedUserOperationClaimResponse deletedUserOperationClaimDto = _mapper.Map<DeletedUserOperationClaimResponse>(
-                deletedUserOperationClaim
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+                predicate: uoc => uoc.Id == request.Id,
+                cancellationToken: cancellationToken
             );
-            return deletedUserOperationClaimDto;
+            await _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);
+            userOperationClaim = _mapper.Map(request, userOperationClaim);
+
+            await _userOperationClaimRepository.DeleteAsync(userOperationClaim!);
+
+            DeletedUserOperationClaimResponse? response = _mapper.Map<DeletedUserOperationClaimResponse>(userOperationClaim);
+            return response;
         }
     }
 }

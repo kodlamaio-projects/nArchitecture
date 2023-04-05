@@ -9,10 +9,17 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
 {
     public void Configure(EntityTypeBuilder<OperationClaim> builder)
     {
-        builder.ToTable("OperationClaims").HasKey(o => o.Id);
-        builder.Property(o => o.Id).HasColumnName("Id");
-        builder.Property(o => o.Name).HasColumnName("Name");
-        builder.HasIndex(indexExpression: o => o.Name, name: "UK_OperationClaims_Name").IsUnique();
+        builder.ToTable("OperationClaims").HasKey(oc => oc.Id);
+
+        builder.Property(oc => oc.Id).HasColumnName("Id").IsRequired();
+        builder.Property(oc => oc.Name).HasColumnName("Name").IsRequired();
+        builder.Property(oc => oc.CreatedDate).HasColumnName("CreatedDate").IsRequired();
+        builder.Property(oc => oc.UpdatedDate).HasColumnName("UpdatedDate");
+        builder.Property(oc => oc.DeletedDate).HasColumnName("DeletedDate");
+
+        builder.HasQueryFilter(oc => !oc.DeletedDate.HasValue);
+
+        builder.HasMany(oc => oc.UserOperationClaims);
 
         builder.HasData(getSeeds());
     }

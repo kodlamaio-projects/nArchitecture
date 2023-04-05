@@ -8,17 +8,23 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
 {
     public void Configure(EntityTypeBuilder<RefreshToken> builder)
     {
-        builder.ToTable("RefreshTokens").HasKey(r => r.Id);
-        builder.Property(r => r.Id).HasColumnName("Id");
-        builder.Property(r => r.UserId).HasColumnName("UserId");
-        builder.Property(r => r.Token).HasColumnName("Token");
-        builder.Property(r => r.Expires).HasColumnName("Expires");
-        builder.Property(r => r.Created).HasColumnName("Created");
-        builder.Property(r => r.CreatedByIp).HasColumnName("CreatedByIp");
-        builder.Property(r => r.Revoked).HasColumnName("Revoked");
-        builder.Property(r => r.RevokedByIp).HasColumnName("RevokedByIp");
-        builder.Property(r => r.ReplacedByToken).HasColumnName("ReplacedByToken");
-        builder.Property(r => r.ReasonRevoked).HasColumnName("ReasonRevoked");
-        builder.HasOne(r => r.User);
+        builder.ToTable("RefreshTokens").HasKey(rt => rt.Id);
+
+        builder.Property(rt => rt.Id).HasColumnName("Id").IsRequired();
+        builder.Property(rt => rt.UserId).HasColumnName("UserId").IsRequired();
+        builder.Property(rt => rt.Token).HasColumnName("Token").IsRequired();
+        builder.Property(rt => rt.Expires).HasColumnName("Expires").IsRequired();
+        builder.Property(rt => rt.CreatedByIp).HasColumnName("CreatedByIp").IsRequired();
+        builder.Property(rt => rt.Revoked).HasColumnName("Revoked");
+        builder.Property(rt => rt.RevokedByIp).HasColumnName("RevokedByIp");
+        builder.Property(rt => rt.ReplacedByToken).HasColumnName("ReplacedByToken");
+        builder.Property(rt => rt.ReasonRevoked).HasColumnName("ReasonRevoked");
+        builder.Property(rt => rt.CreatedDate).HasColumnName("CreatedDate").IsRequired();
+        builder.Property(rt => rt.UpdatedDate).HasColumnName("UpdatedDate");
+        builder.Property(rt => rt.DeletedDate).HasColumnName("DeletedDate");
+
+        builder.HasQueryFilter(rt => !rt.DeletedDate.HasValue);
+
+        builder.HasOne(rt => rt.User);
     }
 }

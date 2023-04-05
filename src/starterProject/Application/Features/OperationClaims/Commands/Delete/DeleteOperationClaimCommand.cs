@@ -5,6 +5,7 @@ using AutoMapper;
 using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using static Application.Features.OperationClaims.Constants.OperationClaimsOperationClaims;
 
 namespace Application.Features.OperationClaims.Commands.Delete;
@@ -34,12 +35,16 @@ public class DeleteOperationClaimCommand : IRequest<DeletedOperationClaimRespons
 
         public async Task<DeletedOperationClaimResponse> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
         {
-            await _operationClaimBusinessRules.OperationClaimIdShouldExistWhenSelected(request.Id);
+            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
+                predicate: oc => oc.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
+            await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
 
-            OperationClaim mappedOperationClaim = _mapper.Map<OperationClaim>(request);
-            OperationClaim deletedOperationClaim = await _operationClaimRepository.DeleteAsync(mappedOperationClaim);
-            DeletedOperationClaimResponse deletedOperationClaimDto = _mapper.Map<DeletedOperationClaimResponse>(deletedOperationClaim);
-            return deletedOperationClaimDto;
+            await _operationClaimRepository.DeleteAsync(entity: operationClaim!);
+
+            DeletedOperationClaimResponse? response = _mapper.Map<DeletedOperationClaimResponse>(operationClaim);
+            return response;
         }
     }
 }

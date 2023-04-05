@@ -16,18 +16,17 @@ public class UserBusinessRules : BaseBusinessRules
         _userRepository = userRepository;
     }
 
-    public async Task UserIdShouldExistWhenSelected(int id)
+    public Task UserShouldBeExistWhenSelected(User? user)
     {
-        User? result = await _userRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
-        if (result == null)
-            throw new BusinessException(AuthMessages.UserDontExists);
-    }
-
-    public Task UserShouldBeExist(User? user)
-    {
-        if (user is null)
+        if (user == null)
             throw new BusinessException(AuthMessages.UserDontExists);
         return Task.CompletedTask;
+    }
+
+    public async Task UserIdShouldBeExistWhenSelected(int id)
+    {
+        User? user = await _userRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
+        await UserShouldBeExistWhenSelected(user);
     }
 
     public Task UserPasswordShouldBeMatch(User user, string password)
@@ -39,8 +38,8 @@ public class UserBusinessRules : BaseBusinessRules
 
     public async Task UserEmailShouldNotExist(string email)
     {
-        User? result = await _userRepository.GetAsync(predicate: u => u.Email == email, enableTracking: false);
-        if (result != null)
+        User? user = await _userRepository.GetAsync(predicate: u => u.Email == email, enableTracking: false);
+        if (user != null)
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 }
