@@ -21,5 +21,24 @@ public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOper
 
         builder.HasOne(uoc => uoc.User);
         builder.HasOne(uoc => uoc.OperationClaim);
+
+        builder.HasData(getSeeds());
+    }
+
+    private IEnumerable<UserOperationClaim> getSeeds()
+    {
+        List<UserOperationClaim> userOperationClaims = new();
+
+        UserOperationClaim adminUserOperationClaim =
+            new()
+            {
+                Id = 1,
+                UserId = 1,
+                OperationClaimId = 1,
+                CreatedDate = DateTime.Now
+            };
+        userOperationClaims.Add(adminUserOperationClaim);
+
+        return userOperationClaims;
     }
 }
