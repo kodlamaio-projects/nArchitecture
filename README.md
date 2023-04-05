@@ -116,5 +116,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- ## 🙏 Acknowledgements
 - []() -->
-
-<!-- readme template author: https://github.com/ahmet-cetinkaya-core -->
