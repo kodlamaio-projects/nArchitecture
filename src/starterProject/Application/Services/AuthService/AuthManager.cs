@@ -28,13 +28,7 @@ public class AuthManager : IAuthService
 
     public async Task<AccessToken> CreateAccessToken(User user)
     {
-        IList<OperationClaim> operationClaims = await _userOperationClaimRepository
-            .Query()
-            .AsNoTracking()
-            .Where(p => p.UserId == user.Id)
-            .Select(p => new OperationClaim { Id = p.OperationClaimId, Name = p.OperationClaim.Name })
-            .ToListAsync();
-
+        IList<OperationClaim> operationClaims = await _userOperationClaimRepository.GetOperationClaimsByUserIdAsync(user.Id);
         AccessToken accessToken = _tokenHelper.CreateToken(user, operationClaims);
         return accessToken;
     }
@@ -47,18 +41,7 @@ public class AuthManager : IAuthService
 
     public async Task DeleteOldRefreshTokens(int userId)
     {
-        List<RefreshToken> refreshTokens = await _refreshTokenRepository
-            .Query()
-            .AsNoTracking()
-            .Where(
-                r =>
-                    r.UserId == userId
-                    && r.Revoked == null
-                    && r.Expires >= DateTime.UtcNow
-                    && r.CreatedDate.AddDays(_tokenOptions.RefreshTokenTTL) <= DateTime.UtcNow
-            )
-            .ToListAsync();
-
+        List<RefreshToken> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(userId, _tokenOptions.RefreshTokenTTL);
         await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
 
