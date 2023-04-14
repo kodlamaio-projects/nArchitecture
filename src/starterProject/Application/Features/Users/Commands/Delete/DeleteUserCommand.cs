@@ -5,7 +5,6 @@ using AutoMapper;
 using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using static Application.Features.Users.Constants.UsersOperationClaims;
 
 namespace Application.Features.Users.Commands.Delete;
@@ -32,11 +31,11 @@ public class DeleteUserCommand : IRequest<DeletedUserResponse>, ISecuredRequest
         public async Task<DeletedUserResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             User? user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
-            await _userBusinessRules.UserShouldBeExistWhenSelected(user);
+            await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
-            await _userRepository.DeleteAsync(user);
+            await _userRepository.DeleteAsync(user!);
 
-            DeletedUserResponse? response = _mapper.Map<DeletedUserResponse>(user);
+            DeletedUserResponse response = _mapper.Map<DeletedUserResponse>(user);
             return response;
         }
     }

@@ -43,7 +43,6 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
                 cancellationToken: cancellationToken
             );
             await _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);
-            userOperationClaim = _mapper.Map(request, userOperationClaim);
 
             await _userOperationClaimRepository.DeleteAsync(userOperationClaim!);
 

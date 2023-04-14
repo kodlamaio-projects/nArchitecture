@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Security.Entities;
+﻿using Core.Security.Entities;
 using Core.Test.Application.FakeData;
+using System;
+using System.Collections.Generic;
 
 namespace Application.Tests.Mocks.FakeData;
 

@@ -33,7 +33,10 @@ public class GetListUserOperationClaimQuery : IRequest<GetListResponse<GetListUs
                 index: request.PageRequest.Page,
                 size: request.PageRequest.PageSize
             );
-            var mappedUserOperationClaimListModel = _mapper.Map<GetListResponse<GetListUserOperationClaimListItemDto>>(userOperationClaims);
+
+            GetListResponse<GetListUserOperationClaimListItemDto> mappedUserOperationClaimListModel = _mapper.Map<
+                GetListResponse<GetListUserOperationClaimListItemDto>
+            >(userOperationClaims);
             return mappedUserOperationClaimListModel;
         }
     }

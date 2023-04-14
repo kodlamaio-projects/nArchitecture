@@ -1,5 +1,4 @@
-﻿using System;
-using Application.Features.Users.Commands.Create;
+﻿using Application.Features.Users.Commands.Create;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.CrossCuttingConcerns.Exceptions.Types;

@@ -40,8 +40,21 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+                predicate: uoc => uoc.Id == request.Id,
+                enableTracking: false,
+                cancellationToken: cancellationToken
+            );
+            await _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);
+            await _userOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenUpdated(
+                request.Id,
+                request.UserId,
+                request.OperationClaimId
+            );
+            UserOperationClaim mappedUserOperationClaim = _mapper.Map(source: request, destination: userOperationClaim!);
+
             UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
+
             UpdatedUserOperationClaimResponse updatedUserOperationClaimDto = _mapper.Map<UpdatedUserOperationClaimResponse>(
                 updatedUserOperationClaim
             );

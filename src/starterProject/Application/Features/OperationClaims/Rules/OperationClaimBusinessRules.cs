@@ -18,13 +18,28 @@ public class OperationClaimBusinessRules : BaseBusinessRules
     public Task OperationClaimShouldExistWhenSelected(OperationClaim? operationClaim)
     {
         if (operationClaim == null)
-            throw new BusinessException(OperationClaimsMessages.OperationClaimNotExists);
+            throw new BusinessException(OperationClaimsMessages.NotExists);
         return Task.CompletedTask;
     }
 
     public async Task OperationClaimIdShouldExistWhenSelected(int id)
     {
-        OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(predicate: b => b.Id == id, enableTracking: false);
-        await OperationClaimShouldExistWhenSelected(operationClaim);
+        bool doesExist = await _operationClaimRepository.AnyAsync(predicate: b => b.Id == id, enableTracking: false);
+        if (doesExist)
+            throw new BusinessException(OperationClaimsMessages.NotExists);
+    }
+
+    public async Task OperationClaimNameShouldNotExistWhenCreating(string name)
+    {
+        bool doesExist = await _operationClaimRepository.AnyAsync(predicate: b => b.Name == name, enableTracking: false);
+        if (doesExist)
+            throw new BusinessException(OperationClaimsMessages.AlreadyExists);
+    }
+
+    public async Task OperationClaimNameShouldNotExistWhenUpdating(int id, string name)
+    {
+        bool doesExist = await _operationClaimRepository.AnyAsync(predicate: b => b.Id != id && b.Name == name, enableTracking: false);
+        if (doesExist)
+            throw new BusinessException(OperationClaimsMessages.AlreadyExists);
     }
 }

@@ -6,7 +6,6 @@ using Application.Features.Users.Queries.GetById;
 using Application.Features.Users.Queries.GetList;
 using Core.Application.Requests;
 using Core.Application.Responses;
-using Core.Persistence.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;

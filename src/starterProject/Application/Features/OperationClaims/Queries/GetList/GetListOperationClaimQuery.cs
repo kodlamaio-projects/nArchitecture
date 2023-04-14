@@ -31,10 +31,14 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
         {
             IPaginate<OperationClaim> operationClaims = await _operationClaimRepository.GetListAsync(
                 index: request.PageRequest.Page,
-                size: request.PageRequest.PageSize
+                size: request.PageRequest.PageSize,
+                cancellationToken: cancellationToken
             );
-            var mappedOperationClaimListModel = _mapper.Map<GetListResponse<GetListOperationClaimListItemDto>>(operationClaims);
-            return mappedOperationClaimListModel;
+
+            GetListResponse<GetListOperationClaimListItemDto> response = _mapper.Map<GetListResponse<GetListOperationClaimListItemDto>>(
+                operationClaims
+            );
+            return response;
         }
     }
 }

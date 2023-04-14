@@ -30,14 +30,15 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
 
         public async Task<GetByIdOperationClaimResponse> Handle(GetByIdOperationClaimQuery request, CancellationToken cancellationToken)
         {
-            await _operationClaimBusinessRules.OperationClaimIdShouldExistWhenSelected(request.Id);
-
             OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
-                b => b.Id == request.Id,
-                include: e => e.Include(e => e.UserOperationClaims)
+                predicate: b => b.Id == request.Id,
+                include: q => q.Include(oc => oc.UserOperationClaims),
+                cancellationToken: cancellationToken
             );
-            GetByIdOperationClaimResponse operationClaimDto = _mapper.Map<GetByIdOperationClaimResponse>(operationClaim);
-            return operationClaimDto;
+            await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
+
+            GetByIdOperationClaimResponse response = _mapper.Map<GetByIdOperationClaimResponse>(operationClaim);
+            return response;
         }
     }
 }

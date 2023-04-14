@@ -35,8 +35,9 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
-            await _userBusinessRules.UserShouldBeExistWhenSelected(user);
+            User? user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
+            await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
+            await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);
             user = _mapper.Map(request, user);
 
             HashingHelper.CreatePasswordHash(
@@ -44,7 +45,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
                 passwordHash: out byte[] passwordHash,
                 passwordSalt: out byte[] passwordSalt
             );
-            user.PasswordHash = passwordHash;
+            user!.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             await _userRepository.UpdateAsync(user);
 

@@ -1,11 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Application.Features.Users.Queries.GetList;
+﻿using Application.Features.Users.Queries.GetList;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.Application.Requests;
 using Core.Application.Responses;
-using Core.Persistence.Paging;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Queries.GetList.GetListUserQuery;
 

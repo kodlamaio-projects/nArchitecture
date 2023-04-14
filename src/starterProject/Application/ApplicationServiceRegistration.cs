@@ -1,7 +1,6 @@
-﻿using System.Reflection;
-using Application.Services.AuthenticatorService;
+﻿using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
-using Application.Services.UserService;
+using Application.Services.UsersService;
 using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Logging;
@@ -15,6 +14,7 @@ using Core.Mailing;
 using Core.Mailing.MailKitImplementations;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Application;
 
@@ -56,7 +56,7 @@ public static class ApplicationServiceRegistration
     )
     {
         var types = assembly.GetTypes().Where(t => t.IsSubclassOf(type) && type != t).ToList();
-        foreach (var item in types)
+        foreach (Type? item in types)
             if (addWithLifeCycle == null)
                 services.AddScoped(item);
             else

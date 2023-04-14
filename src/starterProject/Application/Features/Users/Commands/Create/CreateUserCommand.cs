@@ -33,7 +33,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
 
         public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            await _userBusinessRules.UserEmailShouldNotExist(request.Email);
+            await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(request.Email);
             User user = _mapper.Map<User>(request);
 
             HashingHelper.CreatePasswordHash(
@@ -45,7 +45,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
             user.PasswordSalt = passwordSalt;
             User createdUser = await _userRepository.AddAsync(user);
 
-            CreatedUserResponse? response = _mapper.Map<CreatedUserResponse>(createdUser);
+            CreatedUserResponse response = _mapper.Map<CreatedUserResponse>(createdUser);
             return response;
         }
     }
