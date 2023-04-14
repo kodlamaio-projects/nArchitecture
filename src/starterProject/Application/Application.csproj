@@ -36,7 +36,7 @@
     <Folder Include="Features\Users\Dtos\" />
     <Folder Include="Features\Users\Models\" />
     <Folder Include="Services\AuthService\" />
-    <Folder Include="Services\UserService\" />
+    <Folder Include="Services\UsersService\" />
   </ItemGroup>
 
   <ItemGroup>

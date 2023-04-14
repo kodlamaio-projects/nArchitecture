@@ -1,6 +1,6 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
-using Application.Services.UserService;
+using Application.Services.UsersService;
 using Core.Security.Entities;
 using Core.Security.JWT;
 using MediatR;
@@ -38,14 +38,14 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
                 );
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
-            User user = await _userService.GetById(refreshToken.UserId);
+            User? user = await _userService.GetAsync(predicate: u => u.Id == refreshToken.UserId, cancellationToken: cancellationToken);
+            await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
-            RefreshToken newRefreshToken = await _authService.RotateRefreshToken(user, refreshToken, request.IPAddress);
+            RefreshToken newRefreshToken = await _authService.RotateRefreshToken(user!, refreshToken, request.IPAddress);
             RefreshToken addedRefreshToken = await _authService.AddRefreshToken(newRefreshToken);
-
             await _authService.DeleteOldRefreshTokens(refreshToken.UserId);
 
-            AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
+            AccessToken createdAccessToken = await _authService.CreateAccessToken(user!);
 
             RefreshedTokensResponse refreshedTokensResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return refreshedTokensResponse;

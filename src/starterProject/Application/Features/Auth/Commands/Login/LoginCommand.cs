@@ -1,7 +1,7 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
-using Application.Services.UserService;
+using Application.Services.UsersService;
 using Core.Application.Dtos;
 using Core.Security.Entities;
 using Core.Security.Enums;
@@ -37,9 +37,12 @@ public class LoginCommand : IRequest<LoggedResponse>
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userService.GetByEmail(request.UserForLoginDto.Email);
-            await _authBusinessRules.UserShouldBeExists(user);
-            await _authBusinessRules.UserPasswordShouldBeMatch(user.Id, request.UserForLoginDto.Password);
+            User? user = await _userService.GetAsync(
+                predicate: u => u.Email == request.UserForLoginDto.Email,
+                cancellationToken: cancellationToken
+            );
+            await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
+            await _authBusinessRules.UserPasswordShouldBeMatch(user!.Id, request.UserForLoginDto.Password);
 
             LoggedResponse loggedResponse = new();
 
