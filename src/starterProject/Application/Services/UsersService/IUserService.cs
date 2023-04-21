@@ -14,6 +14,7 @@ public interface IUserService
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     );
+
     Task<IPaginate<User>?> GetListAsync(
         Expression<Func<User, bool>>? predicate = null,
         Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
@@ -24,6 +25,7 @@ public interface IUserService
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     );
+
     Task<User> AddAsync(User user);
     Task<User> UpdateAsync(User user);
     Task<User> DeleteAsync(User user, bool permanent = false);

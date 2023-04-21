@@ -14,6 +14,7 @@ public interface IUserOperationClaimService
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     );
+
     Task<IPaginate<UserOperationClaim>?> GetListAsync(
         Expression<Func<UserOperationClaim, bool>>? predicate = null,
         Func<IQueryable<UserOperationClaim>, IOrderedQueryable<UserOperationClaim>>? orderBy = null,
@@ -24,6 +25,7 @@ public interface IUserOperationClaimService
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     );
+
     Task<UserOperationClaim> AddAsync(UserOperationClaim userOperationClaim);
     Task<UserOperationClaim> UpdateAsync(UserOperationClaim userOperationClaim);
     Task<UserOperationClaim> DeleteAsync(UserOperationClaim userOperationClaim, bool permanent = false);

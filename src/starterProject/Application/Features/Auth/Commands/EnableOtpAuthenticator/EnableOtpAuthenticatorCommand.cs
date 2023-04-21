@@ -40,7 +40,9 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user);
 
-            OtpAuthenticator? doesExistOtpAuthenticator = await _otpAuthenticatorRepository.GetAsync(predicate: o => o.UserId == request.UserId);
+            OtpAuthenticator? doesExistOtpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
+                predicate: o => o.UserId == request.UserId
+            );
             await _authBusinessRules.OtpAuthenticatorThatVerifiedShouldNotBeExists(doesExistOtpAuthenticator);
             if (doesExistOtpAuthenticator is not null)
                 await _otpAuthenticatorRepository.DeleteAsync(doesExistOtpAuthenticator);
