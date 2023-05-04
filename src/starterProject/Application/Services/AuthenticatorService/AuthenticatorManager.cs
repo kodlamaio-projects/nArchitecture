@@ -44,7 +44,7 @@ public class AuthenticatorManager : IAuthenticatorService
         return emailAuthenticator;
     }
 
-    public async Task<OtpAuthenticator> CreateOtpAuthenticator(User? user)
+    public async Task<OtpAuthenticator> CreateOtpAuthenticator(User user)
     {
         OtpAuthenticator otpAuthenticator =
             new()

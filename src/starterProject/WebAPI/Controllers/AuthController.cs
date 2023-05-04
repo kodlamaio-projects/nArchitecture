@@ -1,7 +1,7 @@
 ﻿using Application.Features.Auth.Commands.EnableEmailAuthenticator;
 using Application.Features.Auth.Commands.EnableOtpAuthenticator;
 using Application.Features.Auth.Commands.Login;
-using Application.Features.Auth.Commands.RefleshToken;
+using Application.Features.Auth.Commands.RefreshToken;
 using Application.Features.Auth.Commands.Register;
 using Application.Features.Auth.Commands.RevokeToken;
 using Application.Features.Auth.Commands.VerifyEmailAuthenticator;
@@ -17,17 +17,20 @@ namespace WebAPI.Controllers;
 [ApiController]
 public class AuthController : BaseController
 {
-    private readonly WebAPIConfiguration _configuration;
+    private readonly WebApiConfiguration _configuration;
 
     public AuthController(IConfiguration configuration)
     {
-        _configuration = configuration.GetSection("WebAPIConfiguration").Get<WebAPIConfiguration>();
+        const string configurationSection = "WebAPIConfiguration";
+        _configuration =
+            configuration.GetSection(configurationSection).Get<WebApiConfiguration>()
+            ?? throw new NullReferenceException($"\"{configurationSection}\" section cannot found in configuration.");
     }
 
     [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
     {
-        LoginCommand loginCommand = new() { UserForLoginDto = userForLoginDto, IPAddress = getIpAddress() };
+        LoginCommand loginCommand = new() { UserForLoginDto = userForLoginDto, IpAddress = getIpAddress() };
         LoggedResponse result = await Mediator.Send(loginCommand);
 
         if (result.RefreshToken is not null)
@@ -39,7 +42,7 @@ public class AuthController : BaseController
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
     {
-        RegisterCommand registerCommand = new() { UserForRegisterDto = userForRegisterDto, IPAddress = getIpAddress() };
+        RegisterCommand registerCommand = new() { UserForRegisterDto = userForRegisterDto, IpAddress = getIpAddress() };
         RegisteredResponse result = await Mediator.Send(registerCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created(uri: "", result.AccessToken);
@@ -48,7 +51,7 @@ public class AuthController : BaseController
     [HttpGet("RefreshToken")]
     public async Task<IActionResult> RefreshToken()
     {
-        RefreshTokenCommand refreshTokenCommand = new() { RefleshToken = getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
+        RefreshTokenCommand refreshTokenCommand = new() { RefreshToken = getRefreshTokenFromCookies(), IpAddress = getIpAddress() };
         RefreshedTokensResponse result = await Mediator.Send(refreshTokenCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created(uri: "", result.AccessToken);
@@ -57,7 +60,7 @@ public class AuthController : BaseController
     [HttpPut("RevokeToken")]
     public async Task<IActionResult> RevokeToken([FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)] string? refreshToken)
     {
-        RevokeTokenCommand revokeTokenCommand = new() { Token = refreshToken ?? getRefreshTokenFromCookies(), IPAddress = getIpAddress() };
+        RevokeTokenCommand revokeTokenCommand = new() { Token = refreshToken ?? getRefreshTokenFromCookies(), IpAddress = getIpAddress() };
         RevokedTokenResponse result = await Mediator.Send(revokeTokenCommand);
         return Ok(result);
     }
@@ -66,7 +69,7 @@ public class AuthController : BaseController
     public async Task<IActionResult> EnableEmailAuthenticator()
     {
         EnableEmailAuthenticatorCommand enableEmailAuthenticatorCommand =
-            new() { UserId = getUserIdFromRequest(), VerifyEmailUrlPrefix = $"{_configuration.APIDomain}/Auth/VerifyEmailAuthenticator" };
+            new() { UserId = getUserIdFromRequest(), VerifyEmailUrlPrefix = $"{_configuration.ApiDomain}/Auth/VerifyEmailAuthenticator" };
         await Mediator.Send(enableEmailAuthenticatorCommand);
 
         return Ok();
@@ -98,7 +101,8 @@ public class AuthController : BaseController
         return Ok();
     }
 
-    private string? getRefreshTokenFromCookies() => Request.Cookies["refreshToken"];
+    private string getRefreshTokenFromCookies() =>
+        Request.Cookies["refreshToken"] ?? throw new ArgumentException("Refresh token is not found in request cookies.");
 
     private void setRefreshTokenToCookie(RefreshToken refreshToken)
     {

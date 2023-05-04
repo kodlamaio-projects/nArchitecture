@@ -14,6 +14,17 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
     public int Id { get; set; }
     public string Name { get; set; }
 
+    public UpdateOperationClaimCommand()
+    {
+        Name = string.Empty;
+    }
+
+    public UpdateOperationClaimCommand(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
     public string[] Roles => new[] { Admin, Write, OperationClaimsOperationClaims.Update };
 
     public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, UpdatedOperationClaimResponse>

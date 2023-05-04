@@ -6,14 +6,20 @@ namespace WebAPI.Controllers;
 
 public class BaseController : ControllerBase
 {
-    protected IMediator? Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+    protected IMediator Mediator =>
+        _mediator ??=
+            HttpContext.RequestServices.GetService<IMediator>()
+            ?? throw new InvalidOperationException("IMediator cannot be retrieved from request services.");
+
     private IMediator? _mediator;
 
-    protected string? getIpAddress()
+    protected string getIpAddress()
     {
-        if (Request.Headers.ContainsKey("X-Forwarded-For"))
-            return Request.Headers["X-Forwarded-For"];
-        return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+        string ipAddress = Request.Headers.ContainsKey("X-Forwarded-For")
+            ? Request.Headers["X-Forwarded-For"].ToString()
+            : HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString()
+                ?? throw new InvalidOperationException("IP address cannot be retrieved from request.");
+        return ipAddress;
     }
 
     protected int getUserIdFromRequest() //todo authentication behavior?

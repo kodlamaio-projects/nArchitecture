@@ -16,6 +16,21 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
     public string Password { get; set; }
     public string? NewPassword { get; set; }
 
+    public UpdateUserFromAuthCommand()
+    {
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        Password = string.Empty;
+    }
+
+    public UpdateUserFromAuthCommand(int id, string firstName, string lastName, string password)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Password = password;
+    }
+
     public class UpdateUserFromAuthCommandHandler : IRequestHandler<UpdateUserFromAuthCommand, UpdatedUserFromAuthResponse>
     {
         private readonly IUserRepository _userRepository;

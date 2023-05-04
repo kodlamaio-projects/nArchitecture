@@ -12,6 +12,16 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
 {
     public PageRequest PageRequest { get; set; }
 
+    public GetListUserQuery()
+    {
+        PageRequest = new PageRequest { Page = 0, PageSize = 10 };
+    }
+
+    public GetListUserQuery(PageRequest pageRequest)
+    {
+        PageRequest = pageRequest;
+    }
+
     public class GetListUserQueryHandler : IRequestHandler<GetListUserQuery, GetListResponse<GetListUserListItemDto>>
     {
         private readonly IUserRepository _userRepository;

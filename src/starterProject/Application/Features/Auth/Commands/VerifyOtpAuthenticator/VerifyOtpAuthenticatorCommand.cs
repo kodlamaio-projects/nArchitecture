@@ -13,6 +13,17 @@ public class VerifyOtpAuthenticatorCommand : IRequest
     public int UserId { get; set; }
     public string ActivationCode { get; set; }
 
+    public VerifyOtpAuthenticatorCommand()
+    {
+        ActivationCode = string.Empty;
+    }
+
+    public VerifyOtpAuthenticatorCommand(int userId, string activationCode)
+    {
+        UserId = userId;
+        ActivationCode = activationCode;
+    }
+
     public class VerifyOtpAuthenticatorCommandHandler : IRequestHandler<VerifyOtpAuthenticatorCommand>
     {
         private readonly AuthBusinessRules _authBusinessRules;

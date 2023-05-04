@@ -13,7 +13,19 @@ namespace Application.Features.Auth.Commands.Login;
 public class LoginCommand : IRequest<LoggedResponse>
 {
     public UserForLoginDto UserForLoginDto { get; set; }
-    public string IPAddress { get; set; }
+    public string IpAddress { get; set; }
+
+    public LoginCommand()
+    {
+        UserForLoginDto = null!;
+        IpAddress = string.Empty;
+    }
+
+    public LoginCommand(UserForLoginDto userForLoginDto, string ipAddress)
+    {
+        UserForLoginDto = userForLoginDto;
+        IpAddress = ipAddress;
+    }
 
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoggedResponse>
     {
@@ -60,8 +72,8 @@ public class LoginCommand : IRequest<LoggedResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
 
-            RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(user, request.IPAddress);
-            RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+            Core.Security.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(user, request.IpAddress);
+            Core.Security.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
             await _authService.DeleteOldRefreshTokens(user.Id);
 
             loggedResponse.AccessToken = createdAccessToken;

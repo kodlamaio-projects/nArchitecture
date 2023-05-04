@@ -16,6 +16,17 @@ public class EnableEmailAuthenticatorCommand : IRequest
     public int UserId { get; set; }
     public string VerifyEmailUrlPrefix { get; set; }
 
+    public EnableEmailAuthenticatorCommand()
+    {
+        VerifyEmailUrlPrefix = string.Empty;
+    }
+
+    public EnableEmailAuthenticatorCommand(int userId, string verifyEmailUrlPrefix)
+    {
+        UserId = userId;
+        VerifyEmailUrlPrefix = verifyEmailUrlPrefix;
+    }
+
     public class EnableEmailAuthenticatorCommandHandler : IRequestHandler<EnableEmailAuthenticatorCommand>
     {
         private readonly AuthBusinessRules _authBusinessRules;
@@ -45,7 +56,7 @@ public class EnableEmailAuthenticatorCommand : IRequest
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
 
-            user.AuthenticatorType = AuthenticatorType.Email;
+            user!.AuthenticatorType = AuthenticatorType.Email;
             await _userService.UpdateAsync(user);
 
             EmailAuthenticator emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(user);

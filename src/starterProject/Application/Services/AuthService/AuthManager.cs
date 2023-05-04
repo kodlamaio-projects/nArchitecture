@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Auth.Rules;
+using Application.Services.Repositories;
 using Core.Security.Entities;
 using Core.Security.JWT;
 using Microsoft.EntityFrameworkCore;
@@ -10,20 +11,27 @@ public class AuthManager : IAuthService
 {
     private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly ITokenHelper _tokenHelper;
-    private readonly TokenOptions? _tokenOptions;
+    private readonly TokenOptions _tokenOptions;
+    private readonly AuthBusinessRules _authBusinessRules;
     private readonly IUserOperationClaimRepository _userOperationClaimRepository;
 
     public AuthManager(
         IUserOperationClaimRepository userOperationClaimRepository,
         IRefreshTokenRepository refreshTokenRepository,
         ITokenHelper tokenHelper,
-        IConfiguration configuration
+        IConfiguration configuration,
+        AuthBusinessRules authBusinessRules
     )
     {
         _userOperationClaimRepository = userOperationClaimRepository;
         _refreshTokenRepository = refreshTokenRepository;
         _tokenHelper = tokenHelper;
-        _tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
+        _authBusinessRules = authBusinessRules;
+
+        const string tokenOptionsConfigurationSection = "TokenOptions";
+        _tokenOptions =
+            configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
+            ?? throw new NullReferenceException($"\"{tokenOptionsConfigurationSection}\" section cannot found in configuration");
     }
 
     public async Task<AccessToken> CreateAccessToken(User user)
@@ -86,12 +94,12 @@ public class AuthManager : IAuthService
 
     public async Task RevokeDescendantRefreshTokens(RefreshToken refreshToken, string ipAddress, string reason)
     {
-        RefreshToken childToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == refreshToken.ReplacedByToken);
+        RefreshToken? childToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == refreshToken.ReplacedByToken);
 
-        if (childToken != null && childToken.Revoked != null && childToken.Expires <= DateTime.UtcNow)
+        if (childToken?.Revoked != null && childToken.Expires <= DateTime.UtcNow)
             await RevokeRefreshToken(childToken, ipAddress, reason);
         else
-            await RevokeDescendantRefreshTokens(childToken, ipAddress, reason);
+            await RevokeDescendantRefreshTokens(refreshToken: childToken!, ipAddress, reason);
     }
 
     public Task<RefreshToken> CreateRefreshToken(User user, string ipAddress)

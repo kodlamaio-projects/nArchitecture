@@ -1,20 +1,20 @@
 ﻿using Core.Application.Responses;
 using Core.Security.JWT;
 
-namespace Application.Features.Auth.Commands.Register;
+namespace Application.Features.Auth.Commands.RefreshToken;
 
-public class RegisteredResponse : IResponse
+public class RefreshedTokensResponse : IResponse
 {
     public AccessToken AccessToken { get; set; }
     public Core.Security.Entities.RefreshToken RefreshToken { get; set; }
 
-    public RegisteredResponse()
+    public RefreshedTokensResponse()
     {
         AccessToken = null!;
         RefreshToken = null!;
     }
 
-    public RegisteredResponse(AccessToken accessToken, Core.Security.Entities.RefreshToken refreshToken)
+    public RefreshedTokensResponse(AccessToken accessToken, Core.Security.Entities.RefreshToken refreshToken)
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;

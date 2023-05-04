@@ -18,6 +18,23 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
+    public UpdateUserCommand()
+    {
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        Email = string.Empty;
+        Password = string.Empty;
+    }
+
+    public UpdateUserCommand(int id, string firstName, string lastName, string email, string password)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Password = password;
+    }
+
     public string[] Roles => new[] { Admin, Write, UsersOperationClaims.Update };
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>

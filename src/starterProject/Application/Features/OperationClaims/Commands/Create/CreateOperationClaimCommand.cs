@@ -12,6 +12,16 @@ public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimRespons
 {
     public string Name { get; set; }
 
+    public CreateOperationClaimCommand()
+    {
+        Name = string.Empty;
+    }
+
+    public CreateOperationClaimCommand(string name)
+    {
+        Name = name;
+    }
+
     public string[] Roles => new[] { Admin, Write, Add };
 
     public class CreateOperationClaimCommandHandler : IRequestHandler<CreateOperationClaimCommand, CreatedOperationClaimResponse>

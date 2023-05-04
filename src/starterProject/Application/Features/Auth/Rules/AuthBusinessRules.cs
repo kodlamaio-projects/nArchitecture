@@ -54,7 +54,7 @@ public class AuthBusinessRules : BaseBusinessRules
         return Task.CompletedTask;
     }
 
-    public Task UserShouldNotBeHaveAuthenticator(User? user)
+    public Task UserShouldNotBeHaveAuthenticator(User user)
     {
         if (user.AuthenticatorType != AuthenticatorType.None)
             throw new BusinessException(AuthMessages.UserHaveAlreadyAAuthenticator);

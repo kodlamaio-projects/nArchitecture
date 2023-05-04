@@ -12,6 +12,16 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
 {
     public PageRequest PageRequest { get; set; }
 
+    public GetListOperationClaimQuery()
+    {
+        PageRequest = new PageRequest { Page = 0, PageSize = 10 };
+    }
+
+    public GetListOperationClaimQuery(PageRequest pageRequest)
+    {
+        PageRequest = pageRequest;
+    }
+
     public class GetListOperationClaimQueryHandler
         : IRequestHandler<GetListOperationClaimQuery, GetListResponse<GetListOperationClaimListItemDto>>
     {
