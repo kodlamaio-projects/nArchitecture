@@ -49,7 +49,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
             user.PasswordSalt = passwordSalt;
             await _userRepository.UpdateAsync(user);
 
-            UpdatedUserResponse? response = _mapper.Map<UpdatedUserResponse>(user);
+            UpdatedUserResponse response = _mapper.Map<UpdatedUserResponse>(user);
             return response;
         }
     }

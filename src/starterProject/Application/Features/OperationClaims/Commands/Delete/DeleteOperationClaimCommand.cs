@@ -44,7 +44,7 @@ public class DeleteOperationClaimCommand : IRequest<DeletedOperationClaimRespons
 
             await _operationClaimRepository.DeleteAsync(entity: operationClaim!);
 
-            DeletedOperationClaimResponse? response = _mapper.Map<DeletedOperationClaimResponse>(operationClaim);
+            DeletedOperationClaimResponse response = _mapper.Map<DeletedOperationClaimResponse>(operationClaim);
             return response;
         }
     }

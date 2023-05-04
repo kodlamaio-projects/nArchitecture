@@ -1,7 +1,6 @@
 ﻿using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Nest;
 
 namespace Persistence.EntityConfigurations;
 

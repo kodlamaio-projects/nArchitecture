@@ -56,7 +56,7 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
             }
             User updatedUser = await _userRepository.UpdateAsync(user!);
 
-            UpdatedUserFromAuthResponse? response = _mapper.Map<UpdatedUserFromAuthResponse>(updatedUser);
+            UpdatedUserFromAuthResponse response = _mapper.Map<UpdatedUserFromAuthResponse>(updatedUser);
             response.AccessToken = await _authService.CreateAccessToken(user!);
             return response;
         }

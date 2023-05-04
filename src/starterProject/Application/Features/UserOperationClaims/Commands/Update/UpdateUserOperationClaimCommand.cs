@@ -51,7 +51,7 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
                 request.UserId,
                 request.OperationClaimId
             );
-            UserOperationClaim mappedUserOperationClaim = _mapper.Map(source: request, destination: userOperationClaim!);
+            UserOperationClaim mappedUserOperationClaim = _mapper.Map(request, destination: userOperationClaim!);
 
             UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
 

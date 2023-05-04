@@ -22,8 +22,6 @@ public class BaseDbContext : DbContext
         Database.EnsureCreated();
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-    }
 }

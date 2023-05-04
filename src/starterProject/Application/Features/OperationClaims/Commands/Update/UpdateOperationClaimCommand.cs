@@ -41,7 +41,7 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
             await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(request.Id, request.Name);
-            OperationClaim mappedOperationClaim = _mapper.Map(source: request, destination: operationClaim!);
+            OperationClaim mappedOperationClaim = _mapper.Map(request, destination: operationClaim!);
 
             OperationClaim updatedOperationClaim = await _operationClaimRepository.UpdateAsync(mappedOperationClaim);
 
