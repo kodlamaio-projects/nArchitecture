@@ -67,8 +67,8 @@ builder.Services.AddSwaggerGen(opt =>
             BearerFormat = "JWT",
             In = ParameterLocation.Header,
             Description =
-                "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer YOUR_TOKEN\". \r\n\r\n" +
-                "`Enter your token in the text input below.`"
+                "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer YOUR_TOKEN\". \r\n\r\n"
+                + "`Enter your token in the text input below.`"
         }
     );
     opt.OperationFilter<BearerSecurityRequirementOperationFilter>();
