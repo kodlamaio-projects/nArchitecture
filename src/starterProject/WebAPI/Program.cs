@@ -3,6 +3,7 @@ using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
+using Core.WebAPI.Extensions.Swagger;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -61,26 +62,16 @@ builder.Services.AddSwaggerGen(opt =>
         securityScheme: new OpenApiSecurityScheme
         {
             Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey,
+            Type = SecuritySchemeType.Http,
             Scheme = "Bearer",
             BearerFormat = "JWT",
             In = ParameterLocation.Header,
             Description =
-                "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345.54321\""
+                "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer YOUR_TOKEN\". \r\n\r\n" +
+                "`Enter your token in the text input below.`"
         }
     );
-    opt.AddSecurityRequirement(
-        new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                },
-                new string[] { }
-            }
-        }
-    );
+    opt.OperationFilter<BearerSecurityRequirementOperationFilter>();
 });
 
 WebApplication app = builder.Build();
