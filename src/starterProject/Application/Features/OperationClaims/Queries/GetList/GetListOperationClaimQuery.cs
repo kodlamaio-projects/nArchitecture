@@ -14,7 +14,7 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
 
     public GetListOperationClaimQuery()
     {
-        PageRequest = new PageRequest { Page = 0, PageSize = 10 };
+        PageRequest = new PageRequest { PageIndex = 0, PageSize = 10 };
     }
 
     public GetListOperationClaimQuery(PageRequest pageRequest)
@@ -40,7 +40,7 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
         )
         {
             IPaginate<OperationClaim> operationClaims = await _operationClaimRepository.GetListAsync(
-                index: request.PageRequest.Page,
+                index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );

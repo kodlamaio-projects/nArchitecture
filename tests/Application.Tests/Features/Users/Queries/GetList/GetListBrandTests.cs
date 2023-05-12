@@ -25,7 +25,7 @@ public class GetListUserTests : UserMockRepository
     [Fact]
     public async Task GetAllUsersShouldSuccessfuly()
     {
-        _query.PageRequest = new PageRequest { Page = 0, PageSize = 3 };
+        _query.PageRequest = new PageRequest { PageIndex = 0, PageSize = 3 };
 
         GetListResponse<GetListUserListItemDto> result = await _handler.Handle(_query, CancellationToken.None);
 
