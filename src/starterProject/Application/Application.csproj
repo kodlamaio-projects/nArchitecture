@@ -7,18 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\Auth\Dtos\**" />
-    <Compile Remove="Features\Auth\Models\**" />
-    <Compile Remove="Features\Auth\Tests\**" />
-    <EmbeddedResource Remove="Features\Auth\Dtos\**" />
-    <EmbeddedResource Remove="Features\Auth\Models\**" />
-    <EmbeddedResource Remove="Features\Auth\Tests\**" />
-    <None Remove="Features\Auth\Dtos\**" />
-    <None Remove="Features\Auth\Models\**" />
-    <None Remove="Features\Auth\Tests\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\corePackages\Core.Application\Core.Application.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.CrossCuttingConcerns\Core.CrossCuttingConcerns.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.ElasticSearch\Core.ElasticSearch.csproj" />
@@ -28,15 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Auth\Queries\" />
-    <Folder Include="Features\OperationClaims\Dtos\" />
-    <Folder Include="Features\OperationClaims\Models\" />
-    <Folder Include="Features\UserOperationClaims\Dtos\" />
-    <Folder Include="Features\UserOperationClaims\Models\" />
-    <Folder Include="Features\Users\Dtos\" />
-    <Folder Include="Features\Users\Models\" />
-    <Folder Include="Services\AuthService\" />
-    <Folder Include="Services\UsersService\" />
+    <Folder Include="Features\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Repositories" />
   </ItemGroup>
 
   <ItemGroup>
