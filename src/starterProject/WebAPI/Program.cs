@@ -43,8 +43,8 @@ builder.Services
         };
     });
 
-//builder.Services.AddDistributedMemoryCache(); // InMemory
-builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379");
+builder.Services.AddDistributedMemoryCache(); // InMemory
+// builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379"); // Redis
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
