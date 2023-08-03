@@ -22,6 +22,13 @@ public class BaseDbContext : DbContext
         Database.EnsureCreated();
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+            base.OnConfiguring(
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("BaseDb")));
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 }

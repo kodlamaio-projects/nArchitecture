@@ -9,9 +9,17 @@ namespace Persistence;
 
 public static class PersistenceServiceRegistration
 {
-    public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration, bool isDevelopment = false)
     {
-        services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("nArchitecture"));
+        if (isDevelopment == true)
+        {
+            services.AddDbContext<BaseDbContext, InMemoryDbContext>();
+        }
+        else
+        {
+            services.AddDbContext<BaseDbContext>();
+        }
+
         services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
         services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
         services.AddScoped<IOtpAuthenticatorRepository, OtpAuthenticatorRepository>();

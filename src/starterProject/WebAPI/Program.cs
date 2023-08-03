@@ -19,7 +19,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddSecurityServices();
-builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddPersistenceServices(builder.Configuration, builder.Environment.IsDevelopment());
 builder.Services.AddInfrastructureServices();
 builder.Services.AddHttpContextAccessor();
 
