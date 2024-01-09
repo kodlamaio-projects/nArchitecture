@@ -25,11 +25,11 @@ public class GetByIdUserQuery : IRequest<GetByIdUserResponse>
 
         public async Task<GetByIdUserResponse> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetAsync(b => b.Id == request.Id);
-            await _userBusinessRules.UserShouldBeExistWhenSelected(user);
+            User? user = await _userRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
+            await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
-            GetByIdUserResponse userDto = _mapper.Map<GetByIdUserResponse>(user);
-            return userDto;
+            GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);
+            return response;
         }
     }
 }

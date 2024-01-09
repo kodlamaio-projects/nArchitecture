@@ -32,9 +32,12 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
             CancellationToken cancellationToken
         )
         {
-            await _userOperationClaimBusinessRules.UserOperationClaimIdShouldExistWhenSelected(request.Id);
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+                predicate: b => b.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
+            await _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);
 
-            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(b => b.Id == request.Id);
             GetByIdUserOperationClaimResponse userOperationClaimDto = _mapper.Map<GetByIdUserOperationClaimResponse>(userOperationClaim);
             return userOperationClaimDto;
         }

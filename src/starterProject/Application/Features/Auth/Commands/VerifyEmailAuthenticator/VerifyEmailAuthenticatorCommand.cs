@@ -9,6 +9,16 @@ public class VerifyEmailAuthenticatorCommand : IRequest
 {
     public string ActivationKey { get; set; }
 
+    public VerifyEmailAuthenticatorCommand()
+    {
+        ActivationKey = string.Empty;
+    }
+
+    public VerifyEmailAuthenticatorCommand(string activationKey)
+    {
+        ActivationKey = activationKey;
+    }
+
     public class VerifyEmailAuthenticatorCommandHandler : IRequestHandler<VerifyEmailAuthenticatorCommand>
     {
         private readonly AuthBusinessRules _authBusinessRules;
@@ -26,12 +36,13 @@ public class VerifyEmailAuthenticatorCommand : IRequest
         public async Task Handle(VerifyEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
             EmailAuthenticator? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(
-                e => e.ActivationKey == request.ActivationKey
+                predicate: e => e.ActivationKey == request.ActivationKey,
+                cancellationToken: cancellationToken
             );
             await _authBusinessRules.EmailAuthenticatorShouldBeExists(emailAuthenticator);
-            await _authBusinessRules.EmailAuthenticatorActivationKeyShouldBeExists(emailAuthenticator);
+            await _authBusinessRules.EmailAuthenticatorActivationKeyShouldBeExists(emailAuthenticator!);
 
-            emailAuthenticator.ActivationKey = null;
+            emailAuthenticator!.ActivationKey = null;
             emailAuthenticator.IsVerified = true;
             await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
         }

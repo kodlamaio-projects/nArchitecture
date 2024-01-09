@@ -1,7 +1,7 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
-using Application.Services.UserService;
+using Application.Services.UsersService;
 using Core.Application.Dtos;
 using Core.Security.Entities;
 using Core.Security.Enums;
@@ -13,7 +13,19 @@ namespace Application.Features.Auth.Commands.Login;
 public class LoginCommand : IRequest<LoggedResponse>
 {
     public UserForLoginDto UserForLoginDto { get; set; }
-    public string IPAddress { get; set; }
+    public string IpAddress { get; set; }
+
+    public LoginCommand()
+    {
+        UserForLoginDto = null!;
+        IpAddress = string.Empty;
+    }
+
+    public LoginCommand(UserForLoginDto userForLoginDto, string ipAddress)
+    {
+        UserForLoginDto = userForLoginDto;
+        IpAddress = ipAddress;
+    }
 
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoggedResponse>
     {
@@ -37,9 +49,12 @@ public class LoginCommand : IRequest<LoggedResponse>
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userService.GetByEmail(request.UserForLoginDto.Email);
-            await _authBusinessRules.UserShouldBeExists(user);
-            await _authBusinessRules.UserPasswordShouldBeMatch(user.Id, request.UserForLoginDto.Password);
+            User? user = await _userService.GetAsync(
+                predicate: u => u.Email == request.UserForLoginDto.Email,
+                cancellationToken: cancellationToken
+            );
+            await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
+            await _authBusinessRules.UserPasswordShouldBeMatch(user!.Id, request.UserForLoginDto.Password);
 
             LoggedResponse loggedResponse = new();
 
@@ -57,8 +72,8 @@ public class LoginCommand : IRequest<LoggedResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
 
-            RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(user, request.IPAddress);
-            RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+            Core.Security.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(user, request.IpAddress);
+            Core.Security.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
             await _authService.DeleteOldRefreshTokens(user.Id);
 
             loggedResponse.AccessToken = createdAccessToken;

@@ -38,8 +38,14 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
             CancellationToken cancellationToken
         )
         {
+            await _userOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenInsert(
+                request.UserId,
+                request.OperationClaimId
+            );
             UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
+
             UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
+
             CreatedUserOperationClaimResponse createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimResponse>(
                 createdUserOperationClaim
             );

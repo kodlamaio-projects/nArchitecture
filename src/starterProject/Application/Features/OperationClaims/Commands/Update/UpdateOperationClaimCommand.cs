@@ -14,6 +14,17 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
     public int Id { get; set; }
     public string Name { get; set; }
 
+    public UpdateOperationClaimCommand()
+    {
+        Name = string.Empty;
+    }
+
+    public UpdateOperationClaimCommand(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
     public string[] Roles => new[] { Admin, Write, OperationClaimsOperationClaims.Update };
 
     public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, UpdatedOperationClaimResponse>
@@ -35,10 +46,18 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
 
         public async Task<UpdatedOperationClaimResponse> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
         {
-            OperationClaim mappedOperationClaim = _mapper.Map<OperationClaim>(request);
+            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
+                predicate: oc => oc.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
+            await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
+            await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(request.Id, request.Name);
+            OperationClaim mappedOperationClaim = _mapper.Map(request, destination: operationClaim!);
+
             OperationClaim updatedOperationClaim = await _operationClaimRepository.UpdateAsync(mappedOperationClaim);
-            UpdatedOperationClaimResponse updatedOperationClaimDto = _mapper.Map<UpdatedOperationClaimResponse>(updatedOperationClaim);
-            return updatedOperationClaimDto;
+
+            UpdatedOperationClaimResponse response = _mapper.Map<UpdatedOperationClaimResponse>(updatedOperationClaim);
+            return response;
         }
     }
 }

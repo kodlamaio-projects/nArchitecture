@@ -18,6 +18,23 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
+    public UpdateUserCommand()
+    {
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        Email = string.Empty;
+        Password = string.Empty;
+    }
+
+    public UpdateUserCommand(int id, string firstName, string lastName, string email, string password)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Password = password;
+    }
+
     public string[] Roles => new[] { Admin, Write, UsersOperationClaims.Update };
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>
@@ -35,8 +52,9 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
-            await _userBusinessRules.UserShouldBeExistWhenSelected(user);
+            User? user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
+            await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
+            await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);
             user = _mapper.Map(request, user);
 
             HashingHelper.CreatePasswordHash(
@@ -44,11 +62,11 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
                 passwordHash: out byte[] passwordHash,
                 passwordSalt: out byte[] passwordSalt
             );
-            user.PasswordHash = passwordHash;
+            user!.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             await _userRepository.UpdateAsync(user);
 
-            UpdatedUserResponse? response = _mapper.Map<UpdatedUserResponse>(user);
+            UpdatedUserResponse response = _mapper.Map<UpdatedUserResponse>(user);
             return response;
         }
     }

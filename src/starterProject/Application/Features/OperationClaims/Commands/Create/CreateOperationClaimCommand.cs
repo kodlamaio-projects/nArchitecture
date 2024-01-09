@@ -1,4 +1,4 @@
-using Application.Features.OperationClaims.Rules;
+﻿using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Authorization;
@@ -11,6 +11,16 @@ namespace Application.Features.OperationClaims.Commands.Create;
 public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimResponse>, ISecuredRequest
 {
     public string Name { get; set; }
+
+    public CreateOperationClaimCommand()
+    {
+        Name = string.Empty;
+    }
+
+    public CreateOperationClaimCommand(string name)
+    {
+        Name = name;
+    }
 
     public string[] Roles => new[] { Admin, Write, Add };
 
@@ -33,10 +43,13 @@ public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimRespons
 
         public async Task<CreatedOperationClaimResponse> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
         {
+            await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(request.Name);
             OperationClaim mappedOperationClaim = _mapper.Map<OperationClaim>(request);
+
             OperationClaim createdOperationClaim = await _operationClaimRepository.AddAsync(mappedOperationClaim);
-            CreatedOperationClaimResponse createdOperationClaimDto = _mapper.Map<CreatedOperationClaimResponse>(createdOperationClaim);
-            return createdOperationClaimDto;
+
+            CreatedOperationClaimResponse response = _mapper.Map<CreatedOperationClaimResponse>(createdOperationClaim);
+            return response;
         }
     }
 }

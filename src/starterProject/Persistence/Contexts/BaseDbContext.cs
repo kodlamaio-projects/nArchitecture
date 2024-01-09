@@ -1,9 +1,7 @@
-﻿using System.Reflection;
-using Core.Persistence.Repositories;
-using Core.Security.Entities;
+﻿using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace Persistence.Contexts;
 
@@ -24,8 +22,6 @@ public class BaseDbContext : DbContext
         Database.EnsureCreated();
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-    }
 }

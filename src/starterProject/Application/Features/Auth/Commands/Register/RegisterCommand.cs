@@ -12,7 +12,19 @@ namespace Application.Features.Auth.Commands.Register;
 public class RegisterCommand : IRequest<RegisteredResponse>
 {
     public UserForRegisterDto UserForRegisterDto { get; set; }
-    public string IPAddress { get; set; }
+    public string IpAddress { get; set; }
+
+    public RegisterCommand()
+    {
+        UserForRegisterDto = null!;
+        IpAddress = string.Empty;
+    }
+
+    public RegisterCommand(UserForRegisterDto userForRegisterDto, string ipAddress)
+    {
+        UserForRegisterDto = userForRegisterDto;
+        IpAddress = ipAddress;
+    }
 
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisteredResponse>
     {
@@ -31,7 +43,11 @@ public class RegisterCommand : IRequest<RegisteredResponse>
         {
             await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
 
-            HashingHelper.CreatePasswordHash(request.UserForRegisterDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            HashingHelper.CreatePasswordHash(
+                request.UserForRegisterDto.Password,
+                passwordHash: out byte[] passwordHash,
+                passwordSalt: out byte[] passwordSalt
+            );
             User newUser =
                 new()
                 {
@@ -46,8 +62,8 @@ public class RegisterCommand : IRequest<RegisteredResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 
-            RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IPAddress);
-            RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+            Core.Security.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
+            Core.Security.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
             RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return registeredResponse;

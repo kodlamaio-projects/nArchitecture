@@ -47,7 +47,7 @@ public class AuthBusinessRules : BaseBusinessRules
         return Task.CompletedTask;
     }
 
-    public Task UserShouldBeExists(User? user)
+    public Task UserShouldBeExistsWhenSelected(User? user)
     {
         if (user == null)
             throw new BusinessException(AuthMessages.UserDontExists);
@@ -77,15 +77,16 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public async Task UserEmailShouldBeNotExists(string email)
     {
-        User? user = await _userRepository.GetAsync(predicate: u => u.Email == email, enableTracking: false);
-        if (user != null)
+        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
+        if (doesExists)
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
     public async Task UserPasswordShouldBeMatch(int id, string password)
     {
         User? user = await _userRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
-        if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+        await UserShouldBeExistsWhenSelected(user);
+        if (!HashingHelper.VerifyPasswordHash(password, user!.PasswordHash, user.PasswordSalt))
             throw new BusinessException(AuthMessages.PasswordDontMatch);
     }
 }

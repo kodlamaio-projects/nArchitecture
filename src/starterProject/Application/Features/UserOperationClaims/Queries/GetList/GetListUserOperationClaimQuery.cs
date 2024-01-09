@@ -12,6 +12,16 @@ public class GetListUserOperationClaimQuery : IRequest<GetListResponse<GetListUs
 {
     public PageRequest PageRequest { get; set; }
 
+    public GetListUserOperationClaimQuery()
+    {
+        PageRequest = new PageRequest { PageIndex = 0, PageSize = 10 };
+    }
+
+    public GetListUserOperationClaimQuery(PageRequest pageRequest)
+    {
+        PageRequest = pageRequest;
+    }
+
     public class GetListUserOperationClaimQueryHandler
         : IRequestHandler<GetListUserOperationClaimQuery, GetListResponse<GetListUserOperationClaimListItemDto>>
     {
@@ -30,10 +40,13 @@ public class GetListUserOperationClaimQuery : IRequest<GetListResponse<GetListUs
         )
         {
             IPaginate<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository.GetListAsync(
-                index: request.PageRequest.Page,
+                index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize
             );
-            var mappedUserOperationClaimListModel = _mapper.Map<GetListResponse<GetListUserOperationClaimListItemDto>>(userOperationClaims);
+
+            GetListResponse<GetListUserOperationClaimListItemDto> mappedUserOperationClaimListModel = _mapper.Map<
+                GetListResponse<GetListUserOperationClaimListItemDto>
+            >(userOperationClaims);
             return mappedUserOperationClaimListModel;
         }
     }

@@ -37,13 +37,14 @@ public class DeleteOperationClaimCommand : IRequest<DeletedOperationClaimRespons
         {
             OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,
+                include: q => q.Include(oc => oc.UserOperationClaims),
                 cancellationToken: cancellationToken
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
 
             await _operationClaimRepository.DeleteAsync(entity: operationClaim!);
 
-            DeletedOperationClaimResponse? response = _mapper.Map<DeletedOperationClaimResponse>(operationClaim);
+            DeletedOperationClaimResponse response = _mapper.Map<DeletedOperationClaimResponse>(operationClaim);
             return response;
         }
     }

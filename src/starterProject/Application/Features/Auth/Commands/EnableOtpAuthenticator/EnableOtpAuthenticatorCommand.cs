@@ -1,7 +1,7 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
-using Application.Services.UserService;
+using Application.Services.UsersService;
 using Core.Security.Entities;
 using MediatR;
 
@@ -36,16 +36,19 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
             CancellationToken cancellationToken
         )
         {
-            User user = await _userService.GetById(request.UserId);
-            await _authBusinessRules.UserShouldBeExists(user);
-            await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user);
+            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
+            await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
+            await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
 
-            OtpAuthenticator? isExistsOtpAuthenticator = await _otpAuthenticatorRepository.GetAsync(o => o.UserId == request.UserId);
-            await _authBusinessRules.OtpAuthenticatorThatVerifiedShouldNotBeExists(isExistsOtpAuthenticator);
-            if (isExistsOtpAuthenticator is not null)
-                await _otpAuthenticatorRepository.DeleteAsync(isExistsOtpAuthenticator);
+            OtpAuthenticator? doesExistOtpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
+                predicate: o => o.UserId == request.UserId,
+                cancellationToken: cancellationToken
+            );
+            await _authBusinessRules.OtpAuthenticatorThatVerifiedShouldNotBeExists(doesExistOtpAuthenticator);
+            if (doesExistOtpAuthenticator is not null)
+                await _otpAuthenticatorRepository.DeleteAsync(doesExistOtpAuthenticator);
 
-            OtpAuthenticator newOtpAuthenticator = await _authenticatorService.CreateOtpAuthenticator(user);
+            OtpAuthenticator newOtpAuthenticator = await _authenticatorService.CreateOtpAuthenticator(user!);
             OtpAuthenticator addedOtpAuthenticator = await _otpAuthenticatorRepository.AddAsync(newOtpAuthenticator);
 
             EnabledOtpAuthenticatorResponse enabledOtpAuthenticatorDto =

@@ -27,9 +27,11 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
     private HashSet<OperationClaim> getSeeds()
     {
         int id = 0;
-        HashSet<OperationClaim> seeds = new();
-
-        seeds.Add(new OperationClaim { Id = ++id, Name = GeneralOperationClaims.Admin });
+        HashSet<OperationClaim> seeds =
+            new()
+            {
+                new OperationClaim { Id = ++id, Name = GeneralOperationClaims.Admin }
+            };
 
         return seeds;
     }

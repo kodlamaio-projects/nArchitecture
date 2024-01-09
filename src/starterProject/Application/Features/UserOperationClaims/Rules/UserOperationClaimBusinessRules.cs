@@ -24,17 +24,31 @@ public class UserOperationClaimBusinessRules : BaseBusinessRules
 
     public async Task UserOperationClaimIdShouldExistWhenSelected(int id)
     {
-        UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
-            predicate: b => b.Id == id,
-            enableTracking: false
-        );
-        await UserOperationClaimShouldExistWhenSelected(userOperationClaim);
+        bool doesExist = await _userOperationClaimRepository.AnyAsync(predicate: b => b.Id == id);
+        if (!doesExist)
+            throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimNotExists);
     }
 
-    public async Task UserShouldNotHasOperationClaimIdWhenInsert(int userId, int operationClaimId)
+    public Task UserOperationClaimShouldNotExistWhenSelected(UserOperationClaim? userOperationClaim)
     {
-        bool isExist = await _userOperationClaimRepository.AnyAsync(u => u.UserId == userId && u.OperationClaimId == operationClaimId);
-        if (isExist)
+        if (userOperationClaim != null)
+            throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);
+        return Task.CompletedTask;
+    }
+
+    public async Task UserShouldNotHasOperationClaimAlreadyWhenInsert(int userId, int operationClaimId)
+    {
+        bool doesExist = await _userOperationClaimRepository.AnyAsync(u => u.UserId == userId && u.OperationClaimId == operationClaimId);
+        if (doesExist)
+            throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);
+    }
+
+    public async Task UserShouldNotHasOperationClaimAlreadyWhenUpdated(int id, int userId, int operationClaimId)
+    {
+        bool doesExist = await _userOperationClaimRepository.AnyAsync(
+            predicate: uoc => uoc.Id == id && uoc.UserId == userId && uoc.OperationClaimId == operationClaimId
+        );
+        if (doesExist)
             throw new BusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);
     }
 }

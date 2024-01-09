@@ -1,11 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Application.Features.Users.Queries.GetList;
+﻿using Application.Features.Users.Queries.GetList;
 using Application.Tests.Mocks.FakeData;
 using Application.Tests.Mocks.Repositories;
 using Core.Application.Requests;
 using Core.Application.Responses;
-using Core.Persistence.Paging;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Queries.GetList.GetListUserQuery;
 
@@ -26,7 +25,7 @@ public class GetListUserTests : UserMockRepository
     [Fact]
     public async Task GetAllUsersShouldSuccessfuly()
     {
-        _query.PageRequest = new PageRequest { Page = 0, PageSize = 3 };
+        _query.PageRequest = new PageRequest { PageIndex = 0, PageSize = 3 };
 
         GetListResponse<GetListUserListItemDto> result = await _handler.Handle(_query, CancellationToken.None);
 

@@ -16,30 +16,38 @@ public class UserBusinessRules : BaseBusinessRules
         _userRepository = userRepository;
     }
 
-    public Task UserShouldBeExistWhenSelected(User? user)
+    public Task UserShouldBeExistsWhenSelected(User? user)
     {
         if (user == null)
             throw new BusinessException(AuthMessages.UserDontExists);
         return Task.CompletedTask;
     }
 
-    public async Task UserIdShouldBeExistWhenSelected(int id)
+    public async Task UserIdShouldBeExistsWhenSelected(int id)
     {
-        User? user = await _userRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
-        await UserShouldBeExistWhenSelected(user);
+        bool doesExist = await _userRepository.AnyAsync(predicate: u => u.Id == id, enableTracking: false);
+        if (doesExist)
+            throw new BusinessException(AuthMessages.UserDontExists);
     }
 
-    public Task UserPasswordShouldBeMatch(User user, string password)
+    public Task UserPasswordShouldBeMatched(User user, string password)
     {
         if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             throw new BusinessException(AuthMessages.PasswordDontMatch);
         return Task.CompletedTask;
     }
 
-    public async Task UserEmailShouldNotExist(string email)
+    public async Task UserEmailShouldNotExistsWhenInsert(string email)
     {
-        User? user = await _userRepository.GetAsync(predicate: u => u.Email == email, enableTracking: false);
-        if (user != null)
+        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
+        if (doesExists)
+            throw new BusinessException(AuthMessages.UserMailAlreadyExists);
+    }
+
+    public async Task UserEmailShouldNotExistsWhenUpdate(int id, string email)
+    {
+        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Id != id && u.Email == email, enableTracking: false);
+        if (doesExists)
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 }

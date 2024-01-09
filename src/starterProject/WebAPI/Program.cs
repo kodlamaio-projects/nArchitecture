@@ -3,6 +3,7 @@ using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
+using Core.WebAPI.Extensions.Swagger;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -22,7 +23,10 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddHttpContextAccessor();
 
-TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+const string tokenOptionsConfigurationSection = "TokenOptions";
+TokenOptions tokenOptions =
+    builder.Configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
+    ?? throw new InvalidOperationException($"\"{tokenOptionsConfigurationSection}\" section cannot found in configuration.");
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -39,8 +43,9 @@ builder.Services
         };
     });
 
-//builder.Services.AddDistributedMemoryCache(); // InMemory
-builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379");
+builder.Services.AddDistributedMemoryCache(); // InMemory
+
+// builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379"); // Redis
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -58,26 +63,16 @@ builder.Services.AddSwaggerGen(opt =>
         securityScheme: new OpenApiSecurityScheme
         {
             Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey,
+            Type = SecuritySchemeType.Http,
             Scheme = "Bearer",
             BearerFormat = "JWT",
             In = ParameterLocation.Header,
             Description =
-                "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345.54321\""
+                "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer YOUR_TOKEN\". \r\n\r\n"
+                + "`Enter your token in the text input below.`"
         }
     );
-    opt.AddSecurityRequirement(
-        new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                },
-                new string[] { }
-            }
-        }
-    );
+    opt.OperationFilter<BearerSecurityRequirementOperationFilter>();
 });
 
 WebApplication app = builder.Build();
@@ -99,11 +94,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors(
-    opt =>
-        opt.WithOrigins(app.Configuration.GetSection("WebAPIConfiguration").Get<WebAPIConfiguration>().AllowedOrigins)
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials()
-);
+
+const string webApiConfigurationSection = "WebAPIConfiguration";
+WebApiConfiguration webApiConfiguration =
+    app.Configuration.GetSection(webApiConfigurationSection).Get<WebApiConfiguration>()
+    ?? throw new InvalidOperationException($"\"{webApiConfigurationSection}\" section cannot found in configuration.");
+app.UseCors(opt => opt.WithOrigins(webApiConfiguration.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+
 app.Run();

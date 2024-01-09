@@ -1,7 +1,6 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using AutoMapper;
-using Core.Security.Entities;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.RevokeToken;
@@ -9,7 +8,19 @@ namespace Application.Features.Auth.Commands.RevokeToken;
 public class RevokeTokenCommand : IRequest<RevokedTokenResponse>
 {
     public string Token { get; set; }
-    public string IPAddress { get; set; }
+    public string IpAddress { get; set; }
+
+    public RevokeTokenCommand()
+    {
+        Token = string.Empty;
+        IpAddress = string.Empty;
+    }
+
+    public RevokeTokenCommand(string token, string ipAddress)
+    {
+        Token = token;
+        IpAddress = ipAddress;
+    }
 
     public class RevokeTokenCommandHandler : IRequestHandler<RevokeTokenCommand, RevokedTokenResponse>
     {
@@ -26,11 +37,11 @@ public class RevokeTokenCommand : IRequest<RevokedTokenResponse>
 
         public async Task<RevokedTokenResponse> Handle(RevokeTokenCommand request, CancellationToken cancellationToken)
         {
-            RefreshToken? refreshToken = await _authService.GetRefreshTokenByToken(request.Token);
+            Core.Security.Entities.RefreshToken? refreshToken = await _authService.GetRefreshTokenByToken(request.Token);
             await _authBusinessRules.RefreshTokenShouldBeExists(refreshToken);
-            await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
+            await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken!);
 
-            await _authService.RevokeRefreshToken(refreshToken, request.IPAddress, reason: "Revoked without replacement");
+            await _authService.RevokeRefreshToken(token: refreshToken!, request.IpAddress, reason: "Revoked without replacement");
 
             RevokedTokenResponse revokedTokenResponse = _mapper.Map<RevokedTokenResponse>(refreshToken);
             return revokedTokenResponse;
