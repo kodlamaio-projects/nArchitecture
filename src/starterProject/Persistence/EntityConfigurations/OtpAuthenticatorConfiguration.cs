@@ -18,8 +18,6 @@ public class OtpAuthenticatorConfiguration : IEntityTypeConfiguration<OtpAuthent
         builder.Property(oa => oa.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(oa => oa.DeletedDate).HasColumnName("DeletedDate");
 
-        builder.HasQueryFilter(oa => !oa.DeletedDate.HasValue);
-
         builder.HasOne(oa => oa.User);
     }
 }
