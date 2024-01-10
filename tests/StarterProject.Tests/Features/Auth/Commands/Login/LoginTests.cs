@@ -1,9 +1,10 @@
 ﻿using Application.Features.Auth.Commands.Login;
 using Application.Features.Auth.Rules;
+using Application.Features.Users.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
-using Application.Services.UserService;
+using Application.Services.UsersService;
 using Application.Tests.Mocks.Configurations;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Mailing;
@@ -51,14 +52,16 @@ namespace StarterProject.Tests.Features.Auth.Commands.Login
             IMailService mailService = new MailKitMailService(_configuration);
             IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpNetOtpAuthenticatorHelper();
             #endregion
-            AuthBusinessRules _authBusinessRules = new AuthBusinessRules(_userRepository, _userEmailAuthenticatorRepository);
+            AuthBusinessRules _authBusinessRules = new(_userRepository, _userEmailAuthenticatorRepository);
             IAuthService _authService = new AuthManager(
                 _userOperationClaimRepository,
                 _refreshTokenRepository,
                 tokenHelper,
-                _configuration
+                _configuration,
+                _authBusinessRules
             );
-            IUserService _userService = new UserManager(_userRepository);
+            UserBusinessRules _userBusinessRules = new(_userRepository);
+            IUserService _userService = new UserManager(_userRepository, _userBusinessRules);
             IAuthenticatorService _authententicatorService = new AuthenticatorManager(
                 emailAuthenticatorHelper,
                 _userEmailAuthenticatorRepository,
