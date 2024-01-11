@@ -5,7 +5,6 @@ using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
-using Application.Tests.Mocks.Configurations;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Mailing;
 using Core.Mailing.MailKitImplementations;
@@ -15,17 +14,12 @@ using Core.Security.OtpAuthenticator;
 using Core.Security.OtpAuthenticator.OtpNet;
 using FluentValidation.TestHelper;
 using Microsoft.Extensions.Configuration;
-using Moq;
-using StarterProject.Tests.Mocks.FakeDatas;
-using StarterProject.Tests.Mocks.Repositories.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StarterProject.Application.Tests.Mocks.Configurations;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
+using StarterProject.Application.Tests.Mocks.Repositories.Auth;
 using static Application.Features.Auth.Commands.Login.LoginCommand;
 
-namespace StarterProject.Tests.Features.Auth.Commands.Login
+namespace StarterProject.Application.Tests.Features.Auth.Commands.Login
 {
     public class LoginTests
     {
@@ -34,17 +28,24 @@ namespace StarterProject.Tests.Features.Auth.Commands.Login
         private readonly LoginCommandValidator _validator;
         private readonly IConfiguration _configuration;
 
-        public LoginTests()
+        public LoginTests(
+            OperationClaimFakeData operationClaimFakeData,
+            RefreshTokenFakeData refreshTokenFakeData,
+            UserFakeData userFakeData
+        )
         {
             _configuration = MockConfiguration.GetConfigurationMock();
             #region Mock Repositories
-            IUserOperationClaimRepository _userOperationClaimRepository =
-                MockUserOperationClaimRepository.GetMockUserOperationClaimRepository();
-            IRefreshTokenRepository _refreshTokenRepository = MockRefreshTokenRepository.GetMockRefreshTokenRepository();
+            IUserOperationClaimRepository _userOperationClaimRepository = new MockUserOperationClaimRepository(
+                operationClaimFakeData
+            ).GetMockUserOperationClaimRepository();
+            IRefreshTokenRepository _refreshTokenRepository = new MockRefreshTokenRepository(
+                refreshTokenFakeData
+            ).GetMockRefreshTokenRepository();
             IEmailAuthenticatorRepository _userEmailAuthenticatorRepository =
                 MockEmailAuthenticatorRepository.GetEmailAuthenticatorRepositoryMock();
             IOtpAuthenticatorRepository _userOtpAuthenticatorRepository = MockOtpAuthRepository.GetOtpAuthenticatorMock();
-            IUserRepository _userRepository = MockUserRepository.GetUserMockRepository();
+            IUserRepository _userRepository = new MockUserRepository(userFakeData).GetUserMockRepository();
             #endregion
             #region Mock Helpers
             ITokenHelper tokenHelper = new JwtHelper(_configuration);

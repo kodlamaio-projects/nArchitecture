@@ -1,25 +1,21 @@
 ﻿using Application.Services.Repositories;
-using Core.Security.Entities;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using Nest;
-using StarterProject.Tests.Mocks.FakeDatas;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
 
-namespace StarterProject.Tests.Mocks.Repositories.Auth
+namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
 {
     public class MockUserOperationClaimRepository
     {
-        public static IUserOperationClaimRepository GetMockUserOperationClaimRepository()
+        private readonly OperationClaimFakeData _operationClaimFakeData;
+
+        public MockUserOperationClaimRepository(OperationClaimFakeData operationClaimFakeData)
         {
-            var operationClaims = OperationClaimFakeData.Data;
+            _operationClaimFakeData = operationClaimFakeData;
+        }
+
+        public IUserOperationClaimRepository GetMockUserOperationClaimRepository()
+        {
+            var operationClaims = _operationClaimFakeData.Data;
             var mockRepo = new Mock<IUserOperationClaimRepository>();
 
             mockRepo

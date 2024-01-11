@@ -1,49 +1,60 @@
 ﻿using Core.Security.Entities;
-using Core.Security.Enums;
 using Core.Security.Hashing;
 using Core.Test.Application.FakeData;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StarterProject.Tests.Mocks.FakeDatas
+namespace StarterProject.Application.Tests.Mocks.FakeDatas;
+
+public class UserFakeData : BaseFakeData<User, int>
 {
-    public static class UserFakeData
+    public override List<User> CreateFakeData()
     {
-        private static List<User> CreateFakeData()
-        {
-            byte[] passwordHash,
-                passwordSalt;
-            HashingHelper.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
-            int id = 0;
-            var userList = new List<User>()
+        byte[] passwordHash,
+            passwordSalt;
+        HashingHelper.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
+
+        int id = 0;
+        List<User> data =
+            new()
             {
-                new()
+                new User
                 {
                     Id = ++id,
-                    AuthenticatorType = AuthenticatorType.None,
-                    Email = "halit@kodlama.io",
-                    FirstName = "Halit",
-                    LastName = "Kalaycı",
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt
-                },
-                new()
-                {
-                    Id = ++id,
-                    AuthenticatorType = AuthenticatorType.None,
-                    Email = "engin@kodlama.io",
                     FirstName = "Engin",
                     LastName = "Demiroğ",
+                    Email = "example@email.com",
                     PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt
+                    PasswordSalt = passwordSalt,
+                    Status = true,
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now
                 },
+                new User
+                {
+                    Id = ++id,
+                    FirstName = "Ahmet",
+                    LastName = "Çetinkaya",
+                    Email = "example2@email.com",
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    Status = true,
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now
+                },
+                new User
+                {
+                    Id = ++id,
+                    FirstName = "Halit",
+                    LastName = "Kalayci",
+                    Email = "halit@kodlama.io",
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    Status = true,
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now
+                }
             };
-            return userList;
-        }
-
-        public static List<User> Data => CreateFakeData();
+        return data;
     }
 }

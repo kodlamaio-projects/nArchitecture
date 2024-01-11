@@ -1,17 +1,12 @@
 ﻿using Core.Security.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Core.Test.Application.FakeData;
 
-namespace StarterProject.Tests.Mocks.FakeDatas
+namespace StarterProject.Application.Tests.Mocks.FakeDatas
 {
-    public static class OperationClaimFakeData
+    public class OperationClaimFakeData : BaseFakeData<OperationClaim, int>
     {
-        private static List<OperationClaim> CreateFakeData()
-        {
-            return new List<OperationClaim>()
+        public override List<OperationClaim> CreateFakeData() =>
+            new List<OperationClaim>()
             {
                 new() { Id = 1, Name = "Admin" },
                 new() { Id = 2, Name = "Example.Create" },
@@ -19,8 +14,5 @@ namespace StarterProject.Tests.Mocks.FakeDatas
                 new() { Id = 4, Name = "Example.Update" },
                 new() { Id = 5, Name = "Moderator" },
             };
-        }
-
-        public static List<OperationClaim> Data => CreateFakeData();
     }
 }

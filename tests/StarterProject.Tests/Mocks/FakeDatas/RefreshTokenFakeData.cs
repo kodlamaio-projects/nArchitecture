@@ -1,23 +1,14 @@
 ﻿using Core.Security.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Core.Test.Application.FakeData;
 
-namespace StarterProject.Tests.Mocks.FakeDatas
+namespace StarterProject.Application.Tests.Mocks.FakeDatas
 {
-    public static class RefreshTokenFakeData
+    public class RefreshTokenFakeData : BaseFakeData<RefreshToken, int>
     {
-        private static List<RefreshToken> CreateData()
-        {
-            List<RefreshToken> tokens = new List<RefreshToken>()
+        public override List<RefreshToken> CreateFakeData() =>
+            new List<RefreshToken>()
             {
                 new() { UserId = 1, Token = "abc" }
             };
-            return tokens;
-        }
-
-        public static List<RefreshToken> Data => CreateData();
     }
 }

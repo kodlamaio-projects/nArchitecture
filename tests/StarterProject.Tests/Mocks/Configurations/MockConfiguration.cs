@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Tests.Mocks.Configurations
+namespace StarterProject.Application.Tests.Mocks.Configurations
 {
     public static class MockConfiguration
     {

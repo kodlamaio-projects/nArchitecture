@@ -1,29 +1,25 @@
-﻿using Application.Features.Auth.Rules;
-using Application.Features.Users.Profiles;
-using Application.Features.Users.Rules;
-using Application.Services.Repositories;
+﻿using Application.Services.Repositories;
 using Core.Security.Entities;
-using Core.Security.Enums;
-using Core.Security.Hashing;
-using Core.Test.Application.Repositories;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
-using Org.BouncyCastle.Asn1.Ocsp;
-using StarterProject.Tests.Mocks.FakeDatas;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StarterProject.Tests.Mocks.Repositories.Auth
+namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
 {
     public class MockUserRepository
     {
-        public static IUserRepository GetUserMockRepository()
+        private UserFakeData _userFakeData;
+
+        public MockUserRepository(UserFakeData userFakeData)
+        {
+            _userFakeData = userFakeData;
+        }
+
+        public IUserRepository GetUserMockRepository()
         {
             #region GetAsync Mock
+
             var mockRepo = new Mock<IUserRepository>();
             mockRepo
                 .Setup(
@@ -47,11 +43,13 @@ namespace StarterProject.Tests.Mocks.Repositories.Auth
                     {
                         User user = null;
                         if (predicate != null)
-                            user = UserFakeData.Data.Where(predicate.Compile()).FirstOrDefault();
+                            user = _userFakeData.Data.Where(predicate.Compile()).FirstOrDefault();
                         return user;
                     }
                 );
-            #endregion
+
+            #endregion GetAsync Mock
+
             return mockRepo.Object;
         }
     }

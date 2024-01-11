@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarterProject.Tests.Mocks.Repositories.Auth
+namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
 {
     public static class MockOtpAuthRepository
     {

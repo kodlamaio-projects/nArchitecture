@@ -1,15 +1,17 @@
-﻿using Application.Features.Users.Commands.Create;
-using Application.Features.Users.Commands.Delete;
-using Application.Features.Users.Commands.Update;
-using Application.Features.Users.Queries.GetById;
-using Application.Features.Users.Queries.GetList;
+﻿using Application.Features.Auth.Commands.Login;
 using Microsoft.Extensions.DependencyInjection;
-using StarterProject.Tests.Mocks.FakeDatas;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
 
-namespace StarterProject.Tests.DependencyResolvers
+namespace StarterProject.Application.Tests.DependencyResolvers
 {
     public static class AuthServiceRegistrations
     {
-        public static void AddAuthServices(this IServiceCollection services) { }
+        public static void AddAuthServices(this IServiceCollection services)
+        {
+            services.AddTransient<UserFakeData>();
+            services.AddTransient<OperationClaimFakeData>();
+            services.AddTransient<RefreshTokenFakeData>();
+            services.AddTransient<LoginCommand>();
+        }
     }
 }

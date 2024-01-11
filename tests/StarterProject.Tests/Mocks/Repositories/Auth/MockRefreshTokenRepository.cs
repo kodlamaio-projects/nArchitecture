@@ -1,20 +1,21 @@
 ﻿using Application.Services.Repositories;
-using Core.Security.Entities;
 using Moq;
-using StarterProject.Tests.Mocks.FakeDatas;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
 
-namespace StarterProject.Tests.Mocks.Repositories.Auth
+namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
 {
     public class MockRefreshTokenRepository
     {
-        public static IRefreshTokenRepository GetMockRefreshTokenRepository()
+        private readonly RefreshTokenFakeData _refreshTokenFakeData;
+
+        public MockRefreshTokenRepository(RefreshTokenFakeData refreshTokenFakeData)
         {
-            var tokens = RefreshTokenFakeData.Data;
+            _refreshTokenFakeData = refreshTokenFakeData;
+        }
+
+        public IRefreshTokenRepository GetMockRefreshTokenRepository()
+        {
+            var tokens = _refreshTokenFakeData.Data;
             var mockRepo = new Mock<IRefreshTokenRepository>();
             mockRepo.Setup(s => s.GetOldRefreshTokensAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(() => tokens);
             return mockRepo.Object;

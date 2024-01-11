@@ -1,13 +1,13 @@
 ﻿using Application.Features.Users.Commands.Delete;
-using Application.Tests.Mocks.FakeData;
-using Application.Tests.Mocks.Repositories;
 using Core.CrossCuttingConcerns.Exceptions.Types;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
+using StarterProject.Application.Tests.Mocks.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Commands.Delete.DeleteUserCommand;
 
-namespace Application.Tests.Features.Users.Commands.Delete;
+namespace StarterProject.Application.Tests.Features.Users.Commands.Delete;
 
 public class DeleteUserTests : UserMockRepository
 {
