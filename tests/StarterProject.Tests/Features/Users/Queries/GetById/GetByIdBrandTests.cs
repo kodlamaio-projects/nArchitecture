@@ -1,13 +1,13 @@
 ﻿using Application.Features.Users.Queries.GetById;
-using Application.Tests.Mocks.FakeData;
-using Application.Tests.Mocks.Repositories;
 using Core.CrossCuttingConcerns.Exceptions.Types;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
+using StarterProject.Application.Tests.Mocks.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Queries.GetById.GetByIdUserQuery;
 
-namespace Application.Tests.Features.Users.Queries.GetById;
+namespace StarterProject.Application.Tests.Features.Users.Queries.GetById;
 
 public class GetByIdUserTests : UserMockRepository
 {

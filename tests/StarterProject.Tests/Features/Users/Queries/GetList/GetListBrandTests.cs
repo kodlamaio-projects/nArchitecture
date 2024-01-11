@@ -1,14 +1,14 @@
 ﻿using Application.Features.Users.Queries.GetList;
-using Application.Tests.Mocks.FakeData;
-using Application.Tests.Mocks.Repositories;
 using Core.Application.Requests;
 using Core.Application.Responses;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
+using StarterProject.Application.Tests.Mocks.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Queries.GetList.GetListUserQuery;
 
-namespace Application.Tests.Features.Users.Queries.GetList;
+namespace StarterProject.Application.Tests.Features.Users.Queries.GetList;
 
 public class GetListUserTests : UserMockRepository
 {
@@ -29,6 +29,6 @@ public class GetListUserTests : UserMockRepository
 
         GetListResponse<GetListUserListItemDto> result = await _handler.Handle(_query, CancellationToken.None);
 
-        Assert.Equal(expected: 2, result.Items.Count);
+        Assert.Equal(expected: 3, result.Items.Count);
     }
 }

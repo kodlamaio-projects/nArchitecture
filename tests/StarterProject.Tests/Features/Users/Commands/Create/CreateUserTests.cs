@@ -1,16 +1,16 @@
 ﻿using Application.Features.Users.Commands.Create;
-using Application.Tests.Mocks.FakeData;
-using Application.Tests.Mocks.Repositories;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Test.Application.Constants;
 using FluentValidation.Results;
+using StarterProject.Application.Tests.Mocks.FakeDatas;
+using StarterProject.Application.Tests.Mocks.Repositories;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Commands.Create.CreateUserCommand;
 
-namespace Application.Tests.Features.Users.Commands.Create;
+namespace StarterProject.Application.Tests.Features.Users.Commands.Create;
 
 public class CreateUserTests : UserMockRepository
 {
