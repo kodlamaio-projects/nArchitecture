@@ -1,7 +1,9 @@
 using Application.Features.OperationClaims.Constants;
+using Application.Features.Users.Constants;
 using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection;
 
 namespace Persistence.EntityConfigurations;
 
@@ -24,15 +26,37 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         builder.HasData(getSeeds());
     }
 
-    private HashSet<OperationClaim> getSeeds()
+    private List<OperationClaim> getSeeds()
     {
         int id = 0;
-        HashSet<OperationClaim> seeds =
+        List<OperationClaim> seeds =
             new()
             {
-                new OperationClaim { Id = ++id, Name = GeneralOperationClaims.Admin }
+                new OperationClaim {
+                    Id = ++id,
+                    Name = GeneralOperationClaims.Admin
+                }
             };
 
+        var operationClaims = setApplicationOperationClaims(id,
+             typeof(UsersOperationClaims).GetFields()
+             );
+
+        seeds.AddRange(operationClaims);
         return seeds;
+    }
+
+    private List<OperationClaim> setApplicationOperationClaims(int id, params FieldInfo[] objects)
+    {
+        List<OperationClaim> list = new List<OperationClaim>();
+        foreach (var item in objects)
+        {
+            list.Add(new OperationClaim
+            {
+                Id = ++id,
+                Name = item.GetValue(null)?.ToString() ?? ""
+            });
+        }
+        return list;
     }
 }
