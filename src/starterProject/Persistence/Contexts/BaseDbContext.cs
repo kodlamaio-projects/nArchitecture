@@ -25,8 +25,7 @@ public class BaseDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
-            base.OnConfiguring(
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("BaseDb")));
+            base.OnConfiguring(optionsBuilder.UseSqlServer(Configuration.GetConnectionString("BaseDb")));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) =>

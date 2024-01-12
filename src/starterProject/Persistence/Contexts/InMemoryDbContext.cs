@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 
 namespace Persistence.Contexts;
+
 public class InMemoryDbContext : BaseDbContext
 {
     public InMemoryDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions, configuration)
