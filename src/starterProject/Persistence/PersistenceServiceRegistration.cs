@@ -10,12 +10,13 @@ namespace Persistence;
 public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(
-        this IServiceCollection services, 
-        IConfiguration configuration, 
-        bool isDevelopment = false)
+        this IServiceCollection services,
+        IConfiguration configuration,
+        bool isDevelopment = false
+    )
     {
         if (isDevelopment == true)
-    {
+        {
             services.AddDbContext<BaseDbContext, InMemoryDbContext>();
         }
         else

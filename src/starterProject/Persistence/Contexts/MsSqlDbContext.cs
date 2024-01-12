@@ -5,9 +5,8 @@ namespace Persistence.Contexts;
 
 public class MsSqlDbContext : BaseDbContext
 {
-    public MsSqlDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions, configuration)
-    {
-    }
+    public MsSqlDbContext(DbContextOptions dbContextOptions, IConfiguration configuration)
+        : base(dbContextOptions, configuration) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

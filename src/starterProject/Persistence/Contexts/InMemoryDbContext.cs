@@ -5,14 +5,12 @@ namespace Persistence.Contexts;
 
 public class InMemoryDbContext : BaseDbContext
 {
-    public InMemoryDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions, configuration)
-    {
-    }
+    public InMemoryDbContext(DbContextOptions dbContextOptions, IConfiguration configuration)
+        : base(dbContextOptions, configuration) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
-            base.OnConfiguring(
-                optionsBuilder.UseInMemoryDatabase("InMemoryDb"));
+            base.OnConfiguring(optionsBuilder.UseInMemoryDatabase("InMemoryDb"));
     }
 }
