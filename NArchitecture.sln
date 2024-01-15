@@ -38,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.ElasticSearch", "src\c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Test", "src\corePackages\Core.Test\Core.Test.csproj", "{04F34479-7304-45E2-AEA3-5269BA1543E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarterProject.Application.Tests", "tests\StarterProject.Tests\StarterProject.Application.Tests.csproj", "{A06975C0-631D-4E8B-8106-D1C8E3A05D19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarterProject.Application.Tests", "tests\StarterProject.Application.Tests\StarterProject.Application.Tests.csproj", "{A06975C0-631D-4E8B-8106-D1C8E3A05D19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.WebAPI", "src\corePackages\Core.WebAPI\Core.WebAPI.csproj", "{24AE40CB-3961-4DBA-9E7B-E48893CA8DA5}"
 EndProject
