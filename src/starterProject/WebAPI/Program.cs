@@ -1,5 +1,6 @@
 using Application;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
+using Core.Localization.WebApi;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
@@ -100,5 +101,7 @@ WebApiConfiguration webApiConfiguration =
     app.Configuration.GetSection(webApiConfigurationSection).Get<WebApiConfiguration>()
     ?? throw new InvalidOperationException($"\"{webApiConfigurationSection}\" section cannot found in configuration.");
 app.UseCors(opt => opt.WithOrigins(webApiConfiguration.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+
+app.UseResponseLocalization();
 
 app.Run();

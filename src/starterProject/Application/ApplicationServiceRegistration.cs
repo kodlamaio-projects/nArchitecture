@@ -10,6 +10,7 @@ using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Logging.Serilog;
 using Core.CrossCuttingConcerns.Logging.Serilog.Logger;
 using Core.ElasticSearch;
+using Core.Localization.Resource.Yaml.DependencyInjection;
 using Core.Mailing;
 using Core.Mailing.MailKitImplementations;
 using FluentValidation;
@@ -41,9 +42,12 @@ public static class ApplicationServiceRegistration
         services.AddSingleton<IMailService, MailKitMailService>();
         services.AddSingleton<LoggerServiceBase, FileLogger>();
         services.AddSingleton<IElasticSearch, ElasticSearchManager>();
+
         services.AddScoped<IAuthService, AuthManager>();
         services.AddScoped<IAuthenticatorService, AuthenticatorManager>();
         services.AddScoped<IUserService, UserManager>();
+
+        services.AddYamlResourceLocalization();
 
         return services;
     }
