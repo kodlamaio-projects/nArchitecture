@@ -10,15 +10,10 @@
     <ProjectReference Include="..\..\corePackages\Core.Application\Core.Application.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.CrossCuttingConcerns\Core.CrossCuttingConcerns.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.ElasticSearch\Core.ElasticSearch.csproj" />
+    <ProjectReference Include="..\..\corePackages\Core.Localization.Resource.Yaml.DependencyInjection\Core.Localization.Resource.Yaml.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.Mailing\Core.Mailing.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.Security\Core.Security.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Repositories" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,4 +22,36 @@
     <PackageReference Include="MediatR" Version="12.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Services\Repositories" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Features\Auth\Resources\Locales\auth.tr.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\Auth\Resources\Locales\auth.en.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\OperationClaims\Resources\Locales\operation-claims.en.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\OperationClaims\Resources\Locales\operation-claims.tr.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\UserOperationClaims\Resources\Locales\user-operation-claims.en.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\UserOperationClaims\Resources\Locales\user-operation-claims.tr.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\Users\Resources\Locales\users.en.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\Users\Resources\Locales\users.tr.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+	
 </Project>
