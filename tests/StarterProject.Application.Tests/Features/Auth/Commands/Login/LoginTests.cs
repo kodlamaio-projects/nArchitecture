@@ -6,6 +6,8 @@ using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
 using Core.CrossCuttingConcerns.Exceptions.Types;
+using Core.Localization.Abstraction;
+using Core.Localization.Resource.Yaml;
 using Core.Mailing;
 using Core.Mailing.MailKitImplementations;
 using Core.Security.EmailAuthenticator;
@@ -52,8 +54,9 @@ namespace StarterProject.Application.Tests.Features.Auth.Commands.Login
             IEmailAuthenticatorHelper emailAuthenticatorHelper = new EmailAuthenticatorHelper();
             IMailService mailService = new MailKitMailService(_configuration);
             IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpNetOtpAuthenticatorHelper();
+            ILocalizationService localizationService = new ResourceLocalizationManager(resources: new()) { AcceptLocales = new[] { "en" } };
             #endregion
-            AuthBusinessRules _authBusinessRules = new(_userRepository, _userEmailAuthenticatorRepository);
+            AuthBusinessRules _authBusinessRules = new(_userRepository, localizationService);
             IAuthService _authService = new AuthManager(
                 _userOperationClaimRepository,
                 _refreshTokenRepository,
@@ -61,7 +64,7 @@ namespace StarterProject.Application.Tests.Features.Auth.Commands.Login
                 _configuration,
                 _authBusinessRules
             );
-            UserBusinessRules _userBusinessRules = new(_userRepository);
+            UserBusinessRules _userBusinessRules = new(_userRepository, localizationService);
             IUserService _userService = new UserManager(_userRepository, _userBusinessRules);
             IAuthenticatorService _authententicatorService = new AuthenticatorManager(
                 emailAuthenticatorHelper,
