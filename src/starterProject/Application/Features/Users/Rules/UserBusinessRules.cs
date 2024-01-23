@@ -1,5 +1,6 @@
 using Application.Features.Auth.Constants;
 using Application.Services.Repositories;
+using Application.Services.TranslateService;
 using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Security.Entities;
@@ -10,44 +11,52 @@ namespace Application.Features.Users.Rules;
 public class UserBusinessRules : BaseBusinessRules
 {
     private readonly IUserRepository _userRepository;
+    private readonly ITranslateService _translateService;
 
-    public UserBusinessRules(IUserRepository userRepository)
+    public UserBusinessRules(
+        IUserRepository userRepository,
+        ITranslateService translateService
+        )
     {
         _userRepository = userRepository;
+        _translateService = translateService;
+    }
+    public override async Task ThrowBusinessException(string message)
+    {
+        string translatedMessage = await _translateService.TranslateAsync(message);
+        await base.ThrowBusinessException(translatedMessage);
     }
 
-    public Task UserShouldBeExistsWhenSelected(User? user)
+    public async Task UserShouldBeExistsWhenSelected(User? user)
     {
         if (user == null)
-            throw new BusinessException(AuthMessages.UserDontExists);
-        return Task.CompletedTask;
+            await ThrowBusinessException(AuthMessages.UserDontExists);
     }
 
     public async Task UserIdShouldBeExistsWhenSelected(int id)
     {
         bool doesExist = await _userRepository.AnyAsync(predicate: u => u.Id == id, enableTracking: false);
         if (doesExist)
-            throw new BusinessException(AuthMessages.UserDontExists);
+            await ThrowBusinessException(AuthMessages.UserDontExists);
     }
 
-    public Task UserPasswordShouldBeMatched(User user, string password)
+    public async Task UserPasswordShouldBeMatched(User user, string password)
     {
         if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-            throw new BusinessException(AuthMessages.PasswordDontMatch);
-        return Task.CompletedTask;
+            await ThrowBusinessException(AuthMessages.PasswordDontMatch);
     }
 
     public async Task UserEmailShouldNotExistsWhenInsert(string email)
     {
         bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
         if (doesExists)
-            throw new BusinessException(AuthMessages.UserMailAlreadyExists);
+            await ThrowBusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
     public async Task UserEmailShouldNotExistsWhenUpdate(int id, string email)
     {
         bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Id != id && u.Email == email, enableTracking: false);
         if (doesExists)
-            throw new BusinessException(AuthMessages.UserMailAlreadyExists);
+            await ThrowBusinessException(AuthMessages.UserMailAlreadyExists);
     }
 }
