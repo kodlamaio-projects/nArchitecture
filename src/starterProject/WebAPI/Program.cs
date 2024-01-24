@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using Persistence.MigrationConfigurations.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using WebAPI;
 
@@ -90,6 +91,8 @@ if (app.Environment.IsDevelopment())
 
 if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();
+
+_ = app.UseMigrationCreator();
 
 app.UseAuthentication();
 app.UseAuthorization();
