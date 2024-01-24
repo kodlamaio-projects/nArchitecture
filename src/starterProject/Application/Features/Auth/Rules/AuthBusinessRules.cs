@@ -2,6 +2,7 @@ using Application.Features.Auth.Constants;
 using Application.Services.Repositories;
 using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions.Types;
+using Core.Localization.Abstraction;
 using Core.Security.Entities;
 using Core.Security.Enums;
 using Core.Security.Hashing;
@@ -11,75 +12,73 @@ namespace Application.Features.Auth.Rules;
 public class AuthBusinessRules : BaseBusinessRules
 {
     private readonly IUserRepository _userRepository;
-    private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
+    private readonly ILocalizationService _localizationService;
 
-    public AuthBusinessRules(IUserRepository userRepository, IEmailAuthenticatorRepository emailAuthenticatorRepository)
+    public AuthBusinessRules(IUserRepository userRepository, ILocalizationService localizationService)
     {
         _userRepository = userRepository;
-        _emailAuthenticatorRepository = emailAuthenticatorRepository;
+        _localizationService = localizationService;
     }
 
-    public Task EmailAuthenticatorShouldBeExists(EmailAuthenticator? emailAuthenticator)
+    private async Task throwBusinessException(string messageKey)
+    {
+        string message = await _localizationService.GetLocalizedAsync(messageKey, AuthMessages.SectionName);
+        throw new BusinessException(message);
+    }
+
+    public async Task EmailAuthenticatorShouldBeExists(EmailAuthenticator? emailAuthenticator)
     {
         if (emailAuthenticator is null)
-            throw new BusinessException(AuthMessages.EmailAuthenticatorDontExists);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.EmailAuthenticatorDontExists);
     }
 
-    public Task OtpAuthenticatorShouldBeExists(OtpAuthenticator? otpAuthenticator)
+    public async Task OtpAuthenticatorShouldBeExists(OtpAuthenticator? otpAuthenticator)
     {
         if (otpAuthenticator is null)
-            throw new BusinessException(AuthMessages.OtpAuthenticatorDontExists);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.OtpAuthenticatorDontExists);
     }
 
-    public Task OtpAuthenticatorThatVerifiedShouldNotBeExists(OtpAuthenticator? otpAuthenticator)
+    public async Task OtpAuthenticatorThatVerifiedShouldNotBeExists(OtpAuthenticator? otpAuthenticator)
     {
         if (otpAuthenticator is not null && otpAuthenticator.IsVerified)
-            throw new BusinessException(AuthMessages.AlreadyVerifiedOtpAuthenticatorIsExists);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.AlreadyVerifiedOtpAuthenticatorIsExists);
     }
 
-    public Task EmailAuthenticatorActivationKeyShouldBeExists(EmailAuthenticator emailAuthenticator)
+    public async Task EmailAuthenticatorActivationKeyShouldBeExists(EmailAuthenticator emailAuthenticator)
     {
         if (emailAuthenticator.ActivationKey is null)
-            throw new BusinessException(AuthMessages.EmailActivationKeyDontExists);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.EmailActivationKeyDontExists);
     }
 
-    public Task UserShouldBeExistsWhenSelected(User? user)
+    public async Task UserShouldBeExistsWhenSelected(User? user)
     {
         if (user == null)
-            throw new BusinessException(AuthMessages.UserDontExists);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.UserDontExists);
     }
 
-    public Task UserShouldNotBeHaveAuthenticator(User user)
+    public async Task UserShouldNotBeHaveAuthenticator(User user)
     {
         if (user.AuthenticatorType != AuthenticatorType.None)
-            throw new BusinessException(AuthMessages.UserHaveAlreadyAAuthenticator);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.UserHaveAlreadyAAuthenticator);
     }
 
-    public Task RefreshTokenShouldBeExists(RefreshToken? refreshToken)
+    public async Task RefreshTokenShouldBeExists(RefreshToken? refreshToken)
     {
         if (refreshToken == null)
-            throw new BusinessException(AuthMessages.RefreshDontExists);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.RefreshDontExists);
     }
 
-    public Task RefreshTokenShouldBeActive(RefreshToken refreshToken)
+    public async Task RefreshTokenShouldBeActive(RefreshToken refreshToken)
     {
         if (refreshToken.Revoked != null && DateTime.UtcNow >= refreshToken.Expires)
-            throw new BusinessException(AuthMessages.InvalidRefreshToken);
-        return Task.CompletedTask;
+            await throwBusinessException(AuthMessages.InvalidRefreshToken);
     }
 
     public async Task UserEmailShouldBeNotExists(string email)
     {
         bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
         if (doesExists)
-            throw new BusinessException(AuthMessages.UserMailAlreadyExists);
+            await throwBusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
     public async Task UserPasswordShouldBeMatch(int id, string password)
@@ -87,6 +86,6 @@ public class AuthBusinessRules : BaseBusinessRules
         User? user = await _userRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
         await UserShouldBeExistsWhenSelected(user);
         if (!HashingHelper.VerifyPasswordHash(password, user!.PasswordHash, user.PasswordSalt))
-            throw new BusinessException(AuthMessages.PasswordDontMatch);
+            await throwBusinessException(AuthMessages.PasswordDontMatch);
     }
 }

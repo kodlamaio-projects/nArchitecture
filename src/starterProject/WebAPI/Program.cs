@@ -1,6 +1,7 @@
 using Application;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.Persistence.WebApi;
+using Core.Localization.WebApi;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
@@ -45,7 +46,6 @@ builder.Services
     });
 
 builder.Services.AddDistributedMemoryCache(); // InMemory
-
 // builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379"); // Redis
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -103,5 +103,7 @@ WebApiConfiguration webApiConfiguration =
     app.Configuration.GetSection(webApiConfigurationSection).Get<WebApiConfiguration>()
     ?? throw new InvalidOperationException($"\"{webApiConfigurationSection}\" section cannot found in configuration.");
 app.UseCors(opt => opt.WithOrigins(webApiConfiguration.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+
+app.UseResponseLocalization();
 
 app.Run();
