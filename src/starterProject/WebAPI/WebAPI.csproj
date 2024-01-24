@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\corePackages\Core.Localization.WebApi\Core.Localization.WebApi.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.Mailing\Core.Mailing.csproj" />
+    <ProjectReference Include="..\..\corePackages\Core.Persistence.WebApi\Core.Persistence.WebApi.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.WebAPI\Core.WebAPI.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />

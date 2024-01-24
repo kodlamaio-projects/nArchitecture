@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\corePackages\Core.Persistence.DependencyInjection\Core.Persistence.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\corePackages\Core.Persistence\Core.Persistence.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 

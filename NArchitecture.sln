@@ -63,6 +63,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Persistence.DependencyInjection", "src\corePackages\Core.Persistence.DependencyInjection\Core.Persistence.DependencyInjection.csproj", "{E1F0BD02-5781-4309-B469-DFDA36C2462E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Persistence.WebApi", "src\corePackages\Core.Persistence.WebApi\Core.Persistence.WebApi.csproj", "{93910DFF-42FA-4A27-9076-45F276E99143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +161,14 @@ Global
 		{A06975C0-631D-4E8B-8106-D1C8E3A05D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A06975C0-631D-4E8B-8106-D1C8E3A05D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A06975C0-631D-4E8B-8106-D1C8E3A05D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F0BD02-5781-4309-B469-DFDA36C2462E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F0BD02-5781-4309-B469-DFDA36C2462E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F0BD02-5781-4309-B469-DFDA36C2462E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F0BD02-5781-4309-B469-DFDA36C2462E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93910DFF-42FA-4A27-9076-45F276E99143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93910DFF-42FA-4A27-9076-45F276E99143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93910DFF-42FA-4A27-9076-45F276E99143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93910DFF-42FA-4A27-9076-45F276E99143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -186,6 +198,8 @@ Global
 		{82A827A4-0FAB-4A81-8BC9-444571117AA7} = {403A7B6A-EDB3-4B56-8DF2-A92A3247C721}
 		{061DAFB0-CD87-48E9-9ADA-B3C9C85E7306} = {403A7B6A-EDB3-4B56-8DF2-A92A3247C721}
 		{A06975C0-631D-4E8B-8106-D1C8E3A05D19} = {07E15C51-014F-4C05-B709-C273D2D4E78C}
+		{E1F0BD02-5781-4309-B469-DFDA36C2462E} = {403A7B6A-EDB3-4B56-8DF2-A92A3247C721}
+		{93910DFF-42FA-4A27-9076-45F276E99143} = {403A7B6A-EDB3-4B56-8DF2-A92A3247C721}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9208CFCE-156A-49CD-9E43-32CE67AAB957}
