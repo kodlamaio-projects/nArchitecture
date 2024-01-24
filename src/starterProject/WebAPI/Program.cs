@@ -1,5 +1,6 @@
 using Application;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
+using Core.Persistence.WebApi;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
-using Persistence.MigrationConfigurations.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using WebAPI;
 
@@ -45,6 +45,7 @@ builder.Services
     });
 
 builder.Services.AddDistributedMemoryCache(); // InMemory
+
 // builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379"); // Redis
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -53,7 +54,7 @@ builder.Services.AddCors(
     opt =>
         opt.AddDefaultPolicy(p =>
         {
-            p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            _ = p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
         })
 );
 builder.Services.AddSwaggerGen(opt =>
@@ -80,8 +81,8 @@ WebApplication app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(opt =>
+    _ = app.UseSwagger();
+    _ = app.UseSwaggerUI(opt =>
     {
         opt.DocExpansion(DocExpansion.None);
     });
@@ -90,7 +91,7 @@ if (app.Environment.IsDevelopment())
 if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();
 
-_ = app.UseMigrationCreator();
+_ = app.UseDbMigrationApplier();
 
 app.UseAuthentication();
 app.UseAuthorization();
