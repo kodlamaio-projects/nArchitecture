@@ -16,7 +16,7 @@ namespace StarterProject.Application.Tests.Mocks.Configurations
                 { "TokenOptions:Audience", "Kodlamaio Users" },
                 { "TokenOptions:Issuer", "Kodlamaio" },
                 { "TokenOptions:AccessTokenExpiration", "10" },
-                { "TokenOptions:SecurityKey", "afgetywg12!%ksdg81245GHDFlsSkgTtrBuU" },
+                { "TokenOptions:SecurityKey", "StrongAndSecretKeyStrongAndSecretKeyStrongAndSecretKeyStrongAndSecretKey" },
                 { "TokenOptions:RefreshTokenExpiration", "1440" },
                 { "TokenOptions:RefreshTokenTTL", "180" },
                 { "MailSettings:Server", "127.0.0.1" },

@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\corePackages\Core.Application\Core.Application.csproj" />
     <ProjectReference Include="..\..\corePackages\Core.CrossCuttingConcerns\Core.CrossCuttingConcerns.csproj" />
@@ -15,18 +13,15 @@
     <ProjectReference Include="..\..\corePackages\Core.Security\Core.Security.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Services\Repositories" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Features\Auth\Resources\Locales\auth.tr.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -53,5 +48,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-	
 </Project>
