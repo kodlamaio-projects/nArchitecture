@@ -1,0 +1,13 @@
+name: "Release"
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GH Release
+        uses: softprops/action-gh-release@v0.1.15
