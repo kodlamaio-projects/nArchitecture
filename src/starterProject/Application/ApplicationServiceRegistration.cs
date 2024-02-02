@@ -1,4 +1,5 @@
-﻿using Application.Services.AuthenticatorService;
+﻿using System.Reflection;
+using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
 using Core.Application.Pipelines.Authorization;
@@ -15,7 +16,6 @@ using Core.Mailing;
 using Core.Mailing.MailKitImplementations;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Application;
 

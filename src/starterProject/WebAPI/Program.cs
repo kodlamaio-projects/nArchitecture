@@ -1,7 +1,7 @@
 using Application;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
-using Core.Persistence.WebApi;
 using Core.Localization.WebApi;
+using Core.Persistence.WebApi;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
@@ -29,8 +29,8 @@ const string tokenOptionsConfigurationSection = "TokenOptions";
 TokenOptions tokenOptions =
     builder.Configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
     ?? throw new InvalidOperationException($"\"{tokenOptionsConfigurationSection}\" section cannot found in configuration.");
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder
+    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -51,12 +51,11 @@ builder.Services.AddDistributedMemoryCache(); // InMemory
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddCors(
-    opt =>
-        opt.AddDefaultPolicy(p =>
-        {
-            _ = p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-        })
+builder.Services.AddCors(opt =>
+    opt.AddDefaultPolicy(p =>
+    {
+        _ = p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    })
 );
 builder.Services.AddSwaggerGen(opt =>
 {

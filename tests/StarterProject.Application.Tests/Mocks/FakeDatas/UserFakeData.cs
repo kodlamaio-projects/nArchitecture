@@ -1,8 +1,8 @@
-﻿using Core.Security.Entities;
+﻿using System;
+using System.Collections.Generic;
+using Core.Security.Entities;
 using Core.Security.Hashing;
 using Core.Test.Application.FakeData;
-using System;
-using System.Collections.Generic;
 
 namespace StarterProject.Application.Tests.Mocks.FakeDatas;
 

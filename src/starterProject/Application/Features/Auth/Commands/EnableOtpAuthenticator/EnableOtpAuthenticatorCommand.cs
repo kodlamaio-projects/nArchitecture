@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Application.Features.Auth.Commands.EnableOtpAuthenticator;
 
-public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorResponse> , ISecuredRequest
+public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorResponse>, ISecuredRequest
 {
     public int UserId { get; set; }
 

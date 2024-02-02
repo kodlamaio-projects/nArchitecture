@@ -1,9 +1,9 @@
-﻿using Application.Features.Users.Commands.Delete;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Application.Features.Users.Commands.Delete;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using StarterProject.Application.Tests.Mocks.FakeDatas;
 using StarterProject.Application.Tests.Mocks.Repositories;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Commands.Delete.DeleteUserCommand;
 

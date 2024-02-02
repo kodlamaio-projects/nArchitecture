@@ -1,12 +1,12 @@
-﻿using Application.Features.Users.Commands.Update;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Features.Users.Commands.Update;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Test.Application.Constants;
 using FluentValidation.Results;
 using StarterProject.Application.Tests.Mocks.FakeDatas;
 using StarterProject.Application.Tests.Mocks.Repositories;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Commands.Update.UpdateUserCommand;
 

@@ -1,9 +1,9 @@
+using System.Reflection;
 using Application;
 using Application.Features.OperationClaims.Constants;
 using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection;
 
 namespace Persistence.EntityConfigurations;
 
@@ -38,21 +38,22 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             IEnumerable<Type> featureOperationClaimsTypes = Assembly
                 .GetAssembly(typeof(ApplicationServiceRegistration))!
                 .GetTypes()
-                .Where(
-                    type =>
-                        (type.Namespace?.Contains("Features") == true)
-                        && (type.Namespace?.Contains("Constants") == true)
-                        && type.IsClass
-                        && type.Name.EndsWith("OperationClaims")
+                .Where(type =>
+                    (type.Namespace?.Contains("Features") == true)
+                    && (type.Namespace?.Contains("Constants") == true)
+                    && type.IsClass
+                    && type.Name.EndsWith("OperationClaims")
                 );
             foreach (Type type in featureOperationClaimsTypes)
             {
                 FieldInfo[] typeFields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
                 IEnumerable<string> typeFieldsValues = typeFields.Select(field => field.GetValue(null)!.ToString()!);
 
-                IEnumerable<OperationClaim> featureOperationClaimsToAdd = typeFieldsValues.Select(
-                    value => new OperationClaim { Id = ++id, Name = value }
-                );
+                IEnumerable<OperationClaim> featureOperationClaimsToAdd = typeFieldsValues.Select(value => new OperationClaim
+                {
+                    Id = ++id,
+                    Name = value
+                });
                 foreach (OperationClaim featureOperationClaim in featureOperationClaimsToAdd)
                     yield return featureOperationClaim;
             }
