@@ -2,14 +2,17 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.EnableOtpAuthenticator;
 
-public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorResponse>
+public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorResponse> , ISecuredRequest
 {
     public int UserId { get; set; }
+
+    public string[] Roles => [];
 
     public class EnableOtpAuthenticatorCommandHandler : IRequestHandler<EnableOtpAuthenticatorCommand, EnabledOtpAuthenticatorResponse>
     {

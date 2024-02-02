@@ -1,15 +1,19 @@
+using Application.Features.OperationClaims.Constants;
 using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.OperationClaims.Queries.GetById;
 
-public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse>
+public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse>, ISecuredRequest
 {
     public int Id { get; set; }
+
+    public string[] Roles => [OperationClaimsOperationClaims.Read];
 
     public class GetByIdOperationClaimQueryHandler : IRequestHandler<GetByIdOperationClaimQuery, GetByIdOperationClaimResponse>
     {
