@@ -1,9 +1,9 @@
-﻿using Application.Services.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Services.Repositories;
 using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using StarterProject.Application.Tests.Mocks.FakeDatas;
-using System.Linq.Expressions;
 
 namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
 {
@@ -22,15 +22,14 @@ namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
 
             var mockRepo = new Mock<IUserRepository>();
             mockRepo
-                .Setup(
-                    s =>
-                        s.GetAsync(
-                            It.IsAny<Expression<Func<User, bool>>>(),
-                            It.IsAny<Func<IQueryable<User>, IIncludableQueryable<User, object>>>(),
-                            It.IsAny<bool>(),
-                            It.IsAny<bool>(),
-                            It.IsAny<CancellationToken>()
-                        )
+                .Setup(s =>
+                    s.GetAsync(
+                        It.IsAny<Expression<Func<User, bool>>>(),
+                        It.IsAny<Func<IQueryable<User>, IIncludableQueryable<User, object>>>(),
+                        It.IsAny<bool>(),
+                        It.IsAny<bool>(),
+                        It.IsAny<CancellationToken>()
+                    )
                 )
                 .ReturnsAsync(
                     (

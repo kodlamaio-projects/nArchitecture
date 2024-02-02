@@ -1,7 +1,7 @@
-﻿using Core.Persistence.Paging;
+﻿using System.Linq.Expressions;
+using Core.Persistence.Paging;
 using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
 
 namespace Application.Services.UsersService;
 

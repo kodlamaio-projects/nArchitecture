@@ -1,9 +1,9 @@
-﻿using Application.Features.Users.Queries.GetById;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Application.Features.Users.Queries.GetById;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using StarterProject.Application.Tests.Mocks.FakeDatas;
 using StarterProject.Application.Tests.Mocks.Repositories;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using static Application.Features.Users.Queries.GetById.GetByIdUserQuery;
 

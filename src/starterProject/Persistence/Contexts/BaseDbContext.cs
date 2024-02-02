@@ -1,7 +1,7 @@
-﻿using Core.Security.Entities;
+﻿using System.Reflection;
+using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace Persistence.Contexts;
 
