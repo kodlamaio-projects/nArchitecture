@@ -1,5 +1,7 @@
+using Application.Features.OperationClaims.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -8,9 +10,11 @@ using MediatR;
 
 namespace Application.Features.OperationClaims.Queries.GetList;
 
-public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperationClaimListItemDto>>
+public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperationClaimListItemDto>>, ISecuredRequest
 {
     public PageRequest PageRequest { get; set; }
+
+    public string[] Roles => [OperationClaimsOperationClaims.Read];
 
     public GetListOperationClaimQuery()
     {

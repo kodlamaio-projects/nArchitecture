@@ -2,6 +2,7 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
+using Core.Application.Pipelines.Authorization;
 using Core.Mailing;
 using Core.Security.Entities;
 using Core.Security.Enums;
@@ -11,10 +12,12 @@ using System.Web;
 
 namespace Application.Features.Auth.Commands.EnableEmailAuthenticator;
 
-public class EnableEmailAuthenticatorCommand : IRequest
+public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
 {
     public int UserId { get; set; }
     public string VerifyEmailUrlPrefix { get; set; }
+
+    public string[] Roles => [];
 
     public EnableEmailAuthenticatorCommand()
     {

@@ -2,16 +2,19 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using Core.Security.Enums;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.VerifyOtpAuthenticator;
 
-public class VerifyOtpAuthenticatorCommand : IRequest
+public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
 {
     public int UserId { get; set; }
     public string ActivationCode { get; set; }
+
+    public string[] Roles => [];
 
     public VerifyOtpAuthenticatorCommand()
     {
