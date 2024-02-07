@@ -23,29 +23,8 @@
     <Folder Include="Services\Repositories" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Features\Auth\Resources\Locales\auth.tr.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Features\Auth\Resources\Locales\auth.en.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Features\OperationClaims\Resources\Locales\operation-claims.en.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Features\OperationClaims\Resources\Locales\operation-claims.tr.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Features\UserOperationClaims\Resources\Locales\user-operation-claims.en.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Features\UserOperationClaims\Resources\Locales\user-operation-claims.tr.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Features\Users\Resources\Locales\users.en.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Features\Users\Resources\Locales\users.tr.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="Features\**\Resources\Locales\*.*.yaml">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>
