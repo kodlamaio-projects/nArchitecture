@@ -28,7 +28,7 @@ public class GetByIdUserTests : UserMockRepository
 
         GetByIdUserResponse result = await _handler.Handle(_query, CancellationToken.None);
 
-        Assert.Equal(expected: "example@email.com", result.Email);
+        Assert.Equal(expected: "example@kodlama.io", result.Email);
     }
 
     [Fact]

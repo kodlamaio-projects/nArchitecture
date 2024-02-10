@@ -79,9 +79,9 @@ namespace StarterProject.Application.Tests.Features.Auth.Commands.Login
         }
 
         [Fact]
-        public async Task SuccessfullLoginShouldReturnAccessToken()
+        public async Task SuccessfulLoginShouldReturnAccessToken()
         {
-            _loginCommand.UserForLoginDto = new() { Email = "halit@kodlama.io", Password = "123456" };
+            _loginCommand.UserForLoginDto = new() { Email = "example@kodlama.io", Password = "123456" };
             var result = await _loginCommandHandler.Handle(_loginCommand, CancellationToken.None);
             Assert.NotNull(result.AccessToken.Token);
         }
@@ -89,7 +89,7 @@ namespace StarterProject.Application.Tests.Features.Auth.Commands.Login
         [Fact]
         public async Task AccessTokenShouldHaveValidExpirationTime()
         {
-            _loginCommand.UserForLoginDto = new() { Email = "halit@kodlama.io", Password = "123456" };
+            _loginCommand.UserForLoginDto = new() { Email = "example@kodlama.io", Password = "123456" };
             var result = await _loginCommandHandler.Handle(_loginCommand, CancellationToken.None);
             var tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
             bool tokenExpiresInTime = DateTime.Now.AddMinutes(tokenOptions.AccessTokenExpiration + 1) > result.AccessToken.ExpirationDate;
