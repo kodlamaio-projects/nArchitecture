@@ -49,7 +49,10 @@ public class AuthManager : IAuthService
 
     public async Task DeleteOldRefreshTokens(int userId)
     {
-        List<RefreshToken<int, int>> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(userId, _tokenOptions.RefreshTokenTTL);
+        List<RefreshToken<int, int>> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(
+            userId,
+            _tokenOptions.RefreshTokenTTL
+        );
         await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
 
@@ -59,7 +62,12 @@ public class AuthManager : IAuthService
         return refreshToken;
     }
 
-    public async Task RevokeRefreshToken(RefreshToken<int, int> refreshToken, string ipAddress, string? reason = null, string? replacedByToken = null)
+    public async Task RevokeRefreshToken(
+        RefreshToken<int, int> refreshToken,
+        string ipAddress,
+        string? reason = null,
+        string? replacedByToken = null
+    )
     {
         refreshToken.RevokedDate = DateTime.UtcNow;
         refreshToken.RevokedByIp = ipAddress;
@@ -77,7 +85,9 @@ public class AuthManager : IAuthService
 
     public async Task RevokeDescendantRefreshTokens(RefreshToken<int, int> refreshToken, string ipAddress, string reason)
     {
-        RefreshToken<int, int>? childToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == refreshToken.ReplacedByToken);
+        RefreshToken<int, int>? childToken = await _refreshTokenRepository.GetAsync(predicate: r =>
+            r.Token == refreshToken.ReplacedByToken
+        );
 
         if (childToken?.RevokedDate != null && childToken.ExpiresDate <= DateTime.UtcNow)
             await RevokeRefreshToken(childToken, ipAddress, reason);

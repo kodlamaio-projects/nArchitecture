@@ -39,7 +39,10 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
             CancellationToken cancellationToken
         )
         {
-            User<int, int>? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
+            User<int, int>? user = await _userService.GetAsync(
+                predicate: u => u.Id == request.UserId,
+                cancellationToken: cancellationToken
+            );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
 

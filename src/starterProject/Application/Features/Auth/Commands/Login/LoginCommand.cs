@@ -72,7 +72,10 @@ public class LoginCommand : IRequest<LoggedResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
 
-            Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(user, request.IpAddress);
+            Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(
+                user,
+                request.IpAddress
+            );
             Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
             await _authService.DeleteOldRefreshTokens(user.Id);
 

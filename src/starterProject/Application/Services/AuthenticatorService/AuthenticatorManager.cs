@@ -78,7 +78,9 @@ public class AuthenticatorManager : IAuthenticatorService
 
     private async Task SendAuthenticatorCodeWithEmail(User<int, int> user)
     {
-        EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
+        EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e =>
+            e.UserId == user.Id
+        );
         if (emailAuthenticator is null)
             throw new NotFoundException("Email Authenticator not found.");
         if (!emailAuthenticator.IsVerified)
@@ -102,7 +104,9 @@ public class AuthenticatorManager : IAuthenticatorService
 
     private async Task VerifyAuthenticatorCodeWithEmail(User<int, int> user, string authenticatorCode)
     {
-        EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
+        EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e =>
+            e.UserId == user.Id
+        );
         if (emailAuthenticator is null)
             throw new NotFoundException("Email Authenticator not found.");
         if (emailAuthenticator.ActivationKey != authenticatorCode)

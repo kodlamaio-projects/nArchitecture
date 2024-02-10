@@ -59,7 +59,10 @@ public class RegisterCommand : IRequest<RegisteredResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 
-            Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
+            Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(
+                createdUser,
+                request.IpAddress
+            );
             Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
             RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };

@@ -50,7 +50,10 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
                 );
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
-            User<int, int>? user = await _userService.GetAsync(predicate: u => u.Id == refreshToken.UserId, cancellationToken: cancellationToken);
+            User<int, int>? user = await _userService.GetAsync(
+                predicate: u => u.Id == refreshToken.UserId,
+                cancellationToken: cancellationToken
+            );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             Core.Security.Entities.RefreshToken<int, int> newRefreshToken = await _authService.RotateRefreshToken(
