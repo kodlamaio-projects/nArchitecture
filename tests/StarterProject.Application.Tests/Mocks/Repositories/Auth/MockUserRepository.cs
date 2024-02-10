@@ -24,8 +24,8 @@ namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
             mockRepo
                 .Setup(s =>
                     s.GetAsync(
-                        It.IsAny<Expression<Func<User, bool>>>(),
-                        It.IsAny<Func<IQueryable<User>, IIncludableQueryable<User, object>>>(),
+                        It.IsAny<Expression<Func<User<int, int>, bool>>>(),
+                        It.IsAny<Func<IQueryable<User<int, int>>, IIncludableQueryable<User<int, int>, object>>>(),
                         It.IsAny<bool>(),
                         It.IsAny<bool>(),
                         It.IsAny<CancellationToken>()
@@ -33,14 +33,14 @@ namespace StarterProject.Application.Tests.Mocks.Repositories.Auth
                 )
                 .ReturnsAsync(
                     (
-                        Expression<Func<User, bool>> predicate,
-                        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include,
+                        Expression<Func<User<int, int>, bool>> predicate,
+                        Func<IQueryable<User<int, int>>, IIncludableQueryable<User<int, int>, object>>? include,
                         bool withDeleted,
                         bool enableTracking,
                         CancellationToken cancellationToken
                     ) =>
                     {
-                        User user = null;
+                        User<int, int> user = null;
                         if (predicate != null)
                             user = _userFakeData.Data.Where(predicate.Compile()).FirstOrDefault();
                         return user;

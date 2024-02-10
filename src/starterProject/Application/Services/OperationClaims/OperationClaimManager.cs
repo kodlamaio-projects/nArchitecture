@@ -21,15 +21,15 @@ public class OperationClaimManager : IOperationClaimService
         _operationClaimBusinessRules = operationClaimBusinessRules;
     }
 
-    public async Task<OperationClaim?> GetAsync(
-        Expression<Func<OperationClaim, bool>> predicate,
-        Func<IQueryable<OperationClaim>, IIncludableQueryable<OperationClaim, object>>? include = null,
+    public async Task<OperationClaim<int, int>?> GetAsync(
+        Expression<Func<OperationClaim<int, int>, bool>> predicate,
+        Func<IQueryable<OperationClaim<int, int>>, IIncludableQueryable<OperationClaim<int, int>, object>>? include = null,
         bool withDeleted = false,
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     )
     {
-        OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
+        OperationClaim<int, int>? operationClaim = await _operationClaimRepository.GetAsync(
             predicate,
             include,
             withDeleted,
@@ -39,10 +39,10 @@ public class OperationClaimManager : IOperationClaimService
         return operationClaim;
     }
 
-    public async Task<IPaginate<OperationClaim>?> GetListAsync(
-        Expression<Func<OperationClaim, bool>>? predicate = null,
-        Func<IQueryable<OperationClaim>, IOrderedQueryable<OperationClaim>>? orderBy = null,
-        Func<IQueryable<OperationClaim>, IIncludableQueryable<OperationClaim, object>>? include = null,
+    public async Task<IPaginate<OperationClaim<int, int>>?> GetListAsync(
+        Expression<Func<OperationClaim<int, int>, bool>>? predicate = null,
+        Func<IQueryable<OperationClaim<int, int>>, IOrderedQueryable<OperationClaim<int, int>>>? orderBy = null,
+        Func<IQueryable<OperationClaim<int, int>>, IIncludableQueryable<OperationClaim<int, int>, object>>? include = null,
         int index = 0,
         int size = 10,
         bool withDeleted = false,
@@ -50,7 +50,7 @@ public class OperationClaimManager : IOperationClaimService
         CancellationToken cancellationToken = default
     )
     {
-        IPaginate<OperationClaim> operationClaimList = await _operationClaimRepository.GetListAsync(
+        IPaginate<OperationClaim<int, int>> operationClaimList = await _operationClaimRepository.GetListAsync(
             predicate,
             orderBy,
             include,
@@ -63,27 +63,27 @@ public class OperationClaimManager : IOperationClaimService
         return operationClaimList;
     }
 
-    public async Task<OperationClaim> AddAsync(OperationClaim operationClaim)
+    public async Task<OperationClaim<int, int>> AddAsync(OperationClaim<int, int> operationClaim)
     {
         await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(operationClaim.Name);
 
-        OperationClaim addedOperationClaim = await _operationClaimRepository.AddAsync(operationClaim);
+        OperationClaim<int, int> addedOperationClaim = await _operationClaimRepository.AddAsync(operationClaim);
 
         return addedOperationClaim;
     }
 
-    public async Task<OperationClaim> UpdateAsync(OperationClaim operationClaim)
+    public async Task<OperationClaim<int, int>> UpdateAsync(OperationClaim<int, int> operationClaim)
     {
         await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(operationClaim.Id, operationClaim.Name);
 
-        OperationClaim updatedOperationClaim = await _operationClaimRepository.UpdateAsync(operationClaim);
+        OperationClaim<int, int> updatedOperationClaim = await _operationClaimRepository.UpdateAsync(operationClaim);
 
         return updatedOperationClaim;
     }
 
-    public async Task<OperationClaim> DeleteAsync(OperationClaim operationClaim, bool permanent = false)
+    public async Task<OperationClaim<int, int>> DeleteAsync(OperationClaim<int, int> operationClaim, bool permanent = false)
     {
-        OperationClaim deletedOperationClaim = await _operationClaimRepository.DeleteAsync(operationClaim);
+        OperationClaim<int, int> deletedOperationClaim = await _operationClaimRepository.DeleteAsync(operationClaim);
 
         return deletedOperationClaim;
     }

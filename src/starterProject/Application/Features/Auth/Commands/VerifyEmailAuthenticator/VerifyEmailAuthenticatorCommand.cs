@@ -35,7 +35,7 @@ public class VerifyEmailAuthenticatorCommand : IRequest
 
         public async Task Handle(VerifyEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            EmailAuthenticator? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(
+            EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(
                 predicate: e => e.ActivationKey == request.ActivationKey,
                 cancellationToken: cancellationToken
             );

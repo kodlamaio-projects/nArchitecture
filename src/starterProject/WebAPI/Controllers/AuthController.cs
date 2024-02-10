@@ -104,7 +104,7 @@ public class AuthController : BaseController
     private string getRefreshTokenFromCookies() =>
         Request.Cookies["refreshToken"] ?? throw new ArgumentException("Refresh token is not found in request cookies.");
 
-    private void setRefreshTokenToCookie(RefreshToken refreshToken)
+    private void setRefreshTokenToCookie(RefreshToken<int, int> refreshToken)
     {
         CookieOptions cookieOptions = new() { HttpOnly = true, Expires = DateTime.UtcNow.AddDays(7) };
         Response.Cookies.Append(key: "refreshToken", refreshToken.Token, cookieOptions);

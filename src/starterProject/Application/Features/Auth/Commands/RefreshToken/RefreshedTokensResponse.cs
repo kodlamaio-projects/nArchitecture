@@ -6,7 +6,7 @@ namespace Application.Features.Auth.Commands.RefreshToken;
 public class RefreshedTokensResponse : IResponse
 {
     public AccessToken AccessToken { get; set; }
-    public Core.Security.Entities.RefreshToken RefreshToken { get; set; }
+    public Core.Security.Entities.RefreshToken<int, int> RefreshToken { get; set; }
 
     public RefreshedTokensResponse()
     {
@@ -14,7 +14,7 @@ public class RefreshedTokensResponse : IResponse
         RefreshToken = null!;
     }
 
-    public RefreshedTokensResponse(AccessToken accessToken, Core.Security.Entities.RefreshToken refreshToken)
+    public RefreshedTokensResponse(AccessToken accessToken, Core.Security.Entities.RefreshToken<int, int> refreshToken)
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;

@@ -27,7 +27,7 @@ public class UserOperationClaimBusinessRules : BaseBusinessRules
         throw new BusinessException(message);
     }
 
-    public async Task UserOperationClaimShouldExistWhenSelected(UserOperationClaim? userOperationClaim)
+    public async Task UserOperationClaimShouldExistWhenSelected(UserOperationClaim<int, int>? userOperationClaim)
     {
         if (userOperationClaim == null)
             await throwBusinessException(UserOperationClaimsMessages.UserOperationClaimNotExists);
@@ -40,7 +40,7 @@ public class UserOperationClaimBusinessRules : BaseBusinessRules
             await throwBusinessException(UserOperationClaimsMessages.UserOperationClaimNotExists);
     }
 
-    public async Task UserOperationClaimShouldNotExistWhenSelected(UserOperationClaim? userOperationClaim)
+    public async Task UserOperationClaimShouldNotExistWhenSelected(UserOperationClaim<int, int>? userOperationClaim)
     {
         if (userOperationClaim != null)
             await throwBusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);

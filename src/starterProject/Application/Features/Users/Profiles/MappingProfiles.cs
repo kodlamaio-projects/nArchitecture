@@ -15,16 +15,16 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<User, CreateUserCommand>().ReverseMap();
-        CreateMap<User, CreatedUserResponse>().ReverseMap();
-        CreateMap<User, UpdateUserCommand>().ReverseMap();
-        CreateMap<User, UpdatedUserResponse>().ReverseMap();
-        CreateMap<User, UpdateUserFromAuthCommand>().ReverseMap();
-        CreateMap<User, UpdatedUserFromAuthResponse>().ReverseMap();
-        CreateMap<User, DeleteUserCommand>().ReverseMap();
-        CreateMap<User, DeletedUserResponse>().ReverseMap();
-        CreateMap<User, GetByIdUserResponse>().ReverseMap();
-        CreateMap<User, GetListUserListItemDto>().ReverseMap();
-        CreateMap<IPaginate<User>, GetListResponse<GetListUserListItemDto>>().ReverseMap();
+        CreateMap<User<int, int>, CreateUserCommand>().ReverseMap();
+        CreateMap<User<int, int>, CreatedUserResponse>().ReverseMap();
+        CreateMap<User<int, int>, UpdateUserCommand>().ReverseMap();
+        CreateMap<User<int, int>, UpdatedUserResponse>().ReverseMap();
+        CreateMap<User<int, int>, UpdateUserFromAuthCommand>().ReverseMap();
+        CreateMap<User<int, int>, UpdatedUserFromAuthResponse>().ReverseMap();
+        CreateMap<User<int, int>, DeleteUserCommand>().ReverseMap();
+        CreateMap<User<int, int>, DeletedUserResponse>().ReverseMap();
+        CreateMap<User<int, int>, GetByIdUserResponse>().ReverseMap();
+        CreateMap<User<int, int>, GetListUserListItemDto>().ReverseMap();
+        CreateMap<IPaginate<User<int, int>>, GetListResponse<GetListUserListItemDto>>().ReverseMap();
     }
 }

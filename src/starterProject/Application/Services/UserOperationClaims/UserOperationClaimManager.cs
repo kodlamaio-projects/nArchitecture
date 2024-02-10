@@ -21,15 +21,15 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
         _userUserOperationClaimBusinessRules = userUserOperationClaimBusinessRules;
     }
 
-    public async Task<UserOperationClaim?> GetAsync(
-        Expression<Func<UserOperationClaim, bool>> predicate,
-        Func<IQueryable<UserOperationClaim>, IIncludableQueryable<UserOperationClaim, object>>? include = null,
+    public async Task<UserOperationClaim<int, int>?> GetAsync(
+        Expression<Func<UserOperationClaim<int, int>, bool>> predicate,
+        Func<IQueryable<UserOperationClaim<int, int>>, IIncludableQueryable<UserOperationClaim<int, int>  , object>>? include = null,
         bool withDeleted = false,
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     )
     {
-        UserOperationClaim? userUserOperationClaim = await _userUserOperationClaimRepository.GetAsync(
+        UserOperationClaim<int, int>? userUserOperationClaim = await _userUserOperationClaimRepository.GetAsync(
             predicate,
             include,
             withDeleted,
@@ -39,10 +39,10 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
         return userUserOperationClaim;
     }
 
-    public async Task<IPaginate<UserOperationClaim>?> GetListAsync(
-        Expression<Func<UserOperationClaim, bool>>? predicate = null,
-        Func<IQueryable<UserOperationClaim>, IOrderedQueryable<UserOperationClaim>>? orderBy = null,
-        Func<IQueryable<UserOperationClaim>, IIncludableQueryable<UserOperationClaim, object>>? include = null,
+    public async Task<IPaginate<UserOperationClaim<int, int>>?> GetListAsync(
+        Expression<Func<UserOperationClaim<int, int>, bool>>? predicate = null,
+        Func<IQueryable<UserOperationClaim<int, int>>, IOrderedQueryable<UserOperationClaim<int, int>>>? orderBy = null,
+        Func<IQueryable<UserOperationClaim<int, int>>, IIncludableQueryable<UserOperationClaim<int, int>, object>>? include = null,
         int index = 0,
         int size = 10,
         bool withDeleted = false,
@@ -50,7 +50,7 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
         CancellationToken cancellationToken = default
     )
     {
-        IPaginate<UserOperationClaim> userUserOperationClaimList = await _userUserOperationClaimRepository.GetListAsync(
+        IPaginate<UserOperationClaim<int, int>> userUserOperationClaimList = await _userUserOperationClaimRepository.GetListAsync(
             predicate,
             orderBy,
             include,
@@ -63,19 +63,19 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
         return userUserOperationClaimList;
     }
 
-    public async Task<UserOperationClaim> AddAsync(UserOperationClaim userUserOperationClaim)
+    public async Task<UserOperationClaim<int, int>> AddAsync(UserOperationClaim<int, int> userUserOperationClaim)
     {
         await _userUserOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenInsert(
             userUserOperationClaim.UserId,
             userUserOperationClaim.OperationClaimId
         );
 
-        UserOperationClaim addedUserOperationClaim = await _userUserOperationClaimRepository.AddAsync(userUserOperationClaim);
+        UserOperationClaim<int, int> addedUserOperationClaim = await _userUserOperationClaimRepository.AddAsync(userUserOperationClaim);
 
         return addedUserOperationClaim;
     }
 
-    public async Task<UserOperationClaim> UpdateAsync(UserOperationClaim userUserOperationClaim)
+    public async Task<UserOperationClaim<int, int>> UpdateAsync(UserOperationClaim<int, int> userUserOperationClaim)
     {
         await _userUserOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenUpdated(
             userUserOperationClaim.Id,
@@ -83,14 +83,14 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
             userUserOperationClaim.OperationClaimId
         );
 
-        UserOperationClaim updatedUserOperationClaim = await _userUserOperationClaimRepository.UpdateAsync(userUserOperationClaim);
+        UserOperationClaim<int, int> updatedUserOperationClaim = await _userUserOperationClaimRepository.UpdateAsync(userUserOperationClaim);
 
         return updatedUserOperationClaim;
     }
 
-    public async Task<UserOperationClaim> DeleteAsync(UserOperationClaim userUserOperationClaim, bool permanent = false)
+    public async Task<UserOperationClaim<int, int>> DeleteAsync(UserOperationClaim<int, int>     userUserOperationClaim, bool permanent = false)
     {
-        UserOperationClaim deletedUserOperationClaim = await _userUserOperationClaimRepository.DeleteAsync(userUserOperationClaim);
+        UserOperationClaim<int, int> deletedUserOperationClaim = await _userUserOperationClaimRepository.DeleteAsync(userUserOperationClaim);
 
         return deletedUserOperationClaim;
     }

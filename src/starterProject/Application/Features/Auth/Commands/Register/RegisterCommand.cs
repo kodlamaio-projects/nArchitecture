@@ -48,22 +48,19 @@ public class RegisterCommand : IRequest<RegisteredResponse>
                 passwordHash: out byte[] passwordHash,
                 passwordSalt: out byte[] passwordSalt
             );
-            User newUser =
+            User<int, int> newUser =
                 new()
                 {
                     Email = request.UserForRegisterDto.Email,
-                    FirstName = request.UserForRegisterDto.FirstName,
-                    LastName = request.UserForRegisterDto.LastName,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    Status = true
                 };
-            User createdUser = await _userRepository.AddAsync(newUser);
+            User<int, int> createdUser = await _userRepository.AddAsync(newUser);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 
-            Core.Security.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
-            Core.Security.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+            Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
+            Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
             RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return registeredResponse;

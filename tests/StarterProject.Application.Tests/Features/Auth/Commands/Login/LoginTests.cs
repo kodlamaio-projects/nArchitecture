@@ -50,7 +50,7 @@ namespace StarterProject.Application.Tests.Features.Auth.Commands.Login
             IUserRepository _userRepository = new MockUserRepository(userFakeData).GetUserMockRepository();
             #endregion
             #region Mock Helpers
-            ITokenHelper tokenHelper = new JwtHelper(_configuration);
+            ITokenHelper<int, int> tokenHelper = new JwtHelper<int, int>(_configuration);
             IEmailAuthenticatorHelper emailAuthenticatorHelper = new EmailAuthenticatorHelper();
             IMailService mailService = new MailKitMailService(_configuration);
             IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpNetOtpAuthenticatorHelper();
@@ -92,7 +92,7 @@ namespace StarterProject.Application.Tests.Features.Auth.Commands.Login
             _loginCommand.UserForLoginDto = new() { Email = "halit@kodlama.io", Password = "123456" };
             var result = await _loginCommandHandler.Handle(_loginCommand, CancellationToken.None);
             var tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
-            bool tokenExpiresInTime = DateTime.Now.AddMinutes(tokenOptions.AccessTokenExpiration + 1) > result.AccessToken.Expiration;
+            bool tokenExpiresInTime = DateTime.Now.AddMinutes(tokenOptions.AccessTokenExpiration + 1) > result.AccessToken.ExpirationDate;
             Assert.True(tokenExpiresInTime, "Access token expiration time is invalid.");
         }
 

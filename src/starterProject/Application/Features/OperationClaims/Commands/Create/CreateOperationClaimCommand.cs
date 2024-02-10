@@ -44,9 +44,9 @@ public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimRespons
         public async Task<CreatedOperationClaimResponse> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
         {
             await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(request.Name);
-            OperationClaim mappedOperationClaim = _mapper.Map<OperationClaim>(request);
+            OperationClaim<int, int> mappedOperationClaim = _mapper.Map<OperationClaim<int, int>>(request);
 
-            OperationClaim createdOperationClaim = await _operationClaimRepository.AddAsync(mappedOperationClaim);
+            OperationClaim<int, int> createdOperationClaim = await _operationClaimRepository.AddAsync(mappedOperationClaim);
 
             CreatedOperationClaimResponse response = _mapper.Map<CreatedOperationClaimResponse>(createdOperationClaim);
             return response;

@@ -37,7 +37,7 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+            UserOperationClaim<int, int>? userOperationClaim = await _userOperationClaimRepository.GetAsync(
                 predicate: b => b.Id == request.Id,
                 cancellationToken: cancellationToken
             );

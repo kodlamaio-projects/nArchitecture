@@ -38,7 +38,7 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+            UserOperationClaim<int, int>? userOperationClaim = await _userOperationClaimRepository.GetAsync(
                 predicate: uoc => uoc.Id == request.Id,
                 cancellationToken: cancellationToken
             );

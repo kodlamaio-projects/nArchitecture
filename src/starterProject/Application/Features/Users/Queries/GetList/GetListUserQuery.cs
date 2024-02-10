@@ -39,7 +39,7 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
 
         public async Task<GetListResponse<GetListUserListItemDto>> Handle(GetListUserQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<User> users = await _userRepository.GetListAsync(
+            IPaginate<User<int, int>> users = await _userRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken

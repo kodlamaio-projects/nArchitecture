@@ -1,3 +1,3 @@
-﻿UserDontExists: "User don't exists."
-UserMailAlreadyExists: "User mail already exists."
+﻿UserDontExists: "User<int, int> don't exists."
+UserMailAlreadyExists: "User<int, int> mail already exists."
 PasswordDontMatch: "Password don't match."

@@ -30,7 +30,7 @@ public class DeleteUserCommand : IRequest<DeletedUserResponse>, ISecuredRequest
 
         public async Task<DeletedUserResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
+            User<int, int>? user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             await _userRepository.DeleteAsync(user!);

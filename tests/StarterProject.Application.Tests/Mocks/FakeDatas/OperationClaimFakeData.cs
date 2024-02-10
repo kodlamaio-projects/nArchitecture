@@ -3,10 +3,10 @@ using Core.Test.Application.FakeData;
 
 namespace StarterProject.Application.Tests.Mocks.FakeDatas
 {
-    public class OperationClaimFakeData : BaseFakeData<OperationClaim, int>
+    public class OperationClaimFakeData : BaseFakeData<OperationClaim<int, int>, int>
     {
-        public override List<OperationClaim> CreateFakeData() =>
-            new List<OperationClaim>()
+        public override List<OperationClaim<int, int>> CreateFakeData() =>
+            new List<OperationClaim<int, int>>()
             {
                 new() { Id = 1, Name = "Admin" },
                 new() { Id = 2, Name = "Example.Create" },

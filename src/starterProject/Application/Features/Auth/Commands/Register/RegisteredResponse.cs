@@ -6,7 +6,7 @@ namespace Application.Features.Auth.Commands.Register;
 public class RegisteredResponse : IResponse
 {
     public AccessToken AccessToken { get; set; }
-    public Core.Security.Entities.RefreshToken RefreshToken { get; set; }
+    public Core.Security.Entities.RefreshToken<int, int> RefreshToken { get; set; }
 
     public RegisteredResponse()
     {
@@ -14,7 +14,7 @@ public class RegisteredResponse : IResponse
         RefreshToken = null!;
     }
 
-    public RegisteredResponse(AccessToken accessToken, Core.Security.Entities.RefreshToken refreshToken)
+    public RegisteredResponse(AccessToken accessToken, Core.Security.Entities.RefreshToken<int, int> refreshToken)
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;

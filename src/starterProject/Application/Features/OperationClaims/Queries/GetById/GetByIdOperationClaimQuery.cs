@@ -34,7 +34,7 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
 
         public async Task<GetByIdOperationClaimResponse> Handle(GetByIdOperationClaimQuery request, CancellationToken cancellationToken)
         {
-            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim<int, int>? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: b => b.Id == request.Id,
                 include: q => q.Include(oc => oc.UserOperationClaims),
                 cancellationToken: cancellationToken

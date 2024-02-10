@@ -18,22 +18,22 @@ public class UserManager : IUserService
         _userBusinessRules = userBusinessRules;
     }
 
-    public async Task<User?> GetAsync(
-        Expression<Func<User, bool>> predicate,
-        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
+    public async Task<User<int, int>?> GetAsync(
+        Expression<Func<User<int, int>, bool>> predicate,
+        Func<IQueryable<User<int, int>>, IIncludableQueryable<User<int, int>, object>>? include = null,
         bool withDeleted = false,
         bool enableTracking = true,
         CancellationToken cancellationToken = default
     )
     {
-        User? user = await _userRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        User<int, int>? user = await _userRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
         return user;
     }
 
-    public async Task<IPaginate<User>?> GetListAsync(
-        Expression<Func<User, bool>>? predicate = null,
-        Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
-        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
+    public async Task<IPaginate<User<int, int>>?> GetListAsync(
+        Expression<Func<User<int, int>, bool>>? predicate = null,
+        Func<IQueryable<User<int, int>>, IOrderedQueryable<User<int, int>>>? orderBy = null,
+        Func<IQueryable<User<int, int>>, IIncludableQueryable<User<int, int>, object>>? include = null,
         int index = 0,
         int size = 10,
         bool withDeleted = false,
@@ -41,7 +41,7 @@ public class UserManager : IUserService
         CancellationToken cancellationToken = default
     )
     {
-        IPaginate<User> userList = await _userRepository.GetListAsync(
+        IPaginate<User<int, int>> userList = await _userRepository.GetListAsync(
             predicate,
             orderBy,
             include,
@@ -54,27 +54,27 @@ public class UserManager : IUserService
         return userList;
     }
 
-    public async Task<User> AddAsync(User user)
+    public async Task<User<int, int>> AddAsync(User<int, int> user)
     {
         await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(user.Email);
 
-        User addedUser = await _userRepository.AddAsync(user);
+        User<int, int> addedUser = await _userRepository.AddAsync(user);
 
         return addedUser;
     }
 
-    public async Task<User> UpdateAsync(User user)
+    public async Task<User<int, int>> UpdateAsync(User<int, int> user)
     {
         await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user.Id, user.Email);
 
-        User updatedUser = await _userRepository.UpdateAsync(user);
+        User<int, int> updatedUser = await _userRepository.UpdateAsync(user);
 
         return updatedUser;
     }
 
-    public async Task<User> DeleteAsync(User user, bool permanent = false)
+    public async Task<User<int, int>> DeleteAsync(User<int, int> user, bool permanent = false)
     {
-        User deletedUser = await _userRepository.DeleteAsync(user);
+        User<int, int> deletedUser = await _userRepository.DeleteAsync(user);
 
         return deletedUser;
     }

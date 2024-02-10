@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
 
-public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOperationClaim>
+public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOperationClaim<int, int>>
 {
-    public void Configure(EntityTypeBuilder<UserOperationClaim> builder)
+    public void Configure(EntityTypeBuilder<UserOperationClaim<int, int>> builder)
     {
         builder.ToTable("UserOperationClaims").HasKey(uoc => uoc.Id);
 
@@ -22,16 +22,19 @@ public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOper
         builder.HasOne(uoc => uoc.User);
         builder.HasOne(uoc => uoc.OperationClaim);
 
-        builder.HasData(getSeeds());
+        builder.HasData(_seeds);
     }
 
-    private IEnumerable<UserOperationClaim> getSeeds()
+    private IEnumerable<UserOperationClaim<int, int>> _seeds
     {
-        List<UserOperationClaim> userOperationClaims = new();
-
-        UserOperationClaim adminUserOperationClaim = new(id: 1, userId: 1, operationClaimId: 1);
-        userOperationClaims.Add(adminUserOperationClaim);
-
-        return userOperationClaims;
+        get
+        {
+            yield return new()
+            {
+                Id = 1,
+                UserId = 1,
+                OperationClaimId = 1
+            };
+        }
     }
 }

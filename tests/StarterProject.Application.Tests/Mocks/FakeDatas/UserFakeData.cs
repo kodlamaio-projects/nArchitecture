@@ -6,51 +6,42 @@ using Core.Test.Application.FakeData;
 
 namespace StarterProject.Application.Tests.Mocks.FakeDatas;
 
-public class UserFakeData : BaseFakeData<User, int>
+public class UserFakeData : BaseFakeData<User<int, int>, int>
 {
-    public override List<User> CreateFakeData()
+    public override List<User<int, int>> CreateFakeData()
     {
         byte[] passwordHash,
             passwordSalt;
         HashingHelper.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
 
         int id = 0;
-        List<User> data =
+        List<User<int, int>> data =
             new()
             {
-                new User
+                new User<int, int>
                 {
                     Id = ++id,
-                    FirstName = "Engin",
-                    LastName = "Demiroğ",
                     Email = "example@email.com",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    Status = true,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now
                 },
-                new User
+                new User<int, int>
                 {
                     Id = ++id,
-                    FirstName = "Ahmet",
-                    LastName = "Çetinkaya",
                     Email = "example2@email.com",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    Status = true,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now
                 },
-                new User
+                new User<int, int>
                 {
                     Id = ++id,
-                    FirstName = "Halit",
-                    LastName = "Kalayci",
-                    Email = "halit@kodlama.io",
+                    Email = "example3@kodlama.io",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    Status = true,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now
                 }

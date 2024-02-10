@@ -7,7 +7,7 @@ namespace Application.Features.Auth.Commands.Login;
 public class LoggedResponse : IResponse
 {
     public AccessToken? AccessToken { get; set; }
-    public Core.Security.Entities.RefreshToken? RefreshToken { get; set; }
+    public Core.Security.Entities.RefreshToken<int, int>? RefreshToken { get; set; }
     public AuthenticatorType? RequiredAuthenticatorType { get; set; }
 
     public LoggedHttpResponse ToHttpResponse() =>

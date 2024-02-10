@@ -14,14 +14,14 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<UserOperationClaim, CreateUserOperationClaimCommand>().ReverseMap();
-        CreateMap<UserOperationClaim, CreatedUserOperationClaimResponse>().ReverseMap();
-        CreateMap<UserOperationClaim, UpdateUserOperationClaimCommand>().ReverseMap();
-        CreateMap<UserOperationClaim, UpdatedUserOperationClaimResponse>().ReverseMap();
-        CreateMap<UserOperationClaim, DeleteUserOperationClaimCommand>().ReverseMap();
-        CreateMap<UserOperationClaim, DeletedUserOperationClaimResponse>().ReverseMap();
-        CreateMap<UserOperationClaim, GetByIdUserOperationClaimResponse>().ReverseMap();
-        CreateMap<UserOperationClaim, GetListUserOperationClaimListItemDto>().ReverseMap();
-        CreateMap<IPaginate<UserOperationClaim>, GetListResponse<GetListUserOperationClaimListItemDto>>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>, CreateUserOperationClaimCommand>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>, CreatedUserOperationClaimResponse>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>, UpdateUserOperationClaimCommand>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>, UpdatedUserOperationClaimResponse>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>, DeleteUserOperationClaimCommand>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>, DeletedUserOperationClaimResponse>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>, GetByIdUserOperationClaimResponse>().ReverseMap();
+        CreateMap<UserOperationClaim<int, int>  , GetListUserOperationClaimListItemDto>().ReverseMap();
+        CreateMap<IPaginate<UserOperationClaim<int, int>>, GetListResponse<GetListUserOperationClaimListItemDto>>().ReverseMap();
     }
 }

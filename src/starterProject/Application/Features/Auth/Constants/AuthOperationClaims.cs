@@ -1,9 +1,16 @@
-﻿namespace Application.Features.Auth.Constants;
+﻿using Core.Security.Attributes;
 
+namespace Application.Features.Auth.Constants;
+
+[OperationClaimConstants]
 public static class AuthOperationClaims
 {
-    public const string Admin = "Auth.Admin";
-    public const string Write = "Auth.Write";
-    public const string Read = "Auth.Read";
-    public const string RevokeToken = "Auth.RevokeToken";
+    private const string _section = "Auth";
+
+    public const string Admin = $"{_section}.Admin";
+
+    public const string Write = $"{_section}.Write";
+    public const string Read = $"{_section}.Read";
+
+    public const string RevokeToken = $"{_section}.RevokeToken";
 }

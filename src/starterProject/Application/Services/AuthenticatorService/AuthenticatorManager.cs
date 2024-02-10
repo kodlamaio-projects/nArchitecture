@@ -32,9 +32,9 @@ public class AuthenticatorManager : IAuthenticatorService
         _otpAuthenticatorRepository = otpAuthenticatorRepository;
     }
 
-    public async Task<EmailAuthenticator> CreateEmailAuthenticator(User user)
+    public async Task<EmailAuthenticator<int, int>> CreateEmailAuthenticator(User<int, int> user)
     {
-        EmailAuthenticator emailAuthenticator =
+        EmailAuthenticator<int, int> emailAuthenticator =
             new()
             {
                 UserId = user.Id,
@@ -44,9 +44,9 @@ public class AuthenticatorManager : IAuthenticatorService
         return emailAuthenticator;
     }
 
-    public async Task<OtpAuthenticator> CreateOtpAuthenticator(User user)
+    public async Task<OtpAuthenticator<int, int>> CreateOtpAuthenticator(User<int, int> user)
     {
-        OtpAuthenticator otpAuthenticator =
+        OtpAuthenticator<int, int> otpAuthenticator =
             new()
             {
                 UserId = user.Id,
@@ -62,13 +62,13 @@ public class AuthenticatorManager : IAuthenticatorService
         return result;
     }
 
-    public async Task SendAuthenticatorCode(User user)
+    public async Task SendAuthenticatorCode(User<int, int> user)
     {
         if (user.AuthenticatorType is AuthenticatorType.Email)
             await SendAuthenticatorCodeWithEmail(user);
     }
 
-    public async Task VerifyAuthenticatorCode(User user, string authenticatorCode)
+    public async Task VerifyAuthenticatorCode(User<int, int> user, string authenticatorCode)
     {
         if (user.AuthenticatorType is AuthenticatorType.Email)
             await VerifyAuthenticatorCodeWithEmail(user, authenticatorCode);
@@ -76,9 +76,9 @@ public class AuthenticatorManager : IAuthenticatorService
             await VerifyAuthenticatorCodeWithOtp(user, authenticatorCode);
     }
 
-    private async Task SendAuthenticatorCodeWithEmail(User user)
+    private async Task SendAuthenticatorCodeWithEmail(User<int, int> user)
     {
-        EmailAuthenticator? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
+        EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
         if (emailAuthenticator is null)
             throw new NotFoundException("Email Authenticator not found.");
         if (!emailAuthenticator.IsVerified)
@@ -88,7 +88,7 @@ public class AuthenticatorManager : IAuthenticatorService
         emailAuthenticator.ActivationKey = authenticatorCode;
         await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
 
-        var toEmailList = new List<MailboxAddress> { new(name: $"{user.FirstName} {user.LastName}", user.Email) };
+        var toEmailList = new List<MailboxAddress> { new(name: user.Email, address: user.Email) };
 
         _mailService.SendMail(
             new Mail
@@ -100,9 +100,9 @@ public class AuthenticatorManager : IAuthenticatorService
         );
     }
 
-    private async Task VerifyAuthenticatorCodeWithEmail(User user, string authenticatorCode)
+    private async Task VerifyAuthenticatorCodeWithEmail(User<int, int> user, string authenticatorCode)
     {
-        EmailAuthenticator? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
+        EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
         if (emailAuthenticator is null)
             throw new NotFoundException("Email Authenticator not found.");
         if (emailAuthenticator.ActivationKey != authenticatorCode)
@@ -111,9 +111,9 @@ public class AuthenticatorManager : IAuthenticatorService
         await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
     }
 
-    private async Task VerifyAuthenticatorCodeWithOtp(User user, string authenticatorCode)
+    private async Task VerifyAuthenticatorCodeWithOtp(User<int, int> user, string authenticatorCode)
     {
-        OtpAuthenticator? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
+        OtpAuthenticator<int, int>? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(predicate: e => e.UserId == user.Id);
         if (otpAuthenticator is null)
             throw new NotFoundException("Otp Authenticator not found.");
         bool result = await _otpAuthenticatorHelper.VerifyCode(otpAuthenticator.SecretKey, authenticatorCode);

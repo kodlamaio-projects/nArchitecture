@@ -7,19 +7,19 @@ using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, int, BaseDbContext>, IRefreshTokenRepository
+public class RefreshTokenRepository : EfRepositoryBase<RefreshToken<int, int>, int, BaseDbContext>, IRefreshTokenRepository
 {
     public RefreshTokenRepository(BaseDbContext context)
         : base(context) { }
 
-    public async Task<List<RefreshToken>> GetOldRefreshTokensAsync(int userID, int refreshTokenTTL)
+    public async Task<List<RefreshToken<int, int>>> GetOldRefreshTokensAsync(int userID, int refreshTokenTTL)
     {
-        List<RefreshToken> tokens = await Query()
+        List<RefreshToken<int, int>> tokens = await Query()
             .AsNoTracking()
             .Where(r =>
                 r.UserId == userID
-                && r.Revoked == null
-                && r.Expires >= DateTime.UtcNow
+                && r.RevokedDate == null
+                && r.ExpiresDate >= DateTime.UtcNow
                 && r.CreatedDate.AddDays(refreshTokenTTL) <= DateTime.UtcNow
             )
             .ToListAsync();

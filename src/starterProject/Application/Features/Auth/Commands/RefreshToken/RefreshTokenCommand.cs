@@ -39,10 +39,10 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
 
         public async Task<RefreshedTokensResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            Core.Security.Entities.RefreshToken? refreshToken = await _authService.GetRefreshTokenByToken(request.RefreshToken);
+            Core.Security.Entities.RefreshToken<int, int>? refreshToken = await _authService.GetRefreshTokenByToken(request.RefreshToken);
             await _authBusinessRules.RefreshTokenShouldBeExists(refreshToken);
 
-            if (refreshToken!.Revoked != null)
+            if (refreshToken!.RevokedDate != null)
                 await _authService.RevokeDescendantRefreshTokens(
                     refreshToken,
                     request.IpAddress,
@@ -50,15 +50,15 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
                 );
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
-            User? user = await _userService.GetAsync(predicate: u => u.Id == refreshToken.UserId, cancellationToken: cancellationToken);
+            User<int, int>? user = await _userService.GetAsync(predicate: u => u.Id == refreshToken.UserId, cancellationToken: cancellationToken);
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
-            Core.Security.Entities.RefreshToken newRefreshToken = await _authService.RotateRefreshToken(
+            Core.Security.Entities.RefreshToken<int, int> newRefreshToken = await _authService.RotateRefreshToken(
                 user: user!,
                 refreshToken,
                 request.IpAddress
             );
-            Core.Security.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(newRefreshToken);
+            Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(newRefreshToken);
             await _authService.DeleteOldRefreshTokens(refreshToken.UserId);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user!);

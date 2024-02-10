@@ -43,7 +43,7 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
             CancellationToken cancellationToken
         )
         {
-            IPaginate<OperationClaim> operationClaims = await _operationClaimRepository.GetListAsync(
+            IPaginate<OperationClaim<int, int>> operationClaims = await _operationClaimRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken

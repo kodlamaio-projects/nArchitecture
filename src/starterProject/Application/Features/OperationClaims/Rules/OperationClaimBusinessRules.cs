@@ -24,7 +24,7 @@ public class OperationClaimBusinessRules : BaseBusinessRules
         throw new BusinessException(message);
     }
 
-    public async Task OperationClaimShouldExistWhenSelected(OperationClaim? operationClaim)
+    public async Task OperationClaimShouldExistWhenSelected(OperationClaim<int, int>? operationClaim)
     {
         if (operationClaim == null)
             await throwBusinessException(OperationClaimsMessages.NotExists);

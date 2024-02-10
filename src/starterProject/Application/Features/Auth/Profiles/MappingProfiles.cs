@@ -8,6 +8,6 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<RefreshToken, RevokedTokenResponse>().ReverseMap();
+        CreateMap<RefreshToken<int, int>, RevokedTokenResponse>().ReverseMap();
     }
 }

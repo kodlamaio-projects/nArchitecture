@@ -4,9 +4,9 @@ namespace Application.Services.AuthenticatorService;
 
 public interface IAuthenticatorService
 {
-    public Task<EmailAuthenticator> CreateEmailAuthenticator(User user);
-    public Task<OtpAuthenticator> CreateOtpAuthenticator(User user);
+    public Task<EmailAuthenticator<int,int>> CreateEmailAuthenticator(User<int, int> user);
+    public Task<OtpAuthenticator<int, int>> CreateOtpAuthenticator(User<int, int> user);
     public Task<string> ConvertSecretKeyToString(byte[] secretKey);
-    public Task SendAuthenticatorCode(User user);
-    public Task VerifyAuthenticatorCode(User user, string authenticatorCode);
+    public Task SendAuthenticatorCode(User<int, int> user);
+    public Task VerifyAuthenticatorCode(User<int, int> user, string authenticatorCode);
 }

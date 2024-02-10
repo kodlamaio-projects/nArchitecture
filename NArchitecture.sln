@@ -60,7 +60,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarterProject.Application.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A52191F-DCC6-4487-AFFF-4B6BB86231FC}"
 	ProjectSection(SolutionItems) = preProject
+		.csharpierrc = .csharpierrc
 		.editorconfig = .editorconfig
+		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Persistence.DependencyInjection", "src\corePackages\Core.Persistence.DependencyInjection\Core.Persistence.DependencyInjection.csproj", "{E1F0BD02-5781-4309-B469-DFDA36C2462E}"

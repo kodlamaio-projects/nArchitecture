@@ -42,9 +42,9 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
                 request.UserId,
                 request.OperationClaimId
             );
-            UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
+            UserOperationClaim<int, int> mappedUserOperationClaim = _mapper.Map<UserOperationClaim<int, int>>(request);
 
-            UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
+            UserOperationClaim<int, int> createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
 
             CreatedUserOperationClaimResponse createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimResponse>(
                 createdUserOperationClaim

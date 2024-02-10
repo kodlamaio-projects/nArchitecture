@@ -35,7 +35,7 @@ public class DeleteOperationClaimCommand : IRequest<DeletedOperationClaimRespons
 
         public async Task<DeletedOperationClaimResponse> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
         {
-            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim<int, int>? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,
                 include: q => q.Include(oc => oc.UserOperationClaims),
                 cancellationToken: cancellationToken

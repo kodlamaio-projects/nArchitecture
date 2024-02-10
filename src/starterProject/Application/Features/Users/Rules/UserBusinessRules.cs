@@ -25,7 +25,7 @@ public class UserBusinessRules : BaseBusinessRules
         throw new BusinessException(message);
     }
 
-    public async Task UserShouldBeExistsWhenSelected(User? user)
+    public async Task UserShouldBeExistsWhenSelected(User<int, int>? user)
     {
         if (user == null)
             await throwBusinessException(UsersMessages.UserDontExists);
@@ -38,7 +38,7 @@ public class UserBusinessRules : BaseBusinessRules
             await throwBusinessException(UsersMessages.UserDontExists);
     }
 
-    public async Task UserPasswordShouldBeMatched(User user, string password)
+    public async Task UserPasswordShouldBeMatched(User<int, int> user, string password)
     {
         if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             await throwBusinessException(UsersMessages.PasswordDontMatch);

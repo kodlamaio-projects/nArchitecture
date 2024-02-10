@@ -40,7 +40,7 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+            UserOperationClaim<int, int>? userOperationClaim = await _userOperationClaimRepository.GetAsync(
                 predicate: uoc => uoc.Id == request.Id,
                 enableTracking: false,
                 cancellationToken: cancellationToken
@@ -51,9 +51,9 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
                 request.UserId,
                 request.OperationClaimId
             );
-            UserOperationClaim mappedUserOperationClaim = _mapper.Map(request, destination: userOperationClaim!);
+            UserOperationClaim<int, int> mappedUserOperationClaim = _mapper.Map(request, destination: userOperationClaim!);
 
-            UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
+            UserOperationClaim<int, int> updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
 
             UpdatedUserOperationClaimResponse updatedUserOperationClaimDto = _mapper.Map<UpdatedUserOperationClaimResponse>(
                 updatedUserOperationClaim

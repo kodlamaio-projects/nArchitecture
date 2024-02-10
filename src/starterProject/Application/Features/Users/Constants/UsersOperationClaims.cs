@@ -1,13 +1,18 @@
-﻿namespace Application.Features.Users.Constants;
+﻿using Core.Security.Attributes;
 
+namespace Application.Features.Users.Constants;
+
+[OperationClaimConstants]
 public static class UsersOperationClaims
 {
-    public const string Admin = "users.admin";
+    private const string _section = "Users";
 
-    public const string Read = "users.read";
-    public const string Write = "users.write";
+    public const string Admin = $"{_section}.Admin";
 
-    public const string Add = "users.add";
-    public const string Update = "users.update";
-    public const string Delete = "users.delete";
+    public const string Read = $"{_section}.Read";
+    public const string Write = $"{_section}.Write";
+
+    public const string Add = $"{_section}.Add";
+    public const string Update = $"{_section}.Update";
+    public const string Delete = $"{_section}.Delete";
 }

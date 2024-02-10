@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
 
-public class EmailAuthenticatorConfiguration : IEntityTypeConfiguration<EmailAuthenticator>
+public class EmailAuthenticatorConfiguration : IEntityTypeConfiguration<EmailAuthenticator<int, int>>
 {
-    public void Configure(EntityTypeBuilder<EmailAuthenticator> builder)
+    public void Configure(EntityTypeBuilder<EmailAuthenticator<int, int>> builder)
     {
         builder.ToTable("EmailAuthenticators").HasKey(ea => ea.Id);
 

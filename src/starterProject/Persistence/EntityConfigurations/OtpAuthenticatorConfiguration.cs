@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
 
-public class OtpAuthenticatorConfiguration : IEntityTypeConfiguration<OtpAuthenticator>
+public class OtpAuthenticatorConfiguration : IEntityTypeConfiguration<OtpAuthenticator<int, int>>
 {
-    public void Configure(EntityTypeBuilder<OtpAuthenticator> builder)
+    public void Configure(EntityTypeBuilder<OtpAuthenticator<int, int>> builder)
     {
         builder.ToTable("OtpAuthenticators").HasKey(oa => oa.Id);
 

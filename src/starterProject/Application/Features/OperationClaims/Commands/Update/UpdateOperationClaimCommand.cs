@@ -46,15 +46,15 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
 
         public async Task<UpdatedOperationClaimResponse> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
         {
-            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim<int, int>? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,
                 cancellationToken: cancellationToken
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
             await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(request.Id, request.Name);
-            OperationClaim mappedOperationClaim = _mapper.Map(request, destination: operationClaim!);
+            OperationClaim<int, int> mappedOperationClaim = _mapper.Map(request, destination: operationClaim!);
 
-            OperationClaim updatedOperationClaim = await _operationClaimRepository.UpdateAsync(mappedOperationClaim);
+            OperationClaim<int, int> updatedOperationClaim = await _operationClaimRepository.UpdateAsync(mappedOperationClaim);
 
             UpdatedOperationClaimResponse response = _mapper.Map<UpdatedOperationClaimResponse>(updatedOperationClaim);
             return response;

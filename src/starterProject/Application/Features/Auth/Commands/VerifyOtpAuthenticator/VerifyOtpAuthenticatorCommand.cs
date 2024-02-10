@@ -49,13 +49,13 @@ public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
 
         public async Task Handle(VerifyOtpAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            OtpAuthenticator? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
+            OtpAuthenticator<int, int>? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
                 predicate: e => e.UserId == request.UserId,
                 cancellationToken: cancellationToken
             );
             await _authBusinessRules.OtpAuthenticatorShouldBeExists(otpAuthenticator);
 
-            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
+            User<int, int>? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             otpAuthenticator!.IsVerified = true;
