@@ -12,7 +12,7 @@ public static class UserOperationClaimsOperationClaims
     public const string Read = $"{_section}.Read";
     public const string Write = $"{_section}.Write";
 
-    public const string Add = $"{_section}.Add";
+    public const string Create = $"{_section}.Create";
     public const string Update = $"{_section}.Update";
     public const string Delete = $"{_section}.Delete";
 }

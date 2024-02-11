@@ -1,3 +1,4 @@
+using Application.Features.UserOperationClaims.Constants;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -13,7 +14,7 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
     public int UserId { get; set; }
     public int OperationClaimId { get; set; }
 
-    public string[] Roles => new[] { Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, UserOperationClaimsOperationClaims.Create };
 
     public class CreateUserOperationClaimCommandHandler
         : IRequestHandler<CreateUserOperationClaimCommand, CreatedUserOperationClaimResponse>

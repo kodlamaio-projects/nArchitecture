@@ -1,3 +1,4 @@
+using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -32,7 +33,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
         Password = password;
     }
 
-    public string[] Roles => new[] { Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, UsersOperationClaims.Create };
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserResponse>
     {

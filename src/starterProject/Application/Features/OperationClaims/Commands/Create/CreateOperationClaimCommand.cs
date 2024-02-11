@@ -1,4 +1,5 @@
-﻿using Application.Features.OperationClaims.Rules;
+﻿using Application.Features.OperationClaims.Constants;
+using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using MediatR;
@@ -22,7 +23,7 @@ public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimRespons
         Name = name;
     }
 
-    public string[] Roles => new[] { Admin, Write, Add };
+    public string[] Roles => new[] { Admin, Write, OperationClaimsOperationClaims.Create };
 
     public class CreateOperationClaimCommandHandler : IRequestHandler<CreateOperationClaimCommand, CreatedOperationClaimResponse>
     {
