@@ -1,6 +1,6 @@
 using Application.Features.Auth.Commands.RevokeToken;
 using AutoMapper;
-using Core.Security.Entities;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Auth.Profiles;
 

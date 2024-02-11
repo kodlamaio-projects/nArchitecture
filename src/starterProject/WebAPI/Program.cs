@@ -1,25 +1,33 @@
 using Application;
-using Core.CrossCuttingConcerns.Exceptions.Extensions;
-using Core.Localization.WebApi;
-using Core.Persistence.WebApi;
-using Core.Security;
-using Core.Security.Encryption;
-using Core.Security.JWT;
-using Core.WebAPI.Extensions.Swagger;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi.Extensions;
+using NArchitecture.Core.CrossCuttingConcerns.Logging.Configurations;
+using NArchitecture.Core.ElasticSearch.Models;
+using NArchitecture.Core.Localization.WebApi;
+using NArchitecture.Core.Mailing;
+using NArchitecture.Core.Persistence.WebApi;
+using NArchitecture.Core.Security.DependencyInjection;
+using NArchitecture.Core.Security.Encryption;
+using NArchitecture.Core.Security.JWT;
+using NArchitecture.Core.Security.WebApi.Swagger.Extensions;
 using Persistence;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using WebAPI;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(
+    mailSettings: builder.Configuration.GetSection("MailSettings").Get<MailSettings>()
+        ?? throw new InvalidOperationException("MailSettings section cannot found in configuration."),
+    fileLogConfiguration: builder.Configuration.GetSection("SeriLogConfigurations:FileLogConfiguration").Get<FileLogConfiguration>()
+        ?? throw new InvalidOperationException("FileLogConfiguration section cannot found in configuration."),
+    elasticSearchConfig: builder.Configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>()
+        ?? throw new InvalidOperationException("ElasticSearchConfig section cannot found in configuration.")
+);
 builder.Services.AddSecurityServices<int, int>();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
@@ -45,16 +53,13 @@ builder
         };
     });
 
-builder.Services.AddDistributedMemoryCache(); // InMemory
+builder.Services.AddDistributedMemoryCache();
 
-// builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379"); // Redis
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(opt =>
     opt.AddDefaultPolicy(p =>
     {
-        _ = p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     })
 );
 builder.Services.AddSwaggerGen(opt =>
@@ -81,8 +86,8 @@ WebApplication app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    _ = app.UseSwagger();
-    _ = app.UseSwaggerUI(opt =>
+    app.UseSwagger();
+    app.UseSwaggerUI(opt =>
     {
         opt.DocExpansion(DocExpansion.None);
     });
@@ -91,7 +96,7 @@ if (app.Environment.IsDevelopment())
 if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();
 
-_ = app.UseDbMigrationApplier();
+app.UseDbMigrationApplier();
 
 app.UseAuthentication();
 app.UseAuthorization();

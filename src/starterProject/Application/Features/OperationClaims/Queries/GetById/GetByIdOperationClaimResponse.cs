@@ -1,4 +1,4 @@
-using Core.Application.Responses;
+using NArchitecture.Core.Application.Responses;
 
 namespace Application.Features.OperationClaims.Queries.GetById;
 

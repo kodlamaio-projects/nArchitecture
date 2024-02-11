@@ -4,9 +4,9 @@ using Application.Features.Users.Commands.Update;
 using Application.Features.Users.Commands.UpdateFromAuth;
 using Application.Features.Users.Queries.GetById;
 using Application.Features.Users.Queries.GetList;
-using Core.Application.Requests;
-using Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using NArchitecture.Core.Application.Requests;
+using NArchitecture.Core.Application.Responses;
 
 namespace WebAPI.Controllers;
 

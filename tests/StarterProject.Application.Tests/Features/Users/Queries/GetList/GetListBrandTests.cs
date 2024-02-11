@@ -1,11 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Application.Features.Users.Queries.GetList;
-using Core.Application.Requests;
-using Core.Application.Responses;
+﻿using Application.Features.Users.Queries.GetList;
+using NArchitecture.Core.Application.Requests;
+using NArchitecture.Core.Application.Responses;
 using StarterProject.Application.Tests.Mocks.FakeDatas;
 using StarterProject.Application.Tests.Mocks.Repositories;
-using Xunit;
 using static Application.Features.Users.Queries.GetList.GetListUserQuery;
 
 namespace StarterProject.Application.Tests.Features.Users.Queries.GetList;

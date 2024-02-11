@@ -1,10 +1,10 @@
 using System.Reflection;
 using Application;
-using Core.Security.Attributes;
-using Core.Security.Constants;
-using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NArchitecture.Core.Security.Attributes;
+using NArchitecture.Core.Security.Constants;
+using NArchitecture.Core.Security.Entities;
 
 namespace Persistence.EntityConfigurations;
 

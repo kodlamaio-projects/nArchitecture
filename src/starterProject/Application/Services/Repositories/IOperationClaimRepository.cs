@@ -1,5 +1,5 @@
-﻿using Core.Persistence.Repositories;
-using Core.Security.Entities;
+﻿using NArchitecture.Core.Persistence.Repositories;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Services.Repositories;
 

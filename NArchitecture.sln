@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC7CA20F-741
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{07E15C51-014F-4C05-B709-C273D2D4E78C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nArchitecture", "nArchitecture", "{F4CFDEC8-18F0-4A9C-A16B-3045B325FA69}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "starterProject", "starterProject", "{F4CFDEC8-18F0-4A9C-A16B-3045B325FA69}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\starterProject\Application\Application.csproj", "{98DB48DE-CBB4-4BA4-982A-8A564016BBA1}"
 EndProject

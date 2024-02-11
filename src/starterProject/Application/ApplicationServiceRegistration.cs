@@ -2,26 +2,33 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
-using Core.Application.Pipelines.Authorization;
-using Core.Application.Pipelines.Caching;
-using Core.Application.Pipelines.Logging;
-using Core.Application.Pipelines.Transaction;
-using Core.Application.Pipelines.Validation;
-using Core.Application.Rules;
-using Core.CrossCuttingConcerns.Logging.Serilog;
-using Core.CrossCuttingConcerns.Logging.Serilog.Logger;
-using Core.ElasticSearch;
-using Core.Localization.Resource.Yaml.DependencyInjection;
-using Core.Mailing;
-using Core.Mailing.MailKitImplementations;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Application.Pipelines.Caching;
+using NArchitecture.Core.Application.Pipelines.Logging;
+using NArchitecture.Core.Application.Pipelines.Transaction;
+using NArchitecture.Core.Application.Pipelines.Validation;
+using NArchitecture.Core.Application.Rules;
+using NArchitecture.Core.CrossCuttingConcerns.Logging.Abstraction;
+using NArchitecture.Core.CrossCuttingConcerns.Logging.Configurations;
+using NArchitecture.Core.CrossCuttingConcerns.Logging.Serilog.File;
+using NArchitecture.Core.ElasticSearch;
+using NArchitecture.Core.ElasticSearch.Models;
+using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
+using NArchitecture.Core.Mailing;
+using NArchitecture.Core.Mailing.MailKit;
 
 namespace Application;
 
 public static class ApplicationServiceRegistration
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(
+        this IServiceCollection services,
+        MailSettings mailSettings,
+        FileLogConfiguration fileLogConfiguration,
+        ElasticSearchConfig elasticSearchConfig
+    )
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(configuration =>
@@ -39,9 +46,9 @@ public static class ApplicationServiceRegistration
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        services.AddSingleton<IMailService, MailKitMailService>();
-        services.AddSingleton<LoggerServiceBase, FileLogger>();
-        services.AddSingleton<IElasticSearch, ElasticSearchManager>();
+        services.AddSingleton<IMailService, MailKitMailService>(_ => new MailKitMailService(mailSettings));
+        services.AddSingleton<ILogger, SerilogFileLogger>(_ => new SerilogFileLogger(fileLogConfiguration));
+        services.AddSingleton<IElasticSearch, ElasticSearchManager>(_ => new ElasticSearchManager(elasticSearchConfig));
 
         services.AddScoped<IAuthService, AuthManager>();
         services.AddScoped<IAuthenticatorService, AuthenticatorManager>();

@@ -1,4 +1,4 @@
-﻿using Core.Security.Attributes;
+﻿using NArchitecture.Core.Security.Attributes;
 
 namespace Application.Features.Auth.Constants;
 

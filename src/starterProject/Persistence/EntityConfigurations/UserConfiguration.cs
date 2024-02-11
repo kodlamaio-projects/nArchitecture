@@ -1,7 +1,7 @@
-﻿using Core.Security.Entities;
-using Core.Security.Hashing;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.Hashing;
 
 namespace Persistence.EntityConfigurations;
 
@@ -43,7 +43,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User<int, int>>
                 new()
                 {
                     Id = 1,
-                    Email = "admin@nArch.kodlama.io",
+                    Email = "admin@nArchitecture.kodlama.io",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt
                 };

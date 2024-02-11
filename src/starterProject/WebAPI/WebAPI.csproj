@@ -12,12 +12,13 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Localization.WebApi" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Persistence.WebApi" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Security.DependencyInjection" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Security.WebApi.Swagger" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\corePackages\Core.Localization.WebApi\Core.Localization.WebApi.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.Mailing\Core.Mailing.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.Persistence.WebApi\Core.Persistence.WebApi.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.WebAPI\Core.WebAPI.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />

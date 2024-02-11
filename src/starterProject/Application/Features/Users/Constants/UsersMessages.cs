@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Users.Constants;
 
-public class UsersMessages
+public static class UsersMessages
 {
     public const string SectionName = "Users";
 

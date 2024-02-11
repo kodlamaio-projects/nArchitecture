@@ -5,11 +5,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\corePackages\Core.Persistence\Core.Persistence.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.Security\Core.Security.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NArchitecture.Core.Persistence" Version="1.0.0" />
   </ItemGroup>
 </Project>

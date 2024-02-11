@@ -1,8 +1,8 @@
 ﻿using Application.Services.Repositories;
-using Core.Persistence.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NArchitecture.Core.Persistence.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repositories;
 
@@ -12,15 +12,15 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        _ = services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("BaseDb"));
-        _ = services.AddDbMigrationApplier(buildServices => buildServices.GetRequiredService<BaseDbContext>());
+        services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("BaseDb"));
+        services.AddDbMigrationApplier(buildServices => buildServices.GetRequiredService<BaseDbContext>());
 
-        _ = services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
-        _ = services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
-        _ = services.AddScoped<IOtpAuthenticatorRepository, OtpAuthenticatorRepository>();
-        _ = services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-        _ = services.AddScoped<IUserRepository, UserRepository>();
-        _ = services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
+        services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
+        services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
+        services.AddScoped<IOtpAuthenticatorRepository, OtpAuthenticatorRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
 
         return services;
     }

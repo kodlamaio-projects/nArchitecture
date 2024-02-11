@@ -1,4 +1,4 @@
-﻿using Core.Security.Entities;
+﻿using NArchitecture.Core.Security.Entities;
 
 namespace Application.Services.AuthenticatorService;
 

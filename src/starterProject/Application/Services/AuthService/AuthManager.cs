@@ -1,9 +1,8 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.Repositories;
-using Core.Security.Entities;
-using Core.Security.JWT;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.JWT;
 
 namespace Application.Services.AuthService;
 

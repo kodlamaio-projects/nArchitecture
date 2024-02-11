@@ -1,9 +1,9 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
-using Core.Security.Entities;
-using Core.Security.JWT;
 using MediatR;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.JWT;
 
 namespace Application.Features.Auth.Commands.RefreshToken;
 
@@ -39,7 +39,9 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
 
         public async Task<RefreshedTokensResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            Core.Security.Entities.RefreshToken<int, int>? refreshToken = await _authService.GetRefreshTokenByToken(request.RefreshToken);
+            NArchitecture.Core.Security.Entities.RefreshToken<int, int>? refreshToken = await _authService.GetRefreshTokenByToken(
+                request.RefreshToken
+            );
             await _authBusinessRules.RefreshTokenShouldBeExists(refreshToken);
 
             if (refreshToken!.RevokedDate != null)
@@ -56,12 +58,14 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
             );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
-            Core.Security.Entities.RefreshToken<int, int> newRefreshToken = await _authService.RotateRefreshToken(
+            NArchitecture.Core.Security.Entities.RefreshToken<int, int> newRefreshToken = await _authService.RotateRefreshToken(
                 user: user!,
                 refreshToken,
                 request.IpAddress
             );
-            Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(newRefreshToken);
+            NArchitecture.Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(
+                newRefreshToken
+            );
             await _authService.DeleteOldRefreshTokens(refreshToken.UserId);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user!);

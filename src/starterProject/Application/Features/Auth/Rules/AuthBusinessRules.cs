@@ -1,11 +1,11 @@
 using Application.Features.Auth.Constants;
 using Application.Services.Repositories;
-using Core.Application.Rules;
-using Core.CrossCuttingConcerns.Exceptions.Types;
-using Core.Localization.Abstraction;
-using Core.Security.Entities;
-using Core.Security.Enums;
-using Core.Security.Hashing;
+using NArchitecture.Core.Application.Rules;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
+using NArchitecture.Core.Localization.Abstraction;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.Enums;
+using NArchitecture.Core.Security.Hashing;
 
 namespace Application.Features.Auth.Rules;
 

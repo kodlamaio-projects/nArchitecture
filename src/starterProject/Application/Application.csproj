@@ -5,18 +5,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\corePackages\Core.Application\Core.Application.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.CrossCuttingConcerns\Core.CrossCuttingConcerns.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.ElasticSearch\Core.ElasticSearch.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.Localization.Resource.Yaml.DependencyInjection\Core.Localization.Resource.Yaml.DependencyInjection.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.Mailing\Core.Mailing.csproj" />
-    <ProjectReference Include="..\..\corePackages\Core.Security\Core.Security.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="NArchitecture.Core.Application" Version="1.0.0" />
+    <PackageReference Include="NArchitecture.Core.Mailing" Version="1.0.0" />
+    <PackageReference Include="NArchitecture.Core.Mailing.Mailkit" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Exception" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Logging.Serilog.File" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Localization.Abstraction" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.ElasticSearch" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

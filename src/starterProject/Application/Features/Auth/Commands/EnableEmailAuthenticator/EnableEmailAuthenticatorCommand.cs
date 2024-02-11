@@ -3,12 +3,12 @@ using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
-using Core.Application.Pipelines.Authorization;
-using Core.Mailing;
-using Core.Security.Entities;
-using Core.Security.Enums;
 using MediatR;
 using MimeKit;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mailing;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.Enums;
 
 namespace Application.Features.Auth.Commands.EnableEmailAuthenticator;
 

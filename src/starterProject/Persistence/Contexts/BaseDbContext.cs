@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NArchitecture.Core.Security.Entities;
 
 namespace Persistence.Contexts;
 
@@ -21,6 +21,8 @@ public class BaseDbContext : DbContext
         Configuration = configuration;
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }

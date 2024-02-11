@@ -2,9 +2,9 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
-using Core.Application.Pipelines.Authorization;
-using Core.Security.Entities;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Auth.Commands.EnableOtpAuthenticator;
 

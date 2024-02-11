@@ -1,8 +1,7 @@
 ﻿using Application.Services.Repositories;
-using Core.Persistence.Repositories;
-using Core.Security.Entities;
-using Core.Security.JWT;
 using Microsoft.EntityFrameworkCore;
+using NArchitecture.Core.Persistence.Repositories;
+using NArchitecture.Core.Security.Entities;
 using Persistence.Contexts;
 
 namespace Persistence.Repositories;

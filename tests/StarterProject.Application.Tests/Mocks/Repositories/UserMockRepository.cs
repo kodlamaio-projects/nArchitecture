@@ -1,8 +1,8 @@
 ﻿using Application.Features.Users.Profiles;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
-using Core.Security.Entities;
-using Core.Test.Application.Repositories;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Test.Application.Repositories;
 using StarterProject.Application.Tests.Mocks.FakeDatas;
 
 namespace StarterProject.Application.Tests.Mocks.Repositories;

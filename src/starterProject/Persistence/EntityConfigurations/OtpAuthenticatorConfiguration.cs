@@ -1,6 +1,6 @@
-﻿using Core.Security.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NArchitecture.Core.Security.Entities;
 
 namespace Persistence.EntityConfigurations;
 

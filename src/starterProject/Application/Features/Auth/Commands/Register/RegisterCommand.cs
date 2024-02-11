@@ -1,11 +1,11 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
-using Core.Application.Dtos;
-using Core.Security.Entities;
-using Core.Security.Hashing;
-using Core.Security.JWT;
 using MediatR;
+using NArchitecture.Core.Application.Dtos;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.Hashing;
+using NArchitecture.Core.Security.JWT;
 
 namespace Application.Features.Auth.Commands.Register;
 
@@ -59,11 +59,13 @@ public class RegisterCommand : IRequest<RegisteredResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 
-            Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(
+            NArchitecture.Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(
                 createdUser,
                 request.IpAddress
             );
-            Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+            NArchitecture.Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(
+                createdRefreshToken
+            );
 
             RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return registeredResponse;

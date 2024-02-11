@@ -1,12 +1,12 @@
-﻿using Core.Application.Responses;
-using Core.Security.JWT;
+﻿using NArchitecture.Core.Application.Responses;
+using NArchitecture.Core.Security.JWT;
 
 namespace Application.Features.Auth.Commands.RefreshToken;
 
 public class RefreshedTokensResponse : IResponse
 {
     public AccessToken AccessToken { get; set; }
-    public Core.Security.Entities.RefreshToken<int, int> RefreshToken { get; set; }
+    public NArchitecture.Core.Security.Entities.RefreshToken<int, int> RefreshToken { get; set; }
 
     public RefreshedTokensResponse()
     {
@@ -14,7 +14,7 @@ public class RefreshedTokensResponse : IResponse
         RefreshToken = null!;
     }
 
-    public RefreshedTokensResponse(AccessToken accessToken, Core.Security.Entities.RefreshToken<int, int> refreshToken)
+    public RefreshedTokensResponse(AccessToken accessToken, NArchitecture.Core.Security.Entities.RefreshToken<int, int> refreshToken)
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;

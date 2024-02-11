@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using Core.Persistence.Paging;
-using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore.Query;
+using NArchitecture.Core.Persistence.Paging;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Services.UserOperationClaims;
 

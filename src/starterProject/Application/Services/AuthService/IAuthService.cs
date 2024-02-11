@@ -1,5 +1,5 @@
-﻿using Core.Security.Entities;
-using Core.Security.JWT;
+﻿using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.JWT;
 
 namespace Application.Services.AuthService;
 

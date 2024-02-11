@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
-using Core.Persistence.Paging;
-using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore.Query;
+using NArchitecture.Core.Persistence.Paging;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Services.UsersService;
 

@@ -2,10 +2,10 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
-using Core.Application.Pipelines.Authorization;
-using Core.Security.Entities;
-using Core.Security.Enums;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Security.Entities;
+using NArchitecture.Core.Security.Enums;
 
 namespace Application.Features.Auth.Commands.VerifyOtpAuthenticator;
 

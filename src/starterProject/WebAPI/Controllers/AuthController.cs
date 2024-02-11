@@ -6,10 +6,10 @@ using Application.Features.Auth.Commands.Register;
 using Application.Features.Auth.Commands.RevokeToken;
 using Application.Features.Auth.Commands.VerifyEmailAuthenticator;
 using Application.Features.Auth.Commands.VerifyOtpAuthenticator;
-using Core.Application.Dtos;
-using Core.Security.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NArchitecture.Core.Application.Dtos;
+using NArchitecture.Core.Security.Entities;
 
 namespace WebAPI.Controllers;
 
@@ -101,8 +101,10 @@ public class AuthController : BaseController
         return Ok();
     }
 
-    private string getRefreshTokenFromCookies() =>
-        Request.Cookies["refreshToken"] ?? throw new ArgumentException("Refresh token is not found in request cookies.");
+    private string getRefreshTokenFromCookies()
+    {
+        return Request.Cookies["refreshToken"] ?? throw new ArgumentException("Refresh token is not found in request cookies.");
+    }
 
     private void setRefreshTokenToCookie(RefreshToken<int, int> refreshToken)
     {

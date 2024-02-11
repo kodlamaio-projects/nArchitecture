@@ -1,12 +1,12 @@
 using Application.Features.OperationClaims.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
-using Core.Application.Pipelines.Authorization;
-using Core.Application.Requests;
-using Core.Application.Responses;
-using Core.Persistence.Paging;
-using Core.Security.Entities;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Application.Requests;
+using NArchitecture.Core.Application.Responses;
+using NArchitecture.Core.Persistence.Paging;
+using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.OperationClaims.Queries.GetList;
 

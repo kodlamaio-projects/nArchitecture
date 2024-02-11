@@ -1,13 +1,9 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.Features.Users.Commands.Create;
-using Core.CrossCuttingConcerns.Exceptions.Types;
-using Core.Test.Application.Constants;
+﻿using Application.Features.Users.Commands.Create;
 using FluentValidation.Results;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
+using NArchitecture.Core.Test.Application.Constants;
 using StarterProject.Application.Tests.Mocks.FakeDatas;
 using StarterProject.Application.Tests.Mocks.Repositories;
-using Xunit;
 using static Application.Features.Users.Commands.Create.CreateUserCommand;
 
 namespace StarterProject.Application.Tests.Features.Users.Commands.Create;

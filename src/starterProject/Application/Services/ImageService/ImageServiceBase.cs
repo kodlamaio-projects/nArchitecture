@@ -1,5 +1,5 @@
-﻿using Core.CrossCuttingConcerns.Exceptions.Types;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 
 namespace Application.Services.ImageService;
 
@@ -19,7 +19,7 @@ public abstract class ImageServiceBase
 
     protected async Task FileMustBeInImageFormat(IFormFile formFile)
     {
-        List<string> extensions = new() { ".jpg", ".png", ".jpeg", ".webp" };
+        List<string> extensions = [".jpg", ".png", ".jpeg", ".webp"];
 
         string extension = Path.GetExtension(formFile.FileName).ToLower();
         if (!extensions.Contains(extension))
