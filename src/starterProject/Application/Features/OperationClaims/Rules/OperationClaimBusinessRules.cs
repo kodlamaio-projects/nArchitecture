@@ -12,7 +12,10 @@ public class OperationClaimBusinessRules : BaseBusinessRules
     private readonly IOperationClaimRepository _operationClaimRepository;
     private readonly ILocalizationService _localizationService;
 
-    public OperationClaimBusinessRules(IOperationClaimRepository operationClaimRepository, ILocalizationService localizationService)
+    public OperationClaimBusinessRules(
+        IOperationClaimRepository operationClaimRepository,
+        ILocalizationService localizationService
+    )
     {
         _operationClaimRepository = operationClaimRepository;
         _localizationService = localizationService;

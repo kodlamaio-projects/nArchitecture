@@ -32,7 +32,10 @@ public class DeleteOperationClaimCommand : IRequest<DeletedOperationClaimRespons
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
-        public async Task<DeletedOperationClaimResponse> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
+        public async Task<DeletedOperationClaimResponse> Handle(
+            DeleteOperationClaimCommand request,
+            CancellationToken cancellationToken
+        )
         {
             OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,

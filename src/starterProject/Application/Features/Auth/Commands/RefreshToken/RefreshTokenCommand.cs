@@ -50,7 +50,10 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
                 );
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
-            User? user = await _userService.GetAsync(predicate: u => u.Id == refreshToken.UserId, cancellationToken: cancellationToken);
+            User? user = await _userService.GetAsync(
+                predicate: u => u.Id == refreshToken.UserId,
+                cancellationToken: cancellationToken
+            );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             Domain.Entities.RefreshToken newRefreshToken = await _authService.RotateRefreshToken(
@@ -63,7 +66,8 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user!);
 
-            RefreshedTokensResponse refreshedTokensResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+            RefreshedTokensResponse refreshedTokensResponse =
+                new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
             return refreshedTokensResponse;
         }
     }

@@ -14,7 +14,8 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
 
     public string[] Roles => [];
 
-    public class EnableOtpAuthenticatorCommandHandler : IRequestHandler<EnableOtpAuthenticatorCommand, EnabledOtpAuthenticatorResponse>
+    public class EnableOtpAuthenticatorCommandHandler
+        : IRequestHandler<EnableOtpAuthenticatorCommand, EnabledOtpAuthenticatorResponse>
     {
         private readonly AuthBusinessRules _authBusinessRules;
         private readonly IAuthenticatorService _authenticatorService;
@@ -39,7 +40,10 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
             CancellationToken cancellationToken
         )
         {
-            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
+            User? user = await _userService.GetAsync(
+                predicate: u => u.Id == request.UserId,
+                cancellationToken: cancellationToken
+            );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
 

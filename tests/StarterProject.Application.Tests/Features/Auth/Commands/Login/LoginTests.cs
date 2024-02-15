@@ -32,7 +32,11 @@ public class LoginTests
     private readonly LoginCommandValidator _validator;
     private readonly IConfiguration _configuration;
 
-    public LoginTests(OperationClaimFakeData operationClaimFakeData, RefreshTokenFakeData refreshTokenFakeData, UserFakeData userFakeData)
+    public LoginTests(
+        OperationClaimFakeData operationClaimFakeData,
+        RefreshTokenFakeData refreshTokenFakeData,
+        UserFakeData userFakeData
+    )
     {
         _configuration = MockConfiguration.GetConfigurationMock();
         #region Mock Repositories
@@ -54,7 +58,10 @@ public class LoginTests
             _configuration.GetSection("MailSettings").Get<MailSettings>() ?? throw new Exception("Mail settings not found.");
         IMailService mailService = new MailKitMailService(mailSettings);
         IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpNetOtpAuthenticatorHelper();
-        ILocalizationService localizationService = new ResourceLocalizationManager(resources: []) { AcceptLocales = new[] { "en" } };
+        ILocalizationService localizationService = new ResourceLocalizationManager(resources: [])
+        {
+            AcceptLocales = new[] { "en" }
+        };
         IMapper mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()));
         #endregion
         AuthBusinessRules authBusinessRules = new(_userRepository, localizationService);
@@ -93,7 +100,8 @@ public class LoginTests
         _loginCommand.UserForLoginDto = new() { Email = "example@kodlama.io", Password = "123456" };
         LoggedResponse result = await _loginCommandHandler.Handle(_loginCommand, CancellationToken.None);
         TokenOptions? tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
-        bool tokenExpiresInTime = DateTime.Now.AddMinutes(tokenOptions.AccessTokenExpiration + 1) > result.AccessToken.ExpirationDate;
+        bool tokenExpiresInTime =
+            DateTime.Now.AddMinutes(tokenOptions.AccessTokenExpiration + 1) > result.AccessToken.ExpirationDate;
         Assert.True(tokenExpiresInTime, "Access token expiration time is invalid.");
     }
 

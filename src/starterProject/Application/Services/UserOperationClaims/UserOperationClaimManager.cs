@@ -83,14 +83,18 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
             userUserOperationClaim.OperationClaimId
         );
 
-        UserOperationClaim updatedUserOperationClaim = await _userUserOperationClaimRepository.UpdateAsync(userUserOperationClaim);
+        UserOperationClaim updatedUserOperationClaim = await _userUserOperationClaimRepository.UpdateAsync(
+            userUserOperationClaim
+        );
 
         return updatedUserOperationClaim;
     }
 
     public async Task<UserOperationClaim> DeleteAsync(UserOperationClaim userUserOperationClaim, bool permanent = false)
     {
-        UserOperationClaim deletedUserOperationClaim = await _userUserOperationClaimRepository.DeleteAsync(userUserOperationClaim);
+        UserOperationClaim deletedUserOperationClaim = await _userUserOperationClaimRepository.DeleteAsync(
+            userUserOperationClaim
+        );
 
         return deletedUserOperationClaim;
     }

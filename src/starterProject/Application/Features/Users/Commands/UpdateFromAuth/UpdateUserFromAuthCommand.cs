@@ -51,9 +51,15 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
             _authService = authService;
         }
 
-        public async Task<UpdatedUserFromAuthResponse> Handle(UpdateUserFromAuthCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatedUserFromAuthResponse> Handle(
+            UpdateUserFromAuthCommand request,
+            CancellationToken cancellationToken
+        )
         {
-            User? user = await _userRepository.GetAsync(predicate: u => u.Id.Equals(request.Id), cancellationToken: cancellationToken);
+            User? user = await _userRepository.GetAsync(
+                predicate: u => u.Id.Equals(request.Id),
+                cancellationToken: cancellationToken
+            );
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _userBusinessRules.UserPasswordShouldBeMatched(user: user!, request.Password);
             await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);

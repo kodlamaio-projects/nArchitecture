@@ -32,7 +32,11 @@ public class RegisterCommand : IRequest<RegisteredResponse>
         private readonly IAuthService _authService;
         private readonly AuthBusinessRules _authBusinessRules;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService, AuthBusinessRules authBusinessRules)
+        public RegisterCommandHandler(
+            IUserRepository userRepository,
+            IAuthService authService,
+            AuthBusinessRules authBusinessRules
+        )
         {
             _userRepository = userRepository;
             _authService = authService;
@@ -59,7 +63,10 @@ public class RegisterCommand : IRequest<RegisteredResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 
-            Domain.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
+            Domain.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(
+                createdUser,
+                request.IpAddress
+            );
             Domain.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
             RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };

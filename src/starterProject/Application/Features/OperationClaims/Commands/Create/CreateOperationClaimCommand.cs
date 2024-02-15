@@ -42,7 +42,10 @@ public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimRespons
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
-        public async Task<CreatedOperationClaimResponse> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
+        public async Task<CreatedOperationClaimResponse> Handle(
+            CreateOperationClaimCommand request,
+            CancellationToken cancellationToken
+        )
         {
             await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(request.Name);
             OperationClaim mappedOperationClaim = _mapper.Map<OperationClaim>(request);

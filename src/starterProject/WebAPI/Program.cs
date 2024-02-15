@@ -22,7 +22,9 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationServices(
     mailSettings: builder.Configuration.GetSection("MailSettings").Get<MailSettings>()
         ?? throw new InvalidOperationException("MailSettings section cannot found in configuration."),
-    fileLogConfiguration: builder.Configuration.GetSection("SeriLogConfigurations:FileLogConfiguration").Get<FileLogConfiguration>()
+    fileLogConfiguration: builder
+        .Configuration.GetSection("SeriLogConfigurations:FileLogConfiguration")
+        .Get<FileLogConfiguration>()
         ?? throw new InvalidOperationException("FileLogConfiguration section cannot found in configuration."),
     elasticSearchConfig: builder.Configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>()
         ?? throw new InvalidOperationException("ElasticSearchConfig section cannot found in configuration.")

@@ -14,7 +14,8 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
 
     public string[] Roles => [UserOperationClaimsOperationClaims.Read];
 
-    public class GetByIdUserOperationClaimQueryHandler : IRequestHandler<GetByIdUserOperationClaimQuery, GetByIdUserOperationClaimResponse>
+    public class GetByIdUserOperationClaimQueryHandler
+        : IRequestHandler<GetByIdUserOperationClaimQuery, GetByIdUserOperationClaimResponse>
     {
         private readonly IUserOperationClaimRepository _userOperationClaimRepository;
         private readonly IMapper _mapper;
@@ -43,7 +44,9 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
             );
             await _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);
 
-            GetByIdUserOperationClaimResponse userOperationClaimDto = _mapper.Map<GetByIdUserOperationClaimResponse>(userOperationClaim);
+            GetByIdUserOperationClaimResponse userOperationClaimDto = _mapper.Map<GetByIdUserOperationClaimResponse>(
+                userOperationClaim
+            );
             return userOperationClaimDto;
         }
     }

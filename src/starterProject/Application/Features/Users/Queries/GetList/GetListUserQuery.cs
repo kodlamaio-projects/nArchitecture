@@ -37,7 +37,10 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListUserListItemDto>> Handle(GetListUserQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListUserListItemDto>> Handle(
+            GetListUserQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<User> users = await _userRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,

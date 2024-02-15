@@ -51,7 +51,8 @@ public class AuthController : BaseController
     [HttpGet("RefreshToken")]
     public async Task<IActionResult> RefreshToken()
     {
-        RefreshTokenCommand refreshTokenCommand = new() { RefreshToken = getRefreshTokenFromCookies(), IpAddress = getIpAddress() };
+        RefreshTokenCommand refreshTokenCommand =
+            new() { RefreshToken = getRefreshTokenFromCookies(), IpAddress = getIpAddress() };
         RefreshedTokensResponse result = await Mediator.Send(refreshTokenCommand);
         setRefreshTokenToCookie(result.RefreshToken);
         return Created(uri: "", result.AccessToken);
@@ -60,7 +61,8 @@ public class AuthController : BaseController
     [HttpPut("RevokeToken")]
     public async Task<IActionResult> RevokeToken([FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)] string? refreshToken)
     {
-        RevokeTokenCommand revokeTokenCommand = new() { Token = refreshToken ?? getRefreshTokenFromCookies(), IpAddress = getIpAddress() };
+        RevokeTokenCommand revokeTokenCommand =
+            new() { Token = refreshToken ?? getRefreshTokenFromCookies(), IpAddress = getIpAddress() };
         RevokedTokenResponse result = await Mediator.Send(revokeTokenCommand);
         return Ok(result);
     }
@@ -69,7 +71,11 @@ public class AuthController : BaseController
     public async Task<IActionResult> EnableEmailAuthenticator()
     {
         EnableEmailAuthenticatorCommand enableEmailAuthenticatorCommand =
-            new() { UserId = getUserIdFromRequest(), VerifyEmailUrlPrefix = $"{_configuration.ApiDomain}/Auth/VerifyEmailAuthenticator" };
+            new()
+            {
+                UserId = getUserIdFromRequest(),
+                VerifyEmailUrlPrefix = $"{_configuration.ApiDomain}/Auth/VerifyEmailAuthenticator"
+            };
         await Mediator.Send(enableEmailAuthenticatorCommand);
 
         return Ok();
@@ -85,7 +91,9 @@ public class AuthController : BaseController
     }
 
     [HttpGet("VerifyEmailAuthenticator")]
-    public async Task<IActionResult> VerifyEmailAuthenticator([FromQuery] VerifyEmailAuthenticatorCommand verifyEmailAuthenticatorCommand)
+    public async Task<IActionResult> VerifyEmailAuthenticator(
+        [FromQuery] VerifyEmailAuthenticatorCommand verifyEmailAuthenticatorCommand
+    )
     {
         await Mediator.Send(verifyEmailAuthenticatorCommand);
         return Ok();

@@ -44,7 +44,10 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
-        public async Task<UpdatedOperationClaimResponse> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatedOperationClaimResponse> Handle(
+            UpdateOperationClaimCommand request,
+            CancellationToken cancellationToken
+        )
         {
             OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,

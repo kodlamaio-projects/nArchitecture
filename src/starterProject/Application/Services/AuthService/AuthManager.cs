@@ -52,7 +52,10 @@ public class AuthManager : IAuthService
 
     public async Task DeleteOldRefreshTokens(Guid userId)
     {
-        List<RefreshToken> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(userId, _tokenOptions.RefreshTokenTTL);
+        List<RefreshToken> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(
+            userId,
+            _tokenOptions.RefreshTokenTTL
+        );
         await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
 
@@ -62,7 +65,12 @@ public class AuthManager : IAuthService
         return refreshToken;
     }
 
-    public async Task RevokeRefreshToken(RefreshToken refreshToken, string ipAddress, string? reason = null, string? replacedByToken = null)
+    public async Task RevokeRefreshToken(
+        RefreshToken refreshToken,
+        string ipAddress,
+        string? reason = null,
+        string? replacedByToken = null
+    )
     {
         refreshToken.RevokedDate = DateTime.UtcNow;
         refreshToken.RevokedByIp = ipAddress;
@@ -73,7 +81,10 @@ public class AuthManager : IAuthService
 
     public async Task<RefreshToken> RotateRefreshToken(User user, RefreshToken refreshToken, string ipAddress)
     {
-        NArchitecture.Core.Security.Entities.RefreshToken<Guid> newCoreRefreshToken = _tokenHelper.CreateRefreshToken(user, ipAddress);
+        NArchitecture.Core.Security.Entities.RefreshToken<Guid> newCoreRefreshToken = _tokenHelper.CreateRefreshToken(
+            user,
+            ipAddress
+        );
         RefreshToken newRefreshToken = _mapper.Map<RefreshToken>(newCoreRefreshToken);
         await RevokeRefreshToken(refreshToken, ipAddress, reason: "Replaced by new token", newRefreshToken.Token);
         return newRefreshToken;
@@ -81,7 +92,9 @@ public class AuthManager : IAuthService
 
     public async Task RevokeDescendantRefreshTokens(RefreshToken refreshToken, string ipAddress, string reason)
     {
-        RefreshToken? childToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == refreshToken.ReplacedByToken);
+        RefreshToken? childToken = await _refreshTokenRepository.GetAsync(predicate: r =>
+            r.Token == refreshToken.ReplacedByToken
+        );
 
         if (childToken?.RevokedDate != null && childToken.ExpiresDate <= DateTime.UtcNow)
             await RevokeRefreshToken(childToken, ipAddress, reason);
@@ -91,7 +104,10 @@ public class AuthManager : IAuthService
 
     public Task<RefreshToken> CreateRefreshToken(User user, string ipAddress)
     {
-        NArchitecture.Core.Security.Entities.RefreshToken<Guid> coreRefreshToken = _tokenHelper.CreateRefreshToken(user, ipAddress);
+        NArchitecture.Core.Security.Entities.RefreshToken<Guid> coreRefreshToken = _tokenHelper.CreateRefreshToken(
+            user,
+            ipAddress
+        );
         RefreshToken refreshToken = _mapper.Map<RefreshToken>(coreRefreshToken);
         return Task.FromResult(refreshToken);
     }

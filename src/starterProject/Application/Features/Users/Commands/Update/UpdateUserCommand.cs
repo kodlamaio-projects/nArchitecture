@@ -52,7 +52,10 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetAsync(predicate: u => u.Id.Equals(request.Id), cancellationToken: cancellationToken);
+            User? user = await _userRepository.GetAsync(
+                predicate: u => u.Id.Equals(request.Id),
+                cancellationToken: cancellationToken
+            );
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);
             user = _mapper.Map(request, user);

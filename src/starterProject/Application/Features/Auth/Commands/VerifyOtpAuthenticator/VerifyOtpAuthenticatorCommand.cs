@@ -55,7 +55,10 @@ public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
             );
             await _authBusinessRules.OtpAuthenticatorShouldBeExists(otpAuthenticator);
 
-            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
+            User? user = await _userService.GetAsync(
+                predicate: u => u.Id == request.UserId,
+                cancellationToken: cancellationToken
+            );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             otpAuthenticator!.IsVerified = true;

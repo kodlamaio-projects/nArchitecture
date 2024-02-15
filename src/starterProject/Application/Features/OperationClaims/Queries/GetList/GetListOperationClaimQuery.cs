@@ -50,9 +50,9 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListOperationClaimListItemDto> response = _mapper.Map<GetListResponse<GetListOperationClaimListItemDto>>(
-                operationClaims
-            );
+            GetListResponse<GetListOperationClaimListItemDto> response = _mapper.Map<
+                GetListResponse<GetListOperationClaimListItemDto>
+            >(operationClaims);
             return response;
         }
     }

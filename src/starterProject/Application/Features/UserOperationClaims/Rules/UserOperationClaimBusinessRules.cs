@@ -48,7 +48,9 @@ public class UserOperationClaimBusinessRules : BaseBusinessRules
 
     public async Task UserShouldNotHasOperationClaimAlreadyWhenInsert(Guid userId, int operationClaimId)
     {
-        bool doesExist = await _userOperationClaimRepository.AnyAsync(u => u.UserId == userId && u.OperationClaimId == operationClaimId);
+        bool doesExist = await _userOperationClaimRepository.AnyAsync(u =>
+            u.UserId == userId && u.OperationClaimId == operationClaimId
+        );
         if (doesExist)
             await throwBusinessException(UserOperationClaimsMessages.UserOperationClaimAlreadyExists);
     }

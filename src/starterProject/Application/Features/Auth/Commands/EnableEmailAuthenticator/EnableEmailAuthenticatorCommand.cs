@@ -55,7 +55,10 @@ public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
 
         public async Task Handle(EnableEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
+            User? user = await _userService.GetAsync(
+                predicate: u => u.Id == request.UserId,
+                cancellationToken: cancellationToken
+            );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
 
