@@ -9,7 +9,6 @@ using NArchitecture.Core.ElasticSearch.Models;
 using NArchitecture.Core.Localization.WebApi;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Persistence.WebApi;
-using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.Encryption;
 using NArchitecture.Core.Security.JWT;
 using NArchitecture.Core.Security.WebApi.Swagger.Extensions;
@@ -28,7 +27,6 @@ builder.Services.AddApplicationServices(
     elasticSearchConfig: builder.Configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>()
         ?? throw new InvalidOperationException("ElasticSearchConfig section cannot found in configuration.")
 );
-builder.Services.AddSecurityServices<int, int>();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddHttpContextAccessor();

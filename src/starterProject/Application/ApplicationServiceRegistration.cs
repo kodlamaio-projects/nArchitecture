@@ -18,6 +18,7 @@ using NArchitecture.Core.ElasticSearch.Models;
 using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
+using NArchitecture.Core.Security.DependencyInjection;
 
 namespace Application;
 
@@ -55,6 +56,8 @@ public static class ApplicationServiceRegistration
         services.AddScoped<IUserService, UserManager>();
 
         services.AddYamlResourceLocalization();
+
+        services.AddSecurityServices<Guid, int>();
 
         return services;
     }

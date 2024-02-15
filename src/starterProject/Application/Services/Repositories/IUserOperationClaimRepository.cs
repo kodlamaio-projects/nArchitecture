@@ -1,11 +1,9 @@
-﻿using NArchitecture.Core.Persistence.Repositories;
-using NArchitecture.Core.Security.Entities;
+﻿using Domain.Entities;
+using NArchitecture.Core.Persistence.Repositories;
 
 namespace Application.Services.Repositories;
 
-public interface IUserOperationClaimRepository
-    : IAsyncRepository<UserOperationClaim<int, int>, int>,
-        IRepository<UserOperationClaim<int, int>, int>
+public interface IUserOperationClaimRepository : IAsyncRepository<UserOperationClaim, Guid>, IRepository<UserOperationClaim, Guid>
 {
-    Task<IList<OperationClaim<int, int>>> GetOperationClaimsByUserIdAsync(int userId);
+    Task<IList<OperationClaim>> GetOperationClaimsByUserIdAsync(Guid userId);
 }

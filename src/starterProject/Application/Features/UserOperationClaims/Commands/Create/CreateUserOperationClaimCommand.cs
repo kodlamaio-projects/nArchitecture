@@ -2,16 +2,16 @@ using Application.Features.UserOperationClaims.Constants;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using static Application.Features.UserOperationClaims.Constants.UserOperationClaimsOperationClaims;
 
 namespace Application.Features.UserOperationClaims.Commands.Create;
 
 public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClaimResponse>, ISecuredRequest
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public int OperationClaimId { get; set; }
 
     public string[] Roles => new[] { Admin, Write, UserOperationClaimsOperationClaims.Create };
@@ -43,9 +43,9 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
                 request.UserId,
                 request.OperationClaimId
             );
-            UserOperationClaim<int, int> mappedUserOperationClaim = _mapper.Map<UserOperationClaim<int, int>>(request);
+            UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
 
-            UserOperationClaim<int, int> createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
+            UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
 
             CreatedUserOperationClaimResponse createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimResponse>(
                 createdUserOperationClaim

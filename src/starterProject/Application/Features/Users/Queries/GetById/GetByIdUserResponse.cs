@@ -4,7 +4,7 @@ namespace Application.Features.Users.Queries.GetById;
 
 public class GetByIdUserResponse : IResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -17,7 +17,7 @@ public class GetByIdUserResponse : IResponse
         Email = string.Empty;
     }
 
-    public GetByIdUserResponse(int id, string firstName, string lastName, string email, bool status)
+    public GetByIdUserResponse(Guid id, string firstName, string lastName, string email, bool status)
     {
         Id = id;
         FirstName = firstName;

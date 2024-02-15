@@ -2,9 +2,9 @@ using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.Hashing;
 using static Application.Features.Users.Constants.UsersOperationClaims;
 
@@ -12,7 +12,7 @@ namespace Application.Features.Users.Commands.Update;
 
 public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -26,7 +26,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
         Password = string.Empty;
     }
 
-    public UpdateUserCommand(int id, string firstName, string lastName, string email, string password)
+    public UpdateUserCommand(Guid id, string firstName, string lastName, string email, string password)
     {
         Id = id;
         FirstName = firstName;
@@ -52,7 +52,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            User<int, int>? user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
+            User? user = await _userRepository.GetAsync(predicate: u => u.Id.Equals(request.Id), cancellationToken: cancellationToken);
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);
             user = _mapper.Map(request, user);

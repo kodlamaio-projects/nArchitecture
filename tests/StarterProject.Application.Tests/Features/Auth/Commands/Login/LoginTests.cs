@@ -1,10 +1,12 @@
 ﻿using Application.Features.Auth.Commands.Login;
+using Application.Features.Auth.Profiles;
 using Application.Features.Auth.Rules;
 using Application.Features.Users.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
+using AutoMapper;
 using FluentValidation.TestHelper;
 using Microsoft.Extensions.Configuration;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
@@ -46,21 +48,22 @@ public class LoginTests
         IUserRepository _userRepository = new MockUserRepository(userFakeData).GetUserMockRepository();
         #endregion
         #region Mock Helpers
-        ITokenHelper<int, int> tokenHelper = new JwtHelper<int, int>(_configuration);
+        ITokenHelper<Guid, int> tokenHelper = new JwtHelper<Guid, int>(_configuration);
         IEmailAuthenticatorHelper emailAuthenticatorHelper = new EmailAuthenticatorHelper();
         MailSettings mailSettings =
             _configuration.GetSection("MailSettings").Get<MailSettings>() ?? throw new Exception("Mail settings not found.");
         IMailService mailService = new MailKitMailService(mailSettings);
         IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpNetOtpAuthenticatorHelper();
         ILocalizationService localizationService = new ResourceLocalizationManager(resources: []) { AcceptLocales = new[] { "en" } };
+        IMapper mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()));
         #endregion
-        AuthBusinessRules _authBusinessRules = new(_userRepository, localizationService);
+        AuthBusinessRules authBusinessRules = new(_userRepository, localizationService);
         IAuthService _authService = new AuthManager(
             _userOperationClaimRepository,
             _refreshTokenRepository,
             tokenHelper,
             _configuration,
-            _authBusinessRules
+            mapper
         );
         UserBusinessRules _userBusinessRules = new(_userRepository, localizationService);
         IUserService _userService = new UserManager(_userRepository, _userBusinessRules);
@@ -73,7 +76,7 @@ public class LoginTests
         );
         _validator = new LoginCommandValidator();
         _loginCommand = new LoginCommand();
-        _loginCommandHandler = new LoginCommandHandler(_userService, _authService, _authBusinessRules, _authententicatorService);
+        _loginCommandHandler = new LoginCommandHandler(_userService, _authService, authBusinessRules, _authententicatorService);
     }
 
     [Fact]
@@ -97,7 +100,7 @@ public class LoginTests
     [Fact]
     public async Task LoginWithWrongPasswordShouldThrowException()
     {
-        _loginCommand.UserForLoginDto = new() { Email = "halit@kodlama.io", Password = "123456789" };
+        _loginCommand.UserForLoginDto = new() { Email = "example@kodlama.io", Password = "123456789" };
         await Assert.ThrowsAsync<BusinessException>(async () =>
         {
             await _loginCommandHandler.Handle(_loginCommand, CancellationToken.None);

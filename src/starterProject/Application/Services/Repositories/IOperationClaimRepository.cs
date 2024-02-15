@@ -1,6 +1,6 @@
-﻿using NArchitecture.Core.Persistence.Repositories;
-using NArchitecture.Core.Security.Entities;
+﻿using Domain.Entities;
+using NArchitecture.Core.Persistence.Repositories;
 
 namespace Application.Services.Repositories;
 
-public interface IOperationClaimRepository : IAsyncRepository<OperationClaim<int, int>, int>, IRepository<OperationClaim<int, int>, int> { }
+public interface IOperationClaimRepository : IAsyncRepository<OperationClaim, int>, IRepository<OperationClaim, int> { }

@@ -1,12 +1,12 @@
 using Application.Features.OperationClaims.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.OperationClaims.Queries.GetList;
 
@@ -43,9 +43,10 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
             CancellationToken cancellationToken
         )
         {
-            IPaginate<OperationClaim<int, int>> operationClaims = await _operationClaimRepository.GetListAsync(
+            IPaginate<OperationClaim> operationClaims = await _operationClaimRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                enableTracking: false,
                 cancellationToken: cancellationToken
             );
 

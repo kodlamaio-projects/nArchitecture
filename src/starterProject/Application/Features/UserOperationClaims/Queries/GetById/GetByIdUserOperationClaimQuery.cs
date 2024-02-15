@@ -2,15 +2,15 @@ using Application.Features.UserOperationClaims.Constants;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.UserOperationClaims.Queries.GetById;
 
 public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaimResponse>, ISecuredRequest
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string[] Roles => [UserOperationClaimsOperationClaims.Read];
 
@@ -36,8 +36,9 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim<int, int>? userOperationClaim = await _userOperationClaimRepository.GetAsync(
-                predicate: b => b.Id == request.Id,
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+                predicate: b => b.Id.Equals(request.Id),
+                enableTracking: false,
                 cancellationToken: cancellationToken
             );
             await _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);

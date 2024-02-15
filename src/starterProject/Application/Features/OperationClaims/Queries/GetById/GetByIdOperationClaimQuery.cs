@@ -2,10 +2,9 @@ using Application.Features.OperationClaims.Constants;
 using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.OperationClaims.Queries.GetById;
 
@@ -34,10 +33,10 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
 
         public async Task<GetByIdOperationClaimResponse> Handle(GetByIdOperationClaimQuery request, CancellationToken cancellationToken)
         {
-            OperationClaim<int, int>? operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: b => b.Id == request.Id,
-                include: q => q.Include(oc => oc.UserOperationClaims),
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                enableTracking: false
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
 

@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NArchitecture.Core.Security.Entities;
 
 namespace Persistence.EntityConfigurations;
 
-public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken<int, int>>
+public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
 {
-    public void Configure(EntityTypeBuilder<RefreshToken<int, int>> builder)
+    public void Configure(EntityTypeBuilder<RefreshToken> builder)
     {
         builder.ToTable("RefreshTokens").HasKey(rt => rt.Id);
 
@@ -26,5 +26,7 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken<i
         builder.HasQueryFilter(rt => !rt.DeletedDate.HasValue);
 
         builder.HasOne(rt => rt.User);
+
+        builder.HasBaseType((string)null!);
     }
 }

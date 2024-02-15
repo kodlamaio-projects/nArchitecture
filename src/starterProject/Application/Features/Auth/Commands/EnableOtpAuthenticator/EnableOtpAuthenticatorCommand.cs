@@ -2,15 +2,15 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Auth.Commands.EnableOtpAuthenticator;
 
 public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorResponse>, ISecuredRequest
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
     public string[] Roles => [];
 
@@ -39,14 +39,11 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
             CancellationToken cancellationToken
         )
         {
-            User<int, int>? user = await _userService.GetAsync(
-                predicate: u => u.Id == request.UserId,
-                cancellationToken: cancellationToken
-            );
+            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
 
-            OtpAuthenticator<int, int>? doesExistOtpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
+            OtpAuthenticator? doesExistOtpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
                 predicate: o => o.UserId == request.UserId,
                 cancellationToken: cancellationToken
             );
@@ -54,8 +51,8 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
             if (doesExistOtpAuthenticator is not null)
                 await _otpAuthenticatorRepository.DeleteAsync(doesExistOtpAuthenticator);
 
-            OtpAuthenticator<int, int> newOtpAuthenticator = await _authenticatorService.CreateOtpAuthenticator(user!);
-            OtpAuthenticator<int, int> addedOtpAuthenticator = await _otpAuthenticatorRepository.AddAsync(newOtpAuthenticator);
+            OtpAuthenticator newOtpAuthenticator = await _authenticatorService.CreateOtpAuthenticator(user!);
+            OtpAuthenticator addedOtpAuthenticator = await _otpAuthenticatorRepository.AddAsync(newOtpAuthenticator);
 
             EnabledOtpAuthenticatorResponse enabledOtpAuthenticatorDto =
                 new() { SecretKey = await _authenticatorService.ConvertSecretKeyToString(addedOtpAuthenticator.SecretKey) };

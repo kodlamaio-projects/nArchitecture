@@ -21,7 +21,7 @@ public class GetByIdUserTests : UserMockRepository
     [Fact]
     public async Task GetByIdUserShouldSuccessfully()
     {
-        _query.Id = 1;
+        _query.Id = UserFakeData.Ids[0];
 
         GetByIdUserResponse result = await _handler.Handle(_query, CancellationToken.None);
 
@@ -31,7 +31,7 @@ public class GetByIdUserTests : UserMockRepository
     [Fact]
     public async Task UserIdNotExistsShouldReturnError()
     {
-        _query.Id = 6;
+        _query.Id = Guid.NewGuid();
 
         async Task Action() => await _handler.Handle(_query, CancellationToken.None);
 

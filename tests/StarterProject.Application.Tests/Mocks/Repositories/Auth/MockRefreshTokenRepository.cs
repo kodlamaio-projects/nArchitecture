@@ -15,9 +15,9 @@ public class MockRefreshTokenRepository
 
     public IRefreshTokenRepository GetMockRefreshTokenRepository()
     {
-        List<NArchitecture.Core.Security.Entities.RefreshToken<int, int>> tokens = _refreshTokenFakeData.Data;
+        List<Domain.Entities.RefreshToken> tokens = _refreshTokenFakeData.Data;
         var mockRepo = new Mock<IRefreshTokenRepository>();
-        mockRepo.Setup(s => s.GetOldRefreshTokensAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(() => tokens);
+        mockRepo.Setup(s => s.GetOldRefreshTokensAsync(It.IsAny<Guid>(), It.IsAny<int>())).ReturnsAsync(() => tokens);
         return mockRepo.Object;
     }
 }

@@ -2,16 +2,16 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.Enums;
 
 namespace Application.Features.Auth.Commands.VerifyOtpAuthenticator;
 
 public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public string ActivationCode { get; set; }
 
     public string[] Roles => [];
@@ -21,7 +21,7 @@ public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
         ActivationCode = string.Empty;
     }
 
-    public VerifyOtpAuthenticatorCommand(int userId, string activationCode)
+    public VerifyOtpAuthenticatorCommand(Guid userId, string activationCode)
     {
         UserId = userId;
         ActivationCode = activationCode;
@@ -49,16 +49,13 @@ public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
 
         public async Task Handle(VerifyOtpAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            OtpAuthenticator<int, int>? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
+            OtpAuthenticator? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
                 predicate: e => e.UserId == request.UserId,
                 cancellationToken: cancellationToken
             );
             await _authBusinessRules.OtpAuthenticatorShouldBeExists(otpAuthenticator);
 
-            User<int, int>? user = await _userService.GetAsync(
-                predicate: u => u.Id == request.UserId,
-                cancellationToken: cancellationToken
-            );
+            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             otpAuthenticator!.IsVerified = true;

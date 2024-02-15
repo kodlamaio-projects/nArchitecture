@@ -1,8 +1,5 @@
-﻿using NArchitecture.Core.Security.Attributes;
+﻿namespace Application.Features.Users.Constants;
 
-namespace Application.Features.Users.Constants;
-
-[OperationClaimConstants]
 public static class UsersOperationClaims
 {
     private const string _section = "Users";

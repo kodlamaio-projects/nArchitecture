@@ -1,7 +1,8 @@
-﻿using Application.Features.Auth.Rules;
+﻿using System.Collections.Immutable;
 using Application.Services.Repositories;
+using AutoMapper;
+using Domain.Entities;
 using Microsoft.Extensions.Configuration;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.JWT;
 
 namespace Application.Services.AuthService;
@@ -9,64 +10,59 @@ namespace Application.Services.AuthService;
 public class AuthManager : IAuthService
 {
     private readonly IRefreshTokenRepository _refreshTokenRepository;
-    private readonly ITokenHelper<int, int> _tokenHelper;
+    private readonly ITokenHelper<Guid, int> _tokenHelper;
     private readonly TokenOptions _tokenOptions;
-    private readonly AuthBusinessRules _authBusinessRules;
     private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+    private readonly IMapper _mapper;
 
     public AuthManager(
         IUserOperationClaimRepository userOperationClaimRepository,
         IRefreshTokenRepository refreshTokenRepository,
-        ITokenHelper<int, int> tokenHelper,
+        ITokenHelper<Guid, int> tokenHelper,
         IConfiguration configuration,
-        AuthBusinessRules authBusinessRules
+        IMapper mapper
     )
     {
         _userOperationClaimRepository = userOperationClaimRepository;
         _refreshTokenRepository = refreshTokenRepository;
         _tokenHelper = tokenHelper;
-        _authBusinessRules = authBusinessRules;
 
         const string tokenOptionsConfigurationSection = "TokenOptions";
         _tokenOptions =
             configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
             ?? throw new NullReferenceException($"\"{tokenOptionsConfigurationSection}\" section cannot found in configuration");
+        _mapper = mapper;
     }
 
-    public async Task<AccessToken> CreateAccessToken(User<int, int> user)
+    public async Task<AccessToken> CreateAccessToken(User user)
     {
-        IList<OperationClaim<int, int>> operationClaims = await _userOperationClaimRepository.GetOperationClaimsByUserIdAsync(user.Id);
-        AccessToken accessToken = _tokenHelper.CreateToken(user, operationClaims);
+        IList<OperationClaim> operationClaims = await _userOperationClaimRepository.GetOperationClaimsByUserIdAsync(user.Id);
+        AccessToken accessToken = _tokenHelper.CreateToken(
+            user,
+            operationClaims.Select(op => (NArchitecture.Core.Security.Entities.OperationClaim<int>)op).ToImmutableList()
+        );
         return accessToken;
     }
 
-    public async Task<RefreshToken<int, int>> AddRefreshToken(RefreshToken<int, int> refreshToken)
+    public async Task<RefreshToken> AddRefreshToken(RefreshToken refreshToken)
     {
-        RefreshToken<int, int> addedRefreshToken = await _refreshTokenRepository.AddAsync(refreshToken);
+        RefreshToken addedRefreshToken = await _refreshTokenRepository.AddAsync(refreshToken);
         return addedRefreshToken;
     }
 
-    public async Task DeleteOldRefreshTokens(int userId)
+    public async Task DeleteOldRefreshTokens(Guid userId)
     {
-        List<RefreshToken<int, int>> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(
-            userId,
-            _tokenOptions.RefreshTokenTTL
-        );
+        List<RefreshToken> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(userId, _tokenOptions.RefreshTokenTTL);
         await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
 
-    public async Task<RefreshToken<int, int>?> GetRefreshTokenByToken(string token)
+    public async Task<RefreshToken?> GetRefreshTokenByToken(string token)
     {
-        RefreshToken<int, int>? refreshToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == token);
+        RefreshToken? refreshToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == token);
         return refreshToken;
     }
 
-    public async Task RevokeRefreshToken(
-        RefreshToken<int, int> refreshToken,
-        string ipAddress,
-        string? reason = null,
-        string? replacedByToken = null
-    )
+    public async Task RevokeRefreshToken(RefreshToken refreshToken, string ipAddress, string? reason = null, string? replacedByToken = null)
     {
         refreshToken.RevokedDate = DateTime.UtcNow;
         refreshToken.RevokedByIp = ipAddress;
@@ -75,18 +71,17 @@ public class AuthManager : IAuthService
         await _refreshTokenRepository.UpdateAsync(refreshToken);
     }
 
-    public async Task<RefreshToken<int, int>> RotateRefreshToken(User<int, int> user, RefreshToken<int, int> refreshToken, string ipAddress)
+    public async Task<RefreshToken> RotateRefreshToken(User user, RefreshToken refreshToken, string ipAddress)
     {
-        RefreshToken<int, int> newRefreshToken = _tokenHelper.CreateRefreshToken(user, ipAddress);
+        NArchitecture.Core.Security.Entities.RefreshToken<Guid> newCoreRefreshToken = _tokenHelper.CreateRefreshToken(user, ipAddress);
+        RefreshToken newRefreshToken = _mapper.Map<RefreshToken>(newCoreRefreshToken);
         await RevokeRefreshToken(refreshToken, ipAddress, reason: "Replaced by new token", newRefreshToken.Token);
         return newRefreshToken;
     }
 
-    public async Task RevokeDescendantRefreshTokens(RefreshToken<int, int> refreshToken, string ipAddress, string reason)
+    public async Task RevokeDescendantRefreshTokens(RefreshToken refreshToken, string ipAddress, string reason)
     {
-        RefreshToken<int, int>? childToken = await _refreshTokenRepository.GetAsync(predicate: r =>
-            r.Token == refreshToken.ReplacedByToken
-        );
+        RefreshToken? childToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == refreshToken.ReplacedByToken);
 
         if (childToken?.RevokedDate != null && childToken.ExpiresDate <= DateTime.UtcNow)
             await RevokeRefreshToken(childToken, ipAddress, reason);
@@ -94,9 +89,10 @@ public class AuthManager : IAuthService
             await RevokeDescendantRefreshTokens(refreshToken: childToken!, ipAddress, reason);
     }
 
-    public Task<RefreshToken<int, int>> CreateRefreshToken(User<int, int> user, string ipAddress)
+    public Task<RefreshToken> CreateRefreshToken(User user, string ipAddress)
     {
-        RefreshToken<int, int> refreshToken = _tokenHelper.CreateRefreshToken(user, ipAddress);
+        NArchitecture.Core.Security.Entities.RefreshToken<Guid> coreRefreshToken = _tokenHelper.CreateRefreshToken(user, ipAddress);
+        RefreshToken refreshToken = _mapper.Map<RefreshToken>(coreRefreshToken);
         return Task.FromResult(refreshToken);
     }
 }

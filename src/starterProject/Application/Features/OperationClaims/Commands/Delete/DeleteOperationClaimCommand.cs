@@ -2,10 +2,9 @@ using Application.Features.OperationClaims.Constants;
 using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using static Application.Features.OperationClaims.Constants.OperationClaimsOperationClaims;
 
 namespace Application.Features.OperationClaims.Commands.Delete;
@@ -35,9 +34,8 @@ public class DeleteOperationClaimCommand : IRequest<DeletedOperationClaimRespons
 
         public async Task<DeletedOperationClaimResponse> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
         {
-            OperationClaim<int, int>? operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,
-                include: q => q.Include(oc => oc.UserOperationClaims),
                 cancellationToken: cancellationToken
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);

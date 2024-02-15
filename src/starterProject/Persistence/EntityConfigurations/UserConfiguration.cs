@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.Hashing;
 
 namespace Persistence.EntityConfigurations;
 
-public class UserConfiguration : IEntityTypeConfiguration<User<int, int>>
+public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<User<int, int>> builder)
+    public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users").HasKey(u => u.Id);
 
@@ -28,9 +28,12 @@ public class UserConfiguration : IEntityTypeConfiguration<User<int, int>>
         builder.HasMany(u => u.OtpAuthenticators);
 
         builder.HasData(_seeds);
+
+        builder.HasBaseType((string)null!);
     }
 
-    private IEnumerable<User<int, int>> _seeds
+    public static Guid AdminId { get; } = Guid.NewGuid();
+    private IEnumerable<User> _seeds
     {
         get
         {
@@ -39,11 +42,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User<int, int>>
                 passwordHash: out byte[] passwordHash,
                 passwordSalt: out byte[] passwordSalt
             );
-            User<int, int> adminUser =
+            User adminUser =
                 new()
                 {
-                    Id = 1,
-                    Email = "admin@nArchitecture.kodlama.io",
+                    Id = AdminId,
+                    Email = "narch@kodlama.io",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt
                 };

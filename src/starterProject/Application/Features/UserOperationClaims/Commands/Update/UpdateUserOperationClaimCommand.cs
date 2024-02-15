@@ -2,17 +2,17 @@ using Application.Features.UserOperationClaims.Constants;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using static Application.Features.UserOperationClaims.Constants.UserOperationClaimsOperationClaims;
 
 namespace Application.Features.UserOperationClaims.Commands.Update;
 
 public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClaimResponse>, ISecuredRequest
 {
-    public int Id { get; set; }
-    public int UserId { get; set; }
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
     public int OperationClaimId { get; set; }
 
     public string[] Roles => new[] { Admin, Write, UserOperationClaimsOperationClaims.Update };
@@ -40,8 +40,8 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim<int, int>? userOperationClaim = await _userOperationClaimRepository.GetAsync(
-                predicate: uoc => uoc.Id == request.Id,
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+                predicate: uoc => uoc.Id.Equals(request.Id),
                 enableTracking: false,
                 cancellationToken: cancellationToken
             );
@@ -51,11 +51,9 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
                 request.UserId,
                 request.OperationClaimId
             );
-            UserOperationClaim<int, int> mappedUserOperationClaim = _mapper.Map(request, destination: userOperationClaim!);
+            UserOperationClaim mappedUserOperationClaim = _mapper.Map(request, destination: userOperationClaim!);
 
-            UserOperationClaim<int, int> updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(
-                mappedUserOperationClaim
-            );
+            UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
 
             UpdatedUserOperationClaimResponse updatedUserOperationClaimDto = _mapper.Map<UpdatedUserOperationClaimResponse>(
                 updatedUserOperationClaim

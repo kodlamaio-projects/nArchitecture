@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NArchitecture.Core.Security.Entities;
 
 namespace Persistence.EntityConfigurations;
 
-public class OtpAuthenticatorConfiguration : IEntityTypeConfiguration<OtpAuthenticator<int, int>>
+public class OtpAuthenticatorConfiguration : IEntityTypeConfiguration<OtpAuthenticator>
 {
-    public void Configure(EntityTypeBuilder<OtpAuthenticator<int, int>> builder)
+    public void Configure(EntityTypeBuilder<OtpAuthenticator> builder)
     {
         builder.ToTable("OtpAuthenticators").HasKey(oa => oa.Id);
 
@@ -21,5 +21,7 @@ public class OtpAuthenticatorConfiguration : IEntityTypeConfiguration<OtpAuthent
         builder.HasQueryFilter(oa => !oa.DeletedDate.HasValue);
 
         builder.HasOne(oa => oa.User);
+
+        builder.HasBaseType((string)null!);
     }
 }

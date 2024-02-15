@@ -3,18 +3,18 @@ using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
+using Domain.Entities;
 using MediatR;
 using MimeKit;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Mailing;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.Enums;
 
 namespace Application.Features.Auth.Commands.EnableEmailAuthenticator;
 
 public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public string VerifyEmailUrlPrefix { get; set; }
 
     public string[] Roles => [];
@@ -24,7 +24,7 @@ public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
         VerifyEmailUrlPrefix = string.Empty;
     }
 
-    public EnableEmailAuthenticatorCommand(int userId, string verifyEmailUrlPrefix)
+    public EnableEmailAuthenticatorCommand(Guid userId, string verifyEmailUrlPrefix)
     {
         UserId = userId;
         VerifyEmailUrlPrefix = verifyEmailUrlPrefix;
@@ -55,18 +55,15 @@ public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
 
         public async Task Handle(EnableEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            User<int, int>? user = await _userService.GetAsync(
-                predicate: u => u.Id == request.UserId,
-                cancellationToken: cancellationToken
-            );
+            User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId, cancellationToken: cancellationToken);
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
 
             user!.AuthenticatorType = AuthenticatorType.Email;
             await _userService.UpdateAsync(user);
 
-            EmailAuthenticator<int, int> emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(user);
-            EmailAuthenticator<int, int> addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
+            EmailAuthenticator emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(user);
+            EmailAuthenticator addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
 
             var toEmailList = new List<MailboxAddress> { new(name: user.Email, user.Email) };
 

@@ -2,9 +2,9 @@ using Application.Features.OperationClaims.Constants;
 using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using static Application.Features.OperationClaims.Constants.OperationClaimsOperationClaims;
 
 namespace Application.Features.OperationClaims.Commands.Update;
@@ -46,15 +46,15 @@ public class UpdateOperationClaimCommand : IRequest<UpdatedOperationClaimRespons
 
         public async Task<UpdatedOperationClaimResponse> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
         {
-            OperationClaim<int, int>? operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,
                 cancellationToken: cancellationToken
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
             await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(request.Id, request.Name);
-            OperationClaim<int, int> mappedOperationClaim = _mapper.Map(request, destination: operationClaim!);
+            OperationClaim mappedOperationClaim = _mapper.Map(request, destination: operationClaim!);
 
-            OperationClaim<int, int> updatedOperationClaim = await _operationClaimRepository.UpdateAsync(mappedOperationClaim);
+            OperationClaim updatedOperationClaim = await _operationClaimRepository.UpdateAsync(mappedOperationClaim);
 
             UpdatedOperationClaimResponse response = _mapper.Map<UpdatedOperationClaimResponse>(updatedOperationClaim);
             return response;

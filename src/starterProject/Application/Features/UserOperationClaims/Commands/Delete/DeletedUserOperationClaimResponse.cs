@@ -4,5 +4,5 @@ namespace Application.Features.UserOperationClaims.Commands.Delete;
 
 public class DeletedUserOperationClaimResponse : IResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 }

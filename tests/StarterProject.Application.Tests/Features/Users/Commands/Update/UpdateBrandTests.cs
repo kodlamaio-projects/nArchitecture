@@ -49,7 +49,7 @@ public class UpdateUserTests : UserMockRepository
     [Fact]
     public async Task UpdateShouldSuccessfully()
     {
-        _command.Id = 1;
+        _command.Id = UserFakeData.Ids[0];
         _command.FirstName = "First";
         _command.LastName = "Last";
         _command.Email = "test@email.com";
@@ -63,7 +63,7 @@ public class UpdateUserTests : UserMockRepository
     [Fact]
     public async Task UserIdNotExistsShouldReturnError()
     {
-        _command.Id = 6;
+        _command.Id = Guid.NewGuid();
         _command.FirstName = "First";
         _command.LastName = "Last";
         _command.Email = "test@email.com";

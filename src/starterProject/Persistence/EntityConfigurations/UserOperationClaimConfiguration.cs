@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NArchitecture.Core.Security.Entities;
 
 namespace Persistence.EntityConfigurations;
 
-public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOperationClaim<int, int>>
+public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOperationClaim>
 {
-    public void Configure(EntityTypeBuilder<UserOperationClaim<int, int>> builder)
+    public void Configure(EntityTypeBuilder<UserOperationClaim> builder)
     {
         builder.ToTable("UserOperationClaims").HasKey(uoc => uoc.Id);
 
@@ -23,17 +23,19 @@ public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOper
         builder.HasOne(uoc => uoc.OperationClaim);
 
         builder.HasData(_seeds);
+
+        builder.HasBaseType((string)null!);
     }
 
-    private IEnumerable<UserOperationClaim<int, int>> _seeds
+    private IEnumerable<UserOperationClaim> _seeds
     {
         get
         {
             yield return new()
             {
-                Id = 1,
-                UserId = 1,
-                OperationClaimId = 1
+                Id = Guid.NewGuid(),
+                UserId = UserConfiguration.AdminId,
+                OperationClaimId = OperationClaimConfiguration.AdminId
             };
         }
     }

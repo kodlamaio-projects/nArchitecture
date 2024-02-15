@@ -21,7 +21,7 @@ public class DeleteUserTests : UserMockRepository
     [Fact]
     public async Task DeleteShouldSuccessfully()
     {
-        _command.Id = 1;
+        _command.Id = UserFakeData.Ids[0];
         DeletedUserResponse result = await _handler.Handle(_command, CancellationToken.None);
         Assert.NotNull(result);
     }
@@ -29,7 +29,7 @@ public class DeleteUserTests : UserMockRepository
     [Fact]
     public async Task UserIdNotExistsShouldReturnError()
     {
-        _command.Id = 6;
+        _command.Id = Guid.NewGuid();
 
         async Task Action() => await _handler.Handle(_command, CancellationToken.None);
 

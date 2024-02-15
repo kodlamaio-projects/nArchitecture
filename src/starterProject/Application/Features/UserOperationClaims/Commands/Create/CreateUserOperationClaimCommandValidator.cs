@@ -6,7 +6,7 @@ public class CreateUserOperationClaimCommandValidator : AbstractValidator<Create
 {
     public CreateUserOperationClaimCommandValidator()
     {
-        RuleFor(c => c.UserId).GreaterThan(0);
+        RuleFor(c => c.UserId).NotNull();
         RuleFor(c => c.OperationClaimId).GreaterThan(0);
     }
 }

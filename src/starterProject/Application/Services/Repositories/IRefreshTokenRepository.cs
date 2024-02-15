@@ -1,9 +1,9 @@
-﻿using NArchitecture.Core.Persistence.Repositories;
-using NArchitecture.Core.Security.Entities;
+﻿using Domain.Entities;
+using NArchitecture.Core.Persistence.Repositories;
 
 namespace Application.Services.Repositories;
 
-public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken<int, int>, int>, IRepository<RefreshToken<int, int>, int>
+public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken, Guid>, IRepository<RefreshToken, Guid>
 {
-    Task<List<RefreshToken<int, int>>> GetOldRefreshTokensAsync(int userID, int refreshTokenTTL);
+    Task<List<RefreshToken>> GetOldRefreshTokensAsync(Guid userId, int refreshTokenTTL);
 }

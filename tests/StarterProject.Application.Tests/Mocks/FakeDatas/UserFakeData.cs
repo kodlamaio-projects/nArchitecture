@@ -1,44 +1,42 @@
-﻿using NArchitecture.Core.Security.Entities;
+﻿using Domain.Entities;
 using NArchitecture.Core.Security.Hashing;
 using NArchitecture.Core.Test.Application.FakeData;
 
 namespace StarterProject.Application.Tests.Mocks.FakeDatas;
 
-public class UserFakeData : BaseFakeData<User<int, int>, int>
+public class UserFakeData : BaseFakeData<User, Guid>
 {
-    public override List<User<int, int>> CreateFakeData()
+    public static Guid[] Ids = [Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()];
+
+    public override List<User> CreateFakeData()
     {
         HashingHelper.CreatePasswordHash("123456", out byte[] passwordHash, out byte[] passwordSalt);
 
-        int id = 0;
-        List<User<int, int>> data =
+        List<User> data =
         [
-            new User<int, int>
+            new User
             {
-                Id = ++id,
+                Id = Ids[0],
                 Email = "example@kodlama.io",
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
             },
-            new User<int, int>
+            new User
             {
-                Id = ++id,
+                Id = Ids[1],
                 Email = "example2@kodlama.io",
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
             },
-            new User<int, int>
+            new User
             {
-                Id = ++id,
+                Id = Ids[2],
                 Email = "example3@kodlama.io",
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
             }
         ];
         return data;

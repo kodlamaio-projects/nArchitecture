@@ -4,7 +4,7 @@ namespace Application.Features.Auth.Commands.RevokeToken;
 
 public class RevokedTokenResponse : IResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Token { get; set; }
 
     public RevokedTokenResponse()
@@ -12,7 +12,7 @@ public class RevokedTokenResponse : IResponse
         Token = string.Empty;
     }
 
-    public RevokedTokenResponse(int id, string token)
+    public RevokedTokenResponse(Guid id, string token)
     {
         Id = id;
         Token = token;

@@ -2,16 +2,16 @@ using Application.Features.UserOperationClaims.Constants;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using static Application.Features.UserOperationClaims.Constants.UserOperationClaimsOperationClaims;
 
 namespace Application.Features.UserOperationClaims.Commands.Delete;
 
 public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClaimResponse>, ISecuredRequest
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string[] Roles => new[] { Admin, Write, UserOperationClaimsOperationClaims.Delete };
 
@@ -38,8 +38,8 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim<int, int>? userOperationClaim = await _userOperationClaimRepository.GetAsync(
-                predicate: uoc => uoc.Id == request.Id,
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(
+                predicate: uoc => uoc.Id.Equals(request.Id),
                 cancellationToken: cancellationToken
             );
             await _userOperationClaimBusinessRules.UserOperationClaimShouldExistWhenSelected(userOperationClaim);

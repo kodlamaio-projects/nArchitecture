@@ -2,15 +2,15 @@ using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Users.Queries.GetById;
 
 public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ISecuredRequest
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string[] Roles => [UsersOperationClaims.Read];
 
@@ -29,7 +29,11 @@ public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ISecuredRequest
 
         public async Task<GetByIdUserResponse> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
         {
-            User<int, int>? user = await _userRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
+            User? user = await _userRepository.GetAsync(
+                predicate: b => b.Id.Equals(request.Id),
+                enableTracking: false,
+                cancellationToken: cancellationToken
+            );
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);

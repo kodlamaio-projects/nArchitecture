@@ -6,7 +6,7 @@ public class UpdateUserOperationClaimCommandValidator : AbstractValidator<Update
 {
     public UpdateUserOperationClaimCommandValidator()
     {
-        RuleFor(c => c.UserId).GreaterThan(0);
+        RuleFor(c => c.UserId).NotNull();
         RuleFor(c => c.OperationClaimId).GreaterThan(0);
     }
 }

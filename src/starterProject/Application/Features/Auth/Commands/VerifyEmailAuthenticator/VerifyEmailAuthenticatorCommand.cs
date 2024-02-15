@@ -1,7 +1,7 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.Repositories;
+using Domain.Entities;
 using MediatR;
-using NArchitecture.Core.Security.Entities;
 
 namespace Application.Features.Auth.Commands.VerifyEmailAuthenticator;
 
@@ -35,7 +35,7 @@ public class VerifyEmailAuthenticatorCommand : IRequest
 
         public async Task Handle(VerifyEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            EmailAuthenticator<int, int>? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(
+            EmailAuthenticator? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(
                 predicate: e => e.ActivationKey == request.ActivationKey,
                 cancellationToken: cancellationToken
             );

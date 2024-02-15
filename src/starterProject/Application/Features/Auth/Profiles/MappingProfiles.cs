@@ -1,6 +1,6 @@
 using Application.Features.Auth.Commands.RevokeToken;
 using AutoMapper;
-using NArchitecture.Core.Security.Entities;
+using Domain.Entities;
 
 namespace Application.Features.Auth.Profiles;
 
@@ -8,6 +8,7 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<RefreshToken<int, int>, RevokedTokenResponse>().ReverseMap();
+        CreateMap<NArchitecture.Core.Security.Entities.RefreshToken<Guid>, RefreshToken>().ReverseMap();
+        CreateMap<RefreshToken, RevokedTokenResponse>().ReverseMap();
     }
 }

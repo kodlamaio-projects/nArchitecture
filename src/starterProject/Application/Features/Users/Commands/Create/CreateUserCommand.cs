@@ -2,9 +2,9 @@ using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.Hashing;
 using static Application.Features.Users.Constants.UsersOperationClaims;
 
@@ -51,7 +51,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
         public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(request.Email);
-            User<int, int> user = _mapper.Map<User<int, int>>(request);
+            User user = _mapper.Map<User>(request);
 
             HashingHelper.CreatePasswordHash(
                 request.Password,
@@ -60,7 +60,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
             );
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            User<int, int> createdUser = await _userRepository.AddAsync(user);
+            User createdUser = await _userRepository.AddAsync(user);
 
             CreatedUserResponse response = _mapper.Map<CreatedUserResponse>(createdUser);
             return response;

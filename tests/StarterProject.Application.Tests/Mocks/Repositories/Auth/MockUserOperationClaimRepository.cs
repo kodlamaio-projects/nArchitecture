@@ -15,13 +15,13 @@ public class MockUserOperationClaimRepository
 
     public IUserOperationClaimRepository GetMockUserOperationClaimRepository()
     {
-        List<NArchitecture.Core.Security.Entities.OperationClaim<int, int>> operationClaims = _operationClaimFakeData.Data;
+        List<Domain.Entities.OperationClaim> operationClaims = _operationClaimFakeData.Data;
         var mockRepo = new Mock<IUserOperationClaimRepository>();
 
         mockRepo
-            .Setup(s => s.GetOperationClaimsByUserIdAsync(It.IsAny<int>()))
+            .Setup(s => s.GetOperationClaimsByUserIdAsync(It.IsAny<Guid>()))
             .ReturnsAsync(
-                (int userId) =>
+                (Guid userId) =>
                 {
                     var claims = operationClaims.ToList();
                     return claims;

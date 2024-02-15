@@ -2,9 +2,9 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
+using Domain.Entities;
 using MediatR;
 using NArchitecture.Core.Application.Dtos;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.Enums;
 using NArchitecture.Core.Security.JWT;
 
@@ -49,16 +49,16 @@ public class LoginCommand : IRequest<LoggedResponse>
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            User<int, int>? user = await _userService.GetAsync(
+            User? user = await _userService.GetAsync(
                 predicate: u => u.Email == request.UserForLoginDto.Email,
                 cancellationToken: cancellationToken
             );
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
-            await _authBusinessRules.UserPasswordShouldBeMatch(user!.Id, request.UserForLoginDto.Password);
+            await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);
 
             LoggedResponse loggedResponse = new();
 
-            if (user.AuthenticatorType is not AuthenticatorType.None)
+            if (user!.AuthenticatorType is not AuthenticatorType.None)
             {
                 if (request.UserForLoginDto.AuthenticatorCode is null)
                 {
@@ -72,13 +72,8 @@ public class LoginCommand : IRequest<LoggedResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
 
-            NArchitecture.Core.Security.Entities.RefreshToken<int, int> createdRefreshToken = await _authService.CreateRefreshToken(
-                user,
-                request.IpAddress
-            );
-            NArchitecture.Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(
-                createdRefreshToken
-            );
+            Domain.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(user, request.IpAddress);
+            Domain.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
             await _authService.DeleteOldRefreshTokens(user.Id);
 
             loggedResponse.AccessToken = createdAccessToken;

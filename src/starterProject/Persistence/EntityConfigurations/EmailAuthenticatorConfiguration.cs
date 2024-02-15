@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NArchitecture.Core.Security.Entities;
 
 namespace Persistence.EntityConfigurations;
 
-public class EmailAuthenticatorConfiguration : IEntityTypeConfiguration<EmailAuthenticator<int, int>>
+public class EmailAuthenticatorConfiguration : IEntityTypeConfiguration<EmailAuthenticator>
 {
-    public void Configure(EntityTypeBuilder<EmailAuthenticator<int, int>> builder)
+    public void Configure(EntityTypeBuilder<EmailAuthenticator> builder)
     {
         builder.ToTable("EmailAuthenticators").HasKey(ea => ea.Id);
 
@@ -21,5 +21,7 @@ public class EmailAuthenticatorConfiguration : IEntityTypeConfiguration<EmailAut
         builder.HasQueryFilter(ea => !ea.DeletedDate.HasValue);
 
         builder.HasOne(ea => ea.User);
+
+        builder.HasBaseType((string)null!);
     }
 }

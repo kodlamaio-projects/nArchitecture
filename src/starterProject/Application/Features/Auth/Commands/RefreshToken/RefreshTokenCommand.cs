@@ -1,8 +1,8 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
+using Domain.Entities;
 using MediatR;
-using NArchitecture.Core.Security.Entities;
 using NArchitecture.Core.Security.JWT;
 
 namespace Application.Features.Auth.Commands.RefreshToken;
@@ -39,9 +39,7 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
 
         public async Task<RefreshedTokensResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            NArchitecture.Core.Security.Entities.RefreshToken<int, int>? refreshToken = await _authService.GetRefreshTokenByToken(
-                request.RefreshToken
-            );
+            Domain.Entities.RefreshToken? refreshToken = await _authService.GetRefreshTokenByToken(request.RefreshToken);
             await _authBusinessRules.RefreshTokenShouldBeExists(refreshToken);
 
             if (refreshToken!.RevokedDate != null)
@@ -52,20 +50,15 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
                 );
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
-            User<int, int>? user = await _userService.GetAsync(
-                predicate: u => u.Id == refreshToken.UserId,
-                cancellationToken: cancellationToken
-            );
+            User? user = await _userService.GetAsync(predicate: u => u.Id == refreshToken.UserId, cancellationToken: cancellationToken);
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
-            NArchitecture.Core.Security.Entities.RefreshToken<int, int> newRefreshToken = await _authService.RotateRefreshToken(
+            Domain.Entities.RefreshToken newRefreshToken = await _authService.RotateRefreshToken(
                 user: user!,
                 refreshToken,
                 request.IpAddress
             );
-            NArchitecture.Core.Security.Entities.RefreshToken<int, int> addedRefreshToken = await _authService.AddRefreshToken(
-                newRefreshToken
-            );
+            Domain.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(newRefreshToken);
             await _authService.DeleteOldRefreshTokens(refreshToken.UserId);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user!);

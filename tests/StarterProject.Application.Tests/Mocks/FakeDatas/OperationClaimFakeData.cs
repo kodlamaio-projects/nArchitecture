@@ -1,11 +1,11 @@
-﻿using NArchitecture.Core.Security.Entities;
+﻿using Domain.Entities;
 using NArchitecture.Core.Test.Application.FakeData;
 
 namespace StarterProject.Application.Tests.Mocks.FakeDatas;
 
-public class OperationClaimFakeData : BaseFakeData<OperationClaim<int, int>, int>
+public class OperationClaimFakeData : BaseFakeData<OperationClaim, int>
 {
-    public override List<OperationClaim<int, int>> CreateFakeData()
+    public override List<OperationClaim> CreateFakeData()
     {
         return
         [

@@ -22,9 +22,9 @@ public class BaseController : ControllerBase
         return ipAddress;
     }
 
-    protected int getUserIdFromRequest() //todo authentication behavior?
+    protected Guid getUserIdFromRequest() //todo authentication behavior?
     {
-        int userId = HttpContext.User.GetUserId();
+        var userId = Guid.Parse(HttpContext.User.GetUserId().ToString()!);
         return userId;
     }
 }
