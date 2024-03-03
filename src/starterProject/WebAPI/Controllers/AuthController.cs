@@ -116,7 +116,14 @@ public class AuthController : BaseController
 
     private void setRefreshTokenToCookie(RefreshToken refreshToken)
     {
-        CookieOptions cookieOptions = new() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None, Expires = DateTime.UtcNow.AddDays(7) };
+        CookieOptions cookieOptions =
+            new()
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
         Response.Cookies.Append(key: "refreshToken", refreshToken.Token, cookieOptions);
     }
 }
