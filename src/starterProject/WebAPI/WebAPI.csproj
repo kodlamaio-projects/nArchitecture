@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi" Version="1.1.0" />
 	<PackageReference Include="NArchitecture.Core.Localization.WebApi" Version="1.0.0" />
 	<PackageReference Include="NArchitecture.Core.Persistence.WebApi" Version="1.0.0" />
 	<PackageReference Include="NArchitecture.Core.Security.WebApi.Swagger" Version="1.0.0" />
