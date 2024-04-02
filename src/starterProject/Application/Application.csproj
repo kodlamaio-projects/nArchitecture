@@ -10,15 +10,15 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="NArchitecture.Core.Application" Version="1.0.0" />
-    <PackageReference Include="NArchitecture.Core.Mailing" Version="1.0.0" />
-    <PackageReference Include="NArchitecture.Core.Mailing.Mailkit" Version="1.0.0" />
+    <PackageReference Include="NArchitecture.Core.Application" Version="1.0.1" />
+    <PackageReference Include="NArchitecture.Core.Mailing" Version="1.0.1" />
+    <PackageReference Include="NArchitecture.Core.Mailing.Mailkit" Version="1.0.1" />
 	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Exception" Version="1.0.0" />
 	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Logging.Serilog.File" Version="1.0.0" />
 	<PackageReference Include="NArchitecture.Core.Localization.Abstraction" Version="1.0.0" />
-	<PackageReference Include="NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection" Version="1.0.1" />
 	<PackageReference Include="NArchitecture.Core.ElasticSearch" Version="1.0.0" />
-	<PackageReference Include="NArchitecture.Core.Security.DependencyInjection" Version="1.0.0" />
+	<PackageReference Include="NArchitecture.Core.Security.DependencyInjection" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

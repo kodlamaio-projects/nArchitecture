@@ -13,7 +13,7 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
         builder.Property(rt => rt.Id).HasColumnName("Id").IsRequired();
         builder.Property(rt => rt.UserId).HasColumnName("UserId").IsRequired();
         builder.Property(rt => rt.Token).HasColumnName("Token").IsRequired();
-        builder.Property(rt => rt.ExpiresDate).HasColumnName("ExpiresDate").IsRequired();
+        builder.Property(rt => rt.ExpirationDate).HasColumnName("ExpiresDate").IsRequired();
         builder.Property(rt => rt.CreatedByIp).HasColumnName("CreatedByIp").IsRequired();
         builder.Property(rt => rt.RevokedDate).HasColumnName("RevokedDate");
         builder.Property(rt => rt.RevokedByIp).HasColumnName("RevokedByIp");

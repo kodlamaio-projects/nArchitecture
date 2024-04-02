@@ -24,7 +24,7 @@ public class BaseController : ControllerBase
 
     protected Guid getUserIdFromRequest() //todo authentication behavior?
     {
-        var userId = Guid.Parse(HttpContext.User.GetUserId().ToString()!);
+        var userId = Guid.Parse(HttpContext.User.GetIdClaim()!);
         return userId;
     }
 }

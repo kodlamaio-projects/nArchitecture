@@ -70,13 +70,13 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public async Task RefreshTokenShouldBeActive(RefreshToken refreshToken)
     {
-        if (refreshToken.RevokedDate != null && DateTime.UtcNow >= refreshToken.ExpiresDate)
+        if (refreshToken.RevokedDate != null && DateTime.UtcNow >= refreshToken.ExpirationDate)
             await throwBusinessException(AuthMessages.InvalidRefreshToken);
     }
 
     public async Task UserEmailShouldBeNotExists(string email)
     {
-        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
+        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email);
         if (doesExists)
             await throwBusinessException(AuthMessages.UserMailAlreadyExists);
     }

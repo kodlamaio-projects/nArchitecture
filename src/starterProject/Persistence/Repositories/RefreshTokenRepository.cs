@@ -18,7 +18,7 @@ public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, Guid, BaseD
             .Where(r =>
                 r.UserId == userId
                 && r.RevokedDate == null
-                && r.ExpiresDate >= DateTime.UtcNow
+                && r.ExpirationDate >= DateTime.UtcNow
                 && r.CreatedDate.AddDays(refreshTokenTtl) <= DateTime.UtcNow
             )
             .ToListAsync();

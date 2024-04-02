@@ -8,10 +8,10 @@
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-    <PackageReference Include="NArchitecture.Core.Persistence" Version="1.0.0" />
-    <PackageReference Include="NArchitecture.Core.Persistence.DependencyInjection" Version="1.0.0" />
+    <PackageReference Include="NArchitecture.Core.Persistence" Version="1.1.1" />
+    <PackageReference Include="NArchitecture.Core.Persistence.DependencyInjection" Version="1.0.1" />
   </ItemGroup>
 </Project>

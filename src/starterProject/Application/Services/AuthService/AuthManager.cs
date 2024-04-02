@@ -10,7 +10,7 @@ namespace Application.Services.AuthService;
 public class AuthManager : IAuthService
 {
     private readonly IRefreshTokenRepository _refreshTokenRepository;
-    private readonly ITokenHelper<Guid, int> _tokenHelper;
+    private readonly ITokenHelper<Guid, int, Guid> _tokenHelper;
     private readonly TokenOptions _tokenOptions;
     private readonly IUserOperationClaimRepository _userOperationClaimRepository;
     private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ public class AuthManager : IAuthService
     public AuthManager(
         IUserOperationClaimRepository userOperationClaimRepository,
         IRefreshTokenRepository refreshTokenRepository,
-        ITokenHelper<Guid, int> tokenHelper,
+        ITokenHelper<Guid, int, Guid> tokenHelper,
         IConfiguration configuration,
         IMapper mapper
     )
@@ -81,7 +81,7 @@ public class AuthManager : IAuthService
 
     public async Task<RefreshToken> RotateRefreshToken(User user, RefreshToken refreshToken, string ipAddress)
     {
-        NArchitecture.Core.Security.Entities.RefreshToken<Guid> newCoreRefreshToken = _tokenHelper.CreateRefreshToken(
+        NArchitecture.Core.Security.Entities.RefreshToken<Guid, Guid> newCoreRefreshToken = _tokenHelper.CreateRefreshToken(
             user,
             ipAddress
         );
@@ -96,7 +96,7 @@ public class AuthManager : IAuthService
             r.Token == refreshToken.ReplacedByToken
         );
 
-        if (childToken?.RevokedDate != null && childToken.ExpiresDate <= DateTime.UtcNow)
+        if (childToken?.RevokedDate != null && childToken.ExpirationDate <= DateTime.UtcNow)
             await RevokeRefreshToken(childToken, ipAddress, reason);
         else
             await RevokeDescendantRefreshTokens(refreshToken: childToken!, ipAddress, reason);
@@ -104,7 +104,7 @@ public class AuthManager : IAuthService
 
     public Task<RefreshToken> CreateRefreshToken(User user, string ipAddress)
     {
-        NArchitecture.Core.Security.Entities.RefreshToken<Guid> coreRefreshToken = _tokenHelper.CreateRefreshToken(
+        NArchitecture.Core.Security.Entities.RefreshToken<Guid, Guid> coreRefreshToken = _tokenHelper.CreateRefreshToken(
             user,
             ipAddress
         );

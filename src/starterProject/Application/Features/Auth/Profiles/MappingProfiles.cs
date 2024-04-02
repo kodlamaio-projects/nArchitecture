@@ -8,7 +8,7 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<NArchitecture.Core.Security.Entities.RefreshToken<Guid>, RefreshToken>().ReverseMap();
+        CreateMap<NArchitecture.Core.Security.Entities.RefreshToken<Guid, Guid>, RefreshToken>().ReverseMap();
         CreateMap<RefreshToken, RevokedTokenResponse>().ReverseMap();
     }
 }
