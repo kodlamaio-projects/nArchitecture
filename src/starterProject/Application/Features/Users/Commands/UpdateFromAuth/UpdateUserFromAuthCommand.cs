@@ -68,7 +68,7 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
             if (request.NewPassword != null && !string.IsNullOrWhiteSpace(request.NewPassword))
             {
                 HashingHelper.CreatePasswordHash(
-                    request.Password,
+                    request.NewPassword,
                     passwordHash: out byte[] passwordHash,
                     passwordSalt: out byte[] passwordSalt
                 );
