@@ -1,9 +1,9 @@
-﻿using Application.Features.Auth.Constants;
+using Application.Features.Auth.Constants;
+using Application.Features.Auth.Mappers;
 using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
-using AutoMapper;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 using static Application.Features.Auth.Constants.AuthOperationClaims;
 
 namespace Application.Features.Auth.Commands.RevokeToken;
@@ -31,13 +31,11 @@ public class RevokeTokenCommand : IRequest<RevokedTokenResponse>, ISecuredReques
     {
         private readonly IAuthService _authService;
         private readonly AuthBusinessRules _authBusinessRules;
-        private readonly IMapper _mapper;
 
-        public RevokeTokenCommandHandler(IAuthService authService, AuthBusinessRules authBusinessRules, IMapper mapper)
+        public RevokeTokenCommandHandler(IAuthService authService, AuthBusinessRules authBusinessRules)
         {
             _authService = authService;
             _authBusinessRules = authBusinessRules;
-            _mapper = mapper;
         }
 
         public async Task<RevokedTokenResponse> Handle(RevokeTokenCommand request, CancellationToken cancellationToken)
@@ -48,7 +46,7 @@ public class RevokeTokenCommand : IRequest<RevokedTokenResponse>, ISecuredReques
 
             await _authService.RevokeRefreshToken(token: refreshToken!, request.IpAddress, reason: "Revoked without replacement");
 
-            RevokedTokenResponse revokedTokenResponse = _mapper.Map<RevokedTokenResponse>(refreshToken);
+            RevokedTokenResponse revokedTokenResponse = RefreshTokenMapper.ToRevokedResponse(refreshToken!);
             return revokedTokenResponse;
         }
     }

@@ -2,7 +2,7 @@ using Application;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi.Extensions;
 using NArchitecture.Core.CrossCuttingConcerns.Logging.Configurations;
 using NArchitecture.Core.ElasticSearch.Models;
@@ -51,7 +51,7 @@ builder
             ValidIssuer = tokenOptions.Issuer,
             ValidAudience = tokenOptions.Audience,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey),
         };
     });
 
@@ -77,7 +77,7 @@ builder.Services.AddSwaggerGen(opt =>
             In = ParameterLocation.Header,
             Description =
                 "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer YOUR_TOKEN\". \r\n\r\n"
-                + "`Enter your token in the text input below.`"
+                + "`Enter your token in the text input below.`",
         }
     );
     opt.OperationFilter<BearerSecurityRequirementOperationFilter>();

@@ -1,12 +1,10 @@
 ﻿using Application.Features.Auth.Commands.Login;
-using Application.Features.Auth.Profiles;
 using Application.Features.Auth.Rules;
 using Application.Features.Users.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
-using AutoMapper;
 using FluentValidation.TestHelper;
 using Microsoft.Extensions.Configuration;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
@@ -62,17 +60,15 @@ public class LoginTests
         IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpNetOtpAuthenticatorHelper();
         ILocalizationService localizationService = new ResourceLocalizationManager(resources: [])
         {
-            AcceptLocales = new[] { "en" }
+            AcceptLocales = new[] { "en" },
         };
-        IMapper mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()));
         #endregion
         AuthBusinessRules authBusinessRules = new(_userRepository, localizationService);
         IAuthService _authService = new AuthManager(
             _userOperationClaimRepository,
             _refreshTokenRepository,
             tokenHelper,
-            _configuration,
-            mapper
+            _configuration
         );
         UserBusinessRules _userBusinessRules = new(_userRepository, localizationService);
         IUserService _userService = new UserManager(_userRepository, _userBusinessRules);

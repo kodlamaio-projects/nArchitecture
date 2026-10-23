@@ -1,10 +1,10 @@
 using Application.Features.Users.Constants;
+using Application.Features.Users.Mappers;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Security.Hashing;
 using static Application.Features.Users.Constants.UsersOperationClaims;
 
@@ -38,20 +38,18 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserResponse>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
 
-        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
+        public CreateUserCommandHandler(IUserRepository userRepository, UserBusinessRules userBusinessRules)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
             _userBusinessRules = userBusinessRules;
         }
 
         public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(request.Email);
-            User user = _mapper.Map<User>(request);
+            User user = UserMapper.ToEntity(request);
 
             HashingHelper.CreatePasswordHash(
                 request.Password,
@@ -62,7 +60,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
             user.PasswordSalt = passwordSalt;
             User createdUser = await _userRepository.AddAsync(user);
 
-            CreatedUserResponse response = _mapper.Map<CreatedUserResponse>(createdUser);
+            CreatedUserResponse response = UserMapper.ToCreatedResponse(createdUser);
             return response;
         }
     }

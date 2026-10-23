@@ -1,10 +1,10 @@
 using Application.Features.UserOperationClaims.Constants;
+using Application.Features.UserOperationClaims.Mappers;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 using static Application.Features.UserOperationClaims.Constants.UserOperationClaimsOperationClaims;
 
 namespace Application.Features.UserOperationClaims.Commands.Update;
@@ -21,17 +21,14 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
         : IRequestHandler<UpdateUserOperationClaimCommand, UpdatedUserOperationClaimResponse>
     {
         private readonly IUserOperationClaimRepository _userOperationClaimRepository;
-        private readonly IMapper _mapper;
         private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
         public UpdateUserOperationClaimCommandHandler(
             IUserOperationClaimRepository userOperationClaimRepository,
-            IMapper mapper,
             UserOperationClaimBusinessRules userOperationClaimBusinessRules
         )
         {
             _userOperationClaimRepository = userOperationClaimRepository;
-            _mapper = mapper;
             _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
         }
 
@@ -51,13 +48,11 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
                 request.UserId,
                 request.OperationClaimId
             );
-            UserOperationClaim mappedUserOperationClaim = _mapper.Map(request, destination: userOperationClaim!);
+            UserOperationClaimMapper.UpdateEntity(request, userOperationClaim!);
 
-            UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(
-                mappedUserOperationClaim
-            );
+            UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(userOperationClaim!);
 
-            UpdatedUserOperationClaimResponse updatedUserOperationClaimDto = _mapper.Map<UpdatedUserOperationClaimResponse>(
+            UpdatedUserOperationClaimResponse updatedUserOperationClaimDto = UserOperationClaimMapper.ToUpdatedResponse(
                 updatedUserOperationClaim
             );
             return updatedUserOperationClaimDto;

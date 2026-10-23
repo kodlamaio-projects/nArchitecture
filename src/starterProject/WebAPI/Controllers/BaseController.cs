@@ -1,5 +1,5 @@
-﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Security.Extensions;
 
 namespace WebAPI.Controllers;

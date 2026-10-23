@@ -1,10 +1,10 @@
-﻿using Application.Features.Auth.Rules;
+using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Security.Enums;
 
 namespace Application.Features.Auth.Commands.VerifyOtpAuthenticator;

@@ -1,6 +1,6 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
+using Application.Features.Auth.Mappers;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using NArchitecture.Core.Security.JWT;
@@ -13,14 +13,12 @@ public class AuthManager : IAuthService
     private readonly ITokenHelper<Guid, int, Guid> _tokenHelper;
     private readonly TokenOptions _tokenOptions;
     private readonly IUserOperationClaimRepository _userOperationClaimRepository;
-    private readonly IMapper _mapper;
 
     public AuthManager(
         IUserOperationClaimRepository userOperationClaimRepository,
         IRefreshTokenRepository refreshTokenRepository,
         ITokenHelper<Guid, int, Guid> tokenHelper,
-        IConfiguration configuration,
-        IMapper mapper
+        IConfiguration configuration
     )
     {
         _userOperationClaimRepository = userOperationClaimRepository;
@@ -31,7 +29,6 @@ public class AuthManager : IAuthService
         _tokenOptions =
             configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
             ?? throw new NullReferenceException($"\"{tokenOptionsConfigurationSection}\" section cannot found in configuration");
-        _mapper = mapper;
     }
 
     public async Task<AccessToken> CreateAccessToken(User user)
@@ -85,7 +82,7 @@ public class AuthManager : IAuthService
             user,
             ipAddress
         );
-        RefreshToken newRefreshToken = _mapper.Map<RefreshToken>(newCoreRefreshToken);
+        RefreshToken newRefreshToken = RefreshTokenMapper.ToRefreshToken(newCoreRefreshToken);
         await RevokeRefreshToken(refreshToken, ipAddress, reason: "Replaced by new token", newRefreshToken.Token);
         return newRefreshToken;
     }
@@ -108,7 +105,7 @@ public class AuthManager : IAuthService
             user,
             ipAddress
         );
-        RefreshToken refreshToken = _mapper.Map<RefreshToken>(coreRefreshToken);
+        RefreshToken refreshToken = RefreshTokenMapper.ToRefreshToken(coreRefreshToken);
         return Task.FromResult(refreshToken);
     }
 }

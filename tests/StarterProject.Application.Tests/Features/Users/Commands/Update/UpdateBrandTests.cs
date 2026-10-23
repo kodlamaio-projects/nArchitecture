@@ -19,7 +19,7 @@ public class UpdateUserTests : UserMockRepository
     {
         _validator = validator;
         _command = command;
-        _handler = new UpdateUserCommandHandler(MockRepository.Object, Mapper, BusinessRules);
+        _handler = new UpdateUserCommandHandler(MockRepository.Object, BusinessRules);
     }
 
     [Fact]

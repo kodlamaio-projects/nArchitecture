@@ -48,53 +48,45 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         List<OperationClaim> featureOperationClaims = new();
 
         #region Auth
-        featureOperationClaims.AddRange(
-            [
-                new() { Id = ++lastId, Name = AuthOperationClaims.Admin },
-                new() { Id = ++lastId, Name = AuthOperationClaims.Read },
-                new() { Id = ++lastId, Name = AuthOperationClaims.Write },
-                new() { Id = ++lastId, Name = AuthOperationClaims.RevokeToken },
-            ]
-        );
+        featureOperationClaims.AddRange([
+            new() { Id = ++lastId, Name = AuthOperationClaims.Admin },
+            new() { Id = ++lastId, Name = AuthOperationClaims.Read },
+            new() { Id = ++lastId, Name = AuthOperationClaims.Write },
+            new() { Id = ++lastId, Name = AuthOperationClaims.RevokeToken },
+        ]);
         #endregion
 
         #region OperationClaims
-        featureOperationClaims.AddRange(
-            [
-                new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Admin },
-                new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Read },
-                new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Write },
-                new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Create },
-                new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Update },
-                new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Delete },
-            ]
-        );
+        featureOperationClaims.AddRange([
+            new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Admin },
+            new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Read },
+            new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Write },
+            new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Create },
+            new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Update },
+            new() { Id = ++lastId, Name = OperationClaimsOperationClaims.Delete },
+        ]);
         #endregion
 
         #region UserOperationClaims
-        featureOperationClaims.AddRange(
-            [
-                new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Admin },
-                new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Read },
-                new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Write },
-                new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Create },
-                new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Update },
-                new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Delete },
-            ]
-        );
+        featureOperationClaims.AddRange([
+            new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Admin },
+            new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Read },
+            new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Write },
+            new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Create },
+            new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Update },
+            new() { Id = ++lastId, Name = UserOperationClaimsOperationClaims.Delete },
+        ]);
         #endregion
 
         #region Users
-        featureOperationClaims.AddRange(
-            [
-                new() { Id = ++lastId, Name = UsersOperationClaims.Admin },
-                new() { Id = ++lastId, Name = UsersOperationClaims.Read },
-                new() { Id = ++lastId, Name = UsersOperationClaims.Write },
-                new() { Id = ++lastId, Name = UsersOperationClaims.Create },
-                new() { Id = ++lastId, Name = UsersOperationClaims.Update },
-                new() { Id = ++lastId, Name = UsersOperationClaims.Delete },
-            ]
-        );
+        featureOperationClaims.AddRange([
+            new() { Id = ++lastId, Name = UsersOperationClaims.Admin },
+            new() { Id = ++lastId, Name = UsersOperationClaims.Read },
+            new() { Id = ++lastId, Name = UsersOperationClaims.Write },
+            new() { Id = ++lastId, Name = UsersOperationClaims.Create },
+            new() { Id = ++lastId, Name = UsersOperationClaims.Update },
+            new() { Id = ++lastId, Name = UsersOperationClaims.Delete },
+        ]);
         #endregion
 
         return featureOperationClaims;

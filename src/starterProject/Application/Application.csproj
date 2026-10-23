@@ -1,24 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="NArchitecture.Core.Application" Version="1.0.1" />
-    <PackageReference Include="NArchitecture.Core.Mailing" Version="1.0.1" />
-    <PackageReference Include="NArchitecture.Core.Mailing.Mailkit" Version="1.0.1" />
-	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Exception" Version="1.0.0" />
-	<PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Logging.Serilog.File" Version="1.0.0" />
-	<PackageReference Include="NArchitecture.Core.Localization.Abstraction" Version="1.0.0" />
-	<PackageReference Include="NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection" Version="1.0.1" />
-	<PackageReference Include="NArchitecture.Core.ElasticSearch" Version="1.0.0" />
-	<PackageReference Include="NArchitecture.Core.Security.DependencyInjection" Version="1.2.0" />
+    <PackageReference Include="NArchitecture.Core.Application" />
+    <PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Exception" />
+    <PackageReference Include="NArchitecture.Core.CrossCuttingConcerns.Logging.Serilog.File" />
+    <PackageReference Include="NArchitecture.Core.ElasticSearch" />
+    <PackageReference Include="NArchitecture.Core.Localization.Abstraction" />
+    <PackageReference Include="NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection" />
+    <PackageReference Include="NArchitecture.Core.Mailing" />
+    <PackageReference Include="NArchitecture.Core.Mailing.MailKit" />
+    <PackageReference Include="NArchitecture.Core.Mediator" />
+    <PackageReference Include="NArchitecture.Core.Security.DependencyInjection" />
+    <PackageReference Include="Riok.Mapperly" PrivateAssets="all" ExcludeAssets="runtime" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -26,7 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Features\**\Resources\Locales\*.*.yaml">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

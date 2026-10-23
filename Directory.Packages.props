@@ -1,0 +1,54 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+    <NArchitectureCoreVersion>2.0.0</NArchitectureCoreVersion>
+  </PropertyGroup>
+  <ItemGroup Label="NArchitecture.Core">
+    <PackageVersion Include="NArchitecture.Core.Application" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.CrossCuttingConcerns.Exception" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion
+      Include="NArchitecture.Core.CrossCuttingConcerns.Logging.Serilog.File"
+      Version="$(NArchitectureCoreVersion)"
+    />
+    <PackageVersion Include="NArchitecture.Core.ElasticSearch" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Localization.Abstraction" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion
+      Include="NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection"
+      Version="$(NArchitectureCoreVersion)"
+    />
+    <PackageVersion Include="NArchitecture.Core.Localization.WebApi" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Mailing" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Mailing.MailKit" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Mediator" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Persistence" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Persistence.DependencyInjection" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Persistence.WebApi" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Security" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Security.DependencyInjection" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Security.WebApi.Swagger" Version="$(NArchitectureCoreVersion)" />
+    <PackageVersion Include="NArchitecture.Core.Test" Version="$(NArchitectureCoreVersion)" />
+  </ItemGroup>
+  <ItemGroup Label="Microsoft">
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.13" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
+  </ItemGroup>
+  <ItemGroup Label="Third party">
+    <PackageVersion Include="CloudinaryDotNet" Version="1.29.3" />
+    <PackageVersion Include="Riok.Mapperly" Version="4.3.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.3.1" />
+  </ItemGroup>
+  <ItemGroup Label="Tests">
+    <PackageVersion Include="Moq" Version="4.21.0" />
+    <PackageVersion Include="Xunit.DependencyInjection" Version="12.0.1" />
+    <PackageVersion Include="xunit.v3" Version="4.0.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
+  </ItemGroup>
+</Project>

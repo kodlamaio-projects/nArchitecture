@@ -1,11 +1,11 @@
 using Application.Features.Users.Constants;
+using Application.Features.Users.Mappers;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.Users.Queries.GetList;
@@ -29,12 +29,10 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
     public class GetListUserQueryHandler : IRequestHandler<GetListUserQuery, GetListResponse<GetListUserListItemDto>>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
 
-        public GetListUserQueryHandler(IUserRepository userRepository, IMapper mapper)
+        public GetListUserQueryHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
         }
 
         public async Task<GetListResponse<GetListUserListItemDto>> Handle(
@@ -49,7 +47,7 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListUserListItemDto> response = _mapper.Map<GetListResponse<GetListUserListItemDto>>(users);
+            GetListResponse<GetListUserListItemDto> response = UserMapper.ToGetListResponse(users);
             return response;
         }
     }

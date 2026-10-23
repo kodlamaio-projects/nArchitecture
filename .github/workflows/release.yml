@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GH Release
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v2
