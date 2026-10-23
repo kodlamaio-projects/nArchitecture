@@ -15,7 +15,7 @@ public class GetByIdUserTests : UserMockRepository
         : base(fakeData)
     {
         _query = query;
-        _handler = new GetByIdUserQueryHandler(MockRepository.Object, Mapper, BusinessRules);
+        _handler = new GetByIdUserQueryHandler(MockRepository.Object, BusinessRules);
     }
 
     [Fact]

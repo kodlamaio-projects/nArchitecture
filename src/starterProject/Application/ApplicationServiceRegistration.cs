@@ -18,6 +18,7 @@ using NArchitecture.Core.ElasticSearch.Models;
 using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
+using NArchitecture.Core.Mediator.DependencyInjection;
 using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.JWT;
 
@@ -33,8 +34,7 @@ public static class ApplicationServiceRegistration
         TokenOptions tokenOptions
     )
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddMediatR(configuration =>
+        services.AddMediator(configuration =>
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             configuration.AddOpenBehavior(typeof(AuthorizationBehavior<,>));

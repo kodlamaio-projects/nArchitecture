@@ -1,10 +1,10 @@
 using Application.Features.OperationClaims.Constants;
+using Application.Features.OperationClaims.Mappers;
 using Application.Features.OperationClaims.Rules;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 
 namespace Application.Features.OperationClaims.Queries.GetById;
 
@@ -17,17 +17,14 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
     public class GetByIdOperationClaimQueryHandler : IRequestHandler<GetByIdOperationClaimQuery, GetByIdOperationClaimResponse>
     {
         private readonly IOperationClaimRepository _operationClaimRepository;
-        private readonly IMapper _mapper;
         private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
 
         public GetByIdOperationClaimQueryHandler(
             IOperationClaimRepository operationClaimRepository,
-            IMapper mapper,
             OperationClaimBusinessRules operationClaimBusinessRules
         )
         {
             _operationClaimRepository = operationClaimRepository;
-            _mapper = mapper;
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
@@ -43,7 +40,7 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
 
-            GetByIdOperationClaimResponse response = _mapper.Map<GetByIdOperationClaimResponse>(operationClaim);
+            GetByIdOperationClaimResponse response = OperationClaimMapper.ToGetByIdResponse(operationClaim!);
             return response;
         }
     }

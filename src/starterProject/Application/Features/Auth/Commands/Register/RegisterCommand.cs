@@ -1,9 +1,9 @@
-﻿using Application.Features.Auth.Rules;
+using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.Repositories;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Dtos;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Security.Hashing;
 using NArchitecture.Core.Security.JWT;
 
@@ -52,13 +52,12 @@ public class RegisterCommand : IRequest<RegisteredResponse>
                 passwordHash: out byte[] passwordHash,
                 passwordSalt: out byte[] passwordSalt
             );
-            User newUser =
-                new()
-                {
-                    Email = request.UserForRegisterDto.Email,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt,
-                };
+            User newUser = new()
+            {
+                Email = request.UserForRegisterDto.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+            };
             User createdUser = await _userRepository.AddAsync(newUser);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);

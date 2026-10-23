@@ -1,8 +1,8 @@
-﻿using Application.Features.Auth.Rules;
+using Application.Features.Auth.Rules;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
 using Domain.Entities;
-using MediatR;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Security.JWT;
 
 namespace Application.Features.Auth.Commands.RefreshToken;
@@ -66,8 +66,11 @@ public class RefreshTokenCommand : IRequest<RefreshedTokensResponse>
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user!);
 
-            RefreshedTokensResponse refreshedTokensResponse =
-                new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+            RefreshedTokensResponse refreshedTokensResponse = new()
+            {
+                AccessToken = createdAccessToken,
+                RefreshToken = addedRefreshToken,
+            };
             return refreshedTokensResponse;
         }
     }

@@ -42,14 +42,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 passwordHash: out byte[] passwordHash,
                 passwordSalt: out byte[] passwordSalt
             );
-            User adminUser =
-                new()
-                {
-                    Id = AdminId,
-                    Email = "narch@kodlama.io",
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt
-                };
+            User adminUser = new()
+            {
+                Id = AdminId,
+                Email = "narch@kodlama.io",
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+            };
             yield return adminUser;
         }
     }

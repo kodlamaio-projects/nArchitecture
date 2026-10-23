@@ -1,10 +1,10 @@
 using Application.Features.UserOperationClaims.Constants;
+using Application.Features.UserOperationClaims.Mappers;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 using static Application.Features.UserOperationClaims.Constants.UserOperationClaimsOperationClaims;
 
 namespace Application.Features.UserOperationClaims.Commands.Delete;
@@ -19,17 +19,14 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
         : IRequestHandler<DeleteUserOperationClaimCommand, DeletedUserOperationClaimResponse>
     {
         private readonly IUserOperationClaimRepository _userOperationClaimRepository;
-        private readonly IMapper _mapper;
         private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
         public DeleteUserOperationClaimCommandHandler(
             IUserOperationClaimRepository userOperationClaimRepository,
-            IMapper mapper,
             UserOperationClaimBusinessRules userOperationClaimBusinessRules
         )
         {
             _userOperationClaimRepository = userOperationClaimRepository;
-            _mapper = mapper;
             _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
         }
 
@@ -46,7 +43,7 @@ public class DeleteUserOperationClaimCommand : IRequest<DeletedUserOperationClai
 
             await _userOperationClaimRepository.DeleteAsync(userOperationClaim!);
 
-            DeletedUserOperationClaimResponse response = _mapper.Map<DeletedUserOperationClaimResponse>(userOperationClaim);
+            DeletedUserOperationClaimResponse response = UserOperationClaimMapper.ToDeletedResponse(userOperationClaim!);
             return response;
         }
     }

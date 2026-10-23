@@ -16,7 +16,7 @@ public class GetListUserTests : UserMockRepository
         : base(fakeData)
     {
         _query = query;
-        _handler = new GetListUserQueryHandler(MockRepository.Object, Mapper);
+        _handler = new GetListUserQueryHandler(MockRepository.Object);
     }
 
     [Fact]

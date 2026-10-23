@@ -1,10 +1,10 @@
-﻿using Application.Features.Auth.Rules;
+using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 
 namespace Application.Features.Auth.Commands.EnableOtpAuthenticator;
 
@@ -58,8 +58,10 @@ public class EnableOtpAuthenticatorCommand : IRequest<EnabledOtpAuthenticatorRes
             OtpAuthenticator newOtpAuthenticator = await _authenticatorService.CreateOtpAuthenticator(user!);
             OtpAuthenticator addedOtpAuthenticator = await _otpAuthenticatorRepository.AddAsync(newOtpAuthenticator);
 
-            EnabledOtpAuthenticatorResponse enabledOtpAuthenticatorDto =
-                new() { SecretKey = await _authenticatorService.ConvertSecretKeyToString(addedOtpAuthenticator.SecretKey) };
+            EnabledOtpAuthenticatorResponse enabledOtpAuthenticatorDto = new()
+            {
+                SecretKey = await _authenticatorService.ConvertSecretKeyToString(addedOtpAuthenticator.SecretKey),
+            };
             return enabledOtpAuthenticatorDto;
         }
     }

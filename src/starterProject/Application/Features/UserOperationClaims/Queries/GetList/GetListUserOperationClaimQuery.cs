@@ -1,11 +1,11 @@
 using Application.Features.UserOperationClaims.Constants;
+using Application.Features.UserOperationClaims.Mappers;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.UserOperationClaims.Queries.GetList;
@@ -30,12 +30,10 @@ public class GetListUserOperationClaimQuery : IRequest<GetListResponse<GetListUs
         : IRequestHandler<GetListUserOperationClaimQuery, GetListResponse<GetListUserOperationClaimListItemDto>>
     {
         private readonly IUserOperationClaimRepository _userOperationClaimRepository;
-        private readonly IMapper _mapper;
 
-        public GetListUserOperationClaimQueryHandler(IUserOperationClaimRepository userOperationClaimRepository, IMapper mapper)
+        public GetListUserOperationClaimQueryHandler(IUserOperationClaimRepository userOperationClaimRepository)
         {
             _userOperationClaimRepository = userOperationClaimRepository;
-            _mapper = mapper;
         }
 
         public async Task<GetListResponse<GetListUserOperationClaimListItemDto>> Handle(
@@ -49,9 +47,8 @@ public class GetListUserOperationClaimQuery : IRequest<GetListResponse<GetListUs
                 enableTracking: false
             );
 
-            GetListResponse<GetListUserOperationClaimListItemDto> mappedUserOperationClaimListModel = _mapper.Map<
-                GetListResponse<GetListUserOperationClaimListItemDto>
-            >(userOperationClaims);
+            GetListResponse<GetListUserOperationClaimListItemDto> mappedUserOperationClaimListModel =
+                UserOperationClaimMapper.ToGetListResponse(userOperationClaims);
             return mappedUserOperationClaimListModel;
         }
     }

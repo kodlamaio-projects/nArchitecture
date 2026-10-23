@@ -15,7 +15,7 @@ public class DeleteUserTests : UserMockRepository
         : base(fakeData)
     {
         _command = command;
-        _handler = new DeleteUserCommandHandler(MockRepository.Object, Mapper, BusinessRules);
+        _handler = new DeleteUserCommandHandler(MockRepository.Object, BusinessRules);
     }
 
     [Fact]

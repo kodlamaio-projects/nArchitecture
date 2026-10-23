@@ -1,10 +1,10 @@
 using Application.Features.Users.Constants;
+using Application.Features.Users.Mappers;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Security.Hashing;
 using static Application.Features.Users.Constants.UsersOperationClaims;
 
@@ -40,13 +40,11 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
 
-        public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
+        public UpdateUserCommandHandler(IUserRepository userRepository, UserBusinessRules userBusinessRules)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
             _userBusinessRules = userBusinessRules;
         }
 
@@ -58,7 +56,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
             );
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);
-            user = _mapper.Map(request, user);
+            UserMapper.UpdateEntity(request, user);
 
             HashingHelper.CreatePasswordHash(
                 request.Password,
@@ -69,7 +67,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
             user.PasswordSalt = passwordSalt;
             await _userRepository.UpdateAsync(user);
 
-            UpdatedUserResponse response = _mapper.Map<UpdatedUserResponse>(user);
+            UpdatedUserResponse response = UserMapper.ToUpdatedResponse(user);
             return response;
         }
     }

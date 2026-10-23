@@ -1,10 +1,10 @@
 using Application.Features.Users.Constants;
+using Application.Features.Users.Mappers;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
-using AutoMapper;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Mediator;
 using static Application.Features.Users.Constants.UsersOperationClaims;
 
 namespace Application.Features.Users.Commands.Delete;
@@ -18,13 +18,11 @@ public class DeleteUserCommand : IRequest<DeletedUserResponse>, ISecuredRequest
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, DeletedUserResponse>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
 
-        public DeleteUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
+        public DeleteUserCommandHandler(IUserRepository userRepository, UserBusinessRules userBusinessRules)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
             _userBusinessRules = userBusinessRules;
         }
 
@@ -38,7 +36,7 @@ public class DeleteUserCommand : IRequest<DeletedUserResponse>, ISecuredRequest
 
             await _userRepository.DeleteAsync(user!);
 
-            DeletedUserResponse response = _mapper.Map<DeletedUserResponse>(user);
+            DeletedUserResponse response = UserMapper.ToDeletedResponse(user!);
             return response;
         }
     }

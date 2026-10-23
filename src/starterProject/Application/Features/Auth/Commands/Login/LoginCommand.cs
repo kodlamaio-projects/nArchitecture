@@ -1,10 +1,10 @@
-﻿using Application.Features.Auth.Rules;
+using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
 using Domain.Entities;
-using MediatR;
 using NArchitecture.Core.Application.Dtos;
+using NArchitecture.Core.Mediator;
 using NArchitecture.Core.Security.Enums;
 using NArchitecture.Core.Security.JWT;
 

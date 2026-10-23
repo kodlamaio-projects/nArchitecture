@@ -35,7 +35,7 @@ public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOper
             {
                 Id = Guid.NewGuid(),
                 UserId = UserConfiguration.AdminId,
-                OperationClaimId = OperationClaimConfiguration.AdminId
+                OperationClaimId = OperationClaimConfiguration.AdminId,
             };
         }
     }

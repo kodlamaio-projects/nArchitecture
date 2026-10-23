@@ -1,3 +1,6 @@
+> [!WARNING]
+> **Breaking change: nArchitecture 2.0 starter.** This now targets .NET 10 with `NArchitecture.Core.Mediator` and [Mapperly](https://mapperly.riok.app/) instead of MediatR/AutoMapper. If your project was created from the 1.x starter, don't pull these changes directly into it. Read the [migration guide](https://github.com/kodlamaio-projects/nArchitecture.Core/blob/main/docs/migration-guide-2.0.md) ([Türkçe](https://github.com/kodlamaio-projects/nArchitecture.Core/blob/main/docs/migration-guide-2.0.tr.md)) or run `nArchGen upgrade` in your project.
+
 <p align="center">
   <a href="https://github.com/kodlamaio-projects/nArchitecture/graphs/contributors"><img src="https://img.shields.io/github/contributors/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
   <a href="https://github.com/kodlamaio-projects/nArchitecture/network/members"><img src="https://img.shields.io/github/forks/kodlamaio-projects/nArchitecture.svg?style=for-the-badge"></a>
@@ -38,25 +41,21 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-- .NET 7
+- .NET 10 SDK (see `global.json`)
 
 ### Installation
 
 1. Clone the repo
    ```sh
-   git clone --recurse-submodules https://github.com/kodlamaio-projects/nArchitecture.git
+   git clone https://github.com/kodlamaio-projects/nArchitecture.git
    ```
 2. Configure `appsettings.json` in WebAPI.
 3. Run `Update-Database` command with Package Manager Console in WebAPI to create tables in sql server.
 
-- Run the following command to update submodules
-  ```sh
-   git submodule update --remote
-   ```
-
 ## 🚀 Usage
 
-1. Run example WebAPI project `dotnet run --project src\rentACar\WebAPI`
+1. Run example WebAPI project `dotnet run --project src\starterProject\WebAPI`
+2. Run tests `dotnet test`
 
 ### Analysis
 
@@ -66,7 +65,15 @@ To get a local copy up and running follow these simple steps.
 ### Format
 
 1. If not, Install dotnet tool `dotnet tool restore`.
-2. Run format command `dotnet csharpier .`
+2. Run format command `dotnet csharpier format .`
+
+## 🆕 What's new in 2.0
+
+- **.NET 10**, package versions managed centrally in `Directory.Packages.props`, shared project settings in `Directory.Build.props`.
+- **NArchitecture.Core 2.0**: MediatR is replaced by `NArchitecture.Core.Mediator` (`using NArchitecture.Core.Mediator;`, `services.AddMediator(...)`), AutoMapper by [Mapperly](https://mapperly.riok.app/) static mappers under each feature's `Mappers` folder.
+- Swashbuckle 10 / Microsoft.OpenApi 2, EF Core 10, xunit v3 with the Microsoft Testing Platform runner.
+- Generate new features with [nArchitecture.Gen](https://github.com/kodlamaio-projects/nArchitecture.Gen) 2.0: `dotnet tool restore` then `dotnet nArchGen generate crud`.
+- Upgrading a project created from the 1.x starter? See the [migration guide](https://github.com/kodlamaio-projects/nArchitecture.Core/blob/main/docs/migration-guide-2.0.md) or run `nArchGen upgrade` in your solution folder.
 
 ## 🚧 Roadmap
 

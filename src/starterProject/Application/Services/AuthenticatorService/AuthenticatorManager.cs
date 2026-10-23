@@ -34,25 +34,23 @@ public class AuthenticatorManager : IAuthenticatorService
 
     public async Task<EmailAuthenticator> CreateEmailAuthenticator(User user)
     {
-        EmailAuthenticator emailAuthenticator =
-            new()
-            {
-                UserId = user.Id,
-                ActivationKey = await _emailAuthenticatorHelper.CreateEmailActivationKey(),
-                IsVerified = false
-            };
+        EmailAuthenticator emailAuthenticator = new()
+        {
+            UserId = user.Id,
+            ActivationKey = await _emailAuthenticatorHelper.CreateEmailActivationKey(),
+            IsVerified = false,
+        };
         return emailAuthenticator;
     }
 
     public async Task<OtpAuthenticator> CreateOtpAuthenticator(User user)
     {
-        OtpAuthenticator otpAuthenticator =
-            new()
-            {
-                UserId = user.Id,
-                SecretKey = await _otpAuthenticatorHelper.GenerateSecretKey(),
-                IsVerified = false
-            };
+        OtpAuthenticator otpAuthenticator = new()
+        {
+            UserId = user.Id,
+            SecretKey = await _otpAuthenticatorHelper.GenerateSecretKey(),
+            IsVerified = false,
+        };
         return otpAuthenticator;
     }
 
@@ -97,7 +95,7 @@ public class AuthenticatorManager : IAuthenticatorService
             {
                 ToList = toEmailList,
                 Subject = "Authenticator Code - NArchitecture",
-                TextBody = $"Enter your authenticator code: {authenticatorCode}"
+                TextBody = $"Enter your authenticator code: {authenticatorCode}",
             }
         );
     }

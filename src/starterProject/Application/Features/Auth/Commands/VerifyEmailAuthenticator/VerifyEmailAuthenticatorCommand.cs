@@ -1,7 +1,7 @@
-﻿using Application.Features.Auth.Rules;
+using Application.Features.Auth.Rules;
 using Application.Services.Repositories;
 using Domain.Entities;
-using MediatR;
+using NArchitecture.Core.Mediator;
 
 namespace Application.Features.Auth.Commands.VerifyEmailAuthenticator;
 

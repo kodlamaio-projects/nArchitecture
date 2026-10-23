@@ -37,7 +37,7 @@ public class UserFakeData : BaseFakeData<User, Guid>
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 CreatedDate = DateTime.Now,
-            }
+            },
         ];
         return data;
     }
